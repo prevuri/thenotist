@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  note_id: 1
+  page_number: 1
+  type: 
+  height: 1
+  width: 1
+  public_path: MyString
+
+two:
+  note_id: 1
+  page_number: 1
+  type: 
+  height: 1
+  width: 1
+  public_path: MyString
