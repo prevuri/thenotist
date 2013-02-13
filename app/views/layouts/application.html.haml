@@ -5,6 +5,20 @@
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
+    = yield(:head)
 
   %body
-    = yield
+    %header.navbar.navbar-inverse.navbar-fixed-top
+      %nav.navbar-inner
+        .container
+          = render 'layouts/navigation'
+    .container
+      .row
+        .span3
+          = render 'layouts/sidebar'
+        .span9
+          #main{:role => "main"}
+            .content
+              = render 'layouts/messages'
+              = yield
+          %footer
