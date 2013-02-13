@@ -2,7 +2,7 @@
 
 .upload_form
   %h3 File Upload
-  = form_for :notes, :html => { :id => "upload_form" }, :method => 'post', :url => { :action => "create" } do |f| 
+  = form_for :notes, :html => { :id => "upload_form" }, :method => :post, :url => notes_path do |f| 
     %p= f.label :title
     %p= f.text_field :title
 
