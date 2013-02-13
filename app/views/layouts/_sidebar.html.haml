@@ -2,39 +2,12 @@
   .nav.nav-list
     .nav-header
       Header
-    %li.active
-      = link_to "/" do
-        %i.icon-home
-        Home
-    %li
-      = link_to "/feed" do
-        %i.icon-star
-        Feed
-    %li
-      = link_to "/profile" do
-        %i.icon-user
-        Profile
-    %li
-      = link_to "/notes" do
-        %i.icon-file
-        Notes
-    %li
-      = link_to "/explore" do
-        %i.icon-road
-        Explore
-    %li
-      = link_to "/courses" do
-        %i.icon-pencil
-        Courses
-    %li
-      = link_to "/textbooks" do
-        %i.icon-book
-        Textbooks
-    %li
-      = link_to "/buddies" do
-        %i.icon-user
-        Buddies
-    %li
-      = link_to "/ahievements" do
-        %i.icon-fire
-        Acievements
+    = sidebar_link 'Home', '/', 'icon-home'
+    = sidebar_link 'Feed', '/feed', 'icon-star'
+    = sidebar_link 'Profile', '/profile', 'icon-user'
+    = sidebar_link 'Notes', '/notes', 'icon-file'
+    = sidebar_link 'Explore', '/explore', 'icon-road'
+    = sidebar_link 'Courses', '/courses', 'icon-pencil'
+    = sidebar_link 'Textbooks', '/textbooks', 'icon-book'
+    = sidebar_link 'Buddies', '/buddies', 'icon-user'
+    = sidebar_link 'Achievements', '/achievements', 'icon-fire'
