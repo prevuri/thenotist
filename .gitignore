@@ -17,3 +17,5 @@
 # Ignore all pdf and png files
 *.pdf
 *.png
+
+.DS_Store

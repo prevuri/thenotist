@@ -8,6 +8,11 @@
     = yield(:head)
 
   %body
+    %p.notice
+      = notice
+    %p.alert
+      = alert
+
     %header.navbar.navbar-inverse.navbar-fixed-top
       %nav.navbar-inner
         .container
