@@ -5,6 +5,7 @@ TheNotist::Application.routes.draw do
 
   root :to => 'main#index'
   
+  
   resources :uploaded_files
   resources :notes
   
