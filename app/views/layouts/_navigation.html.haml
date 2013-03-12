@@ -21,11 +21,11 @@
             %li
               = link_to 'Another Thing', '/'
       %li.divider-vertical
-      - if user_signed_in?
+      - if current_user
         %li
         .btn-group
           %a.btn.dropdown-toggle{:'data-toggle' => 'dropdown'}
-            Logout
+            = current_user.name
             .caret
           %ul.dropdown-menu
             %li
