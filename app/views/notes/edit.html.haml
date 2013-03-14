@@ -1,2 +1,10 @@
-%h1 Notes#edit
-%p Find me in app/views/notes/edit.html.erb
+.notes-edit-page
+  %h1 Notes#edit
+  = form_for @note, :url => note_path(@note), :method => :put do |f|
+    %p= f.label :title
+    %p= f.text_field :title
+
+    %p= f.label :description
+    %p= f.text_field :description
+
+    %p= f.submit "Update"

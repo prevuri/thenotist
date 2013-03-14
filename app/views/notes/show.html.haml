@@ -1,2 +1,10 @@
-%h1 Notes#show
-%p Find me in app/views/notes/show.html.erb
+.notes-show-page
+  %h1 Notes#show
+
+  %h1.note-title= @note.title
+  .note-description= @note.description
+
+  - @note.uploaded_files.each do |file|
+    .image-container
+      = image_tag file.public_path, :width => 700
+

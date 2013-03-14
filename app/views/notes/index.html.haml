@@ -1,2 +1,14 @@
-%h1 Notes#index
-%p Find me in app/views/notes/index.html.erb
+.notes-index-page
+  %h1 Notes#index
+
+  .create-new-note
+    = link_to "Upload new note", new_note_path
+  .notes-list-container
+    .notes-list
+      - @notes.each do |note|
+        .notes-list-item
+          = link_to note.title, note_path(note)
+          = "-"
+          = link_to "edit", edit_note_path(note)
+          = "-"
+          = link_to "delete", note_path(note), :method => :delete

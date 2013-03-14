@@ -1,6 +1,7 @@
 class Note < ActiveRecord::Base
-  attr_accessible :course_id, :description, :title, :user_id
-  has_many :uploaded_files
+  attr_accessible :course_id, :description, :title
+  has_many :uploaded_files, :dependent => :destroy
+
   belongs_to :user
 
   def process (upload)
