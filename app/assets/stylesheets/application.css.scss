@@ -12,10 +12,84 @@
  *= require_tree .
  */
 
-.sidebar-nav {
+$sidebar-trans-time: 0.5s;
+
+#sidebar {
+
+  .sidebar-nav {
+    padding-top: 10px;
+  }
+
+  .nav-list {
+    overflow-x: hidden;
+  }
+
+  li {
+    line-height: 2.2;
+
+    a {
+      /* To make menu text animate out without getting bumped to the next line
+         need to set a fixed (arbitrary bigger than sidebar itself) width on
+         the parent and hide horizontal overflow in the sidebar container */
+      width: 500px;
+    }
+  }
 
   .text {
     margin-left: 5px;
   }
 
+  .collapse-button {
+    display: block;
+    text-align: right;
+    margin-right: -10px;
+  }  
+
+  &.animate {
+    -webkit-transition-property: width;
+    -webkit-transition-duration: $sidebar-trans-time;
+    transition-property: width;
+    transition-duration: $sidebar-trans-time;
+
+    .sidebar-nav {
+      -webkit-transition-property: padding;
+      -webkit-transition-duration: $sidebar-trans-time;
+      transition-property: padding;
+      transition-duration: $sidebar-trans-time;
+    }
+    .text {
+      -webkit-transition-property: opactiy;
+      -webkit-transition-duration: $sidebar-trans-time;
+      transition-property: opactiy;
+      transition-duration: $sidebar-trans-time;
+    }
+    .collapse-button i {
+      -webkit-transition-property: transform;
+      -webkit-transition-duration: $sidebar-trans-time;
+      transition-property: transform;
+      transition-duration: $sidebar-trans-time;
+    }
+  }
+
+  &.collapsed {
+    width: 46px;
+
+    .sidebar-nav {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .text {
+      opacity:0;
+    }
+
+    .collapse-button {
+      i {
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+    }
+  }
 }

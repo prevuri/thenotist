@@ -1,7 +1,7 @@
 .sidebar-nav.well
+  %a.collapse-button{ :onclick => 'toggleSidebar()' }
+    %i.icon-chevron-left
   .nav.nav-list
-    .nav-header
-      Header
     = sidebar_link 'Home', '/', 'icon-home'
     = sidebar_link 'Feed', '/feed', 'icon-star'
     = sidebar_link 'Profile', '/profile', 'icon-user'
