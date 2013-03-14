@@ -14,3 +14,37 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+$(document).ready(function() {
+  if (localStorage["sidebarCollapsed"] == 'true') {
+    collapseSidebar(false);
+  }
+});
+
+function expandSidebar(animate) {
+  switchSidebarAnimation(animate);
+  $('#sidebar').removeClass('collapsed');
+  localStorage["sidebarCollapsed"] = 'false';
+}
+
+function collapseSidebar(animate) {
+  switchSidebarAnimation(animate);
+  $('#sidebar').addClass('collapsed');
+  localStorage["sidebarCollapsed"] = 'true';
+}
+
+function switchSidebarAnimation(animate) {
+  if (animate) {
+    $('#sidebar').addClass('animate');
+  } else {
+    $('#sidebar').removeClass('animate');
+  }
+}
+
+function toggleSidebar() {
+  if ($('#sidebar').hasClass('collapsed')) {
+    expandSidebar(true);
+  } else {
+    collapseSidebar(true);
+  }
+}
