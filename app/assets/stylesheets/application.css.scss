@@ -46,18 +46,26 @@ $sidebar-trans-time: 0.5s;
   }  
 
   &.animate {
+    -webkit-transition-property: width;
+    -webkit-transition-duration: $sidebar-trans-time;
     transition-property: width;
     transition-duration: $sidebar-trans-time;
 
     .sidebar-nav {
+      -webkit-transition-property: padding;
+      -webkit-transition-duration: $sidebar-trans-time;
       transition-property: padding;
       transition-duration: $sidebar-trans-time;
     }
     .text {
+      -webkit-transition-property: opactiy;
+      -webkit-transition-duration: $sidebar-trans-time;
       transition-property: opactiy;
       transition-duration: $sidebar-trans-time;
     }
     .collapse-button i {
+      -webkit-transition-property: transform;
+      -webkit-transition-duration: $sidebar-trans-time;
       transition-property: transform;
       transition-duration: $sidebar-trans-time;
     }
