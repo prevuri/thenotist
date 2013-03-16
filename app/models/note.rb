@@ -22,6 +22,8 @@ class Note < ActiveRecord::Base
     pages.each do |imgPath|
       images << self.uploaded_files.create(:public_path => File.join(browserPath, File.basename(imgPath)))
     end
+
+    File.delete(path)
     return images
   end
 end
