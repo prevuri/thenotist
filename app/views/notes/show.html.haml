@@ -7,4 +7,9 @@
   - @note.uploaded_files.each do |file|
     .image-container
       = image_tag file.public_path, :width => 700
+    .comments-container
+      %h3 Comments
+      = text_field_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
+      = submit_tag 'Submit', :class => 'btn'
+
 

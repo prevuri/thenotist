@@ -7,6 +7,7 @@ TheNotist::Application.routes.draw do
 
   resources :uploaded_files
   resources :notes
+  resources :comments, :module => 'api', :path => 'api/comments', :only => [ :index, :create, :destroy ]
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

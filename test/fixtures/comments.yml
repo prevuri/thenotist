@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  uploaded_file_id: 1
+  user_id: 1
+  text: MyText
+  ycoord: 9.99
+
+two:
+  uploaded_file_id: 1
+  user_id: 1
+  text: MyText
+  ycoord: 9.99
