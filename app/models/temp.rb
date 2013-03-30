@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, :omniauth_providers => [:facebook]
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :name, :email, :password, :password_confirmation, :fb_access_token, :remember_me, :provider, :uid
+  attr_accessible :name, :sq_image, :s_image, :image, :l_image, :email, :password, :password_confirmation, :fb_access_token, :remember_me, :provider, :uid
   # attr_accessible :title, :body
   has_many :notes
 
@@ -23,9 +23,12 @@ class User < ActiveRecord::Base
     puts auth
 	  
     #Get all the image sizes for use
-    
+    def_image = auth.info.image
+    base_image_url = def_image[0, def_image.rindex('?')+1]
+    large_image = base_image_url + "type=large"
+    small_image = base_image_url + "type=small"
+    normal_image = base_image_url + "type=normal"
 
-    
     #Check if user already has provider logged in
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
 
@@ -37,7 +40,10 @@ class User < ActiveRecord::Base
                              :provider => auth.provider,
                              :uid => auth.uid,
                              :fb_access_token => auth.credentials.token,
-                             )
+                             :sq_image => def_image,
+                             :s_image => small_image,
+                             :l_image => large_image,
+                             :image => def_image)
       end
     end
 
@@ -47,7 +53,11 @@ class User < ActiveRecord::Base
 	                         provider:auth.provider,
 	                         uid:auth.uid,
                            fb_access_token:auth.credentials.token,
-                           email:auth.info.email,
+                           sq_image:def_image,
+                           s_image:small_image,
+                           l_image:large_image,
+                           image:auth.info.image,
+	                         email:auth.info.email,
 	                         password:Devise.friendly_token[0,20]
 	                         )
 	  end
