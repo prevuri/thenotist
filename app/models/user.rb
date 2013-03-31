@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   has_many :notes
   has_many :uploaded_files, :through => :notes
-  has_many :comments, :through => :uploaded_files
+  has_many :comments
 
   def self.new_with_session(params, session)
     super.tap do |user|

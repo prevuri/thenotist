@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :text, :ycoord
+  attr_accessible :text, :ycoord, :uploaded_file
   belongs_to :uploaded_file
-  has_one :user, :through => :uploaded_file
+  belongs_to :user
 
   def as_json options = {}
     {

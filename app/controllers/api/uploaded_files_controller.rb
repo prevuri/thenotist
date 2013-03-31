@@ -1,4 +1,4 @@
-class Api::CommentsController < ApplicationController
+class Api::UploadedFilesController < ApplicationController
   # before_filter :authenticate_user!
 
   before_filter :get_uploaded_file_id, :only => [ :index, :create ]
