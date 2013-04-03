@@ -9,8 +9,40 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require bootstrap
+ *= require flat-ui
  *= require_tree .
  */
+
+body {
+  background-color: #3498DB;
+}
+
+#main {
+  background-color: white;
+  padding: 10px;
+  margin-top: 17px;
+  min-height: 500px;
+  border-radius: 6px;
+}
+
+#top-nav {
+  margin-top: 10px;
+
+  .navbar-search {
+    margin-top: 8px;
+
+    input {
+      margin-bottom: 0px;
+      height: 15px;
+    }
+  }
+}
+
+#account-dropdown {
+  position: relative;
+  top: 6px;
+}
 
 $sidebar-trans-time: 0.5s;
 
@@ -21,28 +53,39 @@ $sidebar-trans-time: 0.5s;
   }
 
   .nav-list {
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
   li {
     line-height: 2.2;
+    position: relative;
 
     a {
-      /* To make menu text animate out without getting bumped to the next line
-         need to set a fixed (arbitrary bigger than sidebar itself) width on
-         the parent and hide horizontal overflow in the sidebar container */
-      width: 500px;
+      text-align: left;
+      padding-left: 20px;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
     }
   }
 
+  li:first-child a {
+    border-radius: 6px 6px 0 0;
+  }
+    
+  li:last-child a {
+    border-radius: 0 0 6px 6px;
+  }
+
   .text {
-    margin-left: 5px;
+    position:absolute;
+    left: 40px;
   }
 
   .collapse-button {
     display: block;
     text-align: right;
-    margin-right: -10px;
+    margin-right: 30px;
   }  
 
   &.animate {
@@ -72,7 +115,7 @@ $sidebar-trans-time: 0.5s;
   }
 
   &.collapsed {
-    width: 46px;
+    width: 82px;
 
     .sidebar-nav {
       padding-left: 0;

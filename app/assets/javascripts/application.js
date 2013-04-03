@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require_directory ../../../vendor/assets/javascripts/flat-ui/
 //= require_tree .
 
 $(document).ready(function() {
