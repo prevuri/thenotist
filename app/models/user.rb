@@ -23,9 +23,9 @@ class User < ActiveRecord::Base
     puts auth
 	  
     #Get all the image sizes for use
-    
 
-    
+
+
     #Check if user already has provider logged in
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
 
@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
 	  end
 
 	  if user
+      user.update_attribute(:fb_access_token, auth.credentials.token)
       user
     end
 	end
