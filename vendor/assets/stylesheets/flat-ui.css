@@ -1064,6 +1064,10 @@ textarea,
 .uneditable-input {
   width: 192px; }
 
+input {
+  font-family: Lato, sans-serif;
+}
+
 .checkbox,
 .radio {
   margin-bottom: 12px;
