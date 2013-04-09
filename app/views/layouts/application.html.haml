@@ -8,15 +8,14 @@
     = yield(:head)
 
   %body
-    .container
-      %header#top-nav
-        = render 'layouts/navigation'
-      .row
-        #sidebar.span3
-          = render 'layouts/sidebar'
-        .span9
-          #main{:role => "main"}
-            .content
-              = render 'layouts/messages'
-              = yield
-          %footer
+    %header#top-nav
+      = render 'layouts/navigation'
+    .row
+      #sidebar.span3
+        = render 'layouts/sidebar'
+      #sidebar-placeholder.span3
+      #main{:role => "main"}
+        .content
+          = render 'layouts/messages'
+          = yield
+      %footer

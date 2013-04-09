@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def sidebar_link(text, path, icon_name)
-    default_class = 'btn btn-large btn-block'
+    default_class = 'btn btn-large btn-block btn-info'
     class_name = default_class + (current_page?(path) ? ' active' : '')
 
     content_tag :li, :class do
