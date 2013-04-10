@@ -1043,12 +1043,13 @@ textarea {
   line-height: 20px;
 }
 
+/*
 input,
 button,
 select,
 textarea {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
+}*/
 
 label {
   display: block;
