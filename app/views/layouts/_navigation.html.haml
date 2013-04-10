@@ -1,59 +1,56 @@
-.row
-  .span12
-    .navbar.navbar-inverse
-      .navbar-inner
-        .container
-          .nav-collapse.collapse
-            %ul.nav
-              %li.span
-                = link_to 'TheNotist', root_path
+.navbar.navbar-inverse
+  .navbar-inner
+    .nav-collapse.collapse
+      %ul.nav
+        %li.span
+          = link_to 'TheNotist', root_path
+        %li
+          %a
+            Page Title
+        %li
+          %form.navbar-search
+            %input#search{:type => 'text', :placeholder => 'Search'}
+        %li
+          = link_to 'Options', root_path
+          %ul
+            %li
+              = link_to 'Option1', root_path
+            %li
+              = link_to 'Option2', root_path
+    #account-dropdown.pull-right.span3
+      - if current_user
+        .dk_container.dk_shown.span3
+          %a.dk_toggle
+            %span.dk_label
+              = current_user.name
+            %span.select-icon
+          .dk_options
+            %ul.dk_options_inner
               %li
-                %a
-                  Page Title
+                = link_to('Logout', destroy_user_session_path, :method=>'delete')
               %li
-                %form.navbar-search
-                  %input#search{:type => 'text', :placeholder => 'Search'}
+                = link_to('Edit account', edit_user_registration_path)
+      - else
+        .dk_container.dk_shown.span3
+          %a.dk_toggle
+            %span.dk_label Login
+            %span.select-icon
+          .dk_options
+            %ul.dk_options_inner
               %li
-                = link_to 'Options', root_path
-                %ul
-                  %li
-                    = link_to 'Option1', root_path
-                  %li
-                    = link_to 'Option2', root_path
-          #account-dropdown.pull-right.span3
-            - if current_user
-              .dk_container.dk_shown.span3
-                %a.dk_toggle
-                  %span.dk_label
-                    = current_user.name
-                  %span.select-icon
-                .dk_options
-                  %ul.dk_options_inner
-                    %li
-                      = link_to('Logout', destroy_user_session_path, :method=>'delete')
-                    %li
-                      = link_to('Edit account', edit_user_registration_path)
-            - else
-              .dk_container.dk_shown.span3
-                %a.dk_toggle
-                  %span.dk_label Login
-                  %span.select-icon
-                .dk_options
-                  %ul.dk_options_inner
-                    %li
-                      = link_to('Login', new_user_session_path)
-                    %li
-                      = link_to('Sign up', new_user_registration_path)
+                = link_to('Login', new_user_session_path)
+              %li
+                = link_to('Sign up', new_user_registration_path)
 
-          / -# if user_signed_in?
-          /   %li
-          /     = link_to('Logout', destroy_user_session_path, :method=>'delete')
-          / -# else
-          /   %li
-          /     = link_to('Login', new_user_session_path)
-          / -# if user_signed_in?
-          /   %li
-          /     = link_to('Edit account', edit_user_registration_path)
-          / -# else
-          /   %li
-          /     = link_to('Sign up', new_user_registration_path)
+    / -# if user_signed_in?
+    /   %li
+    /     = link_to('Logout', destroy_user_session_path, :method=>'delete')
+    / -# else
+    /   %li
+    /     = link_to('Login', new_user_session_path)
+    / -# if user_signed_in?
+    /   %li
+    /     = link_to('Edit account', edit_user_registration_path)
+    / -# else
+    /   %li
+    /     = link_to('Sign up', new_user_registration_path)
