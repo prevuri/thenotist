@@ -1,4 +1,5 @@
 TheNotist::Application.routes.draw do
+
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   get "main/index"
 
@@ -7,6 +8,7 @@ TheNotist::Application.routes.draw do
 
   resources :uploaded_files
   resources :notes
+  resources :profile
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,15 @@
+%h3= @profile["name"]
+
+%div{:style => "float:left"}
+  %img{:src => @profile_image}
+%div{:style => "float:right"}
+  %h4
+    =current_user.notes.length
+    Notes
+    .notes-list-container
+      .notes-list
+      - current_user.notes[0..5].each do |note|
+        .notes-list-item
+          = link_to note.title, note_path(note)
+    - if current_user.notes.length > 5
+      = link_to "...", note_path

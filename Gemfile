@@ -18,6 +18,7 @@ group :assets do
   gem 'haml-rails'
   gem 'devise'
   gem 'omniauth'
+  gem "koala", '~> 1.6.0'
   gem 'omniauth-facebook'
 
 
