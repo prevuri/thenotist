@@ -9,7 +9,8 @@ class Comment < ActiveRecord::Base
       :user => user.as_json,
       :uploaded_file_id => uploaded_file.id,
       :text => text,
-      :ycoord => ycoord
+      :ycoord => ycoord,
+      :created_at => created_at
     }
   end
 end
