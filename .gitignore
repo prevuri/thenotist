@@ -18,4 +18,6 @@
 *.pdf
 *.png
 
+db/schema.rb
+
 .DS_Store

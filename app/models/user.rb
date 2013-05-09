@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :fb_access_token, :remember_me, :provider, :uid
   # attr_accessible :title, :body
   has_many :notes
+  has_many :uploaded_files, :through => :notes
+  has_many :comments
 
   def self.new_with_session(params, session)
     super.tap do |user|
@@ -57,4 +59,12 @@ class User < ActiveRecord::Base
       user
     end
 	end
+
+  def as_json
+    {
+      :name => name,
+      :email => email,
+      :member_since => created_at
+    }
+  end
 end
