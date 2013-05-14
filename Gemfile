@@ -8,17 +8,19 @@ gem 'rails', '3.2.8'
 gem 'sqlite3'
 
 # used for creating images out of pdf files
-gem 'rghost_rails', '~> 0.3.3'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
+  gem 'jquery-rails'
+  gem 'bootstrap-sass'
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'haml-rails'
+  gem 'rghost_rails', '~> 0.3.3'
   gem 'devise'
   gem 'omniauth'
-  gem "koala", '~> 1.6.0'
+  gem 'koala', '~> 1.6.0'
   gem 'omniauth-facebook'
 
 
@@ -28,9 +30,25 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+group :development do
+  gem 'growl'
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-cucumber'
+  gem 'guard-rspec'
+  gem 'guard-zeus'
+  gem 'rb-inotify', require: false
+  gem 'rb-fsevent', require: false
+  gem 'rb-fchange', require: false
+end
 
-gem 'bootstrap-sass'
+group :test do
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'rspec-rails'
+  gem 'cucumber-rails', require: false
+end
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
