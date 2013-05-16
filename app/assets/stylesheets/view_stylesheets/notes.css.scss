@@ -3,16 +3,55 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .notes-show-page {
+  .note-description {
+    font-size: 2em;
+  }
+  .note-images {
+    margin-top: 40px;
+  }
   .image-container {
-    border: solid;
-    border-width: 1px;
+    display: inline-block;
+    border: solid 1px #aaa;
   }
   .comments-container {
     margin-bottom: 50px;
-  }
-  
+  } 
 }
 
 .create-new-note {
   margin-bottom: 20px;
+
+  .btn.btn-large i {
+    margin-right: 5px;
+    margin-top: 3px;
+  }
+}
+
+.notes-list-container {
+  border-radius: 8px;
+  overflow: hidden;
+
+  .notes-list {
+    .notes-list-item {
+      overflow: auto;
+      padding: 10px 10px;
+
+      &:nth-child(odd) {
+        background-color: #f2f2f2;
+      }
+      &:nth-child(even) {
+        background-color: #fafafa;
+      }
+
+      .text-link {
+        float: left;
+        font-size: 1.4em;
+      }
+
+      .btn {
+        float: right;
+        margin-left: 10px;
+      }
+    }
+  }
 }
