@@ -1,0 +1,21 @@
+html, body, .container, .content {
+  height: 100%;
+}
+
+body {
+  padding-top:0px;
+}
+
+.nav {
+  opacity: 1;
+}
+
+.container, .content {
+  position: relative;
+  width: 100%;
+}
+
+#main {
+  width:100%;
+  padding: 0;
+}

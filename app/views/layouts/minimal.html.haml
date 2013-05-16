@@ -3,6 +3,7 @@
   %head
     %title TheNotist
     = stylesheet_link_tag "application", :media => "all"
+    = stylesheet_link_tag "overrides/minimal", :media => "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
     = yield(:head)
@@ -10,6 +11,5 @@
   %body
     #main{:role => "main"}
       .content
-        = render 'layouts/messages'
         = yield
     / %footer
