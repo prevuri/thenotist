@@ -40,6 +40,9 @@ group :development do
   gem 'rb-inotify', require: false
   gem 'rb-fsevent', require: false
   gem 'rb-fchange', require: false
+  #error portal
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
