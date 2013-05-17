@@ -14,9 +14,9 @@
 /log/*.log
 /tmp
 
-# Ignore all pdf and png files
-*.pdf
-*.png
+# Ignore all user notes files and images
+/public/user_images
+/public/data
 
 db/schema.rb
 
