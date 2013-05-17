@@ -8,9 +8,9 @@
       #register
         %ul.inline
           %li
-            %a{:class =>"btn btn-large btn-block", :id => "login"} Login
+            = link_to 'Login', new_user_session_path, :class => "btn btn-large btn-block", :id => "splash-login-button"
           %li
-            %a{:class =>"btn btn-large btn-block", :id => "sign_up"} Sign Up
+            = link_to 'Sign Up', new_user_registration_path, :class => "btn btn-large btn-block", :id => "splash-signup-button"
     %section.summary
       %ul.inline
         %li
