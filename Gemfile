@@ -37,6 +37,7 @@ group :development do
   gem 'guard-cucumber'
   gem 'guard-rspec'
   gem 'guard-zeus'
+  gem 'guard-livereload'
   gem 'rb-inotify', require: false
   gem 'rb-fsevent', require: false
   gem 'rb-fchange', require: false
@@ -46,9 +47,12 @@ group :development do
 end
 
 group :test do
+  gem 'factory_girl_rails'
   gem 'capybara'
   gem 'capybara-webkit'
+  gem 'database_cleaner'
   gem 'rspec-rails'
+  gem 'launchy'
   gem 'cucumber-rails', require: false
 end
 
@@ -66,4 +70,4 @@ end
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
+gem 'debugger'
