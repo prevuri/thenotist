@@ -6,25 +6,28 @@ class Note < ActiveRecord::Base
   has_many :comments, :through => :uploaded_files
 
   def process (upload)
-    file = upload[:file]
-    name = file.original_filename
-    directory = "public/data"
+    # create a random name for the uploaded file
+    local_pdf_file = File.join("private/user_uploads", SecureRandom.uuid)
 
-    path = File.join(directory, name)
-    File.open(path, "wb") { |f| f.write(file.read) }
+    # get the uploaded file
+    File.open(local_pdf_file, "wb") { |f| f.write(upload[:file].read) }
 
-    pages = RGhost::Convert.new(path).to :png, :resolution => 144, :multipage => true
-    writePath = 'public/user_images'
-    browserPath = '/user_images'
-    
-    FileUtils.move(pages, writePath)
+    # PDF -> PNG
+    converted_pages = RGhost::Convert.new(local_pdf_file).to :png, :resolution => 144, :multipage => true
 
+    # local -> S3 (AWS creds should be initialized already)
+    # and create models
+    bucket = AWS::S3.new.buckets['thenotist']
     images = []
-    pages.each do |imgPath|
-      images << self.uploaded_files.create(:public_path => File.join(browserPath, File.basename(imgPath)))
+    converted_pages.each_with_index do |path, i|
+      obj = bucket.objects["image_store/#{SecureRandom.uuid}.png"]
+      obj.write(Pathname.new(path), :acl => :public_read)
+      images << self.uploaded_files.create(:public_path => obj.public_url.to_s, :page_number => i)
     end
 
-    File.delete(path)
+    # delete the PDF file
+    File.delete(local_pdf_file)
+    converted_pages.each { |p| File.delete(p) }
     return images
   end
 end
