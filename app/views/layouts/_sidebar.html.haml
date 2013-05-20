@@ -1,13 +1,19 @@
 .sidebar-nav
-  %a.collapse-button{ :onclick => 'toggleSidebar()' }
-    %i.icon-chevron-left.icon-white
-  .nav.nav-list
-    = sidebar_link 'Home', '/', 'icon-home'
-    = sidebar_link 'Feed', '/feed', 'icon-star'
-    = sidebar_link 'Profile', '/profile', 'icon-user'
-    = sidebar_link 'Notes', '/notes', 'icon-file'
-    = sidebar_link 'Explore', '/explore', 'icon-road'
-    = sidebar_link 'Courses', '/courses', 'icon-pencil'
-    = sidebar_link 'Textbooks', '/textbooks', 'icon-book'
-    = sidebar_link 'Buddies', '/buddies', 'icon-user'
-    = sidebar_link 'Achievements', '/achievements', 'icon-fire'
+  .sidebar-inner
+    .nav.nav-list
+      .logo
+        = sidebar_link '', root_path, 'icon-bookmark'
+      = sidebar_link 'Profile', '/profile', 'icon-user icon-2x'
+      = sidebar_link 'Notes', '/notes', 'icon-file icon-2x'
+      = sidebar_link 'Buddies', '/buddies', 'icon-group icon-2x'
+    .nav.nav-list-bottom
+      = sidebar_link 'Settings', '/settings', 'icon-cog'
+      %li
+        - if current_user
+          = link_to destroy_user_session_path, :method=>'delete', :class => 'btn btn-large btn-block' do
+            %i.icon-signout
+            %span.text Logout
+        - else
+          = link_to new_user_session_path, :class => 'btn btn-large btn-block' do
+            %i.icon-signin
+            %span.text Login
