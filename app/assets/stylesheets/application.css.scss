@@ -20,7 +20,7 @@ $sidebar-background: #30373F;
 body {
   margin: 0;
   // padding: 10px 10px 10px 0;
-  background-color: $sidebar-background;
+  background-color: #fffff9;
 }
 
 a.text-link {
@@ -33,7 +33,6 @@ a.text-link {
 }
 
 #main {
-  background-color: #fffff9;
   overflow: auto;
   padding: 10px 30px;
   min-height: 700px;
