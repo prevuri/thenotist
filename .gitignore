@@ -19,5 +19,7 @@
 /public/data
 
 db/schema.rb
+*.orig
+Gemfile.lock
 
 .DS_Store
