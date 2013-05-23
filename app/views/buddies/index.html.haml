@@ -1,9 +1,15 @@
 %h1 Buddies
 %h3 Friends using Notist
 
+.friends-list
+- @friends_using.each do |user|
+	.friends-list-item
+		%img{:src => user["picture"]["data"]["url"]}
+		= user["name"]
+
 %h3 Friends not using Notist
 .friends-list
-- @friend_data.each do |friend|
+- @friends_data.each do |friend|
 	.friends-list-item
 		%img{:src => friend["picture"]["data"]["url"]}
 		= friend["name"]
