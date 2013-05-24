@@ -1,6 +1,7 @@
 class Api::FilesController < ApplicationController
-  # before_filter :authenticate_user!
-
+  include ApiHelper
+  
+  before_filter :check_authenticated_user!
   before_filter :get_note_id, :only => :index
   before_filter :get_file_id, :only => :show
 
@@ -52,13 +53,5 @@ private
 
   def get_file_id
     @uploaded_file_id = params[:id]
-  end
-
-  def note_not_found_error
-    "File with id #{@note_id} not found"
-  end
-
-  def file_not_found_error
-    "File with id #{@uploaded_file_id} not found"
   end
 end
