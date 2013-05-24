@@ -7,9 +7,20 @@
     - @note.uploaded_files.each do |file|
       .image-container
         = image_tag file.public_path, :width => 700
-      .comments-container
-        %h3 Comments
-        = text_field_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
-        = submit_tag 'Submit', :class => 'btn'
 
+.comments-sidebar
+  = text_field_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
+  = text_field_tag 'ycoord', nil, :class => 'new_comment_text_field', :placeholder => 'Enter y-coord'
+  = submit_tag 'Submit', :class => 'btn', :onclick => "submitComment(#{@note.id})"
 
+  .comments-container
+    - @note.comments.each do |comment|
+      .comment{ :style => "top: #{comment.ycoord}", :onclick => "setActive(this)" }
+        .comment-inner
+          .user
+            .name
+              = comment.user.name
+          .comment-text
+            = comment.text
+          .comment-date
+            = distance_of_time_in_words(Time.now, comment.created_at) + ' ago'

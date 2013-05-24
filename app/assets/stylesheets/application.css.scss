@@ -16,6 +16,7 @@
  */
 
 $sidebar-background: #30373F;
+$active-highlight: #27F;
 
 body {
   margin: 0;
@@ -35,7 +36,6 @@ a.text-link {
 #main {
   overflow: auto;
   padding: 10px 30px;
-  min-height: 700px;
   // border-radius: 4px;
 }
 
@@ -136,8 +136,8 @@ $sidebar-trans-time: 0.5s;
       }
 
       &.active {
-        color: #27F;
-        border-right-color: #27F;
+        color: $active-highlight;
+        border-right-color: $active-highlight;
 
         &:hover {
           color: #1AF;
