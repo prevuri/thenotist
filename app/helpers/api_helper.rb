@@ -11,6 +11,22 @@ module ApiHelper
   def file_not_found_error
     "File with id #{@uploaded_file_id} not found"
   end
+  
+  def uploaded_file_not_found_error
+    "File with id #{@uploaded_file_id} not found"
+  end
+
+  def comment_create_error
+    "Could not create comment with supplied parameters"
+  end
+
+  def comment_not_found_error
+    "Comment with id #{@comment_id} not found"
+  end
+
+  def comment_destroy_error
+    "Could not destroy comment with id #{@comment_id}"
+  end
 
 
   # other methods
