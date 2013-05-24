@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def sidebar_link(text, path, icon_name)
     default_class = 'btn btn-large btn-block'
-    class_name = default_class + (current_page?(path) ? ' active' : '')
+    class_name = default_class + (request.fullpath.starts_with?(path) ? ' active' : '')
 
     content_tag :li, :class do
       link_to path, :class => class_name do
