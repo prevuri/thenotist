@@ -64,6 +64,21 @@ a.text-link {
   // border-radius: 4px;
 }
 
+.info {
+  h2 {
+    font-size: 40px; 
+    margin-bottom:10px;
+  }
+}
+
+.profile {
+  float:left;
+}
+
+.profile_section {
+  vertical-align: top;
+}
+
 #top-nav {
   z-index: 100;
   position: fixed;
@@ -94,6 +109,11 @@ a.text-link {
 #account-dropdown {
   position: relative;
   top: 6px;
+}
+
+.profile-buttons {
+  margin-top: 30px; 
+  margin-left: 33px;
 }
 
 $sidebar-trans-time: 0.5s;
