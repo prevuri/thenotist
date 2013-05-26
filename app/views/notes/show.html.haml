@@ -11,7 +11,11 @@
 .comments-sidebar
   = text_field_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
   = text_field_tag 'ycoord', nil, :class => 'new_comment_text_field', :placeholder => 'Enter y-coord'
-  = submit_tag 'Submit', :class => 'btn', :onclick => "submitComment(#{@note.id})"
+
+  -# NOTE: upon submit we actually need a file ID of the file that the user is commenting on,
+  -#       but we don't have that functionality yet, so we are just gonna pick the first file
+  -#       in the note instead
+  = submit_tag 'Submit', :class => 'btn', :onclick => "submitComment(#{@note.uploaded_files.first.id})"
 
   .comments-container
     - @note.comments.each do |comment|

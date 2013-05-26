@@ -14,8 +14,11 @@
     file_id: fileId
   }
 
-  $.post('/api/comments', data, () ->
-    alert('success')
+  $.post('/api/comments', data, (response) ->
+    if !response.success
+      alert response.error
+    else
+      alert "Success!"
   )
 
 @setActive = (clickedComment) ->
