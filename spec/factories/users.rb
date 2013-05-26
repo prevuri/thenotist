@@ -1,11 +1,10 @@
 
 #Factory user definition
 FactoryGirl.define do
-	factory :user do
-		name 'Testy Tasticles'
-		email 'testy@example.com'
-		password 'changeme'
-		password_confirmation 'changeme'
-		#confirmed_at Time.now	
-	end
+ factory :user do
+    sequence(:name)  { |n| "Tester #{n}" }
+    sequence(:email) { |n| "tester#{n}@example.com" }
+    password "password"
+    password_confirmation "password"
+  end
 end

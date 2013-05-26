@@ -10,7 +10,12 @@
           %div.profile_info 
             = current_user.notes.length
             notes
-          %div.profile_info 1000 friends
+          %div.profile_info 
+            = current_user.buddies.length
+            buddies
+          %div.profile_info 
+            = current_user.followers.length
+            followers
           .profile-buttons
             = link_to new_note_path, :class => 'btn btn-large btn-primary' do
               %i.icon-plus.icon-white
