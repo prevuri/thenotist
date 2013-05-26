@@ -41,9 +41,9 @@ group :development do
   gem 'guard-rspec'
   gem 'guard-zeus'
   gem 'guard-livereload'
-  gem 'rb-inotify', require: false
-  gem 'rb-fsevent', require: false
-  gem 'rb-fchange', require: false
+  gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
   #error portal
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -56,7 +56,7 @@ group :test do
   gem 'database_cleaner'
   gem 'rspec-rails'
   gem 'launchy'
-  gem 'cucumber-rails', require: false
+  gem 'cucumber-rails', :require => false
 end
 
 
