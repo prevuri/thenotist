@@ -33,10 +33,12 @@ class Note < ActiveRecord::Base
 
   def as_json
     {
+      :id => id,
       :title => title,
       :description => description,
       :uploaded_files => uploaded_files.map { |f| f.as_json },
-      :user => user.as_json
+      :user => user.as_json,
+      :created_at => created_at
     }
   end
 end
