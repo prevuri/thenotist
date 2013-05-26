@@ -11,7 +11,8 @@ TheNotist::Application.routes.draw do
   resources :uploaded_files
   resources :notes
   resources :profile
-  resources :buddies
+  resources :buddies, :only => [:index]
+  resources :relationships, :only => [:create, :destroy]
   resources :comments, :module => 'api', :path => 'api/comments', :only => [ :index, :create, :destroy ]
   resources :files, :module => 'api', :path => 'api/files', :only => [ :index, :show ]
   

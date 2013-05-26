@@ -11,8 +11,9 @@ class BuddiesController < ApplicationController
   	User.all.each do |user|
   		@friends_data.each do |friend|
   			if friend["id"] == user.uid
+          @removed_friends << index_hash[friend]
+          friend.merge!({:id => user.id})
   				@friends_using << friend
-  				@removed_friends << index_hash[friend]
   			end
   		end
   	end
@@ -21,5 +22,19 @@ class BuddiesController < ApplicationController
   		@friends_data.delete_at(@removed_friends.pop)
   	end
   	# puts @friend_pictures
+  end
+
+  def buddies
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.buddies.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
   end
 end

@@ -9,8 +9,26 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :fb_access_token, :remember_me, :provider, :uid
 
   has_many :notes
-  has_many :uploaded_files, :through => :notes
+  has_many :uploaded_files, through: :notes
   has_many :comments
+  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
+  has_many :buddies, through: :relationships, source: :buddy
+  has_many :reverse_relationships, foreign_key: "buddy_id", class_name: "Relationship", dependent: :destroy
+  has_many :followers, through: :reverse_relationships, source: :follower
+
+
+  def following?(other_user)
+    relationships.find_by_buddy_id(other_user.id)
+  end
+
+  def follow!(other_user)
+    relationships.create!(buddy_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    relationships.find_by_buddy_id(other_user.id).destroy
+  end
+
 
   def self.new_with_session(params, session)
     super.tap do |user|
@@ -22,23 +40,17 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
-    #puts auth
-	  
-    #Get all the image sizes for use
-
-
-
     #Check if user already has provider logged in
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
 
     #Check if the user has an account but has not logged in with provider
     unless user 
-      user = User.find_by_email(auth.info.email)
+      user = User.find_by_email(auth.info.email.downcase)
       if user 
-        user.update_attributes(:name => auth.extra.raw_info.name, 
-                             :provider => auth.provider,
-                             :uid => auth.uid,
-                             :fb_access_token => auth.credentials.token,
+        user.update_attributes(name: auth.extra.raw_info.name, 
+                             provider: auth.provider,
+                             uid: auth.uid,
+                             fb_access_token: auth.credentials.token,
                              )
       end
     end
@@ -49,7 +61,7 @@ class User < ActiveRecord::Base
 	                         provider:auth.provider,
 	                         uid:auth.uid,
                            fb_access_token:auth.credentials.token,
-                           email:auth.info.email,
+                           email:auth.info.email.downcase,
 	                         password:Devise.friendly_token[0,20]
 	                         )
 	  end

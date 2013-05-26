@@ -1,16 +1,30 @@
 %h1 Buddies
-%h3 Friends using Notist
 
-.friends-list
-- @friends_using.each do |user|
-	.friends-list-item
-		%img{:src => user["picture"]["data"]["url"]}
-		= user["name"]
+%div.current-buddies
+	%h3="#{current_user.buddies.count} Buddies"
+	.friends-list
+	- current_user.buddies.each do |user|
+		.friends-list-item
+			= user["name"]
 
-%h3 Friends not using Notist
-.friends-list
-- @friends_data.each do |friend|
-	.friends-list-item
-		%img{:src => friend["picture"]["data"]["url"]}
-		= friend["name"]
+
+%div.fb-friends{:style => "float:right"}
+	%h3 Friends using Notist
+
+	.friends-list
+	- @friends_using.each do |user|
+		.friends-list-item
+			%img{:src => user["picture"]["data"]["url"]}
+			= user["name"]
+			= form_for current_user.relationships.build(buddy_id: user["id"]) do |f|
+				%div= f.hidden_field :buddy_id
+				= f.submit "Add Buddy", :class => "btn"
+
+
+	%h3 Friends not using Notist
+	.friends-list
+	- @friends_data.each do |friend|
+		.friends-list-item
+			%img{:src => friend["picture"]["data"]["url"]}
+			= friend["name"]
 

@@ -1,0 +1,2 @@
+= form_for current_user.relationships.build(buddy_id: user.id) do |f|
+	= f.submit "Add Buddy", :class => "btn btn-large btn-primary"

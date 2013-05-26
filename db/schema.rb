@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130518221257) do
+ActiveRecord::Schema.define(:version => 20130526231225) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(:version => 20130518221257) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "relationships", :force => true do |t|
+    t.integer  "follower_id"
+    t.integer  "buddy_id"
+    t.boolean  "blocked"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "relationships", ["buddy_id"], :name => "index_relationships_on_buddy_id"
+  add_index "relationships", ["follower_id", "buddy_id"], :name => "index_relationships_on_user_id_and_buddy_id", :unique => true
+  add_index "relationships", ["follower_id"], :name => "index_relationships_on_user_id"
 
   create_table "uploaded_files", :force => true do |t|
     t.integer  "note_id"

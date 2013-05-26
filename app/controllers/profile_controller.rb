@@ -6,4 +6,8 @@ class ProfileController < ApplicationController
 	@profile_image = @graph.get_picture("me", {:width => 300, :height => 300})
 	puts @profile
   end
+
+  def feed
+  	
+  end
 end
