@@ -1,7 +1,6 @@
 class RelationshipsController < ApplicationController
 	before_filter :authenticate_user!
   def create
-  	debugger
     @user = User.find(params[:relationship][:buddy_id])
     current_user.follow!(@user)
     respond_to do |format|
