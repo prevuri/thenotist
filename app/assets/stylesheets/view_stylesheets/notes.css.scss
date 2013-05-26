@@ -83,6 +83,21 @@ $comments-sidebar-width: 300px;
   }
 }
 
+.circular {
+  width: 300px;
+  height: 300px;
+  border-radius: 150px;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
+}
+
+.profile_info {
+  font-size: 30px;
+  margin-left: 30px;
+  margin-bottom: 15px;
+  color: grey;
+}
+
 .notes-list-container {
   border-radius: 8px;
   overflow: hidden;
