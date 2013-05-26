@@ -1,7 +1,18 @@
-%h3= @profile["name"]
-
 %div{:style => "float:left"}
-  %img{:src => @profile_image}
+  .container
+    %ul.inline
+      %li
+        %div.circular{:style => "background:url(#{@profile_image}) no-repeat"}
+      %li{:style => "vertical-align: top;"}
+        %div.info
+          %h2{:style => "font-size: 40px; margin-bottom:10px"}= @profile["name"]
+          %div.profile_info 10 notes
+          %div.profile_info 1000 friends
+          %a.btn.btn-large.btn-primary{:style => "margin-top:30px; margin-left: 33px;"} 
+            %i.icon-plus.icon-white
+              Add Buddy
+
+
 %div{:style => "float:right"}
   %h4
     =current_user.notes.length
