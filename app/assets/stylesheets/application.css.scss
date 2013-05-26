@@ -15,9 +15,32 @@
  *= require_tree ./view_stylesheets
  */
 
-$sidebar-background: #ECF0F1;
-$sidebar-background-two: #30373F;
+/*
+ 
+THEME 1
 
+$sidebar_background: #ECF0F1;
+$sidebar_background_hover: #BDC3C7;
+$sidebar_foreground: #999;
+$sidebar_foreground_active: #2ECC71;
+$sidebar_foreground_hover: white;
+
+THEME 2
+
+$sidebar_background: #30373F;
+$sidebar_background_hover: #40474F;
+$sidebar_foreground: #999;
+$sidebar_foreground_active: #27F;
+$sidebar_foreground_hover: white;
+
+ */
+
+/* CURRENT THEME */
+$sidebar_background: #ECF0F1;
+$sidebar_background_hover: #BDC3C7;
+$sidebar_foreground: #999;
+$sidebar_foreground_active: #2ECC71;
+$sidebar_foreground_hover: white;
 
 body {
   margin: 0;
@@ -83,9 +106,7 @@ $sidebar-trans-time: 0.5s;
   position:fixed;
   top: 0;
   bottom: 0;
-  background-color: $sidebar-background;
-
-  
+  background-color: $sidebar_background;
 
   .sidebar-nav {
     overflow: auto;
@@ -123,7 +144,7 @@ $sidebar-trans-time: 0.5s;
     position: relative;
 
     a {
-      color: #999;
+      color: $sidebar_foreground;
       text-align: center;
       font-size: 1.0em;
       padding: 15px 0;
@@ -133,12 +154,12 @@ $sidebar-trans-time: 0.5s;
       background-color: $sidebar-background;
       
       &:hover {
-        background-color: #BDC3C7; /* #40474F; */
-        color: white;
+        background-color: $sidebar_background_hover; 
+        color: $sidebar_foreground_hover;
       }
 
       &.active {
-        color: #2ECC71; /* #27F */
+        color: $sidebar_foreground_active;
       }
     }
 
@@ -155,12 +176,13 @@ $sidebar-trans-time: 0.5s;
     position: absolute;
 
     a {
+      width:100px;
       padding: 5px 5px 0 15px;
       border: none;
 
       &:hover {
-        background-color: $sidebar-background;
-        color: white;
+        background-color: $sidebar_background_hover;
+        color: $sidebar_foreground_hover;
       }
     }
 
