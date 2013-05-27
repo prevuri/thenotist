@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :name, :email, :password, :password_confirmation, :fb_access_token, :remember_me, :provider, :uid
 
+  has_one  :user_fb_data
   has_many :notes
   has_many :uploaded_files, through: :notes
   has_many :comments
@@ -68,6 +69,15 @@ class User < ActiveRecord::Base
 
 	  if user
       user.update_attribute(:fb_access_token, auth.credentials.token)
+
+      #create a user_fb_data object knowing the access token is valid.
+      @graph = Koala::Facebook::API.new(user.fb_access_token)
+      profile = @graph.get_object(user.uid)
+      profile_image = @graph.get_picture(user.uid, {:width => 300, :height => 300})
+      user.user_fb_data = UserFbData.create(uid:user.uid,
+                                profile_image:profile_image,
+                                link:profile["link"])
+      
       user
     end
 	end

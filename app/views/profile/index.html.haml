@@ -2,11 +2,11 @@
   .container
     %ul.inline
       %li
-        %div.circular{:style => "background:url(#{@profile_image}) no-repeat"}
+        %div.circular{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}
       %li.profile_section
         %div.info
           %h2
-            = @profile["name"]
+            = current_user.name
           %div.profile_info 
             = current_user.notes.length
             notes
