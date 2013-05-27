@@ -24,23 +24,25 @@ $sidebar-background-hover: #BDC3C7;
 $sidebar-foreground: #999;
 $sidebar-foreground-active: #2ECC71;
 $sidebar-foreground-hover: white;
+*/
 
-THEME 2
+// THEME 2
 
-$sidebar-background: #30373F;
+$sidebar-background: #252627;
 $sidebar-background-hover: #40474F;
 $sidebar-foreground: #999;
 $sidebar-foreground-active: #27F;
 $sidebar-foreground-hover: white;
+$sidebar-shadow-color: #000;
 
- */
 
 /* CURRENT THEME */
-$sidebar-background: #ECF0F1;
-$sidebar-background-hover: #BDC3C7;
-$sidebar-foreground: #999;
-$sidebar-foreground-active: #2ECC71;
-$sidebar-foreground-hover: white;
+// $sidebar-background: #ECF0F1;
+// $sidebar-background-hover: #BDC3C7;
+// $sidebar-foreground: #999;
+// $sidebar-foreground-active: #2ECC71;
+// $sidebar-foreground-hover: white;
+// $sidebar-shadow-color: #888;
 
 body {
   margin: 0;
@@ -114,7 +116,7 @@ $sidebar-trans-time: 0.5s;
 }
 
 #sidebar {
-  box-shadow: 0 0 10px #888;
+  box-shadow: 0 0 10px $sidebar-shadow-color;
   position:fixed;
   top: 0;
   bottom: 0;
@@ -189,7 +191,7 @@ $sidebar-trans-time: 0.5s;
 
     a {
       width:100px;
-      padding: 5px 5px 0 15px;
+      padding: 5px 5px 0 0;
       border: none;
 
       &:hover {
