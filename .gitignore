@@ -17,6 +17,7 @@
 # Ignore all user notes files and images
 /public/user_images
 /public/data
+/private/user_uploads
 
 db/schema.rb
 *.orig
