@@ -3,7 +3,7 @@
     .theme-background
       .notist-logo
       %div.connect-fb-button
-        = link_to 'Connect with Facebook', new_user_session_path, :class => "btn btn-large btn-block", :id => "splash-login-button"
+        = link_to 'Connect with Facebook', omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
           
     %section.summary
       %ul.inline
