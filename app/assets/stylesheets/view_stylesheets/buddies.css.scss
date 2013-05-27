@@ -1,0 +1,31 @@
+$fbbar_background: #ECF0F1;
+$button_color: #2ECC71;
+
+.fb-friends {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	padding-left: 10px;
+	width: 300px;
+	overflow: auto;
+	box-shadow: 0 0 10px #888;
+
+	background-color: $fbbar_background;
+}
+
+.friends-list-item {
+	width: 290px;
+	height: 50px;
+	margin-bottom: 5px;
+	margin-right: 10px;
+}
+
+.friend-info {
+	float:left;
+}
+
+.add-buddy {
+	float: right;
+	height: 50px;
+}
