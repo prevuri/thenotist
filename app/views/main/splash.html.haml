@@ -1,52 +1,75 @@
 #splash
   .wrapper
     .theme-background
-      %p{:id => "slogan_1"} 
-        We'll handle the mess 
-      %p{:id => "slogan_2"}
-        You handle the ideas
-      #register
-        %ul.inline
-          %li
-            = link_to 'Login', new_user_session_path, :class => "btn btn-large btn-block", :id => "splash-login-button"
-          %li
-            = link_to 'Sign Up', new_user_registration_path, :class => "btn btn-large btn-block", :id => "splash-signup-button"
+      .notist-logo
+      %div.connect-fb-button
+        = link_to 'Connect with Facebook', new_user_session_path, :class => "btn btn-large btn-block", :id => "splash-login-button"
+          
     %section.summary
       %ul.inline
         %li
           %h1 Organize
           %p 
             Focus purely on writing your ideas while TheNotist organizes your notes in a sleek and minimalistic interface.
-          %img{:class => "tile-image big-illustration", :id => "organize"}
-          %a{:class => "btn btn-large btn-block btn-info"} Learn More
+          %div.tile-image.big-illustration.center#organize
+          %a.btn.btn-large.btn-block.btn-info
+            Learn More
         %li
           %h1 Share
           %p 
             Collaborate with people on different notes through our dynamic messaging service. Choose if you want certain notes to be public or private.
-          %img{:class => "tile-image big-illustration", :id => "share"}
-          %a{:class => "btn btn-large btn-block btn-info"} Learn More
+          %div.tile-image.big-illustration#share
+          %a.btn.btn-large.btn-block.btn-info
+            Learn More
         %li
           %h1 Secure
           %p
             All notes are saved in the cloud and can be accessed anywhere with wifi.  Your notes will be backed up on our highly secure servers to ensure no information is lost.
-          %img{:class => "tile-image big-illustration", :id => "secure"}
-          %a{:class => "btn btn-large btn-block btn-info"} Learn More
+          %div.tile-image.big-illustration#secure
+          %a.btn.btn-large.btn-block.btn-info
+            Learn More
+    .theme-background-two
     %section.reviews
       .review#review_1
-        .tooltip.fade.top.in
+        .tooltip.fade.bottom.in
           .tooltip-arrow
           .tooltip-inner
-            "I love how simple and intuitive it is to navigate through the website! Great product!"
+            %i.icon-facebook-sign
       .review#review_2
         .tooltip.fade.top.in
           .tooltip-arrow
           .tooltip-inner
-            "I can't fully express how productive this website has made me. No longer do I have to worry about organizing my notes, but now I can fully focus on cultivating my ideas. The way the notes are organized has helped me quickly reference information from my other notes rather than wasting time going through an overwhelming pile of material. Great job guys." 
+            "The splash page is absolutely stunning!" 
       .review#review_3
         .tooltip.fade.top.in
           .tooltip-arrow
           .tooltip-inner
             "The chatting feature has made my course notes SO much more in-depth as I discuss the content with the my classmates. Having these highly detailed notes has literally lifted the pressure off my shoulders when final exams come around."
+      .review#review_4
+        .tooltip.fade.top.in
+          .tooltip-arrow
+          .tooltip-inner
+            "This is the greatest thing since chocolate milk!"
+      .review#review_5
+        .tooltip.fade.top.in
+          .tooltip-arrow
+          .tooltip-inner
+            %i.icon-twitter
+    .theme-background-three
+    %section.developers
+      %ul.inline
+        %li
+          %h4 Vladimir Li
+          %div.circular{:style => "background:url('/assets/splash/vlad.jpg') no-repeat; background-size: 100px 100px; margin:auto;"}
+        %li
+          %h4 Piyush Revuri
+          %div.circular{:style => "background:url('/assets/splash/piyush.jpg') no-repeat center; background-size: 100px 120px; background-position: center center; margin:auto;"}
+        %li
+          %h4 Josh Zivot
+          %div.circular{:style => "background:url('/assets/splash/josh.jpg') no-repeat; background-size: 100px 110px; margin:auto;"}
+        %li
+          %h4 Matthew Lam
+          %div.circular{:style => "background:url('/assets/splash/matt.png') no-repeat; background-size: 120px 110px; background-position: center left; margin:auto;"}
   .footer-wrapper
     .container
       %ul.inline
