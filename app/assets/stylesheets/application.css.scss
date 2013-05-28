@@ -33,7 +33,7 @@ $sidebar-background-hover: #40474F;
 $sidebar-foreground: #999;
 $sidebar-foreground-active: #27F;
 $sidebar-foreground-hover: white;
-$sidebar-shadow-color: #000;
+$sidebar-shadow-color: #999;
 
 
 /* CURRENT THEME */
@@ -116,7 +116,7 @@ $sidebar-trans-time: 0.5s;
 }
 
 #sidebar {
-  box-shadow: 0 0 10px $sidebar-shadow-color;
+  box-shadow: 2px 0 2px $sidebar-shadow-color;
   position:fixed;
   top: 0;
   bottom: 0;
@@ -195,7 +195,7 @@ $sidebar-trans-time: 0.5s;
       border: none;
 
       &:hover {
-        background-color: $sidebar-background-hover;
+        background-color: $sidebar-background;
         color: $sidebar-foreground-hover;
       }
     }
