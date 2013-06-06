@@ -3,15 +3,17 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 @submitComment = (fileId) =>
-  commentText = $('#newcomment').val()
-  ycoord = $('#ycoord').val()
+  @commentText = $('#newcomment').val()
+  @fileId = fileId
+  @setYCoordModeOn()
 
+@makeNewCommentRequest = () =>
   data = {
     comment: {
-      text: commentText,
-      ycoord: ycoord
+      text: @commentText,
+      ycoord: @yCoord
     },
-    file_id: fileId
+    file_id: @fileId
   }
 
   $.post('/api/comments', data, (response) ->
@@ -20,6 +22,15 @@
     else
       alert "Success!"
   )
+
+@setYCoordModeOn = () =>
+  @yCoordModeOn = true
+
+@yCoordClick = (e) ->
+  if (@yCoordModeOn)
+    @yCoord = e.pageY + document.getElementById('note-main').scrollTop
+    @yCoordModeOn = false
+    @makeNewCommentRequest()
 
 @setActive = (clickedComment) ->
   if (@activeComment)
@@ -30,3 +41,7 @@
     $(@activeComment).addClass('active')
   else
     @activeComment = null;
+
+@scrollNoteToYCoord = (yCoord) =>
+  $(document.getElementById('note-main')).animate({scrollTop:yCoord})
+
