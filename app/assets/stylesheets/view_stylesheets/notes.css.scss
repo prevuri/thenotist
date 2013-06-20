@@ -3,13 +3,15 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 $comments-sidebar-width: 300px;
+$highlight-color: #27F;
 
 #note-main {
   position: fixed;
   top: 0;
   bottom: 0;
   margin-right: $comments-sidebar-width;
-  padding-right: 30px;
+  padding-left: 20px;
+  padding-right: 50px;
   overflow-y: auto;
 
   .note-description {
@@ -35,9 +37,67 @@ $comments-sidebar-width: 300px;
   overflow-y: auto;
   padding: 10px;
 
-  .comments-container {
-    margin-top: 30px;
-  } 
+  #comments-container {
+
+  }
+  #new-comment-container {
+    position: fixed;
+    width: $comments-sidebar-width;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 10;
+    display: none;
+
+    #new-comment-panel {
+      position: absolute;
+      display: none;
+      top: 50px;
+      left: 10px;
+      right: 10px;
+      background-color: #fffff2;
+      border-radius: 8px;
+      border: 4px solid $highlight-color;
+
+      #newcomment {
+        width: 262px;
+        height: 200px;
+        resize: none;
+        border: none;
+        border-bottom: 1px solid #aaa;
+        border-radius: 8px 8px 0 0;
+        margin: 0;
+      }
+
+      .btn {
+        display: inline-block;
+        margin: 6px 5px;
+      }
+
+    }
+  }
+
+  #new-comment-position-line {
+    position: absolute;
+    display: none;
+    bottom: 38px;
+    left: -54px;
+    width: 50px;
+    height: 4px;
+    background-color: $highlight-color;
+
+    .left-arrow {
+      position: relative;
+      top: -8px;
+      left: -10px;
+      width: 0;
+      height: 0;
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right:10px solid $highlight-color;
+    }
+  }
 }
 
 .comment {
@@ -58,7 +118,7 @@ $comments-sidebar-width: 300px;
   }
 
   &.active {
-    background-color: #27F;
+    background-color: $highlight-color;
   }
 
   .user {

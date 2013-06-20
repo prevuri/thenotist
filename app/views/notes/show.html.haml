@@ -8,15 +8,19 @@
         = image_tag file.public_path, :width => 700
 
 .comments-sidebar
-  = text_field_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
-  = text_field_tag 'ycoord', nil, :class => 'new_comment_text_field', :placeholder => 'Enter y-coord'
+  #new-comment-container
+    #new-comment-panel
+      #new-comment-position-line
+        .left-arrow
+      = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
 
-  -# NOTE: upon submit we actually need a file ID of the file that the user is commenting on,
-  -#       but we don't have that functionality yet, so we are just gonna pick the first file
-  -#       in the note instead
-  = submit_tag 'Submit', :class => 'btn', :onclick => "submitComment(#{@note.uploaded_files.first.id})"
-
-  .comments-container
+      -# NOTE: upon submit we actually need a file ID of the file that the user is commenting on,
+      -#       but we don't have that functionality yet, so we are just gonna pick the first file
+      -#       in the note instead
+      .new-comment-cancel.btn{ :onclick => "hideNewCommentField()"}
+        Cancel
+      = submit_tag 'Submit', :class => 'btn btn-primary', :onclick => "submitComment(#{@note.uploaded_files.first.id})"
+  #comments-container
     - @note.comments.each do |comment|
       .comment{ :style => "top: #{comment.ycoord}", :onclick => "setActive(this); scrollNoteToYCoord(#{comment.ycoord})" }
         .comment-inner
