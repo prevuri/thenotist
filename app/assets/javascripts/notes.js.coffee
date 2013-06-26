@@ -2,7 +2,19 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-@submitComment = (fileId) =>
+$(document).ready ->
+  $('#note-main').click( (e) ->
+    yCoordClick(e)
+  )
+  $('#new-comment-submit').click( () ->
+    submitComment( $('#new-comment-submit').attr('file-id') )
+  )
+  $('.comment').click( () ->
+    setActive(this);
+    scrollNoteToYCoord( $(this).attr('ycoord') )
+  )
+
+@submitComment = (fileId) ->
   @commentText = $('#newcomment').val()
   @fileId = fileId
   @makeNewCommentRequest()

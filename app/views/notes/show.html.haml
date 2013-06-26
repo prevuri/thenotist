@@ -1,4 +1,4 @@
-#note-main{ :onclick => "yCoordClick(event)"}
+#note-main
   %h1.note-title= @note.title
   .note-description= @note.description
 
@@ -19,10 +19,10 @@
       -#       in the note instead
       .new-comment-cancel.btn{ :onclick => "hideNewCommentField()"}
         Cancel
-      = submit_tag 'Submit', :class => 'btn btn-primary', :onclick => "submitComment(#{@note.uploaded_files.first.id})"
+      = submit_tag 'Submit', :id => 'new-comment-submit', :class => 'btn btn-primary', :'file-id' => "#{@note.uploaded_files.first.id}"
   #comments-container
     - @note.comments.each do |comment|
-      .comment{ :style => "top: #{comment.ycoord}", :onclick => "setActive(this); scrollNoteToYCoord(#{comment.ycoord})" }
+      .comment{ :style => "top: #{comment.ycoord}", :ycoord => "#{comment.ycoord}" }
         .comment-inner
           .user
             .name
