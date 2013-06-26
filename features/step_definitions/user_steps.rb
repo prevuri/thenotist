@@ -34,11 +34,17 @@ def sign_in
 	click_button 'Sign In'
 end
 
+def sign_in_fb
+	visit '/'
+	set_omniauth()
+	click_link 'Connect with Facebook'
+end
+
 
 ##GIVENS##
 Given /^I am logged in$/ do
 	create_user
-	sign_in
+	sign_in_fb
 end
 
 Given /^I am not logged in$/ do
@@ -57,7 +63,7 @@ end
 ##WHENS##
 When /^I sign in with valid credentials$/ do 
 	create_visitor
-	sign_in
+	sign_in_fb
 end
 
 When /^I sign out$/ do
@@ -102,13 +108,13 @@ end
 When /^I sign in with the wrong email$/ do
 	create_visitor
 	@visitor = @visitor.merge(:email => 'wrong@example.com')
-	sign_in
+	sign_in_fb
 end
 
 When /^I sign in with the wrong password$/ do
 	create_visitor
 	@visitor = @visitor.merge(:password => 'wrongpass')
-	sign_in
+	sign_in_fb
 end
 
 When /^I edit my email$/ do
