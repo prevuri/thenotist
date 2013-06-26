@@ -41,7 +41,6 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
-    puts auth
     #Check if user already has provider logged in
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
 

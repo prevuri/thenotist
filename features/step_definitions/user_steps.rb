@@ -40,6 +40,13 @@ def sign_in_fb
 	click_link 'Connect with Facebook'
 end
 
+def sign_in_fb_invalid
+	visit '/'
+	set_invalid_omniauth()
+	click_link 'Connect with Facebook'
+end
+
+
 
 ##GIVENS##
 Given /^I am logged in$/ do
@@ -64,6 +71,11 @@ end
 When /^I sign in with valid credentials$/ do 
 	create_visitor
 	sign_in_fb
+end
+
+When /^I sign in with invalid credentials$/ do 
+	create_visitor
+	sign_in_fb_invalid
 end
 
 When /^I sign out$/ do
