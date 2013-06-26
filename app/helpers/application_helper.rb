@@ -6,8 +6,7 @@ module ApplicationHelper
     class_name = default_class + (current_page?(path) ? ' active' : '')
 
     content_tag :li, :class do
-      link_to path, :class => class_name do
-      end
+      link_to '', path, :class => class_name
     end
   end
 

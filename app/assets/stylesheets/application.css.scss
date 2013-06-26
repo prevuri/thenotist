@@ -19,28 +19,30 @@
  
 THEME 1
 
-$sidebar_background: #ECF0F1;
-$sidebar_background_hover: #BDC3C7;
-$sidebar_foreground: #999;
-$sidebar_foreground_active: #2ECC71;
-$sidebar_foreground_hover: white;
+$sidebar-background: #ECF0F1;
+$sidebar-background-hover: #BDC3C7;
+$sidebar-foreground: #999;
+$sidebar-foreground-active: #2ECC71;
+$sidebar-foreground-hover: white;
+*/
 
-THEME 2
+// THEME 2
 
-$sidebar_background: #30373F;
-$sidebar_background_hover: #40474F;
-$sidebar_foreground: #999;
-$sidebar_foreground_active: #27F;
-$sidebar_foreground_hover: white;
+$sidebar-background: #252627;
+$sidebar-background-hover: #40474F;
+$sidebar-foreground: #999;
+$sidebar-foreground-active: #27F;
+$sidebar-foreground-hover: white;
+$sidebar-shadow-color: #999;
 
- */
 
 /* CURRENT THEME */
-$sidebar_background: #ECF0F1;
-$sidebar_background_hover: #BDC3C7;
-$sidebar_foreground: #999;
-$sidebar_foreground_active: #2ECC71;
-$sidebar_foreground_hover: white;
+// $sidebar-background: #ECF0F1;
+// $sidebar-background-hover: #BDC3C7;
+// $sidebar-foreground: #999;
+// $sidebar-foreground-active: #2ECC71;
+// $sidebar-foreground-hover: white;
+// $sidebar-shadow-color: #888;
 
 body {
   margin: 0;
@@ -68,14 +70,6 @@ a.text-link {
     font-size: 40px; 
     margin-bottom:10px;
   }
-}
-
-.profile {
-  float:left;
-}
-
-.profile_section {
-  vertical-align: top;
 }
 
 #top-nav {
@@ -122,11 +116,11 @@ $sidebar-trans-time: 0.5s;
 }
 
 #sidebar {
-  box-shadow: 0 0 10px #888;
+  box-shadow: 2px 0 2px $sidebar-shadow-color;
   position:fixed;
   top: 0;
   bottom: 0;
-  background-color: $sidebar_background;
+  background-color: $sidebar-background;
 
   .sidebar-nav {
     overflow: auto;
@@ -164,7 +158,7 @@ $sidebar-trans-time: 0.5s;
     position: relative;
 
     a {
-      color: $sidebar_foreground;
+      color: $sidebar-foreground;
       text-align: center;
       font-size: 1.0em;
       padding: 15px 0;
@@ -174,12 +168,12 @@ $sidebar-trans-time: 0.5s;
       background-color: $sidebar-background;
       
       &:hover {
-        background-color: $sidebar_background_hover; 
-        color: $sidebar_foreground_hover;
+        background-color: $sidebar-background-hover; 
+        color: $sidebar-foreground-hover;
       }
 
       &.active {
-        color: $sidebar_foreground_active;
+        color: $sidebar-foreground-active;
       }
     }
 
@@ -197,12 +191,12 @@ $sidebar-trans-time: 0.5s;
 
     a {
       width:100px;
-      padding: 5px 5px 0 15px;
+      padding: 5px 5px 0 0;
       border: none;
 
       &:hover {
-        background-color: $sidebar_background_hover;
-        color: $sidebar_foreground_hover;
+        background-color: $sidebar-background;
+        color: $sidebar-foreground-hover;
       }
     }
 
@@ -225,7 +219,7 @@ $sidebar-trans-time: 0.5s;
   }
 }
 
-form.new_user {
+form.new-user {
   margin-top: 10px;
   margin-bottom: 10px;
 }
