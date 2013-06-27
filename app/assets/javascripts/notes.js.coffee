@@ -45,6 +45,7 @@ jQuery ->
     alert "Something went wrong, try again later."
     @hideOverlay()
     upload_data = 0
+    location.reload()
 
   $('.select-file').click =>
     $('#file-picker').click()
