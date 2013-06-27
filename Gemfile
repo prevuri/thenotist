@@ -34,24 +34,28 @@ group :assets do
 end
 
 group :development do
-  gem 'growl'
-  gem 'guard'
-  gem 'guard-bundler'
-  gem 'guard-cucumber'
-  gem 'guard-rspec'
-  gem 'guard-zeus'
-  gem 'guard-livereload'
-  gem 'rb-inotify', :require => false
-  gem 'rb-fsevent', :require => false
-  gem 'rb-fchange', :require => false
   #error portal
   gem 'better_errors'
   gem 'binding_of_caller'
 end
 
-group :test do
+
+group :development,:test do
+  gem 'growl'
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-cucumber'
+  gem 'guard-rspec'
+  gem 'guard-livereload'
   gem 'factory_girl_rails'
+  gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
+end
+
+group :test do
   gem 'capybara'
+  gem 'faker'
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'rspec-rails'
