@@ -1,0 +1,11 @@
+- if @images.nil?
+  :plain
+    {
+      "success": false
+    }
+- else
+  :plain
+    {
+      "success": true,
+      "uri": "#{note_path(@note)}"
+    }

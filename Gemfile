@@ -12,7 +12,7 @@ gem 'sqlite3'
 # used for connecting to AWS
 gem 'aws-sdk'
 
-#production gems
+# production gems
 gem 'rghost_rails', '~> 0.3.3'
 gem 'devise'
 gem 'omniauth'
@@ -27,11 +27,13 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'haml-rails'
-
-
+  gem 'spinjs-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
+
+  # asynchronous upload
+  gem 'jquery-fileupload-rails'
 
   gem 'uglifier', '>= 1.0.3'
 end

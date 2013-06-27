@@ -1,16 +1,30 @@
 %h1 Notes#new
+.notes-new-page
+  .upload_form
+    %h3 File Upload
+    = form_for :notes, :html => { :id => "upload_form" }, :method => :post, :url => notes_path do |f| 
+      %p= f.label :title, :for => 'note-title-field'
+      %p= f.text_field :title, :id => 'note-title-field'
 
-.upload_form
-  %h3 File Upload
-  = form_for :notes, :html => { :id => "upload_form" }, :method => :post, :url => notes_path do |f| 
-    %p= f.label :title
-    %p= f.text_field :title
+      %p= f.label :description, :for => 'note-description-field'
+      %p= f.text_field :description, :id => 'note-description-field'
 
-    %p= f.label :description
-    %p= f.text_field :description
+      %p.new-file-upload.hidden= f.file_field :file, :id => 'file-picker'
 
-    %p= f.label :upload_file
-    %p= f.file_field :file
-    
-    %p= f.submit "Upload"
+  .upload-interaction
+    .btn.select-file + Select file
+    .btn.btn-primary.submit-action Upload
+    .file-name
+    .file-size
+
+  .full-screen-overlay.hidden
+    .element-container
+      .activity-label Uploading file.pdf ...
+      .activity-label.secondary Do not refresh this page
+      .upload-progress.hidden
+        .upload-progress-text
+        .progress
+          .bar{ :style => "width: 0%" }
+      .processing-container.hidden
+
 

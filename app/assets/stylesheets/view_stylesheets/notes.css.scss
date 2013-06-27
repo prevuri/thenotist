@@ -127,3 +127,60 @@ $comments-sidebar-width: 300px;
     }
   }
 }
+
+// NOTE UPLOAD PAGE
+.notes-new-page {
+  .hidden {
+    display: none;
+  }
+  .full-screen-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: #000;
+    opacity: 0.9;
+  }
+
+  .element-container {
+    position: relative;
+    margin: auto;
+    top: 10%;
+
+    .activity-label {
+      text-align: center;
+      color: #fff;
+      font-size: 35pt;
+      font-family: Helvetica, Arial;
+    }
+    .activity-label.secondary {
+      font-size: 12pt;
+      color: #4f4f4f;
+      margin-top: 5px;
+    }
+    .upload-progress {
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 40px;
+      
+      .upload-progress-text {
+        text-align: right;
+        color: #4f4f4f;
+        font-size: 8.5pt;
+      }
+      .progress {
+        height: 3px;
+        margin-top: 3px;
+        .bar {
+          background: #2277ff;
+        }
+      }
+    }
+    .processing-container {
+      margin-top: 100px;
+    }
+  }
+}

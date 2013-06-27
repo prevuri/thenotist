@@ -22,7 +22,7 @@ class Note < ActiveRecord::Base
     converted_pages.each_with_index do |path, i|
       obj = bucket.objects["image_store/#{SecureRandom.uuid}.png"]
       obj.write(Pathname.new(path), :acl => :public_read)
-      images << self.uploaded_files.create(:public_path => obj.public_url.to_s, :page_number => i)
+      images << self.uploaded_files.build(:public_path => obj.public_url.to_s, :page_number => i)
     end
 
     # delete the PDF file
