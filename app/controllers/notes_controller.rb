@@ -9,6 +9,7 @@ class NotesController < ApplicationController
     @images = note.process(params[:notes]) if params[:notes]
 
     redirect_to notes_path, :notice => 'Note has been created'
+    
   end
 
   def new

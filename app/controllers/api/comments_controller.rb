@@ -5,11 +5,8 @@ class Api::CommentsController < ApplicationController
   before_filter :get_comment_id, :only => :destroy
 
   def index
-    # TODO: delete this - it's only for testing
-    u = User.first
-    # TODO: change 'u' to 'current_user'
     begin
-      @file = u.uploaded_files.find(@uploaded_file_id) # throws an exception if nothing found
+      @file = current_user.uploaded_files.find(@uploaded_file_id) # throws an exception if nothing found
     rescue
       return render :json => {
         :success => false,
@@ -25,10 +22,7 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    # TODO: delete this - it's only for testing
-    u = User.first
-    # TODO: change 'u' to 'current_user'
-    @file = u.uploaded_files.find_by_id(@uploaded_file_id) # does not throw an exception if nothing found
+    @file = current_user.uploaded_files.find_by_id(@uploaded_file_id) # does not throw an exception if nothing found
 
     if @file.blank?
       return render :json => {
@@ -39,12 +33,14 @@ class Api::CommentsController < ApplicationController
 
     # now, construct all the attributes
     begin
-      # TODO: change 'u' to 'current_user'
-      u.comments.create ({
+      @comment = current_user.comments.create({
         :uploaded_file => @file, 
         :text => params[:comment][:text], 
         :ycoord => params[:comment][:ycoord]
       })
+
+      # track the comment activity
+      track_activity @comment
     rescue
       return render :json => {
         :success => false,
@@ -65,7 +61,7 @@ class Api::CommentsController < ApplicationController
     # TODO: delete this - it's only for testing
     u = User.first
     # TODO: change 'u' to 'current_user'
-    @comment = u.comments.find_by_id(@comment_id) # does not throw an exception if nothing found
+    @comment = current_user.comments.find_by_id(@comment_id) # does not throw an exception if nothing found
 
     if @comment.blank?
       return render :json => {
@@ -86,7 +82,7 @@ class Api::CommentsController < ApplicationController
 
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
-    @comments = u.comments
+    @comments = current_user.comments
     return render :json => { 
       :success => true,
       :comments => @comments.map { |c| c.as_json }

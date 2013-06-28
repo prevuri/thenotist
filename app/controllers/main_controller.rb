@@ -4,6 +4,7 @@ class MainController < ApplicationController
       render 'splash', :layout => 'minimal'
     else
       # Default action (render index)
+      @activities = Activity.order("created_at desc")
     end
   end
 end

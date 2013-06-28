@@ -2,19 +2,19 @@
   .container
     %ul.inline
       %li
-        %div.circular#profile-image{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}
+        %div.circular#profile-image{:style => "background:url(#{@user.user_fb_data.profile_image}) no-repeat"}
       %li.profile_section
         %div.info
           %h2
-            = current_user.name
+            = @user.name
           %div.profile_info 
-            = current_user.notes.length
+            = @user.notes.length
             notes
           %div.profile_info 
-            = current_user.buddies.length
+            = @user.buddies.length
             buddies
           %div.profile_info 
-            = current_user.followers.length
+            = @user.followers.length
             followers
           .profile-buttons
             = link_to new_note_path, :class => 'btn btn-large btn-primary' do

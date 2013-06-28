@@ -22,6 +22,7 @@ class BuddiesController < ApplicationController
   private
 
   def get_fb_data
+    #TODO: Cache information in case of graph api downtime
     @graph = Koala::Facebook::API.new(current_user.fb_access_token)
     @friends_data = @graph.get_connections("me", "friends?fields=id,name,picture")
     

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :fb_access_token, :remember_me, :provider, :uid
 
   has_one  :user_fb_data
+  has_many :activities
   has_many :notes
   has_many :uploaded_files, through: :notes
   has_many :comments
@@ -16,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :buddies, through: :relationships, source: :buddy
   has_many :reverse_relationships, foreign_key: "buddy_id", class_name: "Relationship", dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
+
 
 
   def following?(other_user)
