@@ -36,6 +36,7 @@ $highlight-color: #27F;
   right: 0;
   overflow-y: auto;
   padding: 10px;
+  box-shadow: -2px 0 2px #bbc;
 
   #comments-container {
 
@@ -183,6 +184,32 @@ $highlight-color: #27F;
         float: right;
         margin-left: 10px;
       }
+    }
+  }
+}
+
+#note-upload-form {
+  margin-top: 20px;
+
+  label {
+    cursor: default;
+  }
+
+  .text-field {
+    margin-bottom: 20px;
+    input {
+      width: 500px;
+    }
+  }
+
+  .file-picker {
+    margin-bottom: 20px;
+  }
+
+  #upload-label {
+    -webkit-transition: color 0.1s;
+    &.error {
+      color: red;
     }
   }
 }

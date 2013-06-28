@@ -13,6 +13,15 @@ $(document).ready ->
     setActive(this);
     scrollNoteToYCoord( $(this).attr('ycoord') )
   )
+  $('#upload-form').submit( (e) ->
+    validateUploadForm()
+  )
+  $('#notes_title').focus( () ->
+    $('#title-field').removeClass('error')
+  )
+  $('#notes_file').click( () ->
+    $('#upload-label').removeClass('error')
+  )
 
 @submitComment = (fileId) ->
   @commentText = $('#newcomment').val()
@@ -71,3 +80,13 @@ $(document).ready ->
 @scrollNoteToYCoord = (yCoord) =>
   $(document.getElementById('note-main')).animate({scrollTop:yCoord})
 
+
+@validateUploadForm = () ->
+  if ($('#notes_file').val() == '')
+    $('#upload-label').addClass('error')
+    return false
+  if ($.trim( $('#notes_title').val() ) == '')
+    $('#title-field').addClass('error')
+    return false
+
+  return true

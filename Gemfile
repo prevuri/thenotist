@@ -12,6 +12,13 @@ gem 'sqlite3'
 # used for connecting to AWS
 gem 'aws-sdk'
 
+#production gems
+gem 'rghost_rails', '~> 0.3.3'
+gem 'devise'
+gem 'omniauth'
+gem 'koala', '~> 1.6.0'
+gem 'omniauth-facebook'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -20,11 +27,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'haml-rails'
-  gem 'rghost_rails', '~> 0.3.3'
-  gem 'devise'
-  gem 'omniauth'
-  gem 'koala', '~> 1.6.0'
-  gem 'omniauth-facebook'
+
 
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -34,24 +37,28 @@ group :assets do
 end
 
 group :development do
-  gem 'growl'
-  gem 'guard'
-  gem 'guard-bundler'
-  gem 'guard-cucumber'
-  gem 'guard-rspec'
-  gem 'guard-zeus'
-  gem 'guard-livereload'
-  gem 'rb-inotify', :require => false
-  gem 'rb-fsevent', :require => false
-  gem 'rb-fchange', :require => false
   #error portal
   gem 'better_errors'
   gem 'binding_of_caller'
 end
 
-group :test do
+
+group :development,:test do
+  gem 'growl'
+  gem 'guard'
+  gem 'guard-bundler'
+  gem 'guard-cucumber'
+  gem 'guard-rspec'
+  gem 'guard-livereload'
   gem 'factory_girl_rails'
+  gem 'rb-inotify', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
+end
+
+group :test do
   gem 'capybara'
+  gem 'faker'
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'rspec-rails'

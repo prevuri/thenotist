@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(:version => 20130527212011) do
+=======
 ActiveRecord::Schema.define(:version => 20130526192351) do
+>>>>>>> 56ae7f88dbd55768fd37cb481e33d9b89a25bfc4
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -60,6 +64,15 @@ ActiveRecord::Schema.define(:version => 20130526192351) do
     t.string   "public_path"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "user_fb_data", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "uid"
+    t.string   "profile_image"
+    t.string   "link"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "users", :force => true do |t|
