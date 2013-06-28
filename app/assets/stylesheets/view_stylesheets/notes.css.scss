@@ -186,3 +186,29 @@ $highlight-color: #27F;
     }
   }
 }
+
+#note-upload-form {
+  margin-top: 20px;
+
+  label {
+    cursor: default;
+  }
+
+  .text-field {
+    margin-bottom: 20px;
+    input {
+      width: 500px;
+    }
+  }
+
+  .file-picker {
+    margin-bottom: 20px;
+  }
+
+  #upload-label {
+    -webkit-transition: color 0.1s;
+    &.error {
+      color: red;
+    }
+  }
+}

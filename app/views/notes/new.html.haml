@@ -1,16 +1,19 @@
-%h1 Notes#new
+%h1 New Note
 
-.upload_form
-  %h3 File Upload
-  = form_for :notes, :html => { :id => "upload_form" }, :method => :post, :url => notes_path do |f| 
-    %p= f.label :title
-    %p= f.text_field :title
+#note-upload-form
+  = form_for :notes, :html => { :id => "upload-form" }, :method => :post, :url => notes_path do |f| 
+    %h4#upload-label Select a PDF file to upload
+    .file-picker
+      = f.file_field :file
 
-    %p= f.label :description
-    %p= f.text_field :description
+    = f.label :title
+    #title-field.text-field.control-group
+      = f.text_field :title, :placeholder => "Enter note title"
 
-    %p= f.label :upload_file
-    %p= f.file_field :file
+    = f.label :description
+    #description-field.text-field
+      = f.text_field :description, :placeholder => "Enter note description (optional)"
     
-    %p= f.submit "Upload"
+    .upload-buttom
+      = f.submit "Add Note", :class => "btn btn-primary"
 
