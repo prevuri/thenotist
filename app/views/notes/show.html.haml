@@ -21,13 +21,4 @@
         Cancel
       = submit_tag 'Submit', :id => 'new-comment-submit', :class => 'btn btn-primary', :'file-id' => "#{@note.uploaded_files.first.id}"
   #comments-container
-    - @note.comments.each do |comment|
-      .comment{ :style => "top: #{comment.ycoord}", :ycoord => "#{comment.ycoord}" }
-        .comment-inner
-          .user
-            .name
-              = comment.user.name
-          .comment-text
-            = comment.text
-          .comment-date
-            = distance_of_time_in_words(Time.now, comment.created_at) + ' ago'
+    = render :partial => 'comments', :object => @note.comments

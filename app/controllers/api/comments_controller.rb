@@ -55,9 +55,9 @@ class Api::CommentsController < ApplicationController
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
     @comments = @file.comments
-    return render :json => { 
+    return render :json => {
       :success => true,
-      :comments => @comments.map { |c| c.as_json }
+      :comments_html => render_to_string(:partial => "notes/comments", :object => @comments)
     }
   end
 

@@ -32,6 +32,7 @@ $(document).ready ->
     if !response.success
       alert response.error
     else
+      $('#comments-container').html( response['comments_html'] )
       hideNewCommentField()
   )
 

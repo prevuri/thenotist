@@ -1,0 +1,10 @@
+- comments.each do |comment|
+  .comment{ :style => "top: #{comment.ycoord}", :ycoord => "#{comment.ycoord}" }
+    .comment-inner
+      .user
+        .name
+          = comment.user.name
+      .comment-text
+        = comment.text
+      .comment-date
+        = distance_of_time_in_words(Time.now, comment.created_at) + ' ago'
