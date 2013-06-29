@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $(document).ready ->
-  $('#note-main').click( (e) ->
+  $('.note-images').click( (e) ->
     yCoordClick(e)
   )
   $('#new-comment-submit').click( () ->
@@ -21,6 +21,9 @@ $(document).ready ->
   )
   $('#notes_file').click( () ->
     $('#upload-label').removeClass('error')
+  )
+  $('.new-comment-cancel').click( () ->
+    hideNewCommentField();
   )
 
 @submitComment = (fileId) ->
@@ -49,6 +52,8 @@ $(document).ready ->
   $('#new-comment-panel').css('top', (yClick - 250 + 29) + 'px')
 
 @showNewCommentField = () =>
+  $('#note-main').addClass('new-comment-showing')
+  $('#new-comment-header-container').fadeIn(200);
   $('#new-comment-container').fadeIn(200, () ->
     $('#new-comment-panel').show(200, () ->
       $('#new-comment-position-line').show(100);
@@ -58,13 +63,17 @@ $(document).ready ->
 @hideNewCommentField = () =>
   $('#new-comment-position-line').hide(100, () ->
     $('#new-comment-panel').hide(200, () ->
-      $('#new-comment-container').fadeOut(200)
+      $('#new-comment-header-container').fadeOut(200);
+      $('#new-comment-container').fadeOut(200, () -> 
+        $('#note-main').removeClass('new-comment-showing')
+      )
     );
   );
 
 @yCoordClick = (e) ->
-  @yCoord = e.pageY + document.getElementById('note-main').scrollTop
-  @setCommentPanelPosition(e.pageY)
+  yCoordFromTop = e.pageY + document.getElementById('note-main').scrollTop
+  @yCoord = yCoordFromTop
+  @setCommentPanelPosition(yCoordFromTop)
   @showNewCommentField()
 
 @setActive = (clickedComment) ->
