@@ -166,9 +166,28 @@ $highlight-color: #27F;
   .comment-text {
     color: #222;
   }
-  .comment-date {
+  .bottom {
     margin-top: 4px;
+  }
+  .comment-date {
     color: #aaa;
+    float: left;
+  }
+  .delete-button {
+    float: right;
+    color: #34495E;
+    font-weight: normal;
+  }
+  .delete-confirm-panel {
+    display: none;
+    background-color: #bbb;
+    border-top: 1px solid #999;
+    margin: 10px -8px -5px;
+    border-radius: 0 0 5px 5px;
+
+    .btn {
+      margin: 5px 0 5px 10px;
+    }
   }
 }
 

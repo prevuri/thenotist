@@ -23,7 +23,16 @@ $(document).ready ->
     $('#upload-label').removeClass('error')
   )
   $('.new-comment-cancel').click( () ->
-    hideNewCommentField();
+    hideNewCommentField()
+  )
+  $('.delete-button').click( (e) ->
+    deleteClicked(e)
+  )
+  $('.delete-cancel').click( () ->
+    deleteCancelClicked()
+  )
+  $('.delete-confirm').click( () ->
+    deleteComment()
   )
 
 @submitComment = (fileId) ->
@@ -99,3 +108,40 @@ $(document).ready ->
     return false
 
   return true
+
+@deleteClicked = (e) ->
+  $(e.target).fadeOut(150)
+  element = e.target
+  while (! $(element).hasClass('comment'))
+    element = $(element).parent()
+  showDeleteConfirmation(element)
+  return false
+
+@showDeleteConfirmation = (element) ->
+  $(element).find('.delete-confirm-panel').show(150)
+  @deletingCommentElement = element
+
+@deleteComment = () ->
+  
+  element = @deletingCommentElement
+
+  id = $(element).attr('comment-id')
+  
+  $.ajax({
+    url: '/api/comments/' + id,
+    type: 'DELETE',
+    error: (() ->
+      alert response.error)
+  })
+
+  $(element).hide(200, () -> 
+    $(element).remove()
+  )
+
+  return false  # Stop comment click action from happening
+
+@deleteCancelClicked = () ->
+  element = @deletingCommentElement
+  $(element).find('.delete-confirm-panel').hide(150)
+  $(element).find('.delete-button').fadeIn(150)
+  return false

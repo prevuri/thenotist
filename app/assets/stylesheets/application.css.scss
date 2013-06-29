@@ -53,6 +53,7 @@ body {
 a.text-link {
   font-weight: bold;
   text-decoration: none;
+  cursor: pointer;
   
   &:hover {
     text-decoration: underline;
@@ -234,4 +235,8 @@ form.new-user {
   .btn {
     margin-bottom: 10px;
   }
+}
+
+.clear {
+  clear: both;
 }

@@ -1,10 +1,17 @@
 - comments.each do |comment|
-  .comment{ :style => "top: #{comment.ycoord}", :ycoord => "#{comment.ycoord}" }
+  .comment{ :style => "top: #{comment.ycoord}", :ycoord => "#{comment.ycoord}", :'comment-id' => comment.id }
     .comment-inner
       .user
         .name
           = comment.user.name
       .comment-text
         = comment.text
-      .comment-date
-        = distance_of_time_in_words(Time.now, comment.created_at) + ' ago'
+      .bottom
+        .comment-date
+          = distance_of_time_in_words(Time.now, comment.created_at) + ' ago'
+        %a.delete-button.text-link
+          Delete
+      .clear
+      .delete-confirm-panel
+        .delete-cancel.btn Cancel
+        .delete-confirm.btn.btn-danger Delete
