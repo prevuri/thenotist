@@ -3,7 +3,7 @@ class UploadedFile < ActiveRecord::Base
 
   belongs_to :note
   has_one :user, :through => :note
-  has_many :comments
+  has_many :comments, :dependent => :destroy
 
   def as_json options = {}
     {

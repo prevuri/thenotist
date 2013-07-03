@@ -5,10 +5,14 @@ class NotesController < ApplicationController
   end
 
   def create
-    note = current_user.notes.create(:title => params[:notes][:title], :description => params[:notes][:description])
-    @images = note.process(params[:notes]) if params[:notes]
-
-    redirect_to notes_path, :notice => 'Note has been created'
+    @note = current_user.notes.build(:title => params[:notes][:title], :description => params[:notes][:description])
+    @images = @note.process(params[:notes]) if params[:notes]
+    
+    # defer the saving of everything until later in case things don't work out
+    @note.save!
+    @images.each do |img|
+      img.save!
+    end
   end
 
   def new
