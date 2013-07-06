@@ -1,16 +1,13 @@
 class Api::FilesController < ApplicationController
-  # before_filter :authenticate_user!
-
+  include ApiHelper
+  
+  before_filter :check_authenticated_user!
   before_filter :get_note_id, :only => :index
   before_filter :get_file_id, :only => :show
 
   def index
-    # TODO: delete this - it's only for testing
-    u = User.first
-
-    # TODO: change 'u' to 'current_user'
     begin
-      @note = u.notes.find(@note_id) # throws an exception if nothing found
+      @note = current_user.notes.find(@note_id) # throws an exception if nothing found
     rescue
       return render :json => {
         :success => false,
@@ -26,12 +23,8 @@ class Api::FilesController < ApplicationController
   end
 
   def show
-    # TODO: delete this - it's only for testing
-    u = User.first
-
-    # TODO: change 'u' to 'current_user'
     begin
-      @file = u.uploaded_files.find(@uploaded_file_id) # throws an exception if nothing found
+      @file = current_user.uploaded_files.find(@uploaded_file_id) # throws an exception if nothing found
     rescue
       return render :json => {
         :success => false,
@@ -52,13 +45,5 @@ private
 
   def get_file_id
     @uploaded_file_id = params[:id]
-  end
-
-  def note_not_found_error
-    "File with id #{@note_id} not found"
-  end
-
-  def file_not_found_error
-    "File with id #{@uploaded_file_id} not found"
   end
 end

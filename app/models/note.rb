@@ -26,17 +26,28 @@ class Note < ActiveRecord::Base
       images << self.uploaded_files.build(:public_path => obj.public_url.to_s, :page_number => i)
     end
 
-    # delete the PDF file
+    # delete the PDF file and other files
     File.delete(local_pdf_file)
     converted_pages.each { |p| File.delete(p) }
     return images
   end
-
+  
   def share user 
     contributors << user
   end
 
   def is_contribtor? user
     return contributors.includes? user
+  end
+
+  def as_json
+    {
+      :id => id,
+      :title => title,
+      :description => description,
+      :uploaded_files => uploaded_files.map { |f| f.as_json },
+      :user => user.as_json,
+      :created_at => created_at
+    }
   end
 end
