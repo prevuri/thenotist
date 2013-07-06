@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 
   has_one  :user_fb_data
   has_many :notes
+  has_many :contributing_notes, class_name: "Note"
   has_many :uploaded_files, through: :notes
   has_many :comments
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy

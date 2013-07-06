@@ -2,6 +2,7 @@ class Note < ActiveRecord::Base
   attr_accessible :description, :title
 
   belongs_to :user
+  has_many :contributors, foreign_key: "contributing_note_id", class_name: "User"
   has_many :uploaded_files, :dependent => :destroy
   has_many :comments, :through => :uploaded_files
 
@@ -29,5 +30,13 @@ class Note < ActiveRecord::Base
     File.delete(local_pdf_file)
     converted_pages.each { |p| File.delete(p) }
     return images
+  end
+
+  def share user 
+    contributors << user
+  end
+
+  def is_contribtor? user
+    return contributors.includes? user
   end
 end
