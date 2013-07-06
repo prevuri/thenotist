@@ -4,15 +4,18 @@ class MainController < ApplicationController
       render 'splash', :layout => 'minimal'
     else
       # Default action (render index)
-      @activities = current_user.buddies.first.activities
+      @activities = []
+     unless current_user.buddies
+     	@activities << current_user.buddies.first.activities
 
-      current_user.buddies.each do |buddy|
-      	unless buddy == current_user.buddies.first
-      		(@activities << buddy.activities).flatten
+      	current_user.buddies.each do |buddy|
+      		unless buddy == current_user.buddies.first
+      			(@activities << buddy.activities).flatten
+      		end
       	end
-      end
 
-      @activities = @activities.order("created_at desc")
+      	@activities = @activities.order("created_at desc")
+      end
 
     end
   end
