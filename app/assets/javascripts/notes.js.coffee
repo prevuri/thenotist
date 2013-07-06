@@ -45,8 +45,6 @@ jQuery ->
   @handleError = () =>
     alert "Something went wrong, try again later."
     @hideOverlay()
-    upload_data = 0
-    location.reload()
 
   $('#note-title-field').focus( () ->
     $('#title-field').removeClass('error')
@@ -94,10 +92,11 @@ jQuery ->
         @hideUploadProgress()
         @showSpinner()
       else
-        inter = $('.upload-interaction')
-        inter.find('.upload-progress-text').html((data.loaded / 1000) + "KB / " + (data.total / 1000) + "KB")
-        progress = parseInt(data.loaded / data.total * 100, 10)
-        inter.find('.bar').css('width', progress + '%')
+        parent = $('.upload-progress')
+        parent.find('.upload-progress-text').html((data.loaded / 1000) + "KB / " + (data.total / 1000) + "KB")
+        progressValue = parseInt(data.loaded / data.total * 100, 10)
+        parent.find('.bar').css('width', progressValue + '%')
+        alert progressValue + "%"
 
     done: (e, data) =>
       if (data.result["success"])
