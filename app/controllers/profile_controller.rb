@@ -3,6 +3,11 @@ class ProfileController < ApplicationController
   def index
   end
 
+  def show
+    user = User.find(params[:id])
+    render 'index', :locals => { :current_user => user }
+  end
+
   def feed
   	
   end
