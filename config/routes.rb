@@ -14,15 +14,11 @@ TheNotist::Application.routes.draw do
   resources :relationships, :only => [:create, :destroy]
   
   namespace :api do
+    resources :buddies, :only => [ :index ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]
-    resources :notes, :only => [ :index, :show, :update ]
-  end
-  
-  namespace :api do
-    resources :comments, :only => [ :index, :create, :destroy ]
-    resources :files, :only => [ :index, :show ]
-    resources :notes, :only => [ :index, :show, :update ]
+    resources :notes, :only => [ :index, :show, :update]
+    match 'notes/share/' => 'notes#share', :as => :share
   end
 
   # The priority is based upon order of creation:

@@ -33,6 +33,7 @@ class Note < ActiveRecord::Base
   end
   
   def share user 
+    user.contribute(self)
     contributors << user
   end
 

@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
+
 jQuery ->
   # FILE UPLOAD FUNCTIONALITY
   upload_data = 0
@@ -110,12 +111,39 @@ jQuery ->
       @handleError()
   
   
+  #SHARING
+  $('.share').click (e) =>
+    @shareClick(e)
 
+  @shareWithUser = (event, ui, note_id) =>
+    $('#buddies').addClass("hidden")
+    data = {
+      id: note_id,
+      userid: ui.item.id
+    }
+    $.post('/api/notes/share', data, (response) => 
+      if !response.success
+        alert response.error
+      else
+        alert response   
+    )
+    
+  @shareClick = (e) =>
+    $.get('/api/buddies', (response) =>
+      $('#buddies').autocomplete({
+        source: $.map(response, (value, key) =>
+          return {
+            label: value,
+            value: value,
+            id: key
+          }),
+        select: (event, ui) =>
+          @shareWithUser(event, ui, e.target.getAttribute("note_id"))
+      }); 
+    )
+    $('#buddies').toggleClass("hidden")
+    
   
-
-
-
-
   # COMMENTING
   $('.note-images').click (e) =>
     @yCoordClick(e)

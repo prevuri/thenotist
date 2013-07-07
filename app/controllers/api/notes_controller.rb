@@ -2,7 +2,7 @@ class Api::NotesController < ApplicationController
   include ApiHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_note, :only => :show, :update
+  before_filter :get_note, :only => [ :show, :update, :share ]
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
 
@@ -28,6 +28,24 @@ class Api::NotesController < ApplicationController
       :note => @note.as_json
     }
   end
+
+  def share
+    begin
+      @user = User.find_by_id(params[:userid])
+    rescue
+      return render :json => {
+        :success => false,
+        :error => user_not_found_error
+      }
+    end
+
+    @note.share(@user)
+    return render :json => {
+      :success => true,
+      :note => @note.as_json
+    }
+  end
+
   
 private
   def get_note
@@ -47,5 +65,9 @@ private
 
   def get_note_description
     @description = params[:description]
+  end
+
+  def user_not_found_error
+    "User not found :("
   end
 end

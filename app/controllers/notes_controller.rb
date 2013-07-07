@@ -3,7 +3,7 @@ class NotesController < ApplicationController
   before_filter :get_note_id, :except => [ :index, :create ]
   def index
     @notes = current_user.notes
-    @notes << current_user.contributed_notes
+    @notes << current_user.contributing_notes
   end
 
   def create
@@ -25,30 +25,10 @@ class NotesController < ApplicationController
     @note = current_user.notes.find_by_id(@note_id)
   end
 
-  def share
-    @note = current_user.notes.find_by_id(@note_id)
-    
-    begin
-      @user = User.find_by_id(params[:userid])
-    rescue
-      return render :json => {
-        :success => false,
-        :error => user_not_found_error
-      }
-    end
-
-    @note.share(@user.id)
-    return render :json => {
-      :success => true,
-      :username => @user.name
-    }
-
-  end
-
   def update
     note = current_user.notes.find_by_id(@note_id)
     note.update_attributes(params[:note])
-
+    
     redirect_to :action => :index
   end
 
@@ -61,9 +41,5 @@ class NotesController < ApplicationController
 private
   def get_note_id
     @note_id = params[:id]
-  end
-
-  def user_not_found_error
-    "User not found :("
   end
 end

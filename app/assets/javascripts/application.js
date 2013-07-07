@@ -12,9 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require_tree .
+//
 //= require bootstrap
 //= require_directory ../../../vendor/assets/javascripts/flat-ui/
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
 //= require jquery.spin
-//= require_tree .
+//= require jquery.ui.autocomplete
+

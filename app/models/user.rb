@@ -31,6 +31,9 @@ class User < ActiveRecord::Base
     relationships.find_by_buddy_id(other_user.id).destroy
   end
 
+  def contribute(note)
+    contributing_notes << note
+  end
 
   def self.new_with_session(params, session)
     super.tap do |user|
