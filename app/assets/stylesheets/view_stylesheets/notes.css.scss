@@ -6,14 +6,8 @@ $comments-sidebar-width: 300px;
 $highlight-color: #27F;
 
 #note-main {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  margin-right: $comments-sidebar-width;
   padding-left: 20px;
-  padding-right: 50px;
-  overflow-y: auto;
-  z-index: 100000;
+  min-width: 800px;
 
   &.new-comment-showing {
     margin-right: 0;
@@ -26,10 +20,24 @@ $highlight-color: #27F;
   .note-images {
     margin-top: 40px;
   }
-  .image-container {
-    display: inline-block;
-    border: solid 1px #aaa;
+
+  .file-container {
+    overflow: auto;
     margin: 15px 0;
+  }
+  .image-container {
+    overflow: auto;
+
+    .image-border {
+      border: solid 1px #aaa;
+      display: inline-block;
+    }
+  }  
+  .comments-container {
+    float: right;
+    width: $comments-sidebar-width;
+    margin-left: 20px;
+    min-height: 1px;
   }
 }
 
@@ -75,18 +83,19 @@ $highlight-color: #27F;
 #new-comment-panel {
   position: absolute;
   display: none;
-  width: $comments-sidebar-width - 20px;
+  width: $comments-sidebar-width - 8px;
   -webkit-transition: top 0.2s ease;
   top: 50px;
-  right: 2px;
+  right: 30px;
   background-color: #fffff2;
   border-radius: 8px;
   border: 4px solid $highlight-color;
+  box-shadow: black 1px 1px 5px;
   z-index: 100;
 
   #newcomment {
-    width: 262px;
-    height: 200px;
+    width: 282px;
+    min-height: 100px;
     resize: none;
     border: none;
     border-bottom: 1px solid #aaa;
@@ -103,10 +112,9 @@ $highlight-color: #27F;
 
 #new-comment-position-line {
   position: absolute;
-  display: none;
   bottom: 38px;
-  left: -54px;
-  width: 50px;
+  left: -14px;
+  width: 0px;
   height: 4px;
   background-color: $highlight-color;
 
@@ -116,9 +124,9 @@ $highlight-color: #27F;
     left: -10px;
     width: 0;
     height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right:10px solid $highlight-color;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 20px solid $highlight-color;
   }
 }
 
@@ -133,10 +141,6 @@ $highlight-color: #27F;
   padding: 10px;
   box-shadow: -2px 0 2px #bbc;
   z-index: 100;
-
-  #comments-container {
-
-  }
 }
 
 .comment {

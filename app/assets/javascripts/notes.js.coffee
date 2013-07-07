@@ -109,23 +109,22 @@ jQuery ->
     fail: (e, data) =>
       @handleError()
   
-  
-
-  
-
-
 
 
   # COMMENTING
-  $('.note-images').click (e) =>
+
+  @submitting = false
+
+  $('.note-image').click (e) =>
     @yCoordClick(e)
   
-  $('#new-comment-submit').click =>
-    @submitComment( $('#new-comment-submit').attr('file-id') )
+  $('#new-comment-submit').click ->
+    if !$(this).hasClass('disabled') 
+      $(this).addClass('disabled')
+      _this.submitComment()
 
   $('body').on "click", ".comment", (e) ->
     _this.setActive(this);
-    _this.scrollNoteToYCoord( $(this).attr('ycoord') )
 
   $('.new-comment-cancel').click =>
     @hideNewCommentField()
@@ -139,10 +138,10 @@ jQuery ->
   $('body').on "click", ".delete-confirm", (e) =>
     @deleteComment()
 
-  @submitComment = (fileId) ->
-    @commentText = $('#newcomment').val()
-    @fileId = fileId
-    @makeNewCommentRequest()
+  @submitComment = () ->
+    if !@submitting
+      @commentText = $('#newcomment').val()
+      @makeNewCommentRequest()
 
   @makeNewCommentRequest = () =>
     data = {
@@ -153,41 +152,43 @@ jQuery ->
       file_id: @fileId
     }
 
+    submitting = true
     $.post('/api/comments', data, (response) =>
       if !response.success
         alert response.error
       else
-        $('#comments-container').html( response['comments_html'] )
+        $(@fileCommentContainer).html( response['comments_html'] )
         @hideNewCommentField()
+
+      submitting = false
     )
 
   @setCommentPanelPosition = (yClick) =>
-    $('#new-comment-panel').css('top', (yClick - 250 + 29) + 'px')
+    $('#new-comment-panel').css('top', (yClick - 150 + 25) + 'px')
 
   @showNewCommentField = () =>
-    $('#note-main').addClass('new-comment-showing')
-    $('#new-comment-header-container').fadeIn(200);
-    $('#new-comment-container').fadeIn(200, () ->
-      $('#new-comment-panel').show(200, () ->
-        $('#new-comment-position-line').show(100);
-      );
-    );
+    @newCommentShowing = true
+    $('#new-comment-panel').show(200, () ->
+      $('#newcomment').focus()
+    )
+    $('#new-comment-position-line').show(200)
 
   @hideNewCommentField = () =>
-    $('#new-comment-position-line').hide(100, () ->
-      $('#new-comment-panel').hide(200, () ->
-        $('#new-comment-header-container').fadeOut(200);
-        $('#new-comment-container').fadeOut(200, () -> 
-          $('#note-main').removeClass('new-comment-showing')
-        )
-      );
-    );
+    @newCommentShowing = false
+    $('#new-comment-position-line').hide(200)
+    $('#new-comment-panel').hide(200, () ->
+      $('#new-comment-submit').removeClass('disabled')
+      $('#newcomment').val('')
+    )
 
   @yCoordClick = (e) ->
-    yCoordFromTop = e.pageY + document.getElementById('note-main').scrollTop
-    @yCoord = yCoordFromTop
-    @setCommentPanelPosition(yCoordFromTop)
-    @showNewCommentField()
+    if !@submitting
+      @yCoord = e.offsetY
+      @fileId = $(e.target).attr('file-id')
+      @fileCommentContainer = $(e.target).parents('.file-container').find('.comments-container')
+      @setCommentPanelPosition(e.pageY)
+      if !@newCommentShowing
+        @showNewCommentField()
 
   @setActive = (clickedComment) ->
     if (@activeComment)
@@ -198,9 +199,6 @@ jQuery ->
       $(@activeComment).addClass('active')
     else
       @activeComment = null;
-
-  @scrollNoteToYCoord = (yCoord) =>
-    $(document.getElementById('note-main')).animate({scrollTop:yCoord})
 
   @deleteClicked = (e) =>
     $(e.target).fadeOut(150)
