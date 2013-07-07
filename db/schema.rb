@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130706230243) do
+ActiveRecord::Schema.define(:version => 20130707154418) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -42,6 +42,18 @@ ActiveRecord::Schema.define(:version => 20130706230243) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
+
+  create_table "contributors", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "shared_note_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "contributors", ["user_id"], :name => "index_contributors_on_user_id"
+  add_index "contributors", ["shared_note_id"], :name => "index_contributors_on_shared_note_id"
+  add_index "contributors", ["shared_note_id", "user_id"], :name => "index_contributors_on_shared_note_id_and_user_id", :unique => true
+
 
   create_table "notes", :force => true do |t|
     t.integer  "user_id"
@@ -100,7 +112,6 @@ ActiveRecord::Schema.define(:version => 20130706230243) do
     t.string   "uid"
     t.string   "name"
     t.string   "fb_access_token"
-    t.integer  "contributing_note_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

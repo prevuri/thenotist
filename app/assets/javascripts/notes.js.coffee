@@ -124,8 +124,6 @@ jQuery ->
     $.post('/api/notes/share', data, (response) => 
       if !response.success
         alert response.error
-      else
-        alert response   
     )
     
   @shareClick = (e) =>

@@ -10,9 +10,9 @@
       - @notes.each do |note|
         .notes-list-item
           = link_to note.title, note_path(note), :class => 'text-link'
-          = link_to "Delete", note_path(note), :method => :delete, :class => 'btn btn-danger'
-          = link_to "Edit", edit_note_path(note), :class => 'btn btn-warning'
-          - unless note.contributors.include? current_user
+          - unless current_user.shared_notes.include? note
+            = link_to "Delete", note_path(note), :method => :delete, :class => 'btn btn-danger'
+            = link_to "Edit", edit_note_path(note), :class => 'btn btn-warning'
             = link_to "Share", '#', :class => 'share btn btn-warning', :note_id => note.id
       .ui-widget
         %input.hidden{:id => 'buddies', :placeholder => "Buddy to share with", :selected => false}

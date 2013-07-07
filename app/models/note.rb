@@ -2,8 +2,9 @@ class Note < ActiveRecord::Base
   attr_accessible :description, :title
 
   belongs_to :user
-  has_many :contributors, foreign_key: "contributing_note_id", class_name: "User"
-  has_many :uploaded_files, :dependent => :destroy
+  has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
+  has_many :contributing_users, through: :contributors, class_name: "User"
+  has_many :uploaded_files, dependent: :destroy
   has_many :comments, :through => :uploaded_files
 
   def process (upload)
@@ -32,13 +33,25 @@ class Note < ActiveRecord::Base
     return images
   end
   
-  def share user 
-    user.contribute(self)
-    contributors << user
+  def share! user 
+    contributors.create!(user_id: user.id)
   end
 
-  def is_contribtor? user
-    return contributors.includes? user
+  def shared_with? user
+    contributors.find_by_user_id(user.id)
+  end
+
+  def revoke_share! user
+    contributors.find_by_user_id(user.id).destroy
+  end
+
+  def is_contributor? user
+    contributors.each do |con|
+      if con.has_user? user
+        return true
+      end
+    end
+    return false
   end
 
   def as_json

@@ -39,7 +39,7 @@ class Api::NotesController < ApplicationController
       }
     end
 
-    @note.share(@user)
+    @note.share!(@user)
     return render :json => {
       :success => true,
       :note => @note.as_json
