@@ -3,6 +3,7 @@ class NotesController < ApplicationController
   before_filter :get_note_id, :except => [ :index, :create ]
   def index
     @notes = current_user.notes
+    @notes << current_user.shared_notes
   end
 
   def create

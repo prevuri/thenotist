@@ -3,7 +3,7 @@ class Note < ActiveRecord::Base
 
   belongs_to :user
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
-  has_many :contributing_users, through: :contributors, class_name: "User"
+  has_many :contributing_users, through: :contributors, source: :user
   has_many :uploaded_files, dependent: :destroy
   has_many :comments, :through => :uploaded_files
 
