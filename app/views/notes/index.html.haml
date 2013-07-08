@@ -1,10 +1,8 @@
 .notes-index-page
   %h1 Notes
 
-  .create-new-note
-    = link_to new_note_path, :class => 'btn btn-large btn-primary' do
-      %i.icon-plus.icon-white
-      = "Upload New Note"
+  = render 'upload_form'
+
   .notes-list-container
     .notes-list
       - @notes.each do |note|
@@ -12,4 +10,3 @@
           = link_to note.title, note_path(note), :class => 'text-link'
           = link_to "Delete", note_path(note), :method => :delete, :class => 'btn btn-danger'
           = link_to "Edit", edit_note_path(note), :class => 'btn btn-warning'
-          

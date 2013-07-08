@@ -4,121 +4,10 @@
 
 
 jQuery ->
-  # FILE UPLOAD FUNCTIONALITY
-  upload_data = 0
-
-  @showOverlay = () =>
-    $('.full-screen-overlay').show()
-
-  @hideOverlay = () =>
-    $('.full-screen-overlay').hide()
-
-  @showUploadProgress = () =>
-    file_name = upload_data.files[0].name || "file"
-    $('.activity-label').html("Uploading " + file_name + " ...")
-    $('.activity-label.secondary').html("Do not refresh this page")
-    $('.upload-progress').show()
-
-  @hideUploadProgress = () => 
-    $('.upload-progress').hide()
-
-  @showSpinner = () =>
-    file_name = ""
-    file_name = upload_data.files[0].name if upload_data
-    $('.processing-container').show()
-    $('.activity-label').html("Processing " + file_name + " ...")
-    $('.activity-label.secondary').html("You will be automatically redirected to your note when the file is processed.")
-    $('.processing-container').spin
-      lines: 7,
-      length: 0,
-      width: 20,
-      radius: 24,
-      corners: 1.0,
-      trail: 77,
-      speed: 1.2,
-      shadow: true,
-      color: '#fff'
-
-  @hideSpinner = () =>
-    $('.processing-container').hide()
-  
-  @handleError = () =>
-    alert "Something went wrong, try again later."
-    @hideOverlay()
-
-  $('#note-title-field').focus( () ->
-    $('#title-field').removeClass('error')
-  )
-
-  $('.select-file').click =>
-    $('.select-file').removeClass('error')
-    $('#file-picker').click()
-
-  @validateUploadForm = () ->
-    result = true
-    if (!upload_data || !upload_data.files[0].name.length)
-      $('.select-file').addClass('error')
-      result = false
-    if ($.trim( $('#note-title-field').val() ) == '')
-      $('#title-field').addClass('error')
-      result = false
-    return result
-
-  $('.submit-action').click =>
-    if @validateUploadForm()
-      @showOverlay()
-      @showUploadProgress()
-      upload_data.submit()
-
-  $('.new-file-upload').fileupload
-    dataType: 'json'
-    add: (e, data) =>
-      types = /(\.|\/)(pdf)$/i
-      file = data.files[0]
-      inter = $('.upload-interaction')
-      if types.test(file.type) || types.test(file.name)
-        inter.find('.file-name').html file.name
-        if !$('#note-title-field').val()
-          $('#note-title-field').val(file.name)
-          $('#title-field').removeClass('error')
-
-        inter.find('.file-size').html((file.size / 1000) + "KB")
-        upload_data = data
-      else
-        alert("#{file.name} is not a PDF file")
-
-    progress: (e, data) =>
-      if (data.loaded == data.total)
-        @hideUploadProgress()
-        @showSpinner()
-      else
-        parent = $('.upload-progress')
-        parent.find('.upload-progress-text').html((data.loaded / 1000) + "KB / " + (data.total / 1000) + "KB")
-        progressValue = parseInt(data.loaded / data.total * 100, 10)
-        parent.find('.bar').css('width', progressValue + '%')
-        alert progressValue + "%"
-
-    done: (e, data) =>
-      if (data.result["success"])
-        document.location.href = data.result["uri"]
-        upload_data = 0 # clear the file
-      else
-        @handleError()
-
-    fail: (e, data) =>
-      @handleError()
-  
-  
-
-  
-
-
-
-
   # COMMENTING
   $('.note-images').click (e) =>
     @yCoordClick(e)
-  
+
   $('#new-comment-submit').click =>
     @submitComment( $('#new-comment-submit').attr('file-id') )
 
@@ -128,7 +17,7 @@ jQuery ->
 
   $('.new-comment-cancel').click =>
     @hideNewCommentField()
-  
+
   $('body').on "click", ".delete-button", (e) =>
     @deleteClicked(e)
 
@@ -176,7 +65,7 @@ jQuery ->
     $('#new-comment-position-line').hide(100, () ->
       $('#new-comment-panel').hide(200, () ->
         $('#new-comment-header-container').fadeOut(200);
-        $('#new-comment-container').fadeOut(200, () -> 
+        $('#new-comment-container').fadeOut(200, () ->
           $('#note-main').removeClass('new-comment-showing')
         )
       );
@@ -214,18 +103,18 @@ jQuery ->
     @deletingCommentElement = element
 
   @deleteComment = () ->
-    
+
     element = @deletingCommentElement
 
     id = $(element).attr('comment-id')
-    
+
     $.ajax
       url: '/api/comments/' + id,
       type: 'DELETE',
       error: (response) ->
         alert response.error
 
-    $(element).hide(200, () -> 
+    $(element).hide(200, () ->
       $(element).remove()
     )
 
