@@ -4,22 +4,7 @@
 	.buddy-list
 	- current_user.buddies.each do |user|
 		.buddy-list-item
-			%ul.inline
-				%li
-					%div.circular#profile-image{:style => "background:url(#{user.user_fb_data.profile_image}) no-repeat"}
-				%li.profile_section
-					%div.info
-						%h2
-							= user.name
-						%div.profile_info 
-							= user.notes.length
-							notes
-						%div.profile_info 
-							= user.buddies.length
-							buddies
-						%div.profile_info 
-							= user.followers.length
-							followers
+			= render :partial => 'profile/user_info', :object => user, :locals => { :name_link => true }
 
 %div.fb-friends{:style => "float:right"}
 	%h3 Friends on Notist
@@ -40,6 +25,7 @@
 	.friends-list
 		- @friends_data.each do |friend|
 			.friends-list-item
-				%img{:src => friend["picture"]["data"]["url"]}
+				.profile-container.circular
+					%img.profile-image.circular{:src => friend["picture"]["data"]["url"]}
 				= friend["name"]
 

@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$profile-image-size: 180px;
+
 .profile {
   float:left;
 }
@@ -10,6 +12,29 @@
   vertical-align: top;
 }
 
-#profile-image {
-	background-size: cover !important;
+.profile-buttons {
+  margin-top: 30px; 
+  margin-left: 30px;
+}
+
+.profile-container {
+  width: $profile-image-size;
+  height: $profile-image-size;
+  padding: 5px;
+  background: white;
+  box-shadow: #444 0px 1px 4px;
+  -webkit-user-select: none;
+  margin-bottom: 1px;
+}
+
+a > .profile-container:active {
+  box-shadow: #444 0px 0px 4px;
+  margin-top: 1px;
+  margin-bottom: 0;
+}
+
+.profile-image {
+  width: $profile-image-size;
+  height: $profile-image-size;
+	background-size: cover;
 }

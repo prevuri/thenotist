@@ -50,10 +50,9 @@ ActiveRecord::Schema.define(:version => 20130707154418) do
     t.datetime "updated_at",     :null => false
   end
 
-  add_index "contributors", ["user_id"], :name => "index_contributors_on_user_id"
-  add_index "contributors", ["shared_note_id"], :name => "index_contributors_on_shared_note_id"
   add_index "contributors", ["shared_note_id", "user_id"], :name => "index_contributors_on_shared_note_id_and_user_id", :unique => true
-
+  add_index "contributors", ["shared_note_id"], :name => "index_contributors_on_shared_note_id"
+  add_index "contributors", ["user_id"], :name => "index_contributors_on_user_id"
 
   create_table "notes", :force => true do |t|
     t.integer  "user_id"
