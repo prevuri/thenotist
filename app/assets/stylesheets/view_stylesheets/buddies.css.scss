@@ -1,6 +1,10 @@
 $fbbar_background: #ECF0F1;
 $button_color: #2ECC71;
 
+.buddy-list-item {
+	margin-bottom: 30px;
+}
+
 .fb-friends {
 	position: fixed;
 	top: 0;
@@ -16,9 +20,22 @@ $button_color: #2ECC71;
 
 .friends-list-item {
 	width: 290px;
-	height: 50px;
-	margin-bottom: 5px;
+	margin-top: 7px;
+	padding-top: 7px;
 	margin-right: 10px;
+	border-top: 1px #ccc solid;
+
+	.profile-container {
+		display: inline-block;
+		width: 50px;
+		height: 50px;
+		padding: 2px;
+		margin-right: 10px;
+		.profile-image {
+			width: 50px;
+			height: 50px;
+		}
+	}
 }
 
 .friend-info {

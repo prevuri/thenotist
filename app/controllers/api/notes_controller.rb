@@ -39,7 +39,8 @@ class Api::NotesController < ApplicationController
       }
     end
 
-    @note.share!(@user)
+    @contrib @note.share!(@user)
+    track_activity @contrib
     return render :json => {
       :success => true,
       :note => @note.as_json

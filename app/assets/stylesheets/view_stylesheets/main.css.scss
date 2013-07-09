@@ -17,10 +17,13 @@ $user-type-color: #A5BA3D;
 		min-width: 800px;
 		margin-bottom: 20px;
 		clear: both;
-		#activity-image {
-			height: 50px;
+		.profile-container {
 			width: 50px;
-			background-size: cover !important;
+			height: 50px;
+			float: left;
+			padding: 2px;
+		}
+		#activity-image {
 			float: left;
 		}
 		.tooltip {
@@ -56,7 +59,7 @@ $user-type-color: #A5BA3D;
 			background-color: $comment-type-color;
 		}	
 
-		.note-type {
+		.note-type, .contributor-type{
 			padding: 3px;
 			background-color: $note-type-color;
 		}
@@ -111,7 +114,27 @@ $user-type-color: #A5BA3D;
 	          overflow: hidden;
 					} 
 				}
+			}
+
+			.profile-container {
+				width: 100px;
+				height: 100px;
+				float: left;
+				padding: 4px;
 			}	
+
+			.user-info {
+				h2 {
+					font-size: 1.4em;
+					margin-bottom: 0;
+				}
+
+				.profile_info {
+					font-size: 1.2em;
+					margin-bottom: 5px;
+				}
+			}
+
 		}
 	}	
 }
