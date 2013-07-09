@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :buddies, through: :relationships, source: :buddy
+  has_many :buddy_activities, through: :buddies, source: :activities
   has_many :reverse_relationships, foreign_key: "buddy_id", class_name: "Relationship", dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
   has_many :contributed_to, class_name: "Contributor", dependent: :destroy

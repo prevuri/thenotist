@@ -1,3 +1,80 @@
 // Place all the styles related to the Main controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$activity-item-background-color: #FFFFFF;
+$sub-section-background-color: #FAFAFA;
+$comment-type-color: #85A4CC;
+
+.feed-wrapper {
+	margin: 0 auto;
+	margin-top: 20px;
+	.activity-item {
+		width: 100%;
+		position: relative;
+		min-width: 800px;
+		#activity-image {
+			height: 50px;
+			width: 50px;
+			background-size: cover !important;
+			float: left;
+		}
+		.tooltip {
+			margin-top: 4px;
+			margin-left: 15px;
+			min-height: 60px;			
+			width: 90%;
+			position: relative;
+			float: left;
+			.tooltip-arrow {
+				position: absolute;
+				top: 20px;
+				border-right-color: $activity-item-background-color;
+			}
+			.tooltip-inner {
+				padding: 10px;
+				width: 100%;
+				max-width: 100%;
+				text-align: left;
+				background-color: $activity-item-background-color;
+
+			}
+		}
+	}
+
+	.activity-type {
+		float:left;
+		border-radius: 3px;
+		overflow: hidden;
+		margin-right: 10px;
+		.comment-type {
+			padding: 3px;
+			background-color: $comment-type-color;
+		}	
+	}
+	.activity-time {
+		float: right;
+	}
+	
+	.activity {
+		padding-top: 4px;
+		font-size: 1.3em;
+		color: #292929;
+		.user-name {
+			text-decoration: none;
+			color: #515775;
+			font-weight: bold;
+		}
+
+		.subsection {
+			background-color: $sub-section-background-color;
+			min-height: 50px;
+			line-height: 50px;
+			margin-top: 15px;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			padding-left: 30px;
+			border-top: 1px #ddd;
+		}
+	}	
+}
