@@ -1,16 +1,24 @@
 // Place all the styles related to the Notes controller here.
 // They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+// You can use Sass (SCSS) here: http://sass-lang.com/`
 
 $comments-sidebar-width: 300px;
+$highlight-color: #27F;
 
-.notes-show-page {
+#note-main {
   position: fixed;
   top: 0;
   bottom: 0;
   margin-right: $comments-sidebar-width;
-  padding-right: 30px;
+  padding-left: 20px;
+  padding-right: 50px;
   overflow-y: auto;
+  z-index: 100000;
+
+  &.new-comment-showing {
+    margin-right: 0;
+    padding-right: 50px + $comments-sidebar-width;
+  }
 
   .note-description {
     font-size: 2em;
@@ -25,6 +33,95 @@ $comments-sidebar-width: 300px;
   }
 }
 
+#new-comment-container {
+  position: fixed;
+  width: $comments-sidebar-width;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 10;
+  display: none;
+}
+
+#new-comment-header-container {
+  background-color: #34495E;
+  color: white;
+  padding: 5px 10px;
+  z-index: 100000;
+  display: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 35px;
+  width: $comments-sidebar-width - 20px;
+  text-align: center;
+  box-shadow: #000 2px 0px 2px;
+
+  .new-comment-cancel {
+    float: left;
+    font-size: 1.5em;
+    padding-bottom: 10px;
+    -webkit-user-select: none;
+  }
+
+  h3 {
+    font-size: 1.5em;
+    line-height: 1.4;
+    margin-right: 35px;
+  }
+}
+
+#new-comment-panel {
+  position: absolute;
+  display: none;
+  width: $comments-sidebar-width - 20px;
+  -webkit-transition: top 0.2s ease;
+  top: 50px;
+  right: 2px;
+  background-color: #fffff2;
+  border-radius: 8px;
+  border: 4px solid $highlight-color;
+  z-index: 100;
+
+  #newcomment {
+    width: 262px;
+    height: 200px;
+    resize: none;
+    border: none;
+    border-bottom: 1px solid #aaa;
+    border-radius: 8px 8px 0 0;
+    margin: 0;
+  }
+
+  .btn {
+    display: inline-block;
+    margin: 6px 5px;
+  }
+
+}
+
+#new-comment-position-line {
+  position: absolute;
+  display: none;
+  bottom: 38px;
+  left: -54px;
+  width: 50px;
+  height: 4px;
+  background-color: $highlight-color;
+
+  .left-arrow {
+    position: relative;
+    top: -8px;
+    left: -10px;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right:10px solid $highlight-color;
+  }
+}
+
 .comments-sidebar {
   background-color: #34495E;
   width: $comments-sidebar-width - 20px; // Subtract padding
@@ -35,10 +132,11 @@ $comments-sidebar-width: 300px;
   overflow-y: auto;
   padding: 10px;
   box-shadow: -2px 0 2px #bbc;
+  z-index: 100;
 
-  .comments-container {
-    margin-top: 30px;
-  } 
+  #comments-container {
+
+  }
 }
 
 .comment {
@@ -59,7 +157,7 @@ $comments-sidebar-width: 300px;
   }
 
   &.active {
-    background-color: #27F;
+    background-color: $highlight-color;
   }
 
   .user {
@@ -69,9 +167,28 @@ $comments-sidebar-width: 300px;
   .comment-text {
     color: #222;
   }
-  .comment-date {
+  .bottom {
     margin-top: 4px;
+  }
+  .comment-date {
     color: #aaa;
+    float: left;
+  }
+  .delete-button {
+    float: right;
+    color: #34495E;
+    font-weight: normal;
+  }
+  .delete-confirm-panel {
+    display: none;
+    background-color: #bbb;
+    border-top: 1px solid #999;
+    margin: 10px -8px -5px;
+    border-radius: 0 0 5px 5px;
+
+    .btn {
+      margin: 5px 0 5px 10px;
+    }
   }
 }
 
@@ -104,26 +221,189 @@ $comments-sidebar-width: 300px;
   overflow: hidden;
 
   .notes-list {
+    ul {
+      list-style: none;
+      display: inline;
+      margin: 0;
+      li {
+        display: inline-block;
+        width: 500px;
+        margin-left: 5px;
+      } 
+    }
     .notes-list-item {
-      overflow: auto;
-      padding: 10px 10px;
+      background-color: #BEB5AA;
+      min-height: 300px;
+      padding: 5px;
+      margin-top: 10px;
+      border: 1px solid #ddd;
 
-      &:nth-child(odd) {
-        background-color: #f2f2f2;
-      }
-      &:nth-child(even) {
-        background-color: #fafafa;
-      }
+      .note-item {
+        position: relative;
 
-      .text-link {
-        float: left;
-        font-size: 1.4em;
-      }
+        #list-footer {
+          height: 80px;
+          width: 100%;
+          background-color:rgba(0,0,0,0.5);
+          z-index: 100;
+          
+          .big-info {
+            float: left;            
+          }
 
-      .btn {
-        float: right;
-        margin-left: 10px;
+          .info {
+            font-size: 1em;
+            margin-left: 20px;
+            color: #fff;
+            width: 80%;
+          }
+
+          .tiny-info {
+            float: right;
+            font-size: 1.2em;
+            margin-right: 10px;
+            margin-top: 15px;
+            color: #fff;
+            width: 20%;
+            text-align: right;
+          }
+        }
+
+        .text-link {
+          float: left;
+          color: #fff;
+          font-size: 2em;
+          margin-top: 15px;
+          margin-left: 20px;
+          margin-bottom: 10px;
+
+        }
+
+        .btn-group {
+          margin-right: 0px;
+          margin-top: 10px;
+          border-radius: 0px !important;
+          -webkit-border-radius: 0px !important;
+          position: absolute;
+          top: 0px;
+          right: 10px;
+        }
+
+        .tooltip {
+          right: -10px;
+          top: 35px;
+          .tooltip-arrow {
+            border-bottom-color:rgba(0,0,0,0.5);
+          }
+          .tooltip-inner {
+            width: 210px;
+            background-color:rgba(0,0,0,0.5);
+            #buddies {
+              margin-bottom: 10px;
+              height: 20px;
+              font-size: 10px;
+            }
+          }
+        }
+
+        .shared-note .btn {
+          float: right;
+          margin-top: 10px;
+        }
+        
+
+        .img-preview {
+          height: 300px;
+          width: 100%;
+          background-position: 10% 10%;
+          background-repeat: no-repeat;
+          background-size: 100%;
+          overflow: hidden;
+        }
       }
+    }
+  }
+}
+
+.ui-autocomplete {
+  z-index: 1040;
+}
+
+// NOTE UPLOAD PAGE
+.notes-new-page {
+  .hidden {
+    display: none;
+  }
+  label {
+    cursor: default;
+  }
+  #upload-label {
+    -webkit-transition: color 0.2s;
+    &.error {
+      color: #C42323;
+    }
+  }
+  .btn {
+    -webkit-transition: background 0.2s;
+    &.error {
+      color: #FF0000;
+      background: #E0D5D5;
+    }
+  }
+  .text-field {
+    margin-bottom: 20px;
+    input {
+      width: 500px;
+    }
+  }
+  .full-screen-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: #000;
+    opacity: 0.9;
+  }
+
+  .element-container {
+    position: relative;
+    margin: auto;
+    top: 10%;
+
+    .activity-label {
+      text-align: center;
+      color: #fff;
+      font-size: 35pt;
+      font-family: Helvetica, Arial;
+    }
+    .activity-label.secondary {
+      font-size: 12pt;
+      color: #4f4f4f;
+      margin-top: 5px;
+    }
+    .upload-progress {
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 40px;
+      
+      .upload-progress-text {
+        text-align: right;
+        color: #4f4f4f;
+        font-size: 8.5pt;
+      }
+      .progress {
+        height: 3px;
+        margin-top: 3px;
+        .bar {
+          background: #2277ff;
+        }
+      }
+    }
+    .processing-container {
+      margin-top: 100px;
     }
   }
 }

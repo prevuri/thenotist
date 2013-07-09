@@ -17,6 +17,9 @@ class User < ActiveRecord::Base
   has_many :buddies, through: :relationships, source: :buddy
   has_many :reverse_relationships, foreign_key: "buddy_id", class_name: "Relationship", dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
+  has_many :contributed_to, class_name: "Contributor", dependent: :destroy
+  has_many :shared_notes, through: :contributed_to
+  has_many :shared_uploaded_files, through: :shared_notes, source: :uploaded_files
 
 
 
@@ -31,7 +34,6 @@ class User < ActiveRecord::Base
   def unfollow!(other_user)
     relationships.find_by_buddy_id(other_user.id).destroy
   end
-
 
   def self.new_with_session(params, session)
     super.tap do |user|

@@ -9,9 +9,10 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require bootstrap
+ *= require bootstrap_and_overrides
  *= require flat-ui
  *= require font-awesome
+ *= require jquery.ui.autocomplete
  *= require_tree ./view_stylesheets
  */
 
@@ -26,17 +27,18 @@ $sidebar-foreground-active: #2ECC71;
 $sidebar-foreground-hover: white;
 */
 
+
 // THEME 2
 
-$sidebar-background: #252627;
-$sidebar-background-hover: #40474F;
-$sidebar-foreground: #999;
-$sidebar-foreground-active: #27F;
-$sidebar-foreground-hover: white;
-$sidebar-shadow-color: #999;
+// $sidebar-background: #252627;
+// $sidebar-background-hover: #40474F;
+// $sidebar-foreground: #999;
+// $sidebar-foreground-active: #27F;
+// $sidebar-foreground-hover: white;
+// $sidebar-shadow-color: #999;
 
 
-/* CURRENT THEME */
+/* THEME 3 */
 // $sidebar-background: #ECF0F1;
 // $sidebar-background-hover: #BDC3C7;
 // $sidebar-foreground: #999;
@@ -44,15 +46,43 @@ $sidebar-shadow-color: #999;
 // $sidebar-foreground-hover: white;
 // $sidebar-shadow-color: #888;
 
+/* THEME 4 */
+$sidebar-background: #252627;
+$sidebar-background-hover: #40474F;
+$sidebar-foreground: #999;
+$sidebar-foreground-active: #27F;
+$sidebar-foreground-hover: white;
+$sidebar-shadow-color: #999;
+$background-color: #E8E3DD;
+$btn-primary: #F55451;
+
+
+
 body {
   margin: 0;
   // padding: 10px 10px 10px 0;
-  background-color: #fffff9;
+  background-color: $background-color !important;
+}
+
+//Button color overrides
+//
+
+.btn {
+  
+}
+
+.btn-primary {
+  background-color: $btn-primary !important;
+
+  &:hover, &:focus {
+    background-color: #FF322E !important;    
+  }
 }
 
 a.text-link {
   font-weight: bold;
   text-decoration: none;
+  cursor: pointer;
   
   &:hover {
     text-decoration: underline;
@@ -70,6 +100,10 @@ a.text-link {
     font-size: 40px; 
     margin-bottom:10px;
   }
+}
+
+.hidden {
+  display: none;
 }
 
 #top-nav {
@@ -234,4 +268,8 @@ form.new-user {
   .btn {
     margin-bottom: 10px;
   }
+}
+
+.clear {
+  clear: both;
 }

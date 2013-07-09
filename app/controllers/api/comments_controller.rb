@@ -1,6 +1,7 @@
 class Api::CommentsController < ApplicationController
-  # before_filter :authenticate_user!
+  include ApiHelper
 
+  before_filter :check_authenticated_user!
   before_filter :get_uploaded_file_id, :only => [ :index, :create ]
   before_filter :get_comment_id, :only => :destroy
 
@@ -23,7 +24,7 @@ class Api::CommentsController < ApplicationController
 
   def create
     @file = current_user.uploaded_files.find_by_id(@uploaded_file_id) # does not throw an exception if nothing found
-
+    @file = current_user.shared_uploaded_files.find_by_id(@uploaded_file_id) unless @file
     if @file.blank?
       return render :json => {
         :success => false,
@@ -51,16 +52,13 @@ class Api::CommentsController < ApplicationController
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
     @comments = @file.comments
-    return render :json => { 
+    return render :json => {
       :success => true,
-      :comments => @comments.map { |c| c.as_json }
+      :comments_html => render_to_string(:partial => "notes/comments", :object => @comments)
     }
   end
 
   def destroy
-    # TODO: delete this - it's only for testing
-    u = User.first
-    # TODO: change 'u' to 'current_user'
     @comment = current_user.comments.find_by_id(@comment_id) # does not throw an exception if nothing found
 
     if @comment.blank?
@@ -96,21 +94,5 @@ private
 
   def get_comment_id
     @comment_id = params[:id]
-  end
-
-  def uploaded_file_not_found_error
-    "File with id #{@uploaded_file_id} not found"
-  end
-
-  def comment_create_error
-    "Could not create comment with supplied parameters"
-  end
-
-  def comment_not_found_error
-    "Comment with id #{@comment_id} not found"
-  end
-
-  def comment_destroy_error
-    "Could not destroy comment with id #{@comment_id}"
   end
 end

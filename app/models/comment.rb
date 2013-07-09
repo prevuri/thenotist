@@ -1,4 +1,6 @@
 class Comment < ActiveRecord::Base
+  default_scope order('ycoord ASC')
+
   attr_accessible :text, :ycoord, :uploaded_file
   belongs_to :uploaded_file
   belongs_to :user
