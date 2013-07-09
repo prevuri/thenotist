@@ -1,10 +1,8 @@
 .notes-index-page
   %h1 NOTES
 
-  .create-new-note
-    = link_to new_note_path, :class => 'btn btn-large btn-primary' do
-      %i.icon-plus.icon-white
-      = "Upload New Note"
+  = render 'upload_form'
+
   .notes-list-container
     .notes-list
       %ul

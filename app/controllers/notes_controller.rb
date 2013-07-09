@@ -7,8 +7,8 @@ class NotesController < ApplicationController
   end
 
   def create
-    @note = current_user.notes.build(:title => params[:notes][:title], :description => params[:notes][:description])
-    @images = @note.process(params[:notes]) if params[:notes]
+    @note = current_user.notes.build(:title => params[:new_note][:title], :description => params[:new_note][:description])
+    @images = @note.process(params[:new_note]) if params[:new_note]
 
     # defer the saving of everything until later in case things don't work out
     @note.save!

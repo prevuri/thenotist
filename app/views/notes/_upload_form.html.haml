@@ -1,0 +1,36 @@
+.create-new-note-container
+  .create-new-note-button.btn.btn-large.btn-primary{ "data-toggle" => "modal", "data-target" => ".new-note-form-container" }
+    %i.icon-circle-arrow-up.icon-white
+    Upload a new note
+
+  .new-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true }
+    .upload_form-container.modal-body
+      .btn.btn-large.select-file.control-group
+        %i.upload-status-icon.icon-plus
+        .upload-status-text Choose file
+        .upload-status-text-secondary .pdf
+
+      .form-container
+        = form_for :new_note, :html => { :id => "upload_form_tag" }, :url => notes_path, :method => :post do |f|
+
+          #title-field.text-field.control-group
+            = f.text_field :title, :id => 'note-title-field', :placeholder => "Enter note title"
+            %i.status-icon.success-icon.icon-check-sign.hidden
+            %i.status-icon.error-icon.icon-ban-circle.hidden
+
+          #description-field.text-field
+            = f.text_field :description, :id => 'note-description-field', :placeholder => "Enter note description (optional)"
+          %p.new-file-upload.hidden= f.file_field :file, :id => 'file-picker'
+          .hidden.submit-btn-placeholder= f.submit
+
+    .upload-interaction.modal-footer
+      .upload-progress.hidden
+        .spinner-container
+        .upload-progress-text
+        .progress.progress-success
+          .bar{ :style => "width: 0%" }
+      .spinner-container.hidden
+      .processing-label.hidden This can take several minutes. You will be automatically redirected to your note when processing is done.
+      .btn.btn-primary.submit-action
+        %i.submit-action-icon.icon-cloud-upload
+        .submit-action-text Upload

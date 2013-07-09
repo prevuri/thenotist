@@ -2,8 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-
-
 jQuery ->
 
   # GENERAL NOTE UI
@@ -12,115 +10,6 @@ jQuery ->
         (-> 
           $(this).find('.btn-group').addClass('hidden').fadeOut(150)
           $(this).find('.tooltip').addClass('hidden').fadeOut(150))
-
-  # FILE UPLOAD FUNCTIONALITY
-  upload_data = 0
-  overview_mode = false;
-
-  @showOverlay = () =>
-    $('.full-screen-overlay').fadeIn(200)
-    overview_mode = true;
-
-  @hideOverlay = () =>
-    $('.full-screen-overlay').fadeOut(200)
-    overview_mode = false;
-
-  @showUploadProgress = () =>
-    file_name = upload_data.files[0].name || "file"
-    $('.activity-label').html("Uploading " + file_name + " ...")
-    $('.activity-label.secondary').html("Do not refresh this page")
-    $('.upload-progress').show()
-
-  @hideUploadProgress = () =>
-    $('.upload-progress').hide()
-
-  @showSpinner = () =>
-    file_name = ""
-    file_name = upload_data.files[0].name if upload_data
-    $('.processing-container').show()
-    $('.activity-label').html("Processing " + file_name + " ...")
-    $('.activity-label.secondary').html("You will be automatically redirected to your note when the file is processed.")
-    $('.processing-container').spin
-      lines: 7,
-      length: 0,
-      width: 20,
-      radius: 24,
-      corners: 1.0,
-      trail: 77,
-      speed: 1.2,
-      shadow: true,
-      color: '#fff'
-
-  @hideSpinner = () =>
-    $('.processing-container').hide()
-
-  @handleError = () =>
-    alert "Something went wrong, try again later."
-    @hideOverlay()
-    upload_data = 0
-    location.reload()
-
-  $('#note-title-field').focus( () ->
-    $('#title-field').removeClass('error')
-  )
-
-  $('.select-file').click =>
-    $('.select-file').removeClass('error')
-    $('#file-picker').click()
-
-  @validateUploadForm = () ->
-    result = true
-    if (!upload_data || !upload_data.files[0].name.length)
-      $('.select-file').addClass('error')
-      result = false
-    if ($.trim( $('#note-title-field').val() ) == '')
-      $('#title-field').addClass('error')
-      result = false
-    return result
-
-  $('.submit-action').click =>
-    if @validateUploadForm()
-      @showOverlay()
-      @showUploadProgress()
-      upload_data.submit()
-
-  $('.new-file-upload').fileupload
-    dataType: 'json'
-    add: (e, data) =>
-      types = /(\.|\/)(pdf)$/i
-      file = data.files[0]
-      inter = $('.upload-interaction')
-      if types.test(file.type) || types.test(file.name)
-        inter.find('.file-name').html file.name
-        if !$('#note-title-field').val()
-          $('#note-title-field').val(file.name)
-          $('#title-field').removeClass('error')
-
-        inter.find('.file-size').html((file.size / 1000) + "KB")
-        upload_data = data
-      else
-        alert("#{file.name} is not a PDF file")
-
-    progress: (e, data) =>
-      if (data.loaded == data.total)
-        @hideUploadProgress()
-        @showSpinner()
-      else
-        inter = $('.upload-interaction')
-        inter.find('.upload-progress-text').html((data.loaded / 1000) + "KB / " + (data.total / 1000) + "KB")
-        progress = parseInt(data.loaded / data.total * 100, 10)
-        inter.find('.bar').css('width', progress + '%')
-
-    done: (e, data) =>
-      if (data.result["success"])
-        document.location.href = data.result["uri"]
-        upload_data = 0 # clear the file
-      else
-        @handleError()
-
-    fail: (e, data) =>
-      @handleError()
-
 
   #SHARING
   $('.share-note').click (e) =>
@@ -148,16 +37,9 @@ jQuery ->
           }),
         select: (event, ui) =>
           @shareWithUser(event, ui, e.target.getAttribute("note_id"))
-# <<<<<<< HEAD
     )
     $(e.target).parents('.note-item').children('#list-footer').children('.tooltip').toggleClass("hidden", 1000)
-# =======
-#       });
-#     )
-#     $('#buddies').toggleClass("hidden")
 
-
-# >>>>>>> note-overview-page
   # COMMENTING
   $('.note-image').click (e) =>
     @yCoordClick(e)
@@ -279,9 +161,6 @@ jQuery ->
     $(element).find('.delete-confirm-panel').hide(150)
     $(element).find('.delete-button').fadeIn(150)
     return false
-
-
-
 
   # OVERVIEW PAGE FUNCTIONALITY
   overview_mode = false;

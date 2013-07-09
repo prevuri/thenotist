@@ -10,9 +10,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
-
 ActiveRecord::Schema.define(:version => 20130707154418) do
-
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
     t.string   "provider"
