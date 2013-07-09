@@ -246,12 +246,26 @@ $highlight-color: #27F;
           width: 100%;
           background-color:rgba(0,0,0,0.5);
           z-index: 100;
+          
+          .big-info {
+            float: left;            
+          }
 
           .info {
-            float: left;
             font-size: 1em;
             margin-left: 20px;
             color: #fff;
+            width: 80%;
+          }
+
+          .tiny-info {
+            float: right;
+            font-size: 1.2em;
+            margin-right: 10px;
+            margin-top: 15px;
+            color: #fff;
+            width: 20%;
+            text-align: right;
           }
         }
 

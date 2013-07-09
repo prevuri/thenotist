@@ -23,18 +23,20 @@
                   %i.icon-remove
                 %a.btn.hidden
               #list-footer
-                = link_to note.title, note_path(note), :class => 'text-link'
-                .info
-                  Shared with #{note.contributing_users.first.name}
-                  - if note.contributing_users.length > 1
-                    and #{note.contributing_users.length-1} others
+                .big-info
+                  = link_to note.title, note_path(note), :class => 'text-link'  
+                  .info
+                    - unless note.contributing_users.empty?
+                      Shared with #{note.contributing_users.first.name}
+                    - if note.contributing_users.length > 1
+                      and #{note.contributing_users.length-1} others
+                .tiny-info
+                  %i.icon-comments
+                    = note.comments.length
                 .tooltip.fade.bottom.in.hidden
                   .tooltip-arrow
                   .ui-widget.tooltip-inner
                     %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
-
-
-            
         - @shared_notes.each do |note|
           %li.notes-list-item
             .note-item.shared-note
@@ -46,7 +48,11 @@
                     %i.icon-remove
                   %a.btn.hidden
               #list-footer.shared-note
-                = link_to note.title, note_path(note), :class => 'text-link'
-                .info
-                  Shared by #{note.user.name}
+                .big-info
+                  = link_to note.title, note_path(note), :class => 'text-link'
+                  .info
+                    Shared by #{note.user.name}
+                .tiny-info
+                  %i.icon-comments
+                    = note.comments.length
           
