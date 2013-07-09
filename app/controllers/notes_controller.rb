@@ -9,7 +9,7 @@ class NotesController < ApplicationController
   def create
     @note = current_user.notes.build(:title => params[:notes][:title], :description => params[:notes][:description])
     @images = @note.process(params[:notes]) if params[:notes]
-    
+
     # defer the saving of everything until later in case things don't work out
     @note.save!
     @images.each do |img|
@@ -35,7 +35,7 @@ class NotesController < ApplicationController
   def update
     note = current_user.notes.find_by_id(@note_id)
     note.update_attributes(params[:note])
-    
+
     redirect_to :action => :index
   end
 
@@ -45,6 +45,10 @@ class NotesController < ApplicationController
     redirect_to notes_path, :notice => "Note has been deleted"
   end
 
+  def show_grid
+    @note = current_user.notes.find_by_id(params[:id])
+  end
+  
 private
   def get_note_id
     @note_id = params[:id]

@@ -1,5 +1,5 @@
 class UploadedFile < ActiveRecord::Base
-  attr_accessible :height, :page_number, :public_path, :width
+  attr_accessible :height, :page_number, :public_path, :width, :thumb_url
 
   belongs_to :note
   has_one :user, :through => :note
@@ -12,7 +12,8 @@ class UploadedFile < ActiveRecord::Base
       :width => width,
       :page_number => page_number,
       :public_path => public_path,
-      :created_at => created_at
+      :created_at => created_at,
+      :thumb_url => thumb_url
     }
   end
 end

@@ -8,7 +8,10 @@ TheNotist::Application.routes.draw do
   root :to => 'main#index'
   
   resources :uploaded_files
+  
   resources :notes
+  match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
+
   resources :profile
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]

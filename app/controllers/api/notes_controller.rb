@@ -46,7 +46,7 @@ class Api::NotesController < ApplicationController
     }
   end
 
-  
+
 private
   def get_note
     begin

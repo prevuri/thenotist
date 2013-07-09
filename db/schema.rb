@@ -13,18 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20130707154418) do
 
-  create_table "activities", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "action"
-    t.integer  "trackable_id"
-    t.string   "trackable_type"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "activities", ["trackable_id"], :name => "index_activities_on_trackable_id"
-  add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
-
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
     t.string   "provider"
@@ -50,8 +38,6 @@ ActiveRecord::Schema.define(:version => 20130707154418) do
     t.datetime "updated_at",     :null => false
   end
 
-  add_index "contributors", ["shared_note_id", "user_id"], :name => "index_contributors_on_shared_note_id_and_user_id", :unique => true
-  add_index "contributors", ["shared_note_id"], :name => "index_contributors_on_shared_note_id"
   add_index "contributors", ["user_id"], :name => "index_contributors_on_user_id"
 
   create_table "notes", :force => true do |t|
@@ -83,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20130707154418) do
     t.string   "public_path"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "thumb_url"
   end
 
   create_table "user_fb_data", :force => true do |t|

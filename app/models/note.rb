@@ -1,3 +1,6 @@
+require 'RMagick'
+include Magick
+
 class Note < ActiveRecord::Base
   attr_accessible :description, :title
 
@@ -24,7 +27,17 @@ class Note < ActiveRecord::Base
     converted_pages.each_with_index do |path, i|
       obj = bucket.objects["image_store/#{SecureRandom.uuid}.png"]
       obj.write(Pathname.new(path), :acl => :public_read)
-      images << self.uploaded_files.build(:public_path => obj.public_url.to_s, :page_number => i)
+
+      # get thumbnail
+      obj_thmb = bucket.objects["image_store/#{SecureRandom.uuid}-thumbnail.png"]
+      thumb = ImageList.new(path)
+      thumb = thumb.scale(80*3, 110*3)
+      thumb_path = String.new(path)
+      thumb_path.insert(-5, '-thumbnail')
+      thumb.write(thumb_path)
+      obj_thmb.write(Pathname.new(thumb_path), :acl => :public_read)
+
+      images << self.uploaded_files.build(:public_path => obj.public_url.to_s, :page_number => i, :thumb_url => obj_thmb.public_url.to_s)
     end
 
     # delete the PDF file and other files

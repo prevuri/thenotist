@@ -4,6 +4,60 @@
 
 $comments-sidebar-width: 300px;
 $highlight-color: #27F;
+$thumbnail-width: 240px;
+$thumbnail-height: 330px;
+
+.notes-index-page {
+  .full-screen-overlay {
+    // position: absolute;
+    position: fixed;
+    height: 100%;
+
+    top: 0;
+    right: 0;
+    left: 0;
+  /*    bottom: 0;*/
+    width: 100%;
+    z-index: 999;
+    background-color: rgba(0,0,0,.8);
+  }
+
+  #overview-modal {
+    background-color: rgba(0,0,0,0);
+    border: none;
+
+    .fade.in {
+      opacity: 0;
+    }
+  }
+
+  .modal-container-container {
+    position: absolute;
+    z-index: 1050;
+    top: 0;
+    left: 0;
+    padding-top: 70px;
+    padding-bottom: 70px;
+
+    .modal-container {
+      margin-left: 100px;
+      /*margin-bottom: 70px;*/
+      bottom: 0;
+    }
+  }
+
+
+  .thumb-container {
+    float: left;
+    width: $thumbnail-width;
+    height: $thumbnail-height;
+    border: 3px solid;
+    border-color: transparent;
+    &:hover {
+      border-color: rgb(0, 160, 255);
+    }
+  }
+}
 
 #note-main {
   padding-left: 20px;
@@ -25,6 +79,7 @@ $highlight-color: #27F;
     overflow: auto;
     margin: 15px 0;
   }
+
   .image-container {
     overflow: auto;
 
@@ -153,7 +208,7 @@ $highlight-color: #27F;
   -moz-transition: background-color 0.3s ease;
   -ms-transition: background-color 0.3s ease;
   transition: background-color 0.3s ease;
-  
+
   .comment-inner {
     border-radius: 6px;
     padding: 5px 8px;
@@ -335,9 +390,6 @@ $highlight-color: #27F;
 
 // NOTE UPLOAD PAGE
 .notes-new-page {
-  .hidden {
-    display: none;
-  }
   label {
     cursor: default;
   }
@@ -392,7 +444,7 @@ $highlight-color: #27F;
       margin-left: auto;
       margin-right: auto;
       margin-top: 40px;
-      
+
       .upload-progress-text {
         text-align: right;
         color: #4f4f4f;

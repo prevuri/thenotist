@@ -15,12 +15,15 @@ jQuery ->
 
   # FILE UPLOAD FUNCTIONALITY
   upload_data = 0
+  overview_mode = false;
 
   @showOverlay = () =>
-    $('.full-screen-overlay').show()
+    $('.full-screen-overlay').fadeIn(200)
+    overview_mode = true;
 
   @hideOverlay = () =>
-    $('.full-screen-overlay').hide()
+    $('.full-screen-overlay').fadeOut(200)
+    overview_mode = false;
 
   @showUploadProgress = () =>
     file_name = upload_data.files[0].name || "file"
@@ -28,7 +31,7 @@ jQuery ->
     $('.activity-label.secondary').html("Do not refresh this page")
     $('.upload-progress').show()
 
-  @hideUploadProgress = () => 
+  @hideUploadProgress = () =>
     $('.upload-progress').hide()
 
   @showSpinner = () =>
@@ -50,7 +53,7 @@ jQuery ->
 
   @hideSpinner = () =>
     $('.processing-container').hide()
-  
+
   @handleError = () =>
     alert "Something went wrong, try again later."
     @hideOverlay()
@@ -117,8 +120,8 @@ jQuery ->
 
     fail: (e, data) =>
       @handleError()
-  
-  
+
+
   #SHARING
   $('.share-note').click (e) =>
     @shareClick(e)
@@ -129,14 +132,14 @@ jQuery ->
       id: note_id,
       userid: ui.item.id
     }
-    $.post('/api/notes/share', data, (response) => 
+    $.post('/api/notes/share', data, (response) =>
       if !response.success
         alert response.error
     )
-    
+
   @shareClick = (e) =>
     $.get('/api/buddies', (response) =>
-      $('#buddies').autocomplete({
+      $('#buddies').autocomplete
         source: $.map(response, (value, key) =>
           return {
             label: value,
@@ -145,17 +148,20 @@ jQuery ->
           }),
         select: (event, ui) =>
           @shareWithUser(event, ui, e.target.getAttribute("note_id"))
-      })
+# <<<<<<< HEAD
     )
-
-    
     $(e.target).parents('.note-item').children('#list-footer').children('.tooltip').toggleClass("hidden", 1000)
-    
-  
+# =======
+#       });
+#     )
+#     $('#buddies').toggleClass("hidden")
+
+
+# >>>>>>> note-overview-page
   # COMMENTING
   $('.note-image').click (e) =>
     @yCoordClick(e)
-  
+
   $('#new-comment-submit').click ->
     if !$(this).hasClass('disabled') 
       $(this).addClass('disabled')
@@ -166,7 +172,7 @@ jQuery ->
 
   $('.new-comment-cancel').click =>
     @hideNewCommentField()
-  
+
   $('body').on "click", ".delete-button", (e) =>
     @deleteClicked(e)
 
@@ -251,18 +257,18 @@ jQuery ->
     @deletingCommentElement = element
 
   @deleteComment = () ->
-    
+
     element = @deletingCommentElement
 
     id = $(element).attr('comment-id')
-    
+
     $.ajax
       url: '/api/comments/' + id,
       type: 'DELETE',
       error: (response) ->
         alert response.error
 
-    $(element).hide(200, () -> 
+    $(element).hide(200, () ->
       $(element).remove()
     )
 
@@ -274,3 +280,56 @@ jQuery ->
     $(element).find('.delete-button').fadeIn(150)
     return false
 
+
+
+
+  # OVERVIEW PAGE FUNCTIONALITY
+  overview_mode = false;
+
+  $('.overview-btn').click () ->
+    $('.modal-container-container').show()
+    $('.modal-container').show()
+    $('.full-screen-overlay').fadeIn(200)
+    overview_mode = true;
+
+    path = $(this).attr('data-path')
+    $.get(path, (response) ->
+      if !response.success
+        alert response.error
+      else
+        for page in response.note.uploaded_files
+          url = "/notes/" + response.note.id + "#Page-" + page.page_number
+          image_container = $('.template.thumb-container').clone()
+          image_container.removeClass('template')
+          image = image_container.find('img')
+          $(image).attr('src', page.thumb_url)
+          $(image).attr('data-path',url)
+
+          $('.modal-container').append(image_container)
+
+        pageCount = response.note.uploaded_files.length
+        thumbWidth = 240
+        if pageCount < 5
+          leftMargin = (documentWidth/2) - (thumbWidth/2)*pageCount
+          modal_container.css("margin-left",leftMargin+"px")
+    )
+
+  @clearOverviewPage = () =>
+    $('.modal-container').empty()
+
+  $('body').keyup (e) =>
+    if (e.keyCode == 27 && overview_mode) # escape
+      # user has pressed space
+      @clearOverviewPage()
+      $('.modal-container-container').hide()
+      $('.full-screen-overlay').hide()
+
+  $('body').on "click", ".thumb-image", (e) ->
+    window.location = $(this).attr("data-path")
+
+  $('body').on "click", ".modal-container-container", (e) =>
+    @clearOverviewPage()
+    $('.modal-container-container').hide()
+    $('.full-screen-overlay').hide()
+
+  return false

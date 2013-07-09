@@ -24,7 +24,8 @@
                 %a.btn.hidden
               #list-footer
                 .big-info
-                  = link_to note.title, note_path(note), :class => 'text-link'  
+                  = link_to note.title, note_path(note), :class => 'text-link'
+                  .btn.btn-info.overview-btn{ :data => {:path => api_note_path(note)} } Overview  
                   .info
                     - unless note.contributing_users.empty?
                       Shared with #{truncate(note.contributing_users.first.name, :length => 17)}
@@ -50,9 +51,15 @@
               #list-footer.shared-note
                 .big-info
                   = link_to note.title, note_path(note), :class => 'text-link'
+                  .btn.btn-info.overview-btn{ :data => {:path => api_note_path(note)} } Overview
                   .info
                     Shared by #{truncate(note.user.name, :length => 17)}
                 .tiny-info
                   %i.icon-comments
                     = note.comments.length
           
+  .modal-container-container.hidden
+    .modal-container
+  .full-screen-overlay.hidden
+.template.thumb-container
+  %img.thumb-image

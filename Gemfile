@@ -12,6 +12,9 @@ gem 'sqlite3'
 # used for connecting to AWS
 gem 'aws-sdk'
 
+# image manipulation
+gem 'rmagick'
+
 # production gems
 gem 'rghost_rails', '~> 0.3.3'
 gem 'devise'
