@@ -28,7 +28,7 @@ jQuery ->
 
   @shareClick = (e) =>
     $.get('/api/buddies', (response) =>
-      $('#buddies').autocomplete
+      $(e.target).parents('.note-item').find('#buddies').autocomplete({
         source: $.map(response, (value, key) =>
           return {
             label: value,
@@ -36,10 +36,14 @@ jQuery ->
             id: key
           }),
         select: (event, ui) =>
-          @shareWithUser(event, ui, e.target.getAttribute("note_id"))
+          if e.target.getAttribute != ""
+            @shareWithUser(event, ui, e.target.getAttribute("note_id"))
+          else
+            @shareWithUser(event, ui, $(e.target).parent().getAttribute("note_id"))
+      })
     )
-    $(e.target).parents('.note-item').children('#list-footer').children('.tooltip').toggleClass("hidden", 1000)
-
+    $(e.target).parents('.note-item').children('.tooltip').toggleClass("hidden", 1000)
+    
   # COMMENTING
   $('.note-image').click (e) =>
     @yCoordClick(e)

@@ -9,12 +9,13 @@ class NotesController < ApplicationController
   def create
     @note = current_user.notes.build(:title => params[:new_note][:title], :description => params[:new_note][:description])
     @images = @note.process(params[:new_note]) if params[:new_note]
-
     # defer the saving of everything until later in case things don't work out
     @note.save!
     @images.each do |img|
       img.save!
     end
+
+    track_activity @note
   end
 
   def unsubscribe

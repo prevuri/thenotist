@@ -1,5 +1,7 @@
 TheNotist::Application.routes.draw do
 
+  resources :activities
+
   get "buddies/index"
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }

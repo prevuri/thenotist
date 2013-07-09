@@ -32,10 +32,10 @@
                 .tiny-info
                   %i.icon-comments
                     = note.comments.length
-                .tooltip.fade.bottom.in.hidden
-                  .tooltip-arrow
-                  .ui-widget.tooltip-inner
-                    %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+              .tooltip.fade.bottom.in.hidden
+                .tooltip-arrow
+                .ui-widget.tooltip-inner
+                  %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
         - @shared_notes.each do |note|
           %li.notes-list-item
             .note-item.shared-note

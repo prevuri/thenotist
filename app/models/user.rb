@@ -9,16 +9,19 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation, :fb_access_token, :remember_me, :provider, :uid
 
   has_one  :user_fb_data
+  has_many :activities
   has_many :notes
   has_many :uploaded_files, through: :notes
   has_many :comments
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :buddies, through: :relationships, source: :buddy
+  has_many :buddy_activities, through: :buddies, source: :activities
   has_many :reverse_relationships, foreign_key: "buddy_id", class_name: "Relationship", dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
   has_many :contributed_to, class_name: "Contributor", dependent: :destroy
   has_many :shared_notes, through: :contributed_to
   has_many :shared_uploaded_files, through: :shared_notes, source: :uploaded_files
+
 
 
   def following?(other_user)

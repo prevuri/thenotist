@@ -1,3 +1,140 @@
 // Place all the styles related to the Main controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$activity-item-background-color: #FFFFFF;
+$sub-section-background-color: #FAFAFA;
+$comment-type-color: #85A4CC;
+$note-type-color: #BD476C;
+$user-type-color: #A5BA3D;
+
+.feed-wrapper {
+	margin: 0 auto;
+	margin-top: 20px;
+	.activity-item {
+		width: 100%;
+		position: relative;
+		min-width: 800px;
+		margin-bottom: 20px;
+		clear: both;
+		.profile-container {
+			width: 50px;
+			height: 50px;
+			float: left;
+			padding: 2px;
+		}
+		#activity-image {
+			float: left;
+		}
+		.tooltip {
+			margin-top: 4px;
+			margin-left: 15px;
+			min-height: 60px;			
+			width: 90%;
+			position: relative;
+			float: left;
+			.tooltip-arrow {
+				position: absolute;
+				top: 20px;
+				border-right-color: $activity-item-background-color;
+			}
+			.tooltip-inner {
+				padding: 10px;
+				width: 100%;
+				max-width: 100%;
+				text-align: left;
+				background-color: $activity-item-background-color;
+				margin-bottom: 10px;
+			}
+		}
+	}
+
+	.activity-type {
+		float:left;
+		border-radius: 3px;
+		overflow: hidden;
+		margin-right: 10px;
+		.comment-type {
+			padding: 3px;
+			background-color: $comment-type-color;
+		}	
+
+		.note-type, .contributor-type{
+			padding: 3px;
+			background-color: $note-type-color;
+		}
+
+		.relationship-type {
+			padding: 3px;
+			background-color: $user-type-color;
+		}
+	}
+	.activity-time {
+		float: right;
+	}
+	
+	.activity {
+		padding-top: 4px;
+		font-size: 1.3em;
+		color: #292929;
+		.user-name {
+			text-decoration: none;
+			color: #515775;
+			font-weight: bold;
+		}
+
+		.subsection {
+			background-color: $sub-section-background-color;
+			min-height: 50px;
+			max-height: 230px;
+			line-height: 50px;
+			margin-top: 15px;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			padding-left: 30px;
+			border-top: 1px #ddd;
+			overflow: hidden;
+			ul.note-list {
+				list-style: none;
+				display: inline;
+				margin: 0;
+				li.note-div {
+					display: inline-block;
+					width: 200px;
+					margin-left: 5px;
+		      background-color: #BEB5AA;
+    		  padding: 1px;
+		      margin-top: 10px;
+      		border: 1px solid #ddd; 
+					.note-image {
+	          height: 200px;
+	          width: 100%;
+	          background-repeat: no-repeat;
+	          background-size: cover !important;
+	          overflow: hidden;
+					} 
+				}
+			}
+
+			.profile-container {
+				width: 100px;
+				height: 100px;
+				float: left;
+				padding: 4px;
+			}	
+
+			.user-info {
+				h2 {
+					font-size: 1.4em;
+					margin-bottom: 0;
+				}
+
+				.profile_info {
+					font-size: 1.2em;
+					margin-bottom: 5px;
+				}
+			}
+
+		}
+	}	
+}

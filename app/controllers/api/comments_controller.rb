@@ -34,11 +34,14 @@ class Api::CommentsController < ApplicationController
 
     # now, construct all the attributes
     begin
-      current_user.comments.create ({
+      @comment = current_user.comments.create({
         :uploaded_file => @file, 
         :text => params[:comment][:text], 
         :ycoord => params[:comment][:ycoord]
       })
+
+      # track the comment activity
+      track_activity @comment
     rescue
       return render :json => {
         :success => false,

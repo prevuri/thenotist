@@ -10,6 +10,10 @@ $profile-image-size: 180px;
 
 .profile_section {
   vertical-align: top;
+
+  h2 {
+    margin-top: 0;
+  }
 }
 
 .profile-buttons {
@@ -24,7 +28,13 @@ $profile-image-size: 180px;
   background: white;
   box-shadow: #444 0px 1px 4px;
   -webkit-user-select: none;
+  margin-top: 5px;
   margin-bottom: 1px;
+  .profile-image {
+    width: inherit;
+    height: inherit;
+    background-size: cover !important;
+  } 
 }
 
 a > .profile-container:active {
@@ -33,8 +43,4 @@ a > .profile-container:active {
   margin-bottom: 0;
 }
 
-.profile-image {
-  width: $profile-image-size;
-  height: $profile-image-size;
-	background-size: cover;
-}
+
