@@ -27,7 +27,7 @@
                   = link_to note.title, note_path(note), :class => 'text-link'  
                   .info
                     - unless note.contributing_users.empty?
-                      Shared with #{note.contributing_users.first.name}
+                      Shared with #{truncate(note.contributing_users.first.name, :length => 17)}
                     - if note.contributing_users.length > 1
                       and #{note.contributing_users.length-1} others
                 .tiny-info
@@ -51,7 +51,7 @@
                 .big-info
                   = link_to note.title, note_path(note), :class => 'text-link'
                   .info
-                    Shared by #{note.user.name}
+                    Shared by #{truncate(note.user.name, :length => 17)}
                 .tiny-info
                   %i.icon-comments
                     = note.comments.length
