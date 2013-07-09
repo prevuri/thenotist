@@ -1,0 +1,10 @@
+.subsection
+	%ul.note-list
+		- activity.trackable.uploaded_files[0...4].each do |file|
+			%li.note-div
+				- if activity.trackable.shared_with? current_user
+					=link_to note_path(activity.trackable) do
+						.note-image{:style => "background: url(#{file.public_path})"}
+				- else
+					.note-image{:style => "background: url(#{file.public_path})"}
+	

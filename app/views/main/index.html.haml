@@ -2,16 +2,21 @@
 	%h2 Activities
 
 	.feed-wrapper
-		- @activities.each do |activity|
-			.activity-item
-				%div.circular#activity-image{:style => "background:url(#{activity.user.user_fb_data.profile_image}) no-repeat"}
-				.act.tooltip.fade.right.in
-					.tooltip-arrow
-					.tooltip-inner
-						.activity-type
-							%div{:class => "#{activity.trackable.class.name.downcase}-type" }
-								= activity.trackable.class.name.upcase
-						= ActivityPresenter.new(activity, self).render_activity
+		- unless @activities.nil?
+			- @activities.each do |activity|
+				.activity-item
+					%div.circular#activity-image{:style => "background:url(#{activity.user.user_fb_data.profile_image}) no-repeat"}
+					.act.tooltip.fade.right.in
+						.tooltip-arrow
+						.tooltip-inner
+							.activity-type
+								%div{:class => "#{activity.trackable.class.name.downcase}-type" }
+									-	if activity.trackable.class.name == "Relationship"
+										USER
+									- else
+										= activity.trackable.class.name.upcase
+
+							= ActivityPresenter.new(activity, self).render_activity
 
 
 / <h1>Activities</h1>
