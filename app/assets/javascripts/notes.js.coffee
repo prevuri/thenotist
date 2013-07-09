@@ -5,6 +5,14 @@
 
 
 jQuery ->
+
+  # GENERAL NOTE UI
+  $('.notes-list-item').hover \
+        (-> $(this).find('.btn-group').removeClass('hidden').fadeIn(150)), \
+        (-> 
+          $(this).find('.btn-group').addClass('hidden').fadeOut(150)
+          $(this).find('.tooltip').addClass('hidden').fadeOut(150))
+
   # FILE UPLOAD FUNCTIONALITY
   upload_data = 0
 
@@ -112,11 +120,11 @@ jQuery ->
   
   
   #SHARING
-  $('.share').click (e) =>
+  $('.share-note').click (e) =>
     @shareClick(e)
 
   @shareWithUser = (event, ui, note_id) =>
-    $('#buddies').addClass("hidden")
+    $('.tooltip').addClass("hidden", 1000)
     data = {
       id: note_id,
       userid: ui.item.id
@@ -137,9 +145,11 @@ jQuery ->
           }),
         select: (event, ui) =>
           @shareWithUser(event, ui, e.target.getAttribute("note_id"))
-      }); 
+      })
     )
-    $('#buddies').toggleClass("hidden")
+
+    
+    $(e.target).parents('.note-item').children('#list-footer').children('.tooltip').toggleClass("hidden", 1000)
     
   
   # COMMENTING

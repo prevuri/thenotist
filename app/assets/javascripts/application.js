@@ -12,12 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require twitter/bootstrap
 //= require_tree .
 //
-//= require bootstrap
-//= require_directory ../../../vendor/assets/javascripts/flat-ui/
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
 //= require jquery.spin
 //= require jquery.ui.autocomplete
+//
+// Removing these requirements for gem
+
+// require bootstrap
+// require_directory ../../../vendor/assets/javascripts/flat-ui/
 

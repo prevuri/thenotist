@@ -45,6 +45,16 @@ class Note < ActiveRecord::Base
     contributors.find_by_user_id(user.id).destroy
   end
 
+  def noncontributors user
+    nc = user.buddies - contributing_users
+    nonContrib = Hash.new
+    
+    nc.each do |n|
+      nonContrib[n.id] = n.name
+    end 
+    nonContrib
+  end
+
   def is_contributor? user
     contributors.each do |con|
       if con.has_user? user

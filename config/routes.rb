@@ -12,13 +12,14 @@ TheNotist::Application.routes.draw do
   resources :profile
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]
-  
+  match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
+
   namespace :api do
     resources :buddies, :only => [ :index ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]
     resources :notes, :only => [ :index, :show, :update]
-    match 'notes/share/' => 'notes#share', :as => :share
+    match 'notes/share/' => 'notes#share', :as => :share_note
   end
 
   # The priority is based upon order of creation:

@@ -3,7 +3,7 @@ class NotesController < ApplicationController
   before_filter :get_note_id, :except => [ :index, :create ]
   def index
     @notes = current_user.notes
-    @notes << current_user.shared_notes
+    @shared_notes = current_user.shared_notes
   end
 
   def create
@@ -17,12 +17,19 @@ class NotesController < ApplicationController
     end
   end
 
+  def unsubscribe
+    @note = current_user.shared_notes.find_by_id(@note_id)
+    @note.revoke_share!(current_user)
+    redirect_to notes_path, :notice => "You have unsubscribed from #{@note.title}"
+  end
+
   def edit
     @note = current_user.notes.find_by_id(@note_id)
   end
 
   def show
     @note = current_user.notes.find_by_id(@note_id)
+    @note = current_user.shared_notes.find_by_id(@note_id) unless @note
   end
 
   def update

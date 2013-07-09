@@ -221,28 +221,98 @@ $highlight-color: #27F;
   overflow: hidden;
 
   .notes-list {
+    ul {
+      list-style: none;
+      display: inline;
+      margin: 0;
+      li {
+        display: inline-block;
+        width: 500px;
+        margin-left: 5px;
+      } 
+    }
     .notes-list-item {
-      overflow: auto;
-      padding: 10px 10px;
+      background-color: #BEB5AA;
+      min-height: 300px;
+      padding: 5px;
+      margin-top: 10px;
+      border: 1px solid #ddd;
 
-      &:nth-child(odd) {
-        background-color: #f2f2f2;
-      }
-      &:nth-child(even) {
-        background-color: #fafafa;
-      }
+      .note-item {
+        position: relative;
 
-      .text-link {
-        float: left;
-        font-size: 1.4em;
-      }
+        #list-footer {
+          height: 80px;
+          width: 100%;
+          background-color:rgba(0,0,0,0.5);
+          z-index: 100;
 
-      .btn {
-        float: right;
-        margin-left: 10px;
+          .info {
+            float: left;
+            font-size: 1em;
+            margin-left: 20px;
+            color: #fff;
+          }
+        }
+
+        .text-link {
+          float: left;
+          color: #fff;
+          font-size: 2em;
+          margin-top: 15px;
+          margin-left: 20px;
+          margin-bottom: 10px;
+
+        }
+
+        .btn-group {
+          margin-right: 0px;
+          margin-top: 10px;
+          border-radius: 0px !important;
+          -webkit-border-radius: 0px !important;
+          position: absolute;
+          top: 0px;
+          right: 10px;
+        }
+
+        .tooltip {
+          right: -10px;
+          top: 35px;
+          .tooltip-arrow {
+            border-bottom-color:rgba(0,0,0,0.5);
+          }
+          .tooltip-inner {
+            width: 210px;
+            background-color:rgba(0,0,0,0.5);
+            #buddies {
+              margin-bottom: 10px;
+              height: 20px;
+              font-size: 10px;
+            }
+          }
+        }
+
+        .shared-note .btn {
+          float: right;
+          margin-top: 10px;
+        }
+        
+
+        .img-preview {
+          height: 300px;
+          width: 100%;
+          background-position: 10% 10%;
+          background-repeat: no-repeat;
+          background-size: 100%;
+          overflow: hidden;
+        }
       }
     }
   }
+}
+
+.ui-autocomplete {
+  z-index: 1040;
 }
 
 // NOTE UPLOAD PAGE

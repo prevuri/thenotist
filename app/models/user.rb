@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :followers, through: :reverse_relationships, source: :follower
   has_many :contributed_to, class_name: "Contributor", dependent: :destroy
   has_many :shared_notes, through: :contributed_to
+  has_many :shared_uploaded_files, through: :shared_notes, source: :uploaded_files
 
 
   def following?(other_user)
