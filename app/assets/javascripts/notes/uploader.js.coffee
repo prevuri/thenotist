@@ -21,6 +21,10 @@ Uploader = () ->
     $('.submit-action-text').html "Processing file ..."
     @showSpinner()
 
+  @hideProcessing = () =>
+    $('.processing-label').hide()
+    $('.spinner-container').hide()
+
   @showSpinner = () =>
     file_name = ""
     file_name = upload_data.files[0].name if upload_data
@@ -34,9 +38,18 @@ Uploader = () ->
       speed: 1.2,
       shadow: false,
       color: '#a6a6a6'
+    
 
-  @hideSpinner = () =>
-    $('.processing-container').hide()
+  @resetUI = () =>
+    @hideUploadProgress()
+    @hideProcessing()
+    @enableUploadControls()
+    $('.submit-action-icon').show()
+    $('.submit-action-text').html "Upload"
+    upload_data = 0
+    @updateFileName()
+    $('#upload_form_tag')[0].reset()
+    @validateUploadForm()
 
   @handleError = () =>
     alert "Something went wrong, try again later."
@@ -103,9 +116,9 @@ Uploader = () ->
 
   $('.submit-action').click =>
     if !$('.submit-action').hasClass("disabled") && @validateUploadForm()
-      @disableUploadControls()
       @showUploading()
       upload_data.submit()
+      @disableUploadControls()
 
   $('.new-file-upload').fileupload
     dataType: 'json'
@@ -127,10 +140,9 @@ Uploader = () ->
         @showProcessing()
       else
         parent = $('.upload-progress')
-        parent.find('.upload-progress-text').html(Math.round((data.loaded / 1000)) + "KB / " + Math.roun((data.total / 1000)) + "KB")
+        parent.find('.upload-progress-text').html(Math.round((data.loaded / 1000)) + "KB / " + Math.round((data.total / 1000)) + "KB")
         progressValue = parseInt(data.loaded / data.total * 100, 10)
         parent.find('.bar').css('width', progressValue + '%')
-        alert progressValue + "%"
 
     done: (e, data) =>
       if (data.result["success"])

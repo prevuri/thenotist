@@ -5,24 +5,14 @@ class NotesController < ApplicationController
   end
 
   def create
-    puts "*****************"
-    puts "*****************"
-    puts "*****************"
-
-    puts params[:new_note].inspect
-
-    puts "*****************"
-    puts "*****************"
-    puts "*****************"
-
     @note = current_user.notes.build(:title => params[:new_note][:title], :description => params[:new_note][:description])
-    # @images = @note.process(params[:new_note]) if params[:new_note]
+    @images = @note.process(params[:new_note]) if params[:new_note]
 
-    # # defer the saving of everything until later in case things don't work out
-    # @note.save!
-    # @images.each do |img|
-    #   img.save!
-    # end
+    # defer the saving of everything until later in case things don't work out
+    @note.save!
+    @images.each do |img|
+      img.save!
+    end
   end
 
   def new

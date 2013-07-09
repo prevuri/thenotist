@@ -3,11 +3,43 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
+
 jQuery ->
+  #SHARING
+  $('.share').click (e) =>
+    @shareClick(e)
+
+  @shareWithUser = (event, ui, note_id) =>
+    $('#buddies').addClass("hidden")
+    data = {
+      id: note_id,
+      userid: ui.item.id
+    }
+    $.post('/api/notes/share', data, (response) => 
+      if !response.success
+        alert response.error
+    )
+    
+  @shareClick = (e) =>
+    $.get('/api/buddies', (response) =>
+      $('#buddies').autocomplete({
+        source: $.map(response, (value, key) =>
+          return {
+            label: value,
+            value: value,
+            id: key
+          }),
+        select: (event, ui) =>
+          @shareWithUser(event, ui, e.target.getAttribute("note_id"))
+      }); 
+    )
+    $('#buddies').toggleClass("hidden")
+    
+  
   # COMMENTING
   $('.note-images').click (e) =>
     @yCoordClick(e)
-
+  
   $('#new-comment-submit').click =>
     @submitComment( $('#new-comment-submit').attr('file-id') )
 
@@ -17,7 +49,7 @@ jQuery ->
 
   $('.new-comment-cancel').click =>
     @hideNewCommentField()
-
+  
   $('body').on "click", ".delete-button", (e) =>
     @deleteClicked(e)
 
@@ -65,7 +97,7 @@ jQuery ->
     $('#new-comment-position-line').hide(100, () ->
       $('#new-comment-panel').hide(200, () ->
         $('#new-comment-header-container').fadeOut(200);
-        $('#new-comment-container').fadeOut(200, () ->
+        $('#new-comment-container').fadeOut(200, () -> 
           $('#note-main').removeClass('new-comment-showing')
         )
       );
@@ -103,18 +135,18 @@ jQuery ->
     @deletingCommentElement = element
 
   @deleteComment = () ->
-
+    
     element = @deletingCommentElement
 
     id = $(element).attr('comment-id')
-
+    
     $.ajax
       url: '/api/comments/' + id,
       type: 'DELETE',
       error: (response) ->
         alert response.error
 
-    $(element).hide(200, () ->
+    $(element).hide(200, () -> 
       $(element).remove()
     )
 
@@ -125,4 +157,3 @@ jQuery ->
     $(element).find('.delete-confirm-panel').hide(150)
     $(element).find('.delete-button').fadeIn(150)
     return false
-
