@@ -13,7 +13,7 @@
 		- @friends_using.each do |friend|
 			.friends-list-item
 				.friend-info
-					.profile-image-container.circular
+					.profile-container.circular
 						%img.profile-image.circular{:src => friend["picture"]["data"]["url"]}
 					.profile-link-container= link_to friend["name"], profile_path(friend[:id])
 				- unless current_user.following?(User.find(friend[:id]))
