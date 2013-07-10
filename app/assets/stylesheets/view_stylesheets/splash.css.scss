@@ -17,18 +17,18 @@ $review-5-left: 1190px;
 
 /*splash page css*/
 #splash {
-   
+
   .proper-content {
     padding-top: 40px; /* >= navbar height */
   }
-   
+
   .wrapper {
     min-height: 100%;
     min-width: 940px;
     height: auto !important;
     height: 100%;
   }
-   
+
   .push {
     height: 50px; /* same as the footer */
   }
@@ -54,14 +54,14 @@ $review-5-left: 1190px;
   }
 
   .notist-logo {
-    background:url('/assets/logo/logo2.png') no-repeat; 
+    background:url('/assets/logo/logo3.png') no-repeat;
     background-size: 500px 200px;
     height: 50%;
   }
 
   .theme-background {
     height: 500px;
-    width: 100%;  
+    width: 100%;
     // background-position: center;
     background-size:cover;
     // filter:blur(4px);
@@ -80,8 +80,11 @@ $review-5-left: 1190px;
   // }
 
   #themeback-one {
-    background-image:url('/assets/splash/ironman.jpg');
-    // background-size: 100% 170%;
+    // background-image:url('/assets/splash/ironman.jpg');
+    // background-image:url('/assets/splash/fightclub.jpg');
+    background-image:url('/assets/splash/fantasylibrary2.jpg');
+
+    background-size: 100% 130%;
   }
 
   #themeback-two {
@@ -119,7 +122,7 @@ $review-5-left: 1190px;
         background-image:url('/assets/splash/Retina-Ready@2x.png');
       }
     }
- 
+
   }
 
 
@@ -135,13 +138,13 @@ $review-5-left: 1190px;
     .review .tooltip-inner {
       position: inherit;
       display: block;
-      background-color: rgb(64, 31, 148); 
+      background-color: rgb(64, 31, 148);
       font-size: 20px;
       line-height: 130%;
       font-family: "Open Sans",Arial,Helvetica,sans-serif;
     }
 
-    .review .tooltip-arrow { 
+    .review .tooltip-arrow {
       position: inherit;
       border-top-color: rgb(64, 31, 148) !important;
       border-bottom-color: rgb(64, 31, 148) !important;
@@ -153,7 +156,7 @@ $review-5-left: 1190px;
       width: 400px;
     }
 
-    #review_1 .tooltip-arrow { 
+    #review_1 .tooltip-arrow {
       top: $review-1-top - 9;
       left: 60px;
     }
@@ -165,7 +168,7 @@ $review-5-left: 1190px;
       width: 800px;
     }
 
-    #review_2 .tooltip-arrow { 
+    #review_2 .tooltip-arrow {
       top: $review-2-top + 76px;
       left: $review-2-left + 40px;
     }
@@ -177,18 +180,18 @@ $review-5-left: 1190px;
       width: 400px;
     }
 
-    #review_3 .tooltip-arrow { 
+    #review_3 .tooltip-arrow {
       top: $review-3-top + 336px;
       left: $review-3-left + 40px;
     }
- 
+
     #review_4 .tooltip-inner {
       top: $review-4-top;
       left: $review-4-left;
       width: 400px;
     }
 
-    #review_4 .tooltip-arrow { 
+    #review_4 .tooltip-arrow {
       top: $review-4-top + 102px;
       left: $review-4-left + 40px;
     }
@@ -199,7 +202,7 @@ $review-5-left: 1190px;
       width: 400px;
     }
 
-    #review_5 .tooltip-arrow { 
+    #review_5 .tooltip-arrow {
       top: $review-5-top + 95;
       left: $review-5-left + 50px;
     }
@@ -237,7 +240,7 @@ $review-5-left: 1190px;
   }
 
   .footer-wrapper {
-    background-color: #313233; 
+    background-color: #313233;
     position: relative;
     height: 110px;
     min-width: 940px;

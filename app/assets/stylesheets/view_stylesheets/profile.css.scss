@@ -8,7 +8,11 @@ $profile-image-size: 180px;
   float:left;
 }
 
-.profile_section {
+.profile-image-section {
+  margin-top: 5px;
+}
+
+.profile-section {
   vertical-align: top;
 
   h2 {
@@ -28,7 +32,6 @@ $profile-image-size: 180px;
   background: white;
   box-shadow: #444 0px 1px 4px;
   -webkit-user-select: none;
-  margin-top: 5px;
   margin-bottom: 1px;
   .profile-image {
     width: inherit;
