@@ -12,9 +12,10 @@
 	.friends-list
 		- @friends_using.each do |friend|
 			.friends-list-item
-				.profile-container.circular
-					%img.profile-image.circular{:src => friend["picture"]["data"]["url"]}
-				= link_to friend["name"], profile_path(friend[:id])
+				.friend-info
+					.profile-image-container.circular
+						%img.profile-image.circular{:src => friend["picture"]["data"]["url"]}
+					.profile-link-container= link_to friend["name"], profile_path(friend[:id])
 				- unless current_user.following?(User.find(friend[:id]))
 					= form_for current_user.relationships.build(buddy_id: friend[:id]) do |f|
 						%div= f.hidden_field :buddy_id
@@ -25,7 +26,8 @@
 	.friends-list
 		- @friends_data.each do |friend|
 			.friends-list-item
-				.profile-container.circular
-					%img.profile-image.circular{:src => friend["picture"]["data"]["url"]}
-				= friend["name"]
+				.friend-info
+					.profile-image-container.circular
+						%img.profile-image.circular{:src => friend["picture"]["data"]["url"]}
+					.profile-link-container= friend["name"]
 
