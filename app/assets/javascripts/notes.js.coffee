@@ -4,10 +4,7 @@
 
 jQuery ->
 
-  # GENERAL NOTE UI
   $('.notes-list-item').hover \
-        (-> $(this).find('.btn-group').removeClass('hidden').fadeIn(150)), \
-        (-> 
-          $(this).find('.btn-group').addClass('hidden').fadeOut(150)
-          $(this).find('.tooltip').addClass('hidden').fadeOut(150))
-  return false
+    (-> ), \
+    (->
+      $(this).find('.tooltip').addClass('hidden').fadeOut(150))

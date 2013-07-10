@@ -36,19 +36,19 @@ $thumbnail-height: 330px;
     z-index: 1050;
     top: 0;
     left: 0;
+    right: 0;
     padding-top: 70px;
     padding-bottom: 70px;
 
     .modal-container {
-      margin-left: 100px;
-      /*margin-bottom: 70px;*/
-      bottom: 0;
+      text-align: center;
+      margin: 0 100px;
     }
   }
 
 
   .thumb-container {
-    float: left;
+    display: inline-block;
     width: $thumbnail-width;
     height: $thumbnail-height;
     border: 3px solid;
@@ -291,6 +291,17 @@ $thumbnail-height: 330px;
       .note-item {
         position: relative;
 
+        .appear-hover {
+          opacity: 0;
+          -webkit-transition: opacity 0.2s ease;
+        }
+
+        &:hover {
+          .appear-hover {
+            opacity: 1;
+          }
+        }
+
         #list-footer {
           height: 80px;
           width: 100%;
@@ -329,6 +340,16 @@ $thumbnail-height: 330px;
 
         }
 
+        i.btn {
+          font-size: 20px;
+        }
+
+        .overview-btn {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+        }
+
         .btn-group {
           margin-right: 0px;
           margin-top: 10px;
@@ -337,6 +358,19 @@ $thumbnail-height: 330px;
           position: absolute;
           top: 0px;
           right: 10px;
+          .btn {
+            border-radius: 0;
+            display: inline-block;
+          }
+          a {
+            text-decoration: none;
+          }
+          a:first-child .btn {
+            border-radius: 4px 0 0 4px;
+          }
+          a:last-child .btn {
+            border-radius: 0 4px 4px 0;
+          }
         }
 
         .tooltip {
