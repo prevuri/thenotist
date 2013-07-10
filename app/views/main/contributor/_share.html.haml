@@ -1,2 +1,6 @@
-shared a note with you: 
+- unless activity.user == current_user
+	shared a note with you: 
+- else
+	= "shared a note with #{activity.user}: "
+
 = link_to activity.trackable.shared_note.title, note_path(activity.trackable.shared_note)

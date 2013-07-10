@@ -1,2 +1,6 @@
-started following
-=link_to activity.trackable.buddy.name.split[0], profile_path(activity.trackable.buddy)
+- unless activity.user == current_user
+	started following you
+- else
+	have a new follower: 
+	=link_to activity.trackable.buddy.name.split[0], profile_path(activity.trackable.buddy)
+
