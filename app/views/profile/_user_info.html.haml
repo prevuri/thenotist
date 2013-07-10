@@ -1,5 +1,5 @@
 %ul.inline
-  %li
+  %li.profile-image-section
     - if defined? name_link and name_link == true
       = link_to profile_path(:id => user_info.id), :class => 'text-link' do
         .profile-container.circular
@@ -8,20 +8,20 @@
       .profile-container.circular
         .profile-image.circular{:style => "background:url(#{user_info.user_fb_data.profile_image}) no-repeat"}
 
-  %li.profile_section
+  %li.profile-section
     .info
       %h2
         - if defined? name_link and name_link == true
           = link_to user_info.name, profile_path(:id => user_info.id), :class => 'text-link'
         - else
           = user_info.name
-      .profile_info 
+      .profile-info 
         = user_info.notes.length
         notes
-      .profile_info 
+      .profile-info 
         = user_info.buddies.length
         buddies
-      .profile_info 
+      .profile-info 
         = user_info.followers.length
         followers
       - if defined? show_buttons and show_buttons = true
