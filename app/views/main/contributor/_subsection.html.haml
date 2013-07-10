@@ -1,0 +1,6 @@
+.subsection
+	%ul.note-list
+		- activity.trackable.shared_note.uploaded_files[0...4].each do |file|
+			%li.note-div
+				=link_to note_path(activity.trackable) do
+					.note-image{:style => "background: url(#{file.public_path})"}
