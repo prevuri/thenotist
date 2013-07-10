@@ -27,7 +27,7 @@
 		- @friends_data.each do |friend|
 			.friends-list-item
 				.friend-info
-					.profile-image-container.circular
+					.profile-container.circular
 						%img.profile-image.circular{:src => friend["picture"]["data"]["url"]}
 					.profile-link-container= friend["name"]
 
