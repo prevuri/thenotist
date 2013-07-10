@@ -30,6 +30,10 @@ Overview = () ->
           modal_container.css("margin-left",leftMargin+"px")
     )
 
+  @hideOverviewModal = () =>
+    $('.modal-container-container').fadeOut(200)
+    $('.full-screen-overlay').fadeOut(200)
+
   @clearOverviewPage = () =>
     $('.modal-container').empty()
 
@@ -45,9 +49,9 @@ Overview = () ->
 
   $('body').on "click", ".full-screen-overlay, .modal-container, .modal-container-container", (e) =>
     @clearOverviewPage()
-    $('.modal-container-container').hide()
-    $('.full-screen-overlay').hide()
-  
+    @hideOverviewModal()
+
+
   return false
 
 $ ->
