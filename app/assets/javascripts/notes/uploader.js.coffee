@@ -153,6 +153,8 @@ Uploader = () ->
 
     fail: (e, data) =>
       @handleError()
+  
+  return false
 
 $ ->
   if $('.create-new-note-container').length > 0
