@@ -8,54 +8,11 @@
       %ul
         - @notes.each do |note|
           %li.notes-list-item
-            .note-item
-              = link_to note_path(note) do
-                .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}
-              .btn-group.hidden
-                %a.btn.hidden
-                = link_to '#', :class => 'share-note btn', :note_id => note.id do
-                  %i.icon-share
-                = link_to edit_note_path(note), :class => 'btn' do
-                  %i.icon-edit
-                = link_to note_path(note), :method => :delete, :class => 'btn' do
-                  %i.icon-remove
-                %a.btn.hidden
-              #list-footer
-                .big-info
-                  = link_to note.title, note_path(note), :class => 'text-link'
-                  .btn.btn-info.overview-btn{ :data => {:path => api_note_path(note)} } Overview  
-                  .info
-                    - unless note.contributing_users.empty?
-                      Shared with #{truncate(note.contributing_users.first.name, :length => 17)}
-                    - if note.contributing_users.length > 1
-                      and #{note.contributing_users.length-1} others
-                .tiny-info
-                  %i.icon-comments
-                    = note.comments.length
-              .tooltip.fade.bottom.in.hidden
-                .tooltip-arrow
-                .ui-widget.tooltip-inner
-                  %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+            = render 'grid_item', :note => note, :shared => false
         - @shared_notes.each do |note|
           %li.notes-list-item
-            .note-item.shared-note
-              = link_to note_path(note) do
-                .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}
-                .btn-group.hidden
-                  %a.btn.hidden
-                  = link_to unsubscribe_note_path(note), :class => 'btn usub' do
-                    %i.icon-remove
-                  %a.btn.hidden
-              #list-footer.shared-note
-                .big-info
-                  = link_to note.title, note_path(note), :class => 'text-link'
-                  .btn.btn-info.overview-btn{ :data => {:path => api_note_path(note)} } Overview
-                  .info
-                    Shared by #{truncate(note.user.name, :length => 17)}
-                .tiny-info
-                  %i.icon-comments
-                    = note.comments.length
-          
+            = render 'grid_item', :note => note, :shared => true
+                  
   .modal-container-container.hidden
     .modal-container
   .full-screen-overlay.hidden
