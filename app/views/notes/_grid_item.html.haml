@@ -7,8 +7,10 @@
       = link_to unsubscribe_note_path(note), :class => 'btn usub' do
         %i.icon-remove
     - else
-      = link_to '#', :note_id => note.id do
+      %a.share-note-link{:note_id => note.id}
         %i.icon-share.share-note.btn
+      / = link_to '', :note_id => note.id do
+      /   %i.icon-share.share-note.btn
       = link_to edit_note_path(note) do
         %i.icon-edit.btn
       = link_to note_path(note), :method => :delete do
