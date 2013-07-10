@@ -1,6 +1,7 @@
-- unless activity.user == current_user
-	shared a note with you: 
+- if activity.user != current_user
+  shared a note with you: 
 - else
-	= "shared a note with #{activity.user}: "
-
+  = "shared a note with "
+  = link_to(activity.user.name.split[0], profile_path(activity.user))
+  = ": "
 = link_to activity.trackable.shared_note.title, note_path(activity.trackable.shared_note)

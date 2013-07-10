@@ -1,2 +1,5 @@
 uploaded a new note: 
-= "#{activity.trackable.title}"
+- if activity.user == current_user
+  = link_to activity.trackable.title, note_path(activity.trackable)
+- else
+  = "#{activity.trackable.title}"

@@ -1,5 +1,5 @@
 .profile
-  = render :partial => 'user_info', :object => current_user, :locals => {:show_buttons => true}
+  = render :partial => 'user_info', :object => @user, :locals => {:show_buttons => true}
   
   .activity-list-container
     - if @activities
