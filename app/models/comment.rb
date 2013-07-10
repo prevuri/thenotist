@@ -5,6 +5,9 @@ class Comment < ActiveRecord::Base
   belongs_to :uploaded_file
   belongs_to :user
 
+  after_create :track_activity
+  before_destroy :destroy_activity
+
   def as_json options = {}
     {
       :id => id,
@@ -14,5 +17,12 @@ class Comment < ActiveRecord::Base
       :ycoord => ycoord,
       :created_at => created_at
     }
+  end
+
+private
+  def track_activity
+  end
+  def destroy_activity
+
   end
 end
