@@ -85,7 +85,6 @@ $thumbnail-height: 330px;
 
     .image-border {
       border: solid 1px #aaa;
-      display: inline-block;
     }
   }  
   .comments-container {
@@ -309,14 +308,15 @@ $thumbnail-height: 330px;
           z-index: 100;
           
           .big-info {
-            float: left;            
+            float: left; 
+            width: 80%;           
           }
 
           .info {
             font-size: 1em;
             margin-left: 20px;
             color: #fff;
-            width: 80%;
+            clear: both;
           }
 
           .tiny-info {

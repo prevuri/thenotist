@@ -25,6 +25,7 @@ class MainController < ApplicationController
 
       unless @activities.empty?
         @activities = @activities.sort_by { |act| act.created_at }
+        @activities = @activities.reverse
       end
     end
   end
