@@ -2,9 +2,9 @@
 	%ul.note-list
 		- activity.trackable.uploaded_files[0...4].each do |file|
 			%li.note-div
-				- if activity.trackable.shared_with? current_user or activity.user == current_user
-					=link_to note_path(activity.trackable) do
-						.note-image{:style => "background: url(#{file.public_path})"}
+				- if activity.trackable and (activity.trackable.shared_with? current_user or activity.user == current_user)
+					=link_to note_path(activity.trackable.id) do
+						.note-image{:style => "background: url(#{file.thumb_url})"}
 				- else
-					.note-image{:style => "background: url(#{file.public_path})"}
+					.note-image{:style => "background: url(#{file.thumb_url})"}
 	
