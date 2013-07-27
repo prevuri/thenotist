@@ -80,11 +80,16 @@ $thumbnail-height: 330px;
     margin: 15px 0;
   }
 
-  .image-container {
+  .image-container-outer {
     overflow: auto;
 
-    .image-border {
-      border: solid 1px #aaa;
+    .image-container {
+      display: inline-block;
+      max-width: 100%;
+
+      .image-border {
+        border: solid 1px #aaa;
+      }
     }
   }  
   .comments-container {
