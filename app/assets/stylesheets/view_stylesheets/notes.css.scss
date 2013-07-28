@@ -50,7 +50,7 @@ $thumbnail-height: 330px;
   .thumb-container {
     display: inline-block;
     width: $thumbnail-width;
-    height: $thumbnail-height;
+    // height: 100%;//$thumbnail-height;
     border: 3px solid;
     border-color: transparent;
     &:hover {
@@ -344,6 +344,12 @@ $thumbnail-height: 330px;
           margin-left: 20px;
           margin-bottom: 10px;
 
+          width: 300px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          
+
         }
 
         i.btn {
@@ -397,9 +403,11 @@ $thumbnail-height: 330px;
         }
 
         .img-preview {
-          height: 310px;
+          vertical-align: top;
+          height: 280px;//275px;
           width: 100%;
           background-position: 10% 10%;
+          background-position:top;
           background-repeat: no-repeat;
           background-size: 100%;
           overflow: hidden;

@@ -31,7 +31,10 @@ class Note < ActiveRecord::Base
       # get thumbnail
       obj_thmb = bucket.objects["image_store/#{SecureRandom.uuid}-thumbnail.png"]
       thumb = ImageList.new(path)
-      thumb = thumb.scale(80*3, 110*3)
+      thumb = thumb.scale(1)
+      new_width = 80*3
+      new_height = new_width * thumb.page.height / thumb.page.width
+      thumb = thumb.scale(new_width, new_height)
       thumb_path = String.new(path)
       thumb_path.insert(-5, '-thumbnail')
       thumb.write(thumb_path)

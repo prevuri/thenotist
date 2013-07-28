@@ -20,8 +20,8 @@ Overview = () ->
           image = image_container.find('img')
           $(image).attr('src', page.thumb_url)
           $(image).attr('data-path',url)
-
           $('.modal-container').append(image_container)
+
 
         pageCount = response.note.uploaded_files.length
         thumbWidth = 240

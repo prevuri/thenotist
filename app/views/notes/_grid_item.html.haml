@@ -1,7 +1,7 @@
 .note-item{ :data => {:id => note.id} }
   %i.icon-th.btn.overview-btn.appear-hover{ :data => {:path => api_note_path(note)} }
   = link_to note_path(note) do
-    %img{:src => "#{note.uploaded_files.first.public_path}"}
+    .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}    
   .btn-group.appear-hover
     - if shared
       = link_to unsubscribe_note_path(note), :class => 'btn usub' do
@@ -35,3 +35,5 @@
       .tooltip-arrow
       .ui-widget.tooltip-inner
         %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+
+/ %img{:src => "#{note.uploaded_files.first.public_path}"}
