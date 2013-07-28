@@ -16,7 +16,7 @@ class Api::CommentsController < ApplicationController
     end
 
     # only render top-level comments, because their children will be rendered recursively
-    @comments = @file.comments.select { |c| c.parent_comment.nil? }
+    @comments = @file.top_level_comments
     return render :json => {
       :success => true,
       :comments => @comments.map { |c| c.as_json }
@@ -54,7 +54,7 @@ class Api::CommentsController < ApplicationController
 
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
-    @comments = @file.comments
+    @comments = @file.top_level_comments
     return render :json => {
       :success => true,
       :comments_html => render_to_string(:partial => "notes/comments", :object => @comments)
@@ -83,7 +83,7 @@ class Api::CommentsController < ApplicationController
 
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
-    @comments = current_user.comments
+    @comments = @file.top_level_comments
     return render :json => { 
       :success => true,
       :comments => @comments.map { |c| c.as_json }
