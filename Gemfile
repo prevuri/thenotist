@@ -22,6 +22,14 @@ gem 'omniauth'
 gem 'koala', '~> 1.6.0'
 gem 'omniauth-facebook'
 
+# for asynchronous PDF conversion
+# NOTE: have to install redis first: 'brew install redis'
+#       and launch a redis server: 'redis-server /usr/local/etc/redis.conf'
+#       and launch a sidekiq server: 'bundle exec sidekiq'
+gem 'sidekiq'
+gem 'sinatra', :require => false
+gem 'slim'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do

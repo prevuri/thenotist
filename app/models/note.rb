@@ -11,11 +11,7 @@ class Note < ActiveRecord::Base
   has_many :comments, :through => :uploaded_files
 
   def process (upload)
-    # create a random name for the uploaded file
-    local_pdf_file = File.join("private/user_uploads", SecureRandom.uuid)
-
-    # get the uploaded file
-    File.open(local_pdf_file, "wb") { |f| f.write(upload[:file].read) }
+    local_pdf_file = upload[:file].tempfile.path
 
     # PDF -> PNG
     converted_pages = RGhost::Convert.new(local_pdf_file).to :png, :resolution => 144, :multipage => true

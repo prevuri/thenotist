@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130707154418) do
+ActiveRecord::Schema.define(:version => 20130728185010) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -39,8 +39,9 @@ ActiveRecord::Schema.define(:version => 20130707154418) do
     t.integer  "user_id"
     t.text     "text"
     t.decimal  "ycoord"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.integer  "parent_comment_id"
   end
 
   create_table "contributors", :force => true do |t|
