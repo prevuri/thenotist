@@ -1,9 +1,12 @@
 class Comment < ActiveRecord::Base
   default_scope order('ycoord ASC')
 
-  attr_accessible :text, :ycoord, :uploaded_file
+  attr_accessible :text, :ycoord, :uploaded_file, :parent_comment
   belongs_to :uploaded_file
   belongs_to :user
+
+  belongs_to :parent_comment, :class_name => Comment
+  has_many :child_comments, :class_name => Comment, :foreign_key => :parent_comment_id, :dependent => :destroy
 
   after_create :track_activity
   before_destroy :destroy_activity
