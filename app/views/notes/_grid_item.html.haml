@@ -1,7 +1,7 @@
-.note-item
+.note-item{ :data => {:id => note.id} }
   %i.icon-th.btn.overview-btn.appear-hover{ :data => {:path => api_note_path(note)} }
   = link_to note_path(note) do
-    .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}
+    %img{:src => "#{note.uploaded_files.first.public_path}"}
   .btn-group.appear-hover
     - if shared
       = link_to unsubscribe_note_path(note), :class => 'btn usub' do
