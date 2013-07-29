@@ -1,11 +1,10 @@
-- if @images.nil?
+- if @worker_started
   :plain
     {
-      "success": false
+      "success": true
     }
 - else
   :plain
     {
-      "success": true,
-      "uri": "#{note_path(@note)}"
+      "success": false
     }

@@ -146,8 +146,7 @@ Uploader = () ->
 
     done: (e, data) =>
       if (data.result["success"])
-        document.location.href = data.result["uri"]
-        upload_data = 0 # clear the file
+        alert "Your data is being processed"
       else
         @handleError()
 

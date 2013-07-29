@@ -1,21 +1,25 @@
 class NotesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_note_id, :except => [ :index, :create ]
+
   def index
     @notes = current_user.notes
     @shared_notes = current_user.shared_notes
   end
 
   def create
-    @note = current_user.notes.build(:title => params[:new_note][:title], :description => params[:new_note][:description])
-    @images = @note.process(params[:new_note]) if params[:new_note]
-    # defer the saving of everything until later in case things don't work out
-    @note.save!
-    @images.each do |img|
-      img.save!
+    begin
+      @note = current_user.notes.create(:title => params[:new_note][:title], :description => params[:new_note][:description])
+      local_pdf_file = params[:new_note][:file].tempfile.path
+      DocumentConversionWorker.perform_async({
+        :current_user_id => current_user.id,
+        :note_id => @note.id,
+        :local_pdf_file => local_pdf_file
+      })
+      @worker_started = true
+    rescue
+      @worker_started = false
     end
-
-    track_activity @note
   end
 
   def unsubscribe
