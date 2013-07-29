@@ -5,25 +5,29 @@
   .note-images
     - @note.uploaded_files.each do |file|
       .file-container
-        .comments-container
-          = render :partial => 'comments', :object => file.top_level_comments
+
         .image-container-outer
           .image-container
             .image-border
               %a{ :name => "Page-#{file.page_number}"}
               = image_tag file.public_path, :class => 'note-image', :'file-id' => file.id
+        .comments-container
+          = render :partial => 'comments', :object => file.top_level_comments     
+          .tooltip.fade.right.in#new-comment-panel
+            .tooltip-arrow
+            .tooltip-inner
+              #new-comment-position-line
+                / .left-arrow
+              = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
 
-  #new-comment-panel
-    #new-comment-position-line
-      .left-arrow
-    = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
+              -# NOTE: upon submit we actually need a file ID of the file that the user is commenting on,
+              -#       but we don't have that functionality yet, so we are just gonna pick the first file
+              -#       in the note instead
+              .btndiv
+                .new-comment-cancel.btn
+                  Cancel
+                = submit_tag 'Submit', :id => 'new-comment-submit', :class => 'btn btn-primary'
 
-    -# NOTE: upon submit we actually need a file ID of the file that the user is commenting on,
-    -#       but we don't have that functionality yet, so we are just gonna pick the first file
-    -#       in the note instead
-    .new-comment-cancel.btn
-      Cancel
-    = submit_tag 'Submit', :id => 'new-comment-submit', :class => 'btn btn-primary'
 #new-comment-header-container
   .new-comment-cancel.btn x
   %h3 New Comment
