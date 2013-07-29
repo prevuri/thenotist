@@ -31,6 +31,9 @@ Commenting = () ->
   $('body').on "click", ".delete-confirm", (e) =>
     @deleteComment()
 
+  $('body').on "click", ".comment-button", (e) =>
+    @showComment(e.target)
+
   @submitComment = () ->
     if !@submitting
       @commentText = $('#newcomment').val()
@@ -112,14 +115,23 @@ Commenting = () ->
     else
       @activeComment = null;
 
+  @showComment = (commentButton) =>
+    if @activeComment
+      $(@activeComment).hide(200)
+    @activeComment = $(commentButton).parents('.comment-thread-container').children('.comment.parent')
+    $(@activeComment).show(200)
+
   @deleteClicked = (e) =>
     $(e.target).fadeOut(150)
-    @showDeleteConfirmation($(e.target).parents('.comment-inner'))
+    @showDeleteConfirmation($(e.target).parents('.comment'))
     return false
 
   @showDeleteConfirmation = (element) ->
     $(element).find('.delete-confirm-panel').show(150)
-    @deletingCommentElement = $(element).parent()
+    if $(element).hasClass('parent')
+      @deletingCommentElement = $(element).parents('.comment-thread-container')
+    else
+      @deletingCommentElement = element
 
   @deleteComment = () ->
 
