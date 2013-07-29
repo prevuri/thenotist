@@ -34,6 +34,7 @@ NoteProcessingFooter = () ->
           $('.note-status-link').attr('href', '/notes/' + processing_id)
 
   @initPolling = () =>
+    @checkStatus()
     timer = window.setInterval(@checkStatus, 5000)
 
   @showSpinner()

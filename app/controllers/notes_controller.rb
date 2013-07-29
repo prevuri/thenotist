@@ -4,7 +4,7 @@ class NotesController < ApplicationController
   before_filter :abort_timed_out_notes
 
   def index
-    @notes = current_user.notes
+    @notes = current_user.notes.select { |n| n.processed }
     @shared_notes = current_user.shared_notes
   end
 
