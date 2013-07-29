@@ -1,7 +1,7 @@
-.note-item
+.note-item{ :data => {:id => note.id} }
   %i.icon-th.btn.overview-btn.appear-hover{ :data => {:path => api_note_path(note)} }
   = link_to note_path(note) do
-    .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}
+    .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}    
   .btn-group.appear-hover
     - if shared
       = link_to unsubscribe_note_path(note), :class => 'btn usub' do
@@ -25,12 +25,13 @@
   #list-footer
     .big-info
       = link_to note.title, note_path(note), :class => 'text-link'
+      .description= note.description
       .info
         - if shared
-          Shared by #{truncate(note.user.name, :length => 17)}
+          Shared by #{note.user.name}
         - else
           - unless note.contributing_users.empty?
-            Shared with #{truncate(note.contributing_users.first.name, :length => 17)}
+            Shared with #{note.contributing_users.first.name}
           - if note.contributing_users.length > 1
             and #{note.contributing_users.length-1} others
     .tiny-info
@@ -42,3 +43,5 @@
       .tooltip-arrow
       .ui-widget.tooltip-inner
         %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+
+/ %img{:src => "#{note.uploaded_files.first.public_path}"}

@@ -3,6 +3,7 @@ Overview = () ->
   overview_mode = false;
 
   $('.overview-btn').click () ->
+    $("html, body").animate({ scrollTop: "0px" });
     $('.modal-container-container').show()
     $('.modal-container').show()
     $('.full-screen-overlay').fadeIn(200)
@@ -20,8 +21,8 @@ Overview = () ->
           image = image_container.find('img')
           $(image).attr('src', page.thumb_url)
           $(image).attr('data-path',url)
-
           $('.modal-container').append(image_container)
+
 
         pageCount = response.note.uploaded_files.length
         thumbWidth = 240

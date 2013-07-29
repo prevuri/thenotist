@@ -50,7 +50,7 @@ $thumbnail-height: 330px;
   .thumb-container {
     display: inline-block;
     width: $thumbnail-width;
-    height: $thumbnail-height;
+    // height: 100%;//$thumbnail-height;
     border: 3px solid;
     border-color: transparent;
     &:hover {
@@ -350,16 +350,21 @@ $thumbnail-height: 330px;
       margin: 0;
       li {
         display: inline-block;
-        width: 500px;
+        width: 300px;
         margin-left: 5px;
+        vertical-align: top;
       } 
     }
     .notes-list-item {
       background-color: #BEB5AA;
-      min-height: 300px;
-      padding: 5px;
+      min-height: 200px;
+      padding: 1px;
       margin-top: 10px;
       border: 1px solid #ddd;
+
+      &:hover {
+        background-color: #8A847D;//#696662;
+      }
 
       .note-item {
         position: relative;
@@ -376,21 +381,47 @@ $thumbnail-height: 330px;
         }
 
         #list-footer {
-          height: 80px;
+          height: 55px;
+          position: relative;
+          bottom: 55px;
           width: 100%;
-          background-color:rgba(0,0,0,0.5);
+          background-color:rgba(0,0,0,0.8);
           z-index: 100;
+          overflow: hidden;
           
           .big-info {
             float: left; 
-            width: 80%;           
+            width: 80%;        
+
+            .description {
+              width: 350px;
+              font-size: 1em;
+              margin-left: 20px;
+              margin-bottom: 20px;
+              color: #dadada;
+              clear: both;
+              overflow: hidden;
+              white-space: wrap;
+              display: -webkit-box;
+              -webkit-line-clamp: 6;
+              -webkit-box-orient: vertical;
+              text-overflow: ellipsis;
+              font-weight: lighter;
+              font-family: ‘Arial Narrow’, sans-serif;
+            }   
           }
 
           .info {
             font-size: 1em;
             margin-left: 20px;
-            color: #fff;
+            color: #a0a0a0;
             clear: both;
+            width: 350px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: Gill Sans / Gill Sans MT, sans-serif;
+            font-weight: normal;
           }
 
           .tiny-info {
@@ -406,10 +437,18 @@ $thumbnail-height: 330px;
         .text-link {
           float: left;
           color: #fff;
-          font-size: 2em;
-          margin-top: 15px;
+          font-size: 1.2em;
+          font-weight: normal;
+          font-family: Century Gothic, sans-serif;//"Lucida Sans Unicode";
+          margin-top: 17px;
           margin-left: 20px;
-          margin-bottom: 10px;
+          margin-bottom: 17px;
+
+          width: 300px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          
 
         }
 
@@ -464,9 +503,11 @@ $thumbnail-height: 330px;
         }
 
         .img-preview {
-          height: 300px;
+          vertical-align: top;
+          height: 280px;//275px;
           width: 100%;
           background-position: 10% 10%;
+          background-position:top;
           background-repeat: no-repeat;
           background-size: 100%;
           overflow: hidden;

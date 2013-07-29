@@ -7,10 +7,10 @@
     .notes-list
       %ul
         - @notes.each_with_index do |note, index|
-          %li.notes-list-item
+          %li.notes-list-item{ :data => {:id => note.id} }
             = render 'grid_item', :note => note, :shared => false, :index => index
         - @shared_notes.each do |note|
-          %li.notes-list-item
+          %li.notes-list-item{ :data => {:id => note.id} }
             = render 'grid_item', :note => note, :shared => true
                   
   .modal-container-container.hidden
