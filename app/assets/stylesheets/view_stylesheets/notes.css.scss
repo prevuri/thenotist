@@ -76,8 +76,7 @@ $thumbnail-height: 330px;
   }
 
   .file-container {
-    overflow: auto;
-    margin: 15px 0;
+    clear: both;
   }
 
   .image-container-outer {
@@ -88,6 +87,7 @@ $thumbnail-height: 330px;
     .image-container {
       display: inline-block;
       max-width: 100%;
+      margin: 5px 0;
 
       .image-border {
         border: solid 1px #aaa;
