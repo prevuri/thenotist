@@ -116,10 +116,18 @@ Commenting = () ->
       @activeComment = null;
 
   @showComment = (commentButton) =>
+    @newActiveComment = $(commentButton).parents('.comment-thread-container').children('.comment.parent')[0]
     if @activeComment
       $(@activeComment).hide(200)
-    @activeComment = $(commentButton).parents('.comment-thread-container').children('.comment.parent')
-    $(@activeComment).show(200)
+      $(@activeCommentButton).removeClass('active')
+    if @activeComment != @newActiveComment
+      @activeComment = @newActiveComment
+      $(@activeComment).show(200)
+      @activeCommentButton = commentButton
+      $(@activeCommentButton).addClass('active')
+    else
+      @activeComment = null
+      @activeCommentButton = null
 
   @deleteClicked = (e) =>
     $(e.target).fadeOut(150)
@@ -128,10 +136,7 @@ Commenting = () ->
 
   @showDeleteConfirmation = (element) ->
     $(element).find('.delete-confirm-panel').show(150)
-    if $(element).hasClass('parent')
-      @deletingCommentElement = $(element).parents('.comment-thread-container')
-    else
-      @deletingCommentElement = element
+    @deletingCommentElement = element
 
   @deleteComment = () ->
 
@@ -145,9 +150,11 @@ Commenting = () ->
       error: (response) ->
         alert response.error
 
+    if $(element).hasClass('parent')
+      # If comment is parent, remove while thread, not just comment
+      element = $(element).parents('.comment-thread-container') 
     $(element).hide(200, () ->
       $(element).remove()
-      $(element + ' + .reply').remove()
     )
 
     return false  # Stop comment click action from happening
