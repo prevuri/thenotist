@@ -12,7 +12,8 @@
               %a{ :name => "Page-#{file.page_number}"}
               = image_tag file.public_path, :class => 'note-image', :'file-id' => file.id
         .comments-container
-          = render :partial => 'comments', :object => file.top_level_comments     
+          .comments
+            = render :partial => 'comments', :object => file.top_level_comments
           .tooltip.fade.right.in#new-comment-panel
             .tooltip-arrow
             .tooltip-inner

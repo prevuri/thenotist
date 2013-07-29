@@ -83,10 +83,10 @@ class Api::CommentsController < ApplicationController
 
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
-    @comments = @file.top_level_comments
+    # @comments = @file.top_level_comments
     return render :json => { 
-      :success => true,
-      :comments => @comments.map { |c| c.as_json }
+      :success => true
+      # :comments => @comments.map { |c| c.as_json }
     }
   end
 

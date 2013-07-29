@@ -1,3 +1,4 @@
+
 Commenting = () ->
   # COMMENTING
   $('.note-image').click (e) =>
@@ -5,16 +6,18 @@ Commenting = () ->
 
   $('body').on "click", ".reply-button", (e) =>
     commentDiv = $(e.target).parents('.comment')[0]
+    @fileComments = $(e.target).parents('.comment')  
     @fileCommentContainer = $(e.target).parents('.comments-container')
     @setCommentPanelPositionReply(commentDiv.offsetTop + commentDiv.clientHeight + 10)
     @parentId = $(commentDiv).attr('comment-id')
     @fileId = $(commentDiv).attr('file-id')
-    @replyClick()
+    @replyClick(@fileCommentContainer)
 
-  $('#new-comment-submit').click ->
+  $('.tooltip #new-comment-submit').click ->
     if !$(this).hasClass('disabled') 
       $(this).addClass('disabled')
-      _this.submitComment()
+      @selector = $(this).parents('.tooltip-inner')
+      _this.submitComment(@selector)
 
   $('body').on "click", ".comment", (e) ->
     _this.setActive(this);
@@ -31,9 +34,9 @@ Commenting = () ->
   $('body').on "click", ".delete-confirm", (e) =>
     @deleteComment()
 
-  @submitComment = () ->
+  @submitComment = (selector) ->
     if !@submitting
-      @commentText = $('#newcomment').val()
+      @commentText = $(selector).children('#newcomment').val()
       @makeNewCommentRequest()
 
   @makeNewCommentRequest = () =>
@@ -54,53 +57,70 @@ Commenting = () ->
       if !response.success
         alert response.error
       else
-        $(@fileCommentContainer).html( response['comments_html'] )
+        $(@fileComments).html( response['comments_html'] )
         @hideNewCommentField()
 
       submitting = false
     )
 
   @setCommentPanelPositionReply = (yCoord) =>
-    $('#new-comment-panel').css('top', yCoord + 'px')
+    $(@fileCommentContainer).children('#new-comment-panel').css('top', yCoord + 'px')
 
   @setCommentPanelPositionClick = (yClick) =>
-    $('#new-comment-panel').css('top', (yClick - 150 + 25) + 'px')
+    $(@fileCommentContainer).children('#new-comment-panel').css('top', (yClick - 150 + 25) + 'px')
 
   @showNewCommentFieldParent = () =>
-    @newCommentShowing = true
-    $('#new-comment-panel .left-arrow').show();
-    @showNewCommentField()
+    @newCommentShowing = true 
+    $(@fileCommentContainer).children('#new-comment-panel .tooltip-arrow').show();
+    @showNewCommentField(@fileCommentContainer)
 
   @showNewCommentFieldReply = () =>
-    $('#new-comment-panel .left-arrow').hide();
-    @showNewCommentField()
+    @newCommentShowing = true 
+    $(@fileCommentContainer).children('#new-comment-panel .tooltip-arrow').hide();
+    @showNewCommentField(@fileCommentContainer)
 
   @showNewCommentField = () =>
-    $('#new-comment-panel').show(200, () ->
-      $('#newcomment').focus()
+    $(@fileCommentContainer).children('#new-comment-panel').show(200, () ->
+      $(@fileCommentContainer).children('#newcomment').focus()
     )
     $('#new-comment-position-line').show(200)
 
   @hideNewCommentField = () =>
     @newCommentShowing = false
-    $('#new-comment-position-line').hide(200)
-    $('#new-comment-panel').hide(200, () ->
-      $('#new-comment-submit').removeClass('disabled')
-      $('#newcomment').val('')
+    $(@fileCommentContainer).children('.tooltip #new-comment-position-line').hide(200)
+    $(@fileCommentContainer).children('.tooltip').hide(200, () ->
+      $('.tooltip #new-comment-submit').removeClass('disabled')
+      $('.tooltip #newcomment').val('')
     )
 
-  @yCoordClick = (e) ->
+  @hideAllCommentField = () =>
+    @newCommentShowing = false
+    $('.tooltip #new-comment-position-line').hide()
+    $('.tooltip').hide( () ->
+      $('.tooltip #new-comment-submit').removeClass('disabled')
+      $('.tooltip #newcomment').val('')
+    )
+
+  @yCoordClick = (e) =>
     if !@submitting
       @yCoord = e.offsetY
       @parentId = null
       @fileId = $(e.target).attr('file-id')
+      @fileComments = $(e.target).parents('.file-container').find('.comment')
       @fileCommentContainer = $(e.target).parents('.file-container').find('.comments-container')
-      @setCommentPanelPositionClick(e.pageY)
+      @setCommentPanelPositionClick(@yCoord)
       if !@newCommentShowing
         @showNewCommentFieldParent()
+      else if !@fileCommentContainer.children('#new-comment-panel').is(':visible')
+        @hideAllCommentField()
+        @showNewCommentFieldParent()
 
-  @replyClick = () ->
-    @showNewCommentFieldReply()
+  @replyClick = () =>
+    if !@newCommentShowing
+        @showNewCommentFieldReply()
+      else if !$(@fileCommentContainer).children('#new-comment-panel').is(':visible')
+        @hideAllCommentField()
+        @showNewCommentFieldReply()
 
   @setActive = (clickedComment) ->
     if (@activeComment)
@@ -135,7 +155,6 @@ Commenting = () ->
 
     $(element).hide(200, () ->
       $(element).remove()
-      $(element + ' + .reply').remove()
     )
 
     return false  # Stop comment click action from happening
