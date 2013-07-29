@@ -23,6 +23,14 @@ class User < ActiveRecord::Base
   has_many :shared_uploaded_files, through: :shared_notes, source: :uploaded_files
 
 
+  def has_note_processing?
+    self.notes.count { |n| !n.processed } > 0
+  end
+
+  def abort_timed_out_notes!
+    timed_out = self.notes.select { |n| n.processing_timeout? }
+    timed_out.each { |n| n.abort_processing! }
+  end
 
   def following?(other_user)
     relationships.find_by_buddy_id(other_user.id)

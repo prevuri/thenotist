@@ -1,37 +1,41 @@
-.note-item
-  %i.icon-th.btn.overview-btn.appear-hover{ :data => {:path => api_note_path(note)} }
-  = link_to note_path(note) do
-    .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}
-  .btn-group.appear-hover
-    - if shared
-      = link_to unsubscribe_note_path(note), :class => 'btn usub' do
-        %i.icon-remove
-    - else
-      %a.share-note-link{:note_id => note.id}
-        %i.icon-share.share-note.btn
-      / = link_to '', :note_id => note.id do
-      /   %i.icon-share.share-note.btn
-      = link_to edit_note_path(note) do
-        %i.icon-edit.btn
-      = link_to note_path(note), :method => :delete do
-        %i.icon-remove.btn
-  #list-footer
-    .big-info
-      = link_to note.title, note_path(note), :class => 'text-link'
-      .info
-        - if shared
-          Shared by #{truncate(note.user.name, :length => 17)}
-        - else
-          - unless note.contributing_users.empty?
-            Shared with #{truncate(note.contributing_users.first.name, :length => 17)}
-          - if note.contributing_users.length > 1
-            and #{note.contributing_users.length-1} others
-    .tiny-info
-      %i.icon-comments
-        = note.comments.length
+- if note.processed
+  .note-item
+    %i.icon-th.btn.overview-btn.appear-hover{ :data => {:path => api_note_path(note)} }
+    = link_to note_path(note) do
+      .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}
+    .btn-group.appear-hover
+      - if shared
+        = link_to unsubscribe_note_path(note), :class => 'btn usub' do
+          %i.icon-remove
+      - else
+        %a.share-note-link{:note_id => note.id}
+          %i.icon-share.share-note.btn
+        / = link_to '', :note_id => note.id do
+        /   %i.icon-share.share-note.btn
+        = link_to edit_note_path(note) do
+          %i.icon-edit.btn
+        = link_to note_path(note), :method => :delete do
+          %i.icon-remove.btn
+    #list-footer
+      .big-info
+        = link_to note.title, note_path(note), :class => 'text-link'
+        .info
+          - if shared
+            Shared by #{truncate(note.user.name, :length => 17)}
+          - else
+            - unless note.contributing_users.empty?
+              Shared with #{truncate(note.contributing_users.first.name, :length => 17)}
+            - if note.contributing_users.length > 1
+              and #{note.contributing_users.length-1} others
+      .tiny-info
+        %i.icon-comments
+          = note.comments.length
 
-  - if !shared
-    .tooltip.fade.bottom.in.hidden
-      .tooltip-arrow
-      .ui-widget.tooltip-inner
-        %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+    - if !shared
+      .tooltip.fade.bottom.in.hidden
+        .tooltip-arrow
+        .ui-widget.tooltip-inner
+          %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+- else
+  .note-item
+    STILL PROCESSING

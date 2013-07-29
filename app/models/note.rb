@@ -2,14 +2,30 @@
 # include Magick
 
 class Note < ActiveRecord::Base
-  attr_accessible :description, :title
+  attr_accessible :description, :title, :processed, :aborted, :processing_started_at
 
   belongs_to :user
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
   has_many :contributing_users, through: :contributors, source: :user
   has_many :uploaded_files, dependent: :destroy
   has_many :comments, :through => :uploaded_files
-  
+
+  # want to assume that we are processing a file right away
+  before_create :start_processing!
+
+  def finish_processing!
+    self.update_attribute :processed, true
+  end
+
+  def abort_processing!
+    self.update_attribute :aborted, true
+  end
+
+  def processing_timeout?
+    !processed && (Time.now - self.processing_started_at > 10.minutes)
+  end
+
+
   def share! user 
     contributors.create!(user_id: user.id)
   end
@@ -50,5 +66,10 @@ class Note < ActiveRecord::Base
       :user => user.as_json,
       :created_at => created_at
     }
+  end
+
+private
+  def start_processing!
+    self.processing_started_at = Time.now
   end
 end
