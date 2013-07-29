@@ -1,5 +1,5 @@
+require 'sidekiq/web'
 TheNotist::Application.routes.draw do
-
   resources :activities
 
   get "buddies/index"
@@ -26,6 +26,9 @@ TheNotist::Application.routes.draw do
     resources :notes, :only => [ :index, :show, :update]
     match 'notes/share/' => 'notes#share', :as => :share_note
   end
+
+  # mount sidekiq so we can monitor jobs
+  mount Sidekiq::Web, :at => '/sidekiq'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

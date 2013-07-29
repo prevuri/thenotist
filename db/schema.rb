@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130728185010) do
+ActiveRecord::Schema.define(:version => 20130729015227) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -60,9 +60,14 @@ ActiveRecord::Schema.define(:version => 20130728185010) do
     t.string   "title"
     t.string   "description"
     t.integer  "course_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.boolean  "processed",             :default => false
+    t.datetime "processing_started_at"
+    t.boolean  "aborted",               :default => false
   end
+
+  add_index "notes", ["processed"], :name => "index_notes_on_processed"
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"

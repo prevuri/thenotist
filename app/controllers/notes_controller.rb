@@ -1,21 +1,35 @@
 class NotesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_note_id, :except => [ :index, :create ]
+  before_filter :abort_timed_out_notes
+
   def index
-    @notes = current_user.notes
+    @notes = current_user.notes.select { |n| n.processed }
     @shared_notes = current_user.shared_notes
   end
 
   def create
-    @note = current_user.notes.build(:title => params[:new_note][:title], :description => params[:new_note][:description])
-    @images = @note.process(params[:new_note]) if params[:new_note]
-    # defer the saving of everything until later in case things don't work out
-    @note.save!
-    @images.each do |img|
-      img.save!
+    # don't allow a user to process more than one note at a time
+    if current_user.has_note_processing?
+      @worker_started = false
+      @fail_reason = "Can't upload more than one file at a time"
+    else
+      begin
+        @note = current_user.notes.create(:title => params[:new_note][:title], :description => params[:new_note][:description])
+        
+        local_pdf_file = params[:new_note][:file].tempfile.path
+        DocumentConversionWorker.perform_async({
+          :current_user_id => current_user.id,
+          :note_id => @note.id,
+          :local_pdf_file => local_pdf_file
+        })
+        track_activity @note
+        @worker_started = true
+      rescue
+        @worker_started = false
+        @fail_reason = "unknown"
+      end
     end
-
-    track_activity @note
   end
 
   def unsubscribe
@@ -53,5 +67,9 @@ class NotesController < ApplicationController
 private
   def get_note_id
     @note_id = params[:id]
+  end
+
+  def abort_timed_out_notes
+    current_user.abort_timed_out_notes!
   end
 end

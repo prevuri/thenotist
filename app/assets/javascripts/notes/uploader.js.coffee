@@ -146,8 +146,9 @@ Uploader = () ->
 
     done: (e, data) =>
       if (data.result["success"])
-        document.location.href = data.result["uri"]
-        upload_data = 0 # clear the file
+        alert "Your data is being processed. This can take a few minutes. Don't worry, we'll let you know when it's done."
+        @hideModal()
+        location.reload()
       else
         @handleError()
 

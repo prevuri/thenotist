@@ -1,8 +1,8 @@
-require 'RMagick'
-include Magick
+# require 'RMagick'
+# include Magick
 
 class Note < ActiveRecord::Base
-  attr_accessible :description, :title
+  attr_accessible :description, :title, :processed, :aborted, :processing_started_at
 
   belongs_to :user
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
@@ -10,45 +10,23 @@ class Note < ActiveRecord::Base
   has_many :uploaded_files, dependent: :destroy
   has_many :comments, :through => :uploaded_files
 
-  def process (upload)
-    # create a random name for the uploaded file
-    local_pdf_file = File.join("private/user_uploads", SecureRandom.uuid)
+  # want to assume that we are processing a file right away
+  before_create :start_processing!
 
-    # get the uploaded file
-    File.open(local_pdf_file, "wb") { |f| f.write(upload[:file].read) }
-
-    # PDF -> PNG
-    converted_pages = RGhost::Convert.new(local_pdf_file).to :png, :resolution => 144, :multipage => true
-
-    # local -> S3 (AWS creds should be initialized already)
-    # and create models
-    bucket = AWS::S3.new.buckets['thenotist']
-    images = []
-    converted_pages.each_with_index do |path, i|
-      obj = bucket.objects["image_store/#{SecureRandom.uuid}.png"]
-      obj.write(Pathname.new(path), :acl => :public_read)
-
-      # get thumbnail
-      obj_thmb = bucket.objects["image_store/#{SecureRandom.uuid}-thumbnail.png"]
-      thumb = ImageList.new(path)
-      thumb = thumb.scale(1)
-      new_width = 80*3
-      new_height = new_width * thumb.page.height / thumb.page.width
-      thumb = thumb.scale(new_width, new_height)
-      thumb_path = String.new(path)
-      thumb_path.insert(-5, '-thumbnail')
-      thumb.write(thumb_path)
-      obj_thmb.write(Pathname.new(thumb_path), :acl => :public_read)
-
-      images << self.uploaded_files.build(:public_path => obj.public_url.to_s, :page_number => i, :thumb_url => obj_thmb.public_url.to_s)
-    end
-
-    # delete the PDF file and other files
-    File.delete(local_pdf_file)
-    converted_pages.each { |p| File.delete(p) }
-    return images
+  def finish_processing!
+    self.update_attribute :processed, true
   end
-  
+
+  def abort_processing!
+    self.update_attribute :aborted, true
+  end
+
+  def processing_timeout?
+    start_time = self.processing_started_at.nil? ? Time.now : self.processing_started_at
+    !processed && (Time.now - start_time > 10.minutes)
+  end
+
+
   def share! user 
     contributors.create!(user_id: user.id)
   end
@@ -87,7 +65,15 @@ class Note < ActiveRecord::Base
       :description => description,
       :uploaded_files => uploaded_files.map { |f| f.as_json },
       :user => user.as_json,
+      :processed => processed,
+      :aborted => aborted,
+      :processing_started_at => processing_started_at,
       :created_at => created_at
     }
+  end
+
+private
+  def start_processing!
+    self.processing_started_at = Time.now
   end
 end
