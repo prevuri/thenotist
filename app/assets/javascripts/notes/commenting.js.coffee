@@ -3,6 +3,14 @@ Commenting = () ->
   $('.note-image').click (e) =>
     @yCoordClick(e)
 
+  $('body').on "click", ".reply-button", (e) =>
+    commentDiv = $(e.target).parents('.comment')[0]
+    @fileCommentContainer = $(e.target).parents('.comments-container')
+    @setCommentPanelPositionReply(commentDiv.offsetTop + commentDiv.clientHeight + 10)
+    @parentId = $(commentDiv).attr('comment-id')
+    @fileId = $(commentDiv).attr('file-id')
+    @replyClick()
+
   $('#new-comment-submit').click ->
     if !$(this).hasClass('disabled') 
       $(this).addClass('disabled')
@@ -31,11 +39,15 @@ Commenting = () ->
   @makeNewCommentRequest = () =>
     data = {
       comment: {
-        text: @commentText,
-        ycoord: @yCoord
+        text: @commentText
       },
       file_id: @fileId
     }
+
+    if @parentId
+      data['comment']['parent_id'] = @parentId
+    else
+      data['comment']['ycoord'] = @yCoord
 
     submitting = true
     $.post('/api/comments', data, (response) =>
@@ -48,11 +60,22 @@ Commenting = () ->
       submitting = false
     )
 
-  @setCommentPanelPosition = (yClick) =>
+  @setCommentPanelPositionReply = (yCoord) =>
+    $('#new-comment-panel').css('top', yCoord + 'px')
+
+  @setCommentPanelPositionClick = (yClick) =>
     $('#new-comment-panel').css('top', (yClick - 150 + 25) + 'px')
 
-  @showNewCommentField = () =>
+  @showNewCommentFieldParent = () =>
     @newCommentShowing = true
+    $('#new-comment-panel .left-arrow').show();
+    @showNewCommentField()
+
+  @showNewCommentFieldReply = () =>
+    $('#new-comment-panel .left-arrow').hide();
+    @showNewCommentField()
+
+  @showNewCommentField = () =>
     $('#new-comment-panel').show(200, () ->
       $('#newcomment').focus()
     )
@@ -69,11 +92,15 @@ Commenting = () ->
   @yCoordClick = (e) ->
     if !@submitting
       @yCoord = e.offsetY
+      @parentId = null
       @fileId = $(e.target).attr('file-id')
       @fileCommentContainer = $(e.target).parents('.file-container').find('.comments-container')
-      @setCommentPanelPosition(e.pageY)
+      @setCommentPanelPositionClick(e.pageY)
       if !@newCommentShowing
-        @showNewCommentField()
+        @showNewCommentFieldParent()
+
+  @replyClick = () ->
+    @showNewCommentFieldReply()
 
   @setActive = (clickedComment) ->
     if (@activeComment)
@@ -87,15 +114,12 @@ Commenting = () ->
 
   @deleteClicked = (e) =>
     $(e.target).fadeOut(150)
-    element = e.target
-    while (! $(element).hasClass('comment'))
-      element = $(element).parent()
-    @showDeleteConfirmation(element)
+    @showDeleteConfirmation($(e.target).parents('.comment-inner'))
     return false
 
   @showDeleteConfirmation = (element) ->
     $(element).find('.delete-confirm-panel').show(150)
-    @deletingCommentElement = element
+    @deletingCommentElement = $(element).parent()
 
   @deleteComment = () ->
 
@@ -111,6 +135,7 @@ Commenting = () ->
 
     $(element).hide(200, () ->
       $(element).remove()
+      $(element + ' + .reply').remove()
     )
 
     return false  # Stop comment click action from happening

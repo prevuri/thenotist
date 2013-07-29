@@ -6,11 +6,12 @@
     - @note.uploaded_files.each do |file|
       .file-container
         .comments-container
-          = render :partial => 'comments', :object => file.comments
-        .image-container
-          .image-border
-            %a{ :name => "Page-#{file.page_number}"}
-            = image_tag file.public_path, :class => 'note-image', :'file-id' => file.id
+          = render :partial => 'comments', :object => file.top_level_comments
+        .image-container-outer
+          .image-container
+            .image-border
+              %a{ :name => "Page-#{file.page_number}"}
+              = image_tag file.public_path, :class => 'note-image', :'file-id' => file.id
 
   #new-comment-panel
     #new-comment-position-line

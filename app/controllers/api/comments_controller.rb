@@ -15,7 +15,8 @@ class Api::CommentsController < ApplicationController
       }
     end
 
-    @comments = @file.comments
+    # only render top-level comments, because their children will be rendered recursively
+    @comments = @file.top_level_comments
     return render :json => {
       :success => true,
       :comments => @comments.map { |c| c.as_json }
@@ -34,10 +35,12 @@ class Api::CommentsController < ApplicationController
 
     # now, construct all the attributes
     begin
+      parent_comment = params[:comment][:parent_id].nil? ? nil : Comment.find(params[:comment][:parent_id])
       @comment = current_user.comments.create({
         :uploaded_file => @file, 
         :text => params[:comment][:text], 
-        :ycoord => params[:comment][:ycoord]
+        :ycoord => params[:comment][:ycoord],
+        :parent_comment => parent_comment
       })
 
       # track the comment activity
@@ -51,7 +54,7 @@ class Api::CommentsController < ApplicationController
 
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
-    @comments = @file.comments
+    @comments = @file.top_level_comments
     return render :json => {
       :success => true,
       :comments_html => render_to_string(:partial => "notes/comments", :object => @comments)
@@ -80,7 +83,7 @@ class Api::CommentsController < ApplicationController
 
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
-    @comments = current_user.comments
+    @comments = @file.top_level_comments
     return render :json => { 
       :success => true,
       :comments => @comments.map { |c| c.as_json }

@@ -80,11 +80,16 @@ $thumbnail-height: 330px;
     margin: 15px 0;
   }
 
-  .image-container {
+  .image-container-outer {
     overflow: auto;
 
-    .image-border {
-      border: solid 1px #aaa;
+    .image-container {
+      display: inline-block;
+      max-width: 100%;
+
+      .image-border {
+        border: solid 1px #aaa;
+      }
     }
   }  
   .comments-container {
@@ -198,29 +203,44 @@ $thumbnail-height: 330px;
 }
 
 .comment {
-  margin: 10px 0px;
-  border-radius: 10px;
-  padding: 4px; // Effectively the 'active' border width
-  background-color: #304050;
-
-  -webkit-transition: background-color 0.3s ease;
-  -moz-transition: background-color 0.3s ease;
-  -ms-transition: background-color 0.3s ease;
-  transition: background-color 0.3s ease;
+  margin: 10px 0 0;
 
   .comment-inner {
-    border-radius: 6px;
+    border-radius: 4px;
     padding: 5px 8px;
     background-color: white;
+    border: 1px solid #ddd;
+  }
+
+  &.reply {
+    margin-left: 15px;
+    margin-top: 5px;
+    
+    .comment-inner {
+      background-color: #f7f7f9;
+      border-color: #d5d5d5;
+    }
   }
 
   &.active {
-    background-color: $highlight-color;
+    // background-color: $highlight-color;
   }
 
   .user {
     font-weight: bold;
     margin-bottom: 3px;
+  }
+  .profile-container {
+    width: 40px;
+    height: 40px;
+    padding: 2px;
+    float: left;
+    margin-right: 10px;
+    margin-left: -15px;
+    margin-top: -10px;
+  }
+  .comment-body {
+    overflow: auto;
   }
   .comment-text {
     color: #222;
@@ -232,10 +252,15 @@ $thumbnail-height: 330px;
     color: #aaa;
     float: left;
   }
-  .delete-button {
-    float: right;
-    color: #34495E;
-    font-weight: normal;
+  .bottom {
+    .text-link {
+      float: right;
+      color: #34495E;
+      font-weight: normal;
+    }    
+  }
+  .reply-button {
+    margin-left: 10px;
   }
   .delete-confirm-panel {
     display: none;

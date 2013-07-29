@@ -1,0 +1,22 @@
+.comment-inner
+  .profile-container.circular
+    .profile-image.circular{:style => "background:url(#{comment.user.user_fb_data.profile_image}) no-repeat"}
+  .comment-body
+    .user
+      .name
+        = comment.user.name
+    .comment-text
+      = comment.text
+  .bottom
+    .comment-date
+      = distance_of_time_in_words(Time.now, comment.created_at) + ' ago'
+    - if not defined? no_reply or no_reply == false
+      %a.reply-button.text-link
+        Reply
+    - if comment.user == current_user
+      %a.delete-button.text-link
+        Delete
+  .clear
+  .delete-confirm-panel
+    .delete-cancel.btn Cancel
+    .delete-confirm.btn.btn-danger Delete

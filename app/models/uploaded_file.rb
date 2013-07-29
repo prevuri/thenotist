@@ -5,6 +5,10 @@ class UploadedFile < ActiveRecord::Base
   has_one :user, :through => :note
   has_many :comments, :dependent => :destroy
 
+  def top_level_comments
+    comments.select { |c| c.parent_comment.nil? }
+  end
+
   def as_json options = {}
     {
       :id => id,
