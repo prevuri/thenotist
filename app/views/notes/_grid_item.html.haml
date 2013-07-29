@@ -8,13 +8,20 @@
         %i.icon-remove
     - else
       %a.share-note-link{:note_id => note.id}
-        %i.icon-share.share-note.btn
+        %i.icon-share.share-note.btn{ "data-toggle" => "modal", "data-target" => "#container-#{index}" }
       / = link_to '', :note_id => note.id do
       /   %i.icon-share.share-note.btn
       = link_to edit_note_path(note) do
         %i.icon-edit.btn
       = link_to note_path(note), :method => :delete do
         %i.icon-remove.btn
+  
+  - unless shared
+    .share-note-form-container.modal.hide.fade{ :id => "container-#{index}", :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
+      .share-note-container.modal-body
+        .form-container
+          %input#tagsinput.tagsinput{:name => "tagsinput", :style => "display: none;"}
+
   #list-footer
     .big-info
       = link_to note.title, note_path(note), :class => 'text-link'

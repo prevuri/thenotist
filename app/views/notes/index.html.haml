@@ -6,9 +6,9 @@
   .notes-list-container
     .notes-list
       %ul
-        - @notes.each do |note|
+        - @notes.each_with_index do |note, index|
           %li.notes-list-item
-            = render 'grid_item', :note => note, :shared => false
+            = render 'grid_item', :note => note, :shared => false, :index => index
         - @shared_notes.each do |note|
           %li.notes-list-item
             = render 'grid_item', :note => note, :shared => true

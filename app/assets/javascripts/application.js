@@ -19,9 +19,8 @@
 //= require jquery-fileupload/vendor/tmpl
 //= require jquery.spin
 //= require jquery.ui.autocomplete
-//
 // Removing these requirements for gem
 
 // require bootstrap
-// require_directory ../../../vendor/assets/javascripts/flat-ui/
+//= require_directory ../../../vendor/assets/javascripts/flat-ui/
 
