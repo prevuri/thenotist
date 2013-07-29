@@ -3,6 +3,7 @@ Overview = () ->
   overview_mode = false;
 
   $('.overview-btn').click () ->
+    $("html, body").animate({ scrollTop: "0px" });
     $('.modal-container-container').show()
     $('.modal-container').show()
     $('.full-screen-overlay').fadeIn(200)
