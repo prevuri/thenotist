@@ -6,7 +6,7 @@ Commenting = () ->
 
   $('body').on "click", ".reply-button", (e) =>
     commentDiv = $(e.target).parents('.comment')[0]
-    @fileComments = $(e.target).parents('.comment')  
+    @fileComments = $(e.target).parents('.comments')  
     @fileCommentContainer = $(e.target).parents('.comments-container')
     @setCommentPanelPositionReply(commentDiv.offsetTop + commentDiv.clientHeight + 10)
     @parentId = $(commentDiv).attr('comment-id')
@@ -57,7 +57,7 @@ Commenting = () ->
       if !response.success
         alert response.error
       else
-        $(@fileComments).html( response['comments_html'] )
+        $(@fileComments).html(" ").html( response['comments_html'] )
         @hideNewCommentField()
 
       submitting = false
@@ -106,7 +106,7 @@ Commenting = () ->
       @yCoord = e.offsetY
       @parentId = null
       @fileId = $(e.target).attr('file-id')
-      @fileComments = $(e.target).parents('.file-container').find('.comment')
+      @fileComments = $(e.target).parents('.file-container').find('.comments')
       @fileCommentContainer = $(e.target).parents('.file-container').find('.comments-container')
       @setCommentPanelPositionClick(@yCoord)
       if !@newCommentShowing
