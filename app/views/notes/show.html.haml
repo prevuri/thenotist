@@ -6,7 +6,7 @@
     - @note.uploaded_files.each do |file|
       .file-container
         .comments-container
-          = render :partial => 'comments', :object => file.comments
+          = render :partial => 'comments', :object => file.top_level_comments
         .image-container-outer
           .image-container
             .image-border
