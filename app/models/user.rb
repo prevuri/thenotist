@@ -24,12 +24,15 @@ class User < ActiveRecord::Base
 
 
   def has_note_processing?
-    self.notes.count { |n| !n.processed } > 0
+    self.notes.select { |n| !n.processed }.count > 0
   end
 
   def abort_timed_out_notes!
     timed_out = self.notes.select { |n| n.processing_timeout? }
-    timed_out.each { |n| n.abort_processing! }
+    timed_out.each do |n| 
+      n.abort_processing!
+      # TODO: destroy activity
+    end
   end
 
   def following?(other_user)

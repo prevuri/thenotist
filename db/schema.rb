@@ -62,9 +62,10 @@ ActiveRecord::Schema.define(:version => 20130729015227) do
     t.integer  "course_id"
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
+    t.boolean  "processing_aborted",    :default => false
     t.boolean  "processed",             :default => false
     t.datetime "processing_started_at"
-    t.boolean  "processing_aborted",    :default => false
+    t.boolean  "aborted",               :default => false
   end
 
   add_index "notes", ["processed"], :name => "index_notes_on_processed"

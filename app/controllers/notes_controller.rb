@@ -16,11 +16,7 @@ class NotesController < ApplicationController
     else
       begin
         @note = current_user.notes.create(:title => params[:new_note][:title], :description => params[:new_note][:description])
-        # # create a random name for the uploaded file
-        # local_pdf_file = File.join("private/user_uploads", SecureRandom.uuid)
-        # # get the uploaded file
-        # File.open(local_pdf_file, "wb") { |f| f.write(params[:new_note][:file].read) }
-
+        
         local_pdf_file = params[:new_note][:file].tempfile.path
         DocumentConversionWorker.perform_async({
           :current_user_id => current_user.id,

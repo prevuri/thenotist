@@ -146,9 +146,9 @@ Uploader = () ->
 
     done: (e, data) =>
       if (data.result["success"])
-        alert "Your data is being processed"
+        alert "Your data is being processed. This can take a few minutes. Don't worry, we'll let you know when it's done."
         @hideModal()
-        @resetUI()
+        location.reload()
       else
         @handleError()
 

@@ -64,6 +64,9 @@ class Note < ActiveRecord::Base
       :description => description,
       :uploaded_files => uploaded_files.map { |f| f.as_json },
       :user => user.as_json,
+      :processed => processed,
+      :aborted => aborted,
+      :processing_started_at => processing_started_at,
       :created_at => created_at
     }
   end

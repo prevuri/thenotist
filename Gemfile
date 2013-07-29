@@ -42,6 +42,7 @@ group :assets do
   gem 'spinjs-rails'
   gem "twitter-bootstrap-rails"
   gem "flat-ui-rails"
+  gem 'underscore-rails'
 
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
