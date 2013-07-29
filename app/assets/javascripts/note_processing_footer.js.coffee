@@ -1,6 +1,6 @@
 NoteProcessingFooter = () ->
   timer = 0
-  processing_id = 0
+  processing_id = -1
 
   @showSpinner = () =>
     $('.spinner-container').spin
@@ -31,7 +31,10 @@ NoteProcessingFooter = () ->
           $('.note-status-link').show()
           $('.spinner-container').hide()
           $('.success-glyph').show()
-          $('.note-status-link').attr('href', '/notes/' + processing_id)
+          if processing_id == -1
+            $('.note-status-link').attr('href', '/notes')
+          else
+            $('.note-status-link').attr('href', '/notes/' + processing_id)
 
   @initPolling = () =>
     @checkStatus()
