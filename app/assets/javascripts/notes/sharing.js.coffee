@@ -1,10 +1,25 @@
 Sharing = () ->
   #SHARING
 
-  $(".tagsinput").tagsInput({
-    'autocomplete_url': '/api/buddies'
-  });
 
+
+  
+
+  @getAutocompleteBuddies = () =>
+    $.get('/api/buddies', (response) =>
+      @source = $.map(response, (value, key) =>
+        {
+          'label': value,
+          'id': key
+        })
+      $(".tagsinput").tagsInput({
+        autocomplete_url: '',
+        autocomplete: {source:@source},
+        width: '520px'
+      });
+      )
+
+  @getAutocompleteBuddies()
 
 
   # $('.share-note').click (e) =>

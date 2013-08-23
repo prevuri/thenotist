@@ -20,8 +20,6 @@
 					= form_for current_user.relationships.build(buddy_id: friend[:id]) do |f|
 						%div= f.hidden_field :buddy_id
 						= f.submit "+", :class => "btn btn-primary add-buddy"
-
-
 	%h3 Friends not on Notist
 	.friends-list
 		- @friends_data.each do |friend|
@@ -30,4 +28,3 @@
 					.profile-container.circular
 						%img.profile-image.circular{:src => friend["picture"]["data"]["url"]}
 					.profile-link-container= friend["name"]
-

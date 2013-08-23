@@ -20,7 +20,7 @@ Tile = () ->
 
   $('.note-item').each (index) ->
     # $(".notes-list ul li").width($(document).width()/4.80)
-    $(".notes-list ul li").width($(document).width()/3.59)
+    # $(".notes-list ul li").width($(document).width()/3.59)  !!!IMPORTANT: LEARN: Never base single load dimensions on the window. Users will have different experiences with different window sizes.
     
     tile_id = $(this).attr("data-id")
   
@@ -43,6 +43,8 @@ Tile = () ->
 
     tile_container = $("li[data-id='"+tile_id+"'].notes-list-item")
     tile_container.css("height", tile_height+"px")
+    tile_container.css("width", (1.6*tile_height)+"px")
+
 $ ->
   if $('.note-item').length > 0
     Tile()
