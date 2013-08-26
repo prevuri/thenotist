@@ -9,33 +9,33 @@ Sharing = () ->
     $.get('/api/buddies', (response) =>
       @source = $.map(response, (value, key) =>
         {
-          'label': value,
-          'id': key
+          label: value,
+          value: key,
+          id: value
         })
       $(".tagsinput").tagsInput({
         autocomplete_url: '',
         autocomplete: {source:@source},
         width: '520px'
       });
-      )
+    )
 
-  @getAutocompleteBuddies()
+  @attain
+  @shareWithUser = (event, ui, note_id) =>
+    $('.tooltip').addClass("hidden", 1000)
+    data = {
+      id: note_id,
+      userid: ui.item.id
+    }
+    $.post('/api/notes/share', data, (response) =>
+      if !response.success
+        alert response.error
+    )
 
+  $('.share-note').click (e) =>
+    @getAutocompleteBuddies()
 
-  # $('.share-note').click (e) =>
-  #   @shareClick(e)
-
-  # @shareWithUser = (event, ui, note_id) =>
-  #   $('.tooltip').addClass("hidden", 1000)
-  #   data = {
-  #     id: note_id,
-  #     userid: ui.item.id
-  #   }
-  #   $.post('/api/notes/share', data, (response) =>
-  #     if !response.success
-  #       alert response.error
-  #   )
-
+  #TODO: share button click event calling share with user
 
   # @shareClick = (e) =>
   #   $.get('/api/buddies', (response) =>

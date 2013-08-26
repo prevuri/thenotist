@@ -43,7 +43,7 @@ Tile = () ->
 
     tile_container = $("li[data-id='"+tile_id+"'].notes-list-item")
     tile_container.css("height", tile_height+"px")
-    tile_container.css("width", (1.6*tile_height)+"px")
+    tile_container.css("min-width", (1.6*tile_height)+"px")
 
 $ ->
   if $('.note-item').length > 0

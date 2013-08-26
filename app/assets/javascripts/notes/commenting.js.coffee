@@ -106,7 +106,7 @@ Commenting = () ->
 
   @yCoordClick = (e) =>
     if !@submitting
-      @yCoord = e.offsetY
+      @yCoord = e.pageY - $(e.target).offset().top
       @parentId = null
       @fileId = $(e.target).attr('file-id')
       @fileComments = $(e.target).parents('.file-container').find('.comments')
