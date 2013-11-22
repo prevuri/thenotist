@@ -20,6 +20,7 @@
 //= require jquery.spin
 //= require jquery.ui.autocomplete
 //= require underscore
+//= require magicsuggest-1.3.1
 //
 // Removing these requirements for gem
 // require bootstrap

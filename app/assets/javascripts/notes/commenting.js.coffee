@@ -106,7 +106,7 @@ Commenting = () ->
 
   @yCoordClick = (e) =>
     if !@submitting
-      @yCoord = e.pageY - $(e.target).offset().top
+      @yCoord = e.pageY - $(e.target).offset().top #offsetTop does not work in mozilla (standard not set)
       @parentId = null
       @fileId = $(e.target).attr('file-id')
       @fileComments = $(e.target).parents('.file-container').find('.comments')

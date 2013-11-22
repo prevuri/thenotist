@@ -521,6 +521,35 @@ $thumbnail-height: 330px;
   z-index: 1140;
 }
 
+// NOTE SHARING SECTION
+.share-note-form-container {
+  height: 160px; 
+
+  h3 {
+    padding-top: 12px;
+    padding-left: 12px;
+  }
+
+  .modal-body {
+    overflow-y: visible;
+    padding: 12px;
+  }
+
+  .share-button {
+    float: right;
+    margin-top: 15px;
+    .share-note-icon {
+      float: left;
+      margin-right: 5px;
+    }
+
+    .share-action-text {
+      display: inline;
+    }
+  }
+}
+
+
 // NOTE UPLOAD SECTION
 .create-new-note-container {
   margin-bottom: 20px;

@@ -31,20 +31,37 @@ class Api::NotesController < ApplicationController
 
   def share
     begin
-      @user = User.find_by_id(params[:userid])
+      @useridstring = params[:userids]
+      @useridstring = @useridstring[1..@useridstring.length - 2]
+      @user_ids = @useridstring.split(",").map { |id| id.chomp('"').reverse.chomp('"').reverse}
+      @users = []
+      @user_ids.each do |user_id|
+        @users << User.find_by_id(user_id)
+      end
+    
     rescue
       return render :json => {
         :success => false,
         :error => user_not_found_error
       }
     end
+    #TODO: Set up multiple user activity
 
-    @contrib = @note.share!(@user)
-    track_activity @contrib
+    begin 
+      @users.each do |user|
+        @contrib = @note.share!(user)
+        track_activity @contrib
+      end
+    rescue
+      return render :json => {
+        :success => false,
+        :error => already_shared_error
+      }
+    end
     return render :json => {
       :success => true,
       :note => @note.as_json
-    }
+    }    
   end
 
 
@@ -70,5 +87,9 @@ private
 
   def user_not_found_error
     "User not found :("
+  end
+
+  def already_shared_error
+    "Already shared with user."
   end
 end
