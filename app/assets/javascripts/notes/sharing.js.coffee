@@ -1,11 +1,31 @@
 Sharing = () ->
   #SHARING
 
-  $('.share-note').click (e) =>
-    @initializeShareModal(e)
 
-  $('.share-button').click (e) =>
-    @shareWithUser(e)
+
+  @hideShareModal = () ->
+    $('.share-note-form-container').modal('hide')
+
+  @showErrorCode = (response) ->
+    $('.error-label').html(response.error)
+    $('.error-label').show()
+
+  @updateNote = (note_id) =>
+    data = {
+      id: note_id
+    }
+    notediv = $('div[data-id='+note_id+']')
+    notedivInfo = notediv.find('.info')
+    $.get('/api/notes/'+note_id, (response) =>
+      if response.success
+        if(response.contributor_length > 1)
+          notedivInfo.html("Shared with " + response.first_contributor + " and " + response.contributor_length-1 + " others")
+        else if(response.contributor_length == 1)
+          notedivInfo.html("Shared with " + response.first_contributor)
+          
+        notediv.attr("data-footer-expanded", parseInt(notediv.attr("data-footer-expanded"))+ notedivInfo.height()+15)
+    )
+
 
   @initializeShareModal = (e) =>
     @sharedItem = $(e.target).parents('.note-item')
@@ -14,6 +34,8 @@ Sharing = () ->
       $(@shareForm).magicSuggest({
         width: 530,
         height: 100,
+        toggleOnClick: true,
+        emptyText: 'Search for friends or groups to share note with!'
         data: $.map(response, (value, key) =>
           return {
             id: key,
@@ -31,7 +53,7 @@ Sharing = () ->
       )
 
   @shareWithUser = (event) =>
-    shareIds = $(event.target).parents('.share-note-container').find('#ms-sel-ctn-0 input[type=hidden]').val()
+    shareIds = $(event.target).parents('.share-note-form-container').find('#ms-sel-ctn-0 input[type=hidden]').val()
     note_id = $(event.target).parents('.notes-list-item').attr('data-id')
     data = {
       id: note_id,
@@ -39,25 +61,17 @@ Sharing = () ->
     }
     $.post('/api/notes/share', data, (response) =>
       if !response.success
-        alert response.error
+        @showErrorCode(response)
+      else
+        @hideShareModal()
+        @updateNote(note_id)
     )
-  # @getAutocompleteBuddies = () =>
-  #   $.get('/api/buddies', (response) =>
-  #     @source = $.map(response, (value, key) =>
-  #       {
-  #         label: value, 
-  #         value: key,
-  #         id: value
-  #       })
-  #     $(".tagsinput").tagsInput({
-  #       autocomplete_url: '',
-  #       autocomplete: {source:@source},
-  #       width: '520px'
-  #     });
-  #   )
-  
 
-  # $('.form-container').find('.ms-sel-ctn :hidden')
+  $('.share-note').click (e) =>
+    @initializeShareModal(e)
+
+  $('.share-button').click (e) =>
+    @shareWithUser(e)
 
   
   # @attain

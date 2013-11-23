@@ -16,7 +16,9 @@ class Api::NotesController < ApplicationController
   def show
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json,
+      :first_contributor => @note.contributors.first.user.name,
+      :contributor_length => @note.contributors.length
     }
   end
 
@@ -31,8 +33,8 @@ class Api::NotesController < ApplicationController
 
   def share
     begin
-      @useridstring = params[:userids]
-      @useridstring = @useridstring[1..@useridstring.length - 2]
+      @userstring = params[:userids]
+      @useridstring = @userstring[1..@userstring.length - 2]
       @user_ids = @useridstring.split(",").map { |id| id.chomp('"').reverse.chomp('"').reverse}
       @users = []
       @user_ids.each do |user_id|
@@ -42,7 +44,7 @@ class Api::NotesController < ApplicationController
     rescue
       return render :json => {
         :success => false,
-        :error => user_not_found_error
+        :error => user_not_found_error + " " + @userstring
       }
     end
     #TODO: Set up multiple user activity
@@ -58,6 +60,7 @@ class Api::NotesController < ApplicationController
         :error => already_shared_error
       }
     end
+
     return render :json => {
       :success => true,
       :note => @note.as_json

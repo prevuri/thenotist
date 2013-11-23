@@ -523,7 +523,6 @@ $thumbnail-height: 330px;
 
 // NOTE SHARING SECTION
 .share-note-form-container {
-  height: 160px; 
 
   h3 {
     padding-top: 12px;
@@ -531,13 +530,22 @@ $thumbnail-height: 330px;
   }
 
   .modal-body {
+    padding-top: 35px;
+    padding-bottom: 35px;
     overflow-y: visible;
-    padding: 12px;
+  }
+
+  .share-interaction {
+    .error-label {
+      font-size: 0.85em;
+      color: red;
+      margin-left: 5px;
+      float: left;
+    }
   }
 
   .share-button {
     float: right;
-    margin-top: 15px;
     .share-note-icon {
       float: left;
       margin-right: 5px;
@@ -642,7 +650,8 @@ $thumbnail-height: 330px;
         }
       }
     }
-    .upload-interaction {
+
+    .upload-interaction{
       .spinner-container {
         float: left;
         margin-top: 12px;

@@ -18,21 +18,18 @@
   
   - unless shared
     .share-note-form-container.modal.hide.fade{ :id => "container-#{index}", :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
-      %h3 Share this Note
       .share-note-container.modal-body
         .form-container
           .form
         /   %input#tagsinput.tagsinput{:name => "tagsinput", :style => "display: none;"}
+        
+
+      .share-interaction.modal-footer
+        .error-label.hidden
         .btn.btn-primary.share-button
           %i.icon-share-alt.share-note-icon
-          .share-action-text
-            Share
-
-        .share-interaction.modal-footer
-          .processing-label.hidden This can take several minutes. You will be automatically redirected to your note when processing is done.
-          .btn.btn-primary.submit-action
-            %i.submit-action-icon.icon-cloud-upload
-            .submit-action-text Upload
+            .share-action-text
+              Share
 
 
   #list-footer

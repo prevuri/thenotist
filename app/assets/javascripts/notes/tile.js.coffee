@@ -21,7 +21,9 @@ Tile = () ->
   $('.note-item').each (index) ->
     # $(".notes-list ul li").width($(document).width()/4.80)
     # $(".notes-list ul li").width($(document).width()/3.59)  !!!IMPORTANT: LEARN: Never base single load dimensions on the window. Users will have different experiences with different window sizes.
-    
+    # You can easily do this server side. Should not be doing this here!!! 
+    # TODO: Transfer this code to server side.
+
     tile_id = $(this).attr("data-id")
   
     tile = $("div[data-id='"+tile_id+"'] .img-preview")
