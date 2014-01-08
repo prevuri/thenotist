@@ -81,7 +81,6 @@ class Api::NotesController < ApplicationController
 
   def unshare
     begin 
-      debugger
       @user = User.find_by_id(params[:userid])
     rescue
       return render :json => {
