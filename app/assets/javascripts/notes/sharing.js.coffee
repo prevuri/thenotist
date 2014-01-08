@@ -29,7 +29,7 @@ Sharing = () ->
         shareDiv.empty()
 
         for contrib in response.contributors
-          shareDiv.prepend("<div class='contrib-list-item'>
+          shareDiv.prepend("<div class='contrib-list-item' data-id='"+contrib.id+"'>
                               <div class='contrib-info'>
                                 <div class='profile-container circular'>
                                   <img class='profile-image circular hoverZoomLink' src='"+contrib.image+"'>
@@ -107,7 +107,7 @@ Sharing = () ->
 
 
 
-  $('.delete-contrib').click (e) =>
+  $(document).on 'click', '.delete-contrib', (e) =>
     @removeSharedUser(e)
 
   $('.share-note').click (e) =>
