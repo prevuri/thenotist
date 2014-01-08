@@ -22,10 +22,15 @@ Sharing = () ->
       if response.success
         if(response.contributors.length > 1)
           notedivInfo.html("Shared with " + response.contributors[0].name + " and " + response.contributors.length + " others")
+          notediv.attr("data-footer-expanded", parseInt(notediv.attr("data-footer-expanded"))+ notedivInfo.height()+15)
         else if(response.contributors.length == 1)
           notedivInfo.html("Shared with " + response.contributors[0].name)
+          notediv.attr("data-footer-expanded", parseInt(notediv.attr("data-footer-expanded"))+ notedivInfo.height()+15)          
+        else if(response.contributors.length == 0)
+          notedivInfo.html("")
+          notediv.attr("data-footer-expanded", parseInt(notedivInfo.attr('data-footer')))
           
-        notediv.attr("data-footer-expanded", parseInt(notediv.attr("data-footer-expanded"))+ notedivInfo.height()+15)
+
         shareDiv.empty()
 
         for contrib in response.contributors
