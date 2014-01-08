@@ -524,15 +524,52 @@ $thumbnail-height: 330px;
 // NOTE SHARING SECTION
 .share-note-form-container {
 
-  h3 {
-    padding-top: 12px;
-    padding-left: 12px;
+  h4 {
+    margin-top: 10px;
   }
 
   .modal-body {
     padding-top: 35px;
     padding-bottom: 35px;
     overflow-y: visible;
+    .contributor-list {
+      height: 300px;
+      overflow-y: scroll;
+      
+      .contrib-list-item {
+        // width: 290px;
+        height: 50px;
+        margin-top: 10px;
+        margin-right: 10px;
+        border-top: 1px #ccc solid;
+        clear: both;
+        .contrib-info {
+          width: 80%;
+          margin-top: 7px;
+          margin-bottom: 7px;
+          .profile-container {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            padding: 2px;
+            margin-right: 10px;
+            float: left;
+            .profile-image {
+              width: 50px;
+              height: 50px;
+            }
+          }
+          .profile-link-container {
+            float: left;
+            max-width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 16px;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
   }
 
   .share-interaction {

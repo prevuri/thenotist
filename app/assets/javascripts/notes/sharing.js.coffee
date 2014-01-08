@@ -14,16 +14,33 @@ Sharing = () ->
     data = {
       id: note_id
     }
+
     notediv = $('div[data-id='+note_id+']')
+    shareDiv = notediv.find('.contributor-list')
     notedivInfo = notediv.find('.info')
-    $.get('/api/notes/'+note_id, (response) =>
+    $.get('/api/notes/contribs/'+note_id, (response) =>
       if response.success
-        if(response.contributor_length > 1)
-          notedivInfo.html("Shared with " + response.first_contributor + " and " + response.contributor_length-1 + " others")
-        else if(response.contributor_length == 1)
-          notedivInfo.html("Shared with " + response.first_contributor)
+        if(response.contributors.length > 1)
+          notedivInfo.html("Shared with " + response.contributors[0].name + " and " + response.contributors.length + " others")
+        else if(response.contributors.length == 1)
+          notedivInfo.html("Shared with " + response.contributors[0].name)
           
         notediv.attr("data-footer-expanded", parseInt(notediv.attr("data-footer-expanded"))+ notedivInfo.height()+15)
+        shareDiv.empty()
+
+        for contrib in response.contributors
+          shareDiv.prepend("<div class='contrib-list-item'>
+                              <div class='contrib-info'>
+                                <div class='profile-container circular'>
+                                  <img class='profile-image circular hoverZoomLink' src='"+contrib.image+"'>
+                                </div>
+                                <div class='profile-link-container'><a href='/profile/"+contrib.id+"'>"+contrib.name+"</a></div>
+                                <div class='delete-contrib'>
+                                  <i class='icon-remove btn'></i>
+                                </div>
+                              </div>
+                            </div>")
+
     )
 
 
@@ -66,6 +83,32 @@ Sharing = () ->
         @hideShareModal()
         @updateNote(note_id)
     )
+
+    
+
+  @removeSharedUser = (e) =>
+
+    shared_user_item = $(e.target).parents('.contrib-list-item')
+    shared_user = $(shared_user_item).attr('data-id')
+    note_id = $(e.target).parents('.notes-list-item').attr('data-id')
+
+    data = {
+      id: note_id,
+      userid: shared_user
+    }
+    
+    $.post('/api/notes/unshare', data, (response) =>
+      if !response.success
+        @showErrorCode(response)
+      else
+        $(shared_user_item).remove()
+        @updateNote(note_id)
+    )
+
+
+
+  $('.delete-contrib').click (e) =>
+    @removeSharedUser(e)
 
   $('.share-note').click (e) =>
     @initializeShareModal(e)

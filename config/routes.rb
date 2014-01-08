@@ -25,6 +25,8 @@ TheNotist::Application.routes.draw do
     resources :files, :only => [ :index, :show ]
     resources :notes, :only => [ :index, :show, :update]
     match 'notes/share/' => 'notes#share', :as => :share_note
+    match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
+    match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
   end
 
   # mount sidekiq so we can monitor jobs

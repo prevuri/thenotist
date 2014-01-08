@@ -83,6 +83,7 @@ class User < ActiveRecord::Base
 	                         )
 	  end
 
+    #TODO: Update on last change: Check for a last change time
 	  if user
       user.update_attribute(:fb_access_token, auth.credentials.token)
 
@@ -92,8 +93,7 @@ class User < ActiveRecord::Base
       profile_image = @graph.get_picture(user.uid, {:width => 300, :height => 300})
       user.user_fb_data = UserFbData.create(uid:user.uid,
                                 profile_image:profile_image,
-                                link:profile["link"])
-      
+                                link:profile["link"])      
       user
     end
 	end

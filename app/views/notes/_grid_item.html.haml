@@ -22,8 +22,18 @@
         .form-container
           .form
         /   %input#tagsinput.tagsinput{:name => "tagsinput", :style => "display: none;"}
-        
-
+        %h4 Note Shared With:
+        .contributor-list
+          - note.contributors.each do |contrib|
+            .contrib-list-item{:data => {:id => contrib.user.id} }
+              .contrib-info
+                .profile-container.circular
+                  %img.profile-image.circular{:src => contrib.user.user_fb_data.profile_image}
+                .profile-link-container= link_to contrib.user.name, profile_path(contrib.user)
+                .delete-contrib
+                  %i.icon-remove.btn
+                / TODO: create a delete friend link and connect it to the delete friend for the API
+      
       .share-interaction.modal-footer
         .error-label.hidden
         .btn.btn-primary.share-button

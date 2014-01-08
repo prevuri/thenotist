@@ -2,9 +2,11 @@ class Api::NotesController < ApplicationController
   include ApiHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_note, :only => [ :show, :update, :share ]
+  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs ]
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
+
+  UserInfo = Struct.new(:id, :name, :image)
 
   def index
     return render :json => {
@@ -16,9 +18,7 @@ class Api::NotesController < ApplicationController
   def show
     return render :json => {
       :success => true,
-      :note => @note.as_json,
-      :first_contributor => @note.contributors.first.user.name,
-      :contributor_length => @note.contributors.length
+      :note => @note.as_json
     }
   end
 
@@ -28,6 +28,18 @@ class Api::NotesController < ApplicationController
     return render :json => {
       :success => true,
       :note => @note.as_json
+    }
+  end
+
+  def contribs
+    contribs = []
+    @note.contributors.each do |contrib|
+      contribs << UserInfo.new(contrib.user_id, contrib.user.name, contrib.user.user_fb_data.profile_image)
+    end
+
+    return render :json => {
+      :success => true,
+      :contributors => contribs
     }
   end
 
@@ -67,6 +79,33 @@ class Api::NotesController < ApplicationController
     }    
   end
 
+  def unshare
+    begin 
+      @user = User.find_by_id(params[:userid])
+    rescue
+      return render :json => {
+        :success => false,
+        :error => user_not_found_error + " " + @user.name
+      }
+    end
+
+    begin
+      @note.revoke_share!(@user)
+    rescue
+      return render :json => {
+        :success => false,
+        :Error => cannot_revoke_error + " " + @user.name
+      }
+    end
+
+    return render :json => {
+      :success => true,
+      :note => @note.as_json
+    }
+
+  end
+
+
 
 private
   def get_note
@@ -94,5 +133,9 @@ private
 
   def already_shared_error
     "Already shared with user."
+  end
+
+  def cannot_revoke_error
+    "Cannot remove contributor"
   end
 end
