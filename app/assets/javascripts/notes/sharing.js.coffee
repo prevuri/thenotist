@@ -2,7 +2,6 @@ Sharing = () ->
   #SHARING
 
 
-
   @hideShareModal = () ->
     $('.share-note-form-container').modal('hide')
 
@@ -15,7 +14,7 @@ Sharing = () ->
       id: note_id
     }
 
-    notediv = $('div[data-id='+note_id+']')
+    notediv = $('div[data-id='+note_id+'].note-item')
     shareDiv = notediv.find('.contributor-list')
     notedivInfo = notediv.find('.info')
     $.get('/api/notes/contribs/'+note_id, (response) =>
@@ -53,7 +52,7 @@ Sharing = () ->
     @sharedItem = $(e.target).parents('.note-item')
     @shareForm = @sharedItem.find('.form')
     $.get('/api/buddies', (response) =>
-      $(@shareForm).magicSuggest({
+      @msForm = $(@shareForm).magicSuggest({
         width: 530,
         height: 100,
         toggleOnClick: true,
@@ -86,6 +85,7 @@ Sharing = () ->
         @showErrorCode(response)
       else
         @hideShareModal()
+        @msForm.clear()
         @updateNote(note_id)
     )
 
