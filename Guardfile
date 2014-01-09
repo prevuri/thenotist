@@ -3,11 +3,11 @@
 
 guard 'bundler' do
   watch('Gemfile')
-  # Uncomment next line if Gemfile contain `gemspec' command
+  # Uncomment next line if Gemfile contains `gemspec' command
   # watch(/^.+\.gemspec/)
 end
 
-guard 'rspec' do
+guard 'rspec', cmd: 'rspec -fd' do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }

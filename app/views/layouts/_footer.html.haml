@@ -1,12 +1,13 @@
-- if current_user.has_note_processing?
-  .processing-status-container
-    .status-glyph-container
-      .spinner-container
-      .success-glyph.hidden
-        %i.icon-ok-sign
-    .status-box
-      .note-name= "#{current_user.notes.select { |n| !n.processed }.first.title}"
-      .note-status
-        .note-status-text
-          is being processed
-        = link_to "Show", "", :class => 'note-status-link hidden'
+-if current_user
+  - if current_user.has_note_processing?
+    .processing-status-container
+      .status-glyph-container
+        .spinner-container
+        .success-glyph.hidden
+          %i.icon-ok-sign
+      .status-box
+        .note-name= "#{current_user.notes.select { |n| !n.processed }.first.title}"
+        .note-status
+          .note-status-text
+            is being processed
+          = link_to "Show", "", :class => 'note-status-link hidden'
