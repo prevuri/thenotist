@@ -4,11 +4,15 @@ TheNotist::Application.routes.draw do
 
   get "buddies/index"
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   get "main/index"
 
   root :to => 'main#index'
   
+  # devise_for :users, :skip => [:registrations, :sessions]
+  devise_for :users, :controllers => { 
+    :omniauth_callbacks => "users/omniauth_callbacks"
+  }
+
   resources :uploaded_files
   
   resources :notes
