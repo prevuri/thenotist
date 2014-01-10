@@ -1,11 +1,7 @@
-require 'zeus/rails'
+require 'zeus/parallel_tests'
 
-class CustomPlan < Zeus::Rails
-
-  # def my_custom_command
-  #  # see https://github.com/burke/zeus/blob/master/docs/ruby/modifying.md
-  # end
-
+class CustomPlan < Zeus::ParallelTests::Rails
+  # Your custom methods go here
 end
 
 Zeus.plan = CustomPlan.new

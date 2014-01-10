@@ -11,11 +11,19 @@
           "server": ["s"],
           "generate": ["g"],
           "destroy": ["d"],
-          "dbconsole": []
+          "dbconsole": [],
+          "parallel_rspec": [],
+          "parallel_cucumber": []
         },
         "test_environment": {
-          "cucumber_environment": {"cucumber": []},
-          "test_helper": {"test": ["rspec", "testrb"]}
+          "cucumber_environment": {
+                  "cucumber": [],
+                  "parallel_cucumber_worker": []
+	  },
+          "test_helper": {
+                  "test": ["rspec", "testrb"],
+                  "parallel_rspec_worker": []
+          }
         }
       }
     }
