@@ -66,6 +66,7 @@ group :development, :test do
   gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem 'spork'
   gem 'launchy'
   gem 'debugger'
   # gem 'factory_girl_rails'

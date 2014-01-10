@@ -72,7 +72,3 @@ feature "Unauthenticated Buddies Page Denial" do
    		expect(page).to have_content 'Connect with Facebook'
    	end
 end
-
-feature "Unauthenticated API Page Denial" do
-
-end
