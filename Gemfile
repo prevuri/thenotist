@@ -44,6 +44,7 @@ group :assets do
   gem "flat-ui-rails"
   gem 'underscore-rails'
   gem "font-awesome-rails"
+  gem "angularjs-rails"
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -70,6 +71,9 @@ group :development, :test do
   gem "zeus-parallel_tests"
   gem 'launchy'
   gem 'debugger'
+  gem 'teaspoon'
+  gem 'phantomjs'
+
   # gem 'factory_girl_rails'
   # gem 'rb-inotify', :require => false
   # gem 'rb-fsevent', :require => false

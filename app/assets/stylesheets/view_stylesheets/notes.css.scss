@@ -667,11 +667,13 @@ $thumbnail-height: 330px;
           -webkit-transition: color 0.2s;
           transition: color 0.2s;
           color: #2ecc71;
+          border-color: #2ecc71;
         }
         &.error {
           -webkit-transition: color 0.2s;
           transition: color 0.2s;
           color: #e74c3c;
+          border-color: #e74c3c;
         }
       }
     }
