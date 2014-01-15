@@ -62,7 +62,6 @@ group :development, :test do
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rspec'
-  gem 'guard-livereload'
   gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   gem 'capybara-webkit'
   gem 'database_cleaner'
