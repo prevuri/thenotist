@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -13,7 +13,7 @@ gem 'sqlite3'
 gem 'aws-sdk'
 
 # image manipulation
-gem 'rmagick'
+gem 'rmagick', :require => false
 
 # production gems
 gem 'rghost_rails', '~> 0.3.3'
@@ -43,7 +43,7 @@ group :assets do
   gem "twitter-bootstrap-rails"
   gem "flat-ui-rails"
   gem 'underscore-rails'
-
+  gem "font-awesome-rails"
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -56,31 +56,27 @@ end
 
 group :development, :test do
   gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'growl'
+  # gem 'binding_of_caller'
+  gem 'rspec-rails'
+  # gem 'growl'
   gem 'guard'
   gem 'guard-bundler'
-  gem 'guard-cucumber'
   gem 'guard-rspec'
-  gem 'guard-livereload'
-  gem 'factory_girl_rails'
-  gem 'rb-inotify', :require => false
-  gem 'rb-fsevent', :require => false
-  gem 'rb-fchange', :require => false
-end
-
-group :test do
-  gem 'capybara'
-  gem 'faker'
+  gem 'capybara', :git => 'git://github.com/jnicklas/capybara.git'
   gem 'capybara-webkit'
   gem 'database_cleaner'
-  gem 'rspec-rails'
+  gem 'zeus'
+  gem "parallel_tests"
+  gem "zeus-parallel_tests"
   gem 'launchy'
-  gem 'cucumber-rails', :require => false
+  gem 'debugger'
+  # gem 'factory_girl_rails'
+  # gem 'rb-inotify', :require => false
+  # gem 'rb-fsevent', :require => false
+  # gem 'rb-fchange', :require => false
 end
 
 
-gem "font-awesome-rails"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -93,6 +89,3 @@ gem "font-awesome-rails"
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-# To use debugger
-gem 'debugger'

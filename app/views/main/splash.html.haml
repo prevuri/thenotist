@@ -1,81 +1,14 @@
 #splash
   .wrapper
-    .theme-background#themeback-one
+    .theme-background#themeback-one      
+    .background-overlay
       .notist-logo
       %div.connect-fb-button
         = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
-          
-    %section.summary
-      %ul.inline
-        %li
-          %h1 Organize
-          %p 
-            Focus purely on writing your ideas while TheNotist organizes your notes in a sleek and minimalistic interface.
-          %div.tile-image.big-illustration.center#organize
-          %a.btn.btn-large.btn-block.btn-info
-            Learn More
-        %li
-          %h1 Share
-          %p 
-            Collaborate with people on different notes through our dynamic messaging service. Choose if you want certain notes to be public or private.
-          %div.tile-image.big-illustration#share
-          %a.btn.btn-large.btn-block.btn-info
-            Learn More
-        %li
-          %h1 Secure
-          %p
-            All notes are saved in the cloud and can be accessed anywhere with wifi.  Your notes will be backed up on our highly secure servers to ensure no information is lost.
-          %div.tile-image.big-illustration#secure
-          %a.btn.btn-large.btn-block.btn-info
-            Learn More
-    / .theme-background#themeback-two
-    / %section.reviews
-    /   .review#review_1
-    /     .tooltip.fade.bottom.in
-    /       .tooltip-arrow
-    /       .tooltip-inner
-    /         %i.icon-facebook-sign
-    /   .review#review_2
-    /     .tooltip.fade.top.in
-    /       .tooltip-arrow
-    /       .tooltip-inner
-    /         "The splash page is absolutely stunning!" 
-    /   .review#review_3
-    /     .tooltip.fade.top.in
-    /       .tooltip-arrow
-    /       .tooltip-inner
-    /         "The chatting feature has made my course notes SO much more in-depth as I discuss the content with the my classmates. Having these highly detailed notes has literally lifted the pressure off my shoulders when final exams come around."
-    /   .review#review_4
-    /     .tooltip.fade.top.in
-    /       .tooltip-arrow
-    /       .tooltip-inner
-    /         "This is the greatest thing since chocolate milk!"
-    /   .review#review_5
-    /     .tooltip.fade.top.in
-    /       .tooltip-arrow
-    /       .tooltip-inner
-    /         %i.icon-twitter
-    / .theme-background#themeback-three
-    / %section.developers
-    /   %ul.inline
-    /     %li
-    /       %h4 Vladimir Li
-    /       %div.circular{:style => "background:url('/assets/splash/vlad.jpg') no-repeat; background-size: 100px 100px; margin:auto;"}
-    /     %li
-    /       %h4 Piyush Revuri
-    /       %div.circular{:style => "background:url('/assets/splash/piyush.jpg') no-repeat center; background-size: 100px 120px; background-position: center center; margin:auto;"}
-    /     %li
-    /       %h4 Josh Zivot
-    /       %div.circular{:style => "background:url('/assets/splash/josh.jpg') no-repeat; background-size: 100px 110px; margin:auto;"}
-    /     %li
-    /       %h4 Matthew Lam
-    /       %div.circular{:style => "background:url('/assets/splash/matt.png') no-repeat; background-size: 120px 110px; background-position: center left; margin:auto;"}
-  .footer-wrapper
-    .container
-      %ul.inline
-        %li{:id => "current"}= link_to "About"
-        %li= link_to "Help"
-        %li= link_to "Developers"
-        %li= link_to "Twitter"
-        %li= link_to "Facebook"
+      .big-splash
+        %h1
+          Discuss. Annotate. Comprehend.
+        %h2
+          Share and discuss notes with your friends and classmates.
 
+     
