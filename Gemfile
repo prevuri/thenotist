@@ -19,6 +19,7 @@ gem 'rmagick', :require => false
 gem 'rghost_rails', '~> 0.3.3'
 gem 'devise'
 gem 'omniauth'
+gem 'faraday', '0.8' # if it's not version locked, then koala will break
 gem 'koala', '~> 1.6.0'
 gem 'omniauth-facebook'
 
@@ -56,7 +57,7 @@ end
 
 group :development, :test do
   gem 'better_errors'
-  # gem 'binding_of_caller'
+  gem 'binding_of_caller'
   gem 'rspec-rails'
   # gem 'growl'
   gem 'guard'
