@@ -14,7 +14,7 @@
 /db/*.sqlite3
 
 # Ignore the test DB
-/db/test
+/db/test*
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
