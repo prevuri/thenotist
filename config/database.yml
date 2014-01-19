@@ -21,8 +21,12 @@ test: &test
 # pool set to 25: that is the number of concurrent connections
 #                 needs to be 25 because that's the max for sidekiq
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: postgresql
+  database: NotistApp
+  username: notistapp
+  password: notablenotist
+  host: notistapppgdb.ci7lbldq35nq.us-east-1.rds.amazonaws.com
+  port: 5432
   pool: 25
   timeout: 5000
 

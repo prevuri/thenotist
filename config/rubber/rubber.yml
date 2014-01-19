@@ -6,7 +6,7 @@ app_user: app
 
 # REQUIRED: Notification emails (e.g. monit) get sent to this address
 #
-admin_email: "root@#{full_host}"
+admin_email: "vlad@thenotist.com"
 
 # OPTIONAL: If not set, you won't be able to access web_tools
 # server (graphite, graylog, monit status, haproxy status, etc)
@@ -30,14 +30,14 @@ domain: foo.com
 #
 # rubber_secret: "#{File.expand_path('~') + '/.ec2' + (Rubber.env == 'production' ? '' : '_dev') + '/rubber-secret.yml' rescue ''}"
 
-# OPTIONAL: Encryption key that was used to obfuscate the contents of rubber-secret.yml with "rubber util:obfuscation" 
+# OPTIONAL: Encryption key that was used to obfuscate the contents of rubber-secret.yml with "rubber util:obfuscation"
 # Not that much better when stored in here, but you could use a ruby snippet in here to fetch it from a key server or something
 #
 # rubber_secret_key: "XXXyyy=="
 
 # REQUIRED All known cloud providers with the settings needed to configure them
 # There's only one working cloud provider right now - Amazon Web Services
-# To implement another, clone lib/rubber/cloud/aws.rb or make the fog provider 
+# To implement another, clone lib/rubber/cloud/aws.rb or make the fog provider
 # work in a generic fashion
 #
 cloud_providers:
@@ -58,9 +58,9 @@ cloud_providers:
 
     # REQUIRED The amazon keys and account ID (digits only, no dashes) used to access the AWS API
     #
-    access_key: XXX
-    secret_access_key: YYY
-    account: 'ZZZ'
+    access_key: AKIAJ2DWBCGALRZLWIZA
+    secret_access_key: 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
+    account: 862616723875
 
     # REQUIRED:  The name of the amazon keypair and location of its private key
     #
@@ -233,7 +233,7 @@ isolate_security_groups: true
 
 # OPTIONAL: Prompts one to sync security group rules when the ones in amazon
 # differ from those in rubber
-prompt_for_security_group_sync: true
+prompt_for_security_group_sync: false
 
 # OPTIONAL: A list of CIDR address blocks that represent private networks for your cluster.
 # Set this to open up wide access to hosts in your network.  Consequently, setting the CIDR block
