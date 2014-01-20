@@ -47,14 +47,14 @@ $sidebar-foreground-hover: white;
 // $sidebar-shadow-color: #888;
 
 /* THEME 4 */
-$sidebar-background: #252627;
+$sidebar-background: #26272B;
 $sidebar-background-hover: #40474F;
 $sidebar-foreground: #999;
 $sidebar-foreground-active: #27F;
-$sidebar-foreground-hover: white;
+$sidebar-foreground-hover: #FFF;
 $sidebar-shadow-color: #999;
 // $background-color: #E8E3DD;
-$background-color: #E8E8E8;
+$background-color: #FFF;
 $btn-primary: #F55451;
 
 
@@ -63,10 +63,15 @@ body {
   margin: 0;
   padding: 0 !important;
   background-color: $background-color !important;
+}
+
+body, h1, h2, h3, h4, p {
   font-family: Helvetica Neue !important;
+  font-weight: 300 !important;
   font-style: normal;
   font-variant: normal;
 }
+
 
 //Button color overrides
 //
@@ -152,7 +157,7 @@ $sidebar-trans-time: 0.5s;
 }
 
 #sidebar {
-  box-shadow: 2px 0 2px $sidebar-shadow-color;
+  // box-shadow: 2px 0 2px $sidebar-shadow-color;
   position:fixed;
   top: 0;
   bottom: 0;
