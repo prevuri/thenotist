@@ -71,6 +71,12 @@ end
 # gem 'unicorn'
 
 # Deploy with Capistrano
+# the commands are:
+# cap rubber:create_staging
+# cap rubber:bootstrap
+# cap deploy:cold          -- migrations
+# cap rubber:tail_logs
+# cap -T rubber
 gem 'capistrano'
 gem 'rubber'
 gem 'open4'
