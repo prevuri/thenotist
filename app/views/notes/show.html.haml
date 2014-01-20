@@ -1,16 +1,18 @@
+- @note.uploaded_css_files.each do |css_file|
+  %link{:type => "text/css", :rel => "stylesheet", :href => css_file.public_path}
+
 #note-main
   %h1.note-title= @note.title
   .note-description= @note.description
 
-  .note-images
+  .note-pages
     - @note.uploaded_files.each do |file|
       .file-container
-
-        .image-container-outer
-          .image-container
-            .image-border
-              %a{ :name => "Page-#{file.page_number}"}
-              = image_tag file.public_path, :class => 'note-image', :'file-id' => file.id
+        .page-container
+          %a{ :name => "Page-#{file.page_number}"}
+          .note-page{:'file-id' => file.id }  
+            - @html = open(file.public_path).read
+            = @html.html_safe
         .comments-container
           .comments
             = render :partial => 'comments', :object => file.top_level_comments

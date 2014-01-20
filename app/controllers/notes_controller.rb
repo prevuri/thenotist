@@ -16,7 +16,6 @@ class NotesController < ApplicationController
     else
       begin
         @note = current_user.notes.create(:title => params[:new_note][:title], :description => params[:new_note][:description])
-        
         local_pdf_file = params[:new_note][:file].tempfile.path
         DocumentConversionWorker.perform_async({
           :current_user_id => current_user.id,
