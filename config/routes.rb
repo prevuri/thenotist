@@ -1,4 +1,4 @@
-require 'sidekiq/web'
+# require 'sidekiq/web'
 TheNotist::Application.routes.draw do
   resources :activities
 
@@ -7,18 +7,18 @@ TheNotist::Application.routes.draw do
   get "main/index"
 
   root :to => 'main#index'
-  
 
-  devise_for :users, :controllers => { 
+
+  devise_for :users, :controllers => {
     :omniauth_callbacks => "users/omniauth_callbacks"
-  }, :skip => [:sessions, :registrations, :passwords] 
+  }, :skip => [:sessions, :registrations, :passwords]
   as :user do
     get 'signin' => 'main#index', :as => :new_user_session
     delete 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
   resources :uploaded_files
-  
+
   resources :notes
   match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
 
@@ -38,7 +38,7 @@ TheNotist::Application.routes.draw do
   end
 
   # mount sidekiq so we can monitor jobs
-  mount Sidekiq::Web, :at => '/sidekiq'
+  # mount Sidekiq::Web, :at => '/sidekiq'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

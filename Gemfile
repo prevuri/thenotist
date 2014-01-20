@@ -2,8 +2,6 @@ source 'http://rubygems.org'
 
 # common gems
 gem 'rails', '3.2.13'
-# gem 'rmagick', :require => false  # image manipulation
-# gem 'rghost_rails', '~> 0.3.3'  # used for creating images out of pdf files
 gem 'aws-sdk' # used for connecting to AWS
 gem 'devise'
 gem 'omniauth'
@@ -59,6 +57,8 @@ end
 # gem 'sidekiq'
 # gem 'sinatra', :require => false
 # gem 'slim'
+# gem 'rmagick', :require => false  # image manipulation
+# gem 'rghost_rails', '~> 0.3.3'  # used for creating images out of pdf files
 
 
 # To use ActiveModel has_secure_password
