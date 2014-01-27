@@ -81,7 +81,7 @@ $thumbnail-height: 330px;
 }
 
 #note-main {
-  margin-left: -30px;
+  // margin-left: -30px;
   min-width: 1024px;
   margin-top: 95px;
   z-index: 0;
@@ -110,11 +110,11 @@ $thumbnail-height: 330px;
 
       .comments-container {
         background-color: #F7F5F2;
-        position: absolute;
         right: 0px;
-        width: 41%;
-        overflow: visible;
+        width: 28%;
+        position: fixed;
         height: 100%;
+        overflow: scroll;
       }
     }
   }
@@ -169,7 +169,7 @@ $thumbnail-height: 330px;
   min-width: 100%;
   -webkit-transition: top 0.2s ease;
   top: 50px;
-  left: -13px;
+  left: 5px;
   
   border-radius: 4px;
   // border: 4px solid $highlight-color;
@@ -245,94 +245,110 @@ $thumbnail-height: 330px;
   z-index: 100;
 }
 
-.comment-button {
+.comment-buttons-container {
+  right: 28%%;
+  min-width: 5%;
+  height: 100%;
   position: absolute;
-  left: -15px;
+  background-color: #F7F5F2;
 
-  i {
-    font-size: 1.5em;
-    color: #88b;
-    -webkit-transition: color 0.1s ease;
-    &:hover {
-      color: #55a;
-      cursor: pointer;
+  .comment-button {
+    position: absolute;
+    left: 5px;
+
+    i {
+      font-size: 1.5em;
+      color: #88b;
+      -webkit-transition: color 0.1s ease;
+      &:hover {
+        color: #55a;
+        cursor: pointer;
+      }
+      &:active, &.active {
+        color: #228;
+      }
     }
-    &:active, &.active {
-      color: #228;
-    }
-  }
+  }  
 }
 
-.comment {
-  margin-left: 10px;
-  position: relative;
+.comment-thread-container {
+  // position: absolute;
+  // height: 100%;
+  // right: 0px; 
+  // width: 100%:
+  overflow: scroll;
 
-  .comment-inner {
-    border-radius: 10px 4px 4px;
-    padding: 5px 8px;
-    background-color: white;
-    border: 1px solid #ddd;
-  }
-
-  &.reply {
-    margin-left: 15px;
-    margin-top: 5px;
-    
-    .comment-inner {
-      background-color: #f7f7f9;
-      border-color: #d5d5d5;
-    }
-  }
-
-  &.active {
-    // background-color: $highlight-color;
-  }
-
-  .user {
-    font-weight: bold;
-    margin-bottom: 3px;
-  }
-  .profile-container {
-    width: 40px;
-    height: 40px;
-    padding: 2px;
-    float: left;
-    margin-right: 10px;
-    margin-left: -10px;
-    margin-top: -10px;
-  }
-  .comment-body {
-    overflow: auto;
-  }
-  .comment-text {
-    color: #222;
-  }
-  .bottom {
-    margin-top: 4px;
-  }
-  .comment-date {
-    color: #aaa;
-    float: left;
-  }
-  .bottom {
-    .text-link {
-      float: right;
-      color: #34495E;
-      font-weight: normal;
-    }    
-  }
-  .reply-button {
+  .comment {
     margin-left: 10px;
-  }
-  .delete-confirm-panel {
-    display: none;
-    background-color: #bbb;
-    border-top: 1px solid #999;
-    margin: 10px -8px -5px;
-    border-radius: 0 0 5px 5px;
+    position: relative;
 
-    .btn {
-      margin: 5px 0 5px 10px;
+    .comment-inner {
+      border-radius: 10px 4px 4px;
+      padding: 5px 8px;
+      background-color: white;
+      border: 1px solid #ddd;
+    }
+
+    &.reply {
+      margin-left: 15px;
+      margin-top: 5px;
+      
+      .comment-inner {
+        background-color: #f7f7f9;
+        border-color: #d5d5d5;
+      }
+    }
+
+    &.active {
+      // background-color: $highlight-color;
+    }
+
+    .user {
+      font-weight: bold;
+      margin-bottom: 3px;
+    }
+    .profile-container {
+      width: 40px;
+      height: 40px;
+      padding: 2px;
+      float: left;
+      margin-right: 10px;
+      margin-left: -10px;
+      margin-top: -10px;
+    }
+    .comment-body {
+      overflow: auto;
+    }
+    .comment-text {
+      color: #222;
+    }
+    .bottom {
+      margin-top: 4px;
+    }
+    .comment-date {
+      color: #aaa;
+      float: left;
+    }
+    .bottom {
+      .text-link {
+        float: right;
+        color: #34495E;
+        font-weight: normal;
+      }    
+    }
+    .reply-button {
+      margin-left: 10px;
+    }
+    .delete-confirm-panel {
+      display: none;
+      background-color: #bbb;
+      border-top: 1px solid #999;
+      margin: 10px -8px -5px;
+      border-radius: 0 0 5px 5px;
+
+      .btn {
+        margin: 5px 0 5px 10px;
+      }
     }
   }
 }

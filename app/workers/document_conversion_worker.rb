@@ -17,8 +17,16 @@ class DocumentConversionWorker
       Kristin.convert(local_pdf_file, 'document.htm', {hdpi: 144, vdpi: 144, fit_width: 1024})
 
       converted_doc = Nokogiri::HTML(open("document.htm"))  
+
+      converted_doc.css(".t, .bi").each do |line|
+        line['data-guid'] = SecureRandom.hex
+      end
+
       converted_css = converted_doc.css("style")
       converted_pages = converted_doc.css(".pd")
+
+
+      #insert_guid
 
       bucket = AWS::S3.new.buckets['thenotist']
 

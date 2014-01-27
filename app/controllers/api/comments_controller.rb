@@ -39,7 +39,7 @@ class Api::CommentsController < ApplicationController
       @comment = current_user.comments.create({
         :uploaded_file => @file, 
         :text => params[:comment][:text], 
-        :ycoord => params[:comment][:ycoord],
+        :line_id => params[:comment][:line_id],
         :parent_comment => parent_comment
       })
 

@@ -8,13 +8,20 @@
 #note-main
   
   .note-pages
-    - @note.uploaded_files.each do |file|
+    - @note.uploaded_files.each_with_index do |file, i|
       .file-container
         .page-container
           %a{ :name => "Page-#{file.page_number}"}
           .note-page{:'file-id' => file.id }  
-            - @html = open(file.public_path).read
-            = @html.html_safe
+            - if i == 0
+              - @html = open(file.public_path).read
+              = @html.html_safe
+            - else
+              .spinner-container
+        .comment-buttons-container  
+          - file.top_level_comments.each do |comment|
+            .comment-button{:line_id => "#{comment.line_id}"}
+              %i.icon-comments
         .comments-container
           .comments
             = render :partial => 'comments', :object => file.top_level_comments
@@ -24,10 +31,6 @@
               #new-comment-position-line
                 / .left-arrow
               = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
-
-              -# NOTE: upon submit we actually need a file ID of the file that the user is commenting on,
-              -#       but we don't have that functionality yet, so we are just gonna pick the first file
-              -#       in the note instead
               .btndiv
                 .new-comment-cancel.btn
                   Cancel
