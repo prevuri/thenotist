@@ -1,7 +1,6 @@
 class Comment < ActiveRecord::Base
-  default_scope order('ycoord ASC')
 
-  attr_accessible :text, :ycoord, :uploaded_file, :parent_comment
+  attr_accessible :text, :line_id, :uploaded_file, :parent_comment
   belongs_to :uploaded_file
   belongs_to :user
 
@@ -19,7 +18,7 @@ class Comment < ActiveRecord::Base
       :user => user.as_json,
       :uploaded_file_id => uploaded_file.id,
       :text => text,
-      :ycoord => ycoord,
+      :line_id => line_id,
       :parent_comment_id => parent_comment.nil? ? nil : parent_comment.id,
       :child_comments => child_comments.map { |c| c.as_json },
       :created_at => created_at

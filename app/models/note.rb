@@ -9,6 +9,7 @@ class Note < ActiveRecord::Base
   has_many :contributing_users, through: :contributors, source: :user
   #What was this made for? contibutors should cover this #What was this made for? 
   has_many :uploaded_files, dependent: :destroy
+  has_many :uploaded_css_files, dependent: :destroy
   has_many :comments, :through => :uploaded_files
 
   # want to assume that we are processing a file right away
@@ -65,6 +66,7 @@ class Note < ActiveRecord::Base
       :title => title,
       :description => description,
       :uploaded_files => uploaded_files.map { |f| f.as_json },
+      :uploaded_css_files => uploaded_css_files.map { |f| f.as_json },
       :user => user.as_json,
       :processed => processed,
       :aborted => aborted,

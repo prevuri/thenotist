@@ -40,11 +40,14 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'haml-rails'
   gem 'spinjs-rails'
-  gem "twitter-bootstrap-rails"
-  gem "flat-ui-rails"
+  gem 'twitter-bootstrap-rails'
+  gem 'flat-ui-rails'
   gem 'underscore-rails'
   gem "font-awesome-rails"
   gem "angularjs-rails"
+  gem 'nokogiri'
+  # => install pdf2htmlex... Available in brew
+  gem 'kristin'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
@@ -57,7 +60,7 @@ end
 
 group :development, :test do
   gem 'better_errors'
-  # gem 'binding_of_caller'
+  gem 'binding_of_caller'
   gem 'rspec-rails'
   # gem 'growl'
   gem 'guard'
@@ -67,8 +70,8 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'zeus'
-  gem "parallel_tests"
-  gem "zeus-parallel_tests"
+  gem 'parallel_tests'
+  gem 'zeus-parallel_tests'
   gem 'launchy'
   gem 'debugger'
   gem 'teaspoon'

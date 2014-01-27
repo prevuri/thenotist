@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130729015227) do
+ActiveRecord::Schema.define(:version => 20140120234551) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -38,10 +38,10 @@ ActiveRecord::Schema.define(:version => 20130729015227) do
     t.integer  "uploaded_file_id"
     t.integer  "user_id"
     t.text     "text"
-    t.decimal  "ycoord"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "parent_comment_id"
+    t.string   "line_id"
   end
 
   create_table "contributors", :force => true do |t|
@@ -80,6 +80,13 @@ ActiveRecord::Schema.define(:version => 20130729015227) do
   add_index "relationships", ["buddy_id"], :name => "index_relationships_on_buddy_id"
   add_index "relationships", ["follower_id", "buddy_id"], :name => "index_relationships_on_user_id_and_buddy_id", :unique => true
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_user_id"
+
+  create_table "uploaded_css_files", :force => true do |t|
+    t.string   "public_path"
+    t.integer  "note_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "uploaded_files", :force => true do |t|
     t.integer  "note_id"

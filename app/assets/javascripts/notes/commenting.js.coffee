@@ -1,7 +1,19 @@
 Commenting = () ->
   # COMMENTING
-  $('.note-image').click (e) =>
-    @yCoordClick(e)
+
+
+  @orderComments = () =>
+    @commentButtons = $('.comment-button')
+    for comment in @commentButtons
+      lineId = $(comment).attr("line_id")
+      $(comment).css('top', $('[data-guid='+lineId+']').offset().top - $('.file-container').offset().top)
+
+  
+  $(window).load( ()->
+    @orderComments())
+
+  $('.note-page .t, .note-page .bi').click (e) =>
+    @lineClick(e)
 
   $('body').on "click", ".reply-button", (e) =>
     commentDiv = $(e.target).parents('.comment')[0]
@@ -53,9 +65,9 @@ Commenting = () ->
     if @parentId
       data['comment']['parent_id'] = @parentId
     else
-      data['comment']['ycoord'] = @yCoord
+      data['comment']['line_id'] = @line_id
 
-    submitting = true
+    @submitting = true
     $.post('/api/comments', data, (response) =>
       if !response.success
         alert response.error
@@ -63,14 +75,14 @@ Commenting = () ->
         $(@fileComments).html(" ").html( response['comments_html'] )
         @hideNewCommentField()
 
-      submitting = false
+      @submitting = false
     )
 
   @setCommentPanelPositionReply = (yCoord) =>
     $(@fileCommentContainer).children('#new-comment-panel').css('top', yCoord + 'px')
 
   @setCommentPanelPositionClick = (yClick) =>
-    $(@fileCommentContainer).children('#new-comment-panel').css('top', (yClick - 150 + 25) + 'px')
+    $(@fileCommentContainer).children('#new-comment-panel').css('top', yClick + 'px')
 
   @showNewCommentFieldParent = () =>
     @newCommentShowing = true 
@@ -104,17 +116,19 @@ Commenting = () ->
       $('.tooltip #newcomment').val('')
     )
 
-  @yCoordClick = (e) =>
+  @lineClick = (e) =>
     if !@submitting
-      @yCoord = e.pageY - $(e.target).offset().top #offsetTop does not work in mozilla (standard not set)
-      @parentId = null
-      @fileId = $(e.target).attr('file-id')
-      @fileComments = $(e.target).parents('.file-container').find('.comments')
-      @fileCommentContainer = $(e.target).parents('.file-container').find('.comments-container')
+      @line = if ($(e.target).hasClass('t') || $(e.target).hasClass('bi')) then $(e.target) else $(e.target).parents('.t, .bi')
+      @fileContainer = @line.parents('.file-container')
+      @yCoord = @line.offset().top - @fileContainer.offset().top - 75
+      @line_id = @line.attr('data-guid')
+      @fileId = @line.parents('.note-page').attr('file-id')
+      @fileComments = @fileContainer.find('.comments')
+      @fileCommentContainer = @fileContainer.find('.comments-container')
       @setCommentPanelPositionClick(@yCoord)
       if !@newCommentShowing
         @showNewCommentFieldParent()
-      else if !@fileCommentContainer.children('#new-comment-panel').is(':visible')
+      else
         @hideAllCommentField()
         @showNewCommentFieldParent()
 
@@ -136,11 +150,12 @@ Commenting = () ->
       @activeComment = null;
 
   @showComment = (commentButton) =>
-    @newActiveComment = $(commentButton).parents('.comment-thread-container').children('.comment.parent')[0]
+    @activeCommentLineId = $(commentButton).parents('.comment-button').attr('line_id')
+    @newActiveComment = $('.comment.parent[line_id='+@activeCommentLineId+']')
     if @activeComment
       $(@activeComment).hide(200)
       $(@activeCommentButton).removeClass('active')
-    if @activeComment != @newActiveComment
+    if $(@activeComment).attr('comment-id') != $(@newActiveComment).attr('comment-id')
       @activeComment = @newActiveComment
       $(@activeComment).show(200)
       @activeCommentButton = commentButton

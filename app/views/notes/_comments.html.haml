@@ -1,8 +1,6 @@
 - comments.each do |comment|
   .comment-thread-container
-    .comment-button{:style => "top: #{comment.ycoord}px"}
-      %i.icon-comments
-    .comment.parent{:style => "top: #{comment.ycoord}px; display: none", :ycoord => "#{comment.ycoord}", :'comment-id' => comment.id, :'file-id' => comment.uploaded_file_id }
+    .comment.parent{:style => "display: none", :'line_id' => comment.line_id, :'comment-id' => comment.id, :'file-id' => comment.uploaded_file_id }
       = render :partial => 'notes/comment', :object => comment
       - comment.child_comments.each do |child_comment|
         .comment.reply{ :'comment-id' => child_comment.id }
