@@ -86,7 +86,7 @@ cloud_providers:
     # Ubuntu 12.04 Precise instance-store 64-bit: ami-eafa5883
     #
     # m1.small or m1.large or m1.xlarge
-    image_type: c1.medium
+    image_type: m1.small
     image_id: ami-b6089bdf
 
     # OPTIONAL: EC2 spot instance request support.
