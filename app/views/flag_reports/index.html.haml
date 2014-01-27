@@ -1,0 +1,18 @@
+%h1 Listing All Flag Reports
+ 
+%table
+  %tr
+    %th Report ID
+    %th Doc Title
+    %th Doc ID
+    %th Report Resolved?
+    %th Doc Removed?
+    %th Description
+ 
+  - @flagreports.each do |flagreport|
+    %tr
+      %td= flagreport["id"]
+      %td= flagreport["note_id"]
+      %td= flagreport["report_resolved"]
+      %td= flagreport["doc_removed"]
+      %td= flagreport["description"]

@@ -11,6 +11,7 @@ class Note < ActiveRecord::Base
   has_many :uploaded_files, dependent: :destroy
   has_many :uploaded_css_files, dependent: :destroy
   has_many :comments, :through => :uploaded_files
+  has_many :flag_reports
 
   # want to assume that we are processing a file right away
   before_create :start_processing!

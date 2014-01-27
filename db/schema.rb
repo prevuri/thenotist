@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140120234551) do
+ActiveRecord::Schema.define(:version => 20140126193952) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -54,6 +54,15 @@ ActiveRecord::Schema.define(:version => 20140120234551) do
   add_index "contributors", ["shared_note_id", "user_id"], :name => "index_contributors_on_shared_note_id_and_user_id", :unique => true
   add_index "contributors", ["shared_note_id"], :name => "index_contributors_on_shared_note_id"
   add_index "contributors", ["user_id"], :name => "index_contributors_on_user_id"
+
+  create_table "flag_reports", :force => true do |t|
+    t.integer  "note_id"
+    t.boolean  "report_resolved"
+    t.boolean  "doc_removed"
+    t.string   "description"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "notes", :force => true do |t|
     t.integer  "user_id"

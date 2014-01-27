@@ -4,6 +4,7 @@
 
   #note-header
     %h1.note-title= @note.title
+	%p= link_to 'Flag as Spam', flag_reports_path(:note_id => @note.id), :method => :post
     .note-description= @note.description
     #header-border
   #note-main
