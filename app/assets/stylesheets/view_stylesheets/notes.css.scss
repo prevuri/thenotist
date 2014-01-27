@@ -107,17 +107,18 @@ $thumbnail-height: 330px;
         display: inline-block;;
         border-bottom: solid 3px #f4f4f4;
       }
-
-      .comments-container {
-        background-color: #F7F5F2;
-        right: 0px;
-        width: 28%;
-        position: fixed;
-        height: 100%;
-        overflow: scroll;
-      }
     }
   }
+
+  .comments-container {
+    background-color: #F7F5F2;
+    right: 0px;
+    top: 103px;
+    width: 28%;
+    position: fixed;
+    height: 100%;
+    overflow: scroll;
+  } 
 }
 
 #new-comment-container {
