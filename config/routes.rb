@@ -1,5 +1,7 @@
 require 'sidekiq/web'
 TheNotist::Application.routes.draw do
+  get "flag_reports/index"
+
   resources :activities
 
   get "buddies/index"
@@ -16,6 +18,8 @@ TheNotist::Application.routes.draw do
     get 'signin' => 'main#index', :as => :new_user_session
     delete 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
+
+  resources :flag_reports
 
   resources :uploaded_files
   

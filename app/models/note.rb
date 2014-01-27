@@ -10,6 +10,7 @@ class Note < ActiveRecord::Base
   #What was this made for? contibutors should cover this #What was this made for? 
   has_many :uploaded_files, dependent: :destroy
   has_many :comments, :through => :uploaded_files
+  has_many :flag_reports
 
   # want to assume that we are processing a file right away
   before_create :start_processing!

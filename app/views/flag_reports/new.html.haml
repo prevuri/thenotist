@@ -1,0 +1,24 @@
+%h1 New Flag Report
+.flag-reports-new-page
+  .flag_report_form
+    = form_for :flagreport, :url => flag_reports_path do |f|
+      %p
+      = f.label "Report Id"
+      = f.number_field :report_id
+      %p
+      = f.label "Doc Id"
+      = f.number_field :doc_id
+      %p
+      = f.label "Doc Title"
+      = f.text_field :doc_title
+      %p
+      = f.label "Report Resolved?"
+      = f.check_box :report_resolved
+      %p
+      = f.label "Doc Removed?"
+      = f.check_box :doc_removed
+      %p
+      = f.label "Description"
+      = f.text_area :description
+      %p= f.submit 
+= link_to "Back", flag_reports_path
