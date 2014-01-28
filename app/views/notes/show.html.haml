@@ -13,15 +13,12 @@
         .page-container
           %a{ :name => "Page-#{file.page_number}"}
           .note-page{:'file-id' => file.id }  
-            - if i == 0
-              - @html = open(file.public_path).read
-              = @html.html_safe
-            - else
-              .spinner-container
-        .comment-buttons-container  
-          - file.top_level_comments.each do |comment|
-            .comment-button{:line_id => "#{comment.line_id}"}
-              %i.icon-comments
+            - @html = open(file.public_path).read
+            = @html.html_safe
+      .comment-buttons-container  
+        - file.top_level_comments.each do |comment|
+          .comment-button{:line_id => "#{comment.line_id}"}
+            %i.icon-comments
     .comments-container
       - @note.uploaded_files.each_with_index do |file, i|
         .comments
