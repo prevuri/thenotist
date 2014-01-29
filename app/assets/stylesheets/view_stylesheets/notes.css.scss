@@ -97,6 +97,10 @@ $thumbnail-height: 330px;
   
   .note-pages {
     position:relative;
+    .page {
+      width: 100%;
+    }
+
     .file-container {
       height: 100%;
       max-width: 57%;
@@ -110,18 +114,49 @@ $thumbnail-height: 330px;
         border-right: 3px solid #F2F5F6;
       }
     }
+
+    .comments-container {
+      // background-color: #F7F5F2;
+      // right: 0px;
+      // top: 103px;
+      left: 960px;
+      top: 0px;
+      width: 30%;
+      min-width: 250px;
+      position: absolute;
+      height: 1191px;
+      overflow: scroll;
+    } 
+
+    .comment-buttons-container {
+      float: left;
+      max-width: 7%;
+      height: 100%;
+      position: relative;
+      // background-color: #F7F5F2;
+      width: 4%;
+
+      .comment-button {
+        position: absolute;
+        left: 10px;
+
+        i {
+          font-size: 1.5em;
+          color: #88b;
+          -webkit-transition: color 0.1s ease;
+          &:hover {
+            color: #55a;
+            cursor: pointer;
+          }
+          &:active, &.active {
+            color: #228;
+          }
+        }
+      }  
+    }
   }
 
-  .comments-container {
-    background-color: #F7F5F2;
-    right: 0px;
-    top: 103px;
-    width: 37%;
-    min-width: 0px;
-    position: fixed;
-    height: 100%;
-    overflow: scroll;
-  } 
+
 }
 
 #new-comment-container {
@@ -249,38 +284,12 @@ $thumbnail-height: 330px;
   z-index: 100;
 }
 
-.comment-buttons-container {
-  float: left;
-  max-width: 7%;
-  height: 100%;
-  position: relative;
-  // background-color: #F7F5F2;
-  width: 4%;
-
-  .comment-button {
-    position: absolute;
-    left: 10px;
-
-    i {
-      font-size: 1.5em;
-      color: #88b;
-      -webkit-transition: color 0.1s ease;
-      &:hover {
-        color: #55a;
-        cursor: pointer;
-      }
-      &:active, &.active {
-        color: #228;
-      }
-    }
-  }  
-}
 
 .comment-thread-container {
-  // position: absolute;
-  // height: 100%;
+  position: absolute;
+  height: 100%;
   // right: 0px; 
-  // width: 100%:
+  width: 100%;
   margin-top: 10px;
   margin-right: 10px;
   overflow: scroll;

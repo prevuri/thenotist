@@ -9,30 +9,30 @@
   
   .note-pages
     - @note.uploaded_files.each_with_index do |file, i|
-      .file-container
-        .page-container
-          %a{ :name => "Page-#{file.page_number}"}
-          .note-page{:'file-id' => file.id }  
-            - @html = open(file.public_path).read
-            = @html.html_safe
-      .comment-buttons-container  
-        - file.top_level_comments.each do |comment|
-          .comment-button{:line_id => "#{comment.line_id}"}
-            %i.icon-comments
-    .comments-container
-      - @note.uploaded_files.each_with_index do |file, i|
-        .comments
-          = render :partial => 'comments', :object => file.top_level_comments
-      .tooltip.fade.right.in#new-comment-panel
-        .tooltip-arrow
-        .tooltip-inner
-          #new-comment-position-line
-            / .left-arrow
-          = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
-          .btndiv
-            .new-comment-cancel.btn
-              Cancel
-            = submit_tag 'Submit', :id => 'new-comment-submit', :class => 'btn btn-primary'
+      .page
+        .file-container
+          .page-container
+            %a{ :name => "Page-#{file.page_number}"}
+            .note-page{:'file-id' => file.id }  
+              - @html = open(file.public_path).read
+              = @html.html_safe
+        .comment-buttons-container  
+          - file.top_level_comments.each do |comment|
+            .comment-button{:line_id => "#{comment.line_id}"}
+              %i.icon-comments
+        .comments-container
+          .comments
+            = render :partial => 'comments', :object => file.top_level_comments
+          .tooltip.fade.right.in#new-comment-panel
+            .tooltip-arrow
+            .tooltip-inner
+              #new-comment-position-line
+                / .left-arrow
+              = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
+              .btndiv
+                .new-comment-cancel.btn
+                  Cancel
+                = submit_tag 'Submit', :id => 'new-comment-submit', :class => 'btn btn-primary'
 
 #new-comment-header-container
   .new-comment-cancel.btn x

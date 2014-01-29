@@ -3,10 +3,17 @@ Commenting = () ->
 
 
   @orderComments = () =>
+    @commentContainers = $('.comments-container')
+    for commentContainer in @commentContainers
+      $(commentContainer).css('top', $(commentContainer).parents('.page').find('.page-container').offset().top - 105)
+
     @commentButtons = $('.comment-button')
-    for comment in @commentButtons
-      lineId = $(comment).attr("line_id")
-      $(comment).css('top', $('[data-guid='+lineId+']').offset().top - $('.file-container').offset().top)
+    for commentButton in @commentButtons
+      lineId = $(commentButton).attr("line_id")
+      topCss = $('[data-guid='+lineId+']').offset().top - $('.file-container').offset().top
+      commentBox = $('.comment[line_id='+lineId+']')
+      $(commentButton).css('top', topCss)
+      $(commentBox).parents('.comment-thread-container').css('top', topCss - 20)
 
   
   $(window).load( ()->
@@ -14,6 +21,9 @@ Commenting = () ->
 
   $('.note-page .t, .note-page .bi').click (e) =>
     @lineClick(e)
+
+  $('.note-page .t, .note-page .bi').hover (e) =>
+    # show comment button ghost
 
   $('body').on "click", ".reply-button", (e) =>
     commentDiv = $(e.target).parents('.comment')[0]
@@ -119,18 +129,26 @@ Commenting = () ->
   @lineClick = (e) =>
     if !@submitting
       @line = if ($(e.target).hasClass('t') || $(e.target).hasClass('bi')) then $(e.target) else $(e.target).parents('.t, .bi')
+      @notePage = @line.parents('.note-pages')
       @fileContainer = @line.parents('.file-container')
       @yCoord = @line.offset().top - @fileContainer.offset().top - 75
+
       @line_id = @line.attr('data-guid')
       @fileId = @line.parents('.note-page').attr('file-id')
-      @fileComments = @fileContainer.find('.comments')
-      @fileCommentContainer = @fileContainer.find('.comments-container')
+      
+      @fileComments = @notePage.find('.comments')
+      @fileButtonContainer = @notePage.find('.comment-buttons-container')
+      @fileCommentContainer = @notePage.find('.comments-container')
       @setCommentPanelPositionClick(@yCoord)
       if !@newCommentShowing
         @showNewCommentFieldParent()
       else
         @hideAllCommentField()
         @showNewCommentFieldParent()
+
+    # @lineHover = (e) =>
+    #   if !@submitting
+
 
   @replyClick = () =>
     if !@newCommentShowing

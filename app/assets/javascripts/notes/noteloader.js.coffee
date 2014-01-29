@@ -8,7 +8,7 @@ NoteLoader = () ->
     )
 
   $(window).load( () ->
-    @scalePageOnLoad()
+    # @scalePageOnLoad()
     )
 
   @loadPageFromUrl = (url) =>
@@ -28,23 +28,23 @@ NoteLoader = () ->
 
 
   @scalePageOnLoad = () =>
-    wantedWidthRatio = 0.57
-    @setWidth = $(window).width()
-    @page = $('.page-container')
+    # wantedWidthRatio = 0.57
+    # @setWidth = $(window).width()
+    # @page = $('.page-container')
 
-    pageWidth = @page.width()
+    # pageWidth = @page.width()
 
-    currentRatio = pageWidth/@setWidth
+    # currentRatio = pageWidth/@setWidth
 
-    @page.css('transform-origin', 'left')
-    @page.css('-moz-transform-origin', 'left')
-    @page.css('-webkit-transform-origin', 'left')
-    @page.css('-o-transform-origin', 'left')
+    # @page.css('transform-origin', 'left')
+    # @page.css('-moz-transform-origin', 'left')
+    # @page.css('-webkit-transform-origin', 'left')
+    # @page.css('-o-transform-origin', 'left')
 
-    @page.css('transform', 'scale(' + wantedWidthRatio/currentRatio + ')' )
-    @page.css('-moz-transform', 'scale(' + wantedWidthRatio/currentRatio + ')' )
-    @page.css('-webkit-transform', 'scale(' + wantedWidthRatio/currentRatio + ')' )
-    @page.css('-o-transform', 'scale(' + wantedWidthRatio/currentRatio + ')' )
+    # @page.css('transform', 'scale(' + wantedWidthRatio/currentRatio + ')' )
+    # @page.css('-moz-transform', 'scale(' + wantedWidthRatio/currentRatio + ')' )
+    # @page.css('-webkit-transform', 'scale(' + wantedWidthRatio/currentRatio + ')' )
+    # @page.css('-o-transform', 'scale(' + wantedWidthRatio/currentRatio + ')' )
 
 
 $ ->
