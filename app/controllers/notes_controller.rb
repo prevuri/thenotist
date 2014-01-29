@@ -1,5 +1,4 @@
 class NotesController < ApplicationController
-  helper_method :flag_note
   before_filter :authenticate_user!
   before_filter :get_note_id, :except => [ :index, :create ]
   before_filter :abort_timed_out_notes

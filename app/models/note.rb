@@ -73,6 +73,7 @@ class Note < ActiveRecord::Base
       :aborted => aborted,
       :processing_started_at => processing_started_at,
       :created_at => created_at
+      #do not add flag_reports variable. It will create a circular dependency.
     }
   end
 
