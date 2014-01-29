@@ -1,6 +1,6 @@
 #note-main
   %h1.note-title= @note.title
-  %p= link_to 'Flag as Spam', flag_reports_path(:note_id => @note.id), :method => :post
+  .btn.btn-large.btn-primary#flag_report_btn{ :note_id => @note.id } Flag as Spam
   .note-description= @note.description
 
   .note-images

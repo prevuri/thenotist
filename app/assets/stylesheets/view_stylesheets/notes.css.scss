@@ -63,6 +63,10 @@ $thumbnail-height: 330px;
   padding-left: 20px;
   min-width: 800px;
 
+  #flag_report_btn {
+    float:right;
+  }
+
   &.new-comment-showing {
     margin-right: 0;
     padding-right: 50px + $comments-sidebar-width;
