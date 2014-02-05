@@ -14,7 +14,7 @@ class DocumentConversionWorker
     begin
 
       #PDF -> HTML
-      Kristin.convert(local_pdf_file, 'document.htm', {hdpi: 144, vdpi: 144, fit_width: 1024})
+      Kristin.convert(local_pdf_file, 'document.htm', {hdpi: 144, vdpi: 144, fit_width: 920})
 
       converted_doc = Nokogiri::HTML(open("document.htm"))  
 

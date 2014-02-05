@@ -97,28 +97,62 @@ $thumbnail-height: 330px;
   
   .note-pages {
     position:relative;
+    .page {
+      width: 100%;
+    }
+
     .file-container {
-      clear: both;
+      height: 100%;
+      max-width: 57%;
+      min-width: 950px;
 
       .page-container {
         overflow: auto;
-        max-width: 60%;
         float:left;
         display: inline-block;;
-        border-bottom: solid 3px #f4f4f4;
+        border-bottom: solid 3px #F2F5F6;
+        border-right: 3px solid #F2F5F6;
       }
+    }
+
+    .comments-container {
+      left: 960px;
+      top: 0px;
+      width: 30%;
+      min-width: 250px;
+      position: absolute;
+      height: 1191px;
+      overflow: scroll;
+    } 
+
+    .comment-buttons-container {
+      float: left;
+      max-width: 7%;
+      height: 100%;
+      position: relative;
+      width: 4%;
+
+      .comment-button {
+        position: absolute;
+        left: 10px;
+
+        i {
+          font-size: 1.5em;
+          color: #88b;
+          -webkit-transition: color 0.1s ease;
+          &:hover {
+            color: #55a;
+            cursor: pointer;
+          }
+          &:active, &.active {
+            color: #228;
+          }
+        }
+      }  
     }
   }
 
-  .comments-container {
-    background-color: #F7F5F2;
-    right: 0px;
-    top: 103px;
-    width: 28%;
-    position: fixed;
-    height: 100%;
-    overflow: scroll;
-  } 
+
 }
 
 #new-comment-container {
@@ -246,37 +280,14 @@ $thumbnail-height: 330px;
   z-index: 100;
 }
 
-.comment-buttons-container {
-  right: 28%%;
-  min-width: 5%;
-  height: 100%;
-  position: absolute;
-  background-color: #F7F5F2;
-
-  .comment-button {
-    position: absolute;
-    left: 5px;
-
-    i {
-      font-size: 1.5em;
-      color: #88b;
-      -webkit-transition: color 0.1s ease;
-      &:hover {
-        color: #55a;
-        cursor: pointer;
-      }
-      &:active, &.active {
-        color: #228;
-      }
-    }
-  }  
-}
 
 .comment-thread-container {
-  // position: absolute;
-  // height: 100%;
+  position: absolute;
+  height: 100%;
   // right: 0px; 
-  // width: 100%:
+  width: 100%;
+  margin-top: 10px;
+  margin-right: 10px;
   overflow: scroll;
 
   .comment {
@@ -285,9 +296,11 @@ $thumbnail-height: 330px;
 
     .comment-inner {
       border-radius: 10px 4px 4px;
-      padding: 5px 8px;
-      background-color: white;
-      border: 1px solid #ddd;
+      padding: 10px 8px;
+      // background-color: white;
+      // border: 1px solid #ddd;
+      border-bottom: 1px solid #f2f2f0;
+      overflow: visible;
     }
 
     &.reply {
@@ -295,8 +308,8 @@ $thumbnail-height: 330px;
       margin-top: 5px;
       
       .comment-inner {
-        background-color: #f7f7f9;
-        border-color: #d5d5d5;
+        // background-color: #f7f7f9;
+        // border-color: #d5d5d5;
       }
     }
 
