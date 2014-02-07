@@ -34,11 +34,11 @@ Commenting = () ->
     @fileId = $(commentDiv).attr('file-id')
     @replyClick(@fileCommentContainer)
 
-  $('.tooltip #new-comment-submit').click ->
+  $('.tooltip #new-comment-submit').click =>
     if !$(this).hasClass('disabled') 
       $(this).addClass('disabled')
       @selector = $(this).parents('.tooltip-inner')
-      _this.submitComment(@selector)
+      # _this.submitComment(@selector)
 
   $('body').on "click", ".comment", (e) ->
     _this.setActive(this);

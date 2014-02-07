@@ -1,3 +1,5 @@
+include ActionView::Helpers::DateHelper
+
 class Comment < ActiveRecord::Base
 
   attr_accessible :text, :line_id, :uploaded_file, :parent_comment
@@ -16,12 +18,14 @@ class Comment < ActiveRecord::Base
     {
       :id => id,
       :user => user.as_json,
+      :owned_by_user => user == options[:current_user],
       :uploaded_file_id => uploaded_file.id,
       :text => text,
       :line_id => line_id,
       :parent_comment_id => parent_comment.nil? ? nil : parent_comment.id,
       :child_comments => child_comments.map { |c| c.as_json },
-      :created_at => created_at
+      :created_at => created_at,
+      :time_string => distance_of_time_in_words(Time.now, created_at) + ' ago'
     }
   end
 
