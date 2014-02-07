@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-%html
+%html{ :'ng-app' => 'notistApp' }
   %head
     %title TheNotist
     = stylesheet_link_tag "application", :media => "all"
@@ -7,7 +7,7 @@
     = csrf_meta_tags
     = yield(:head)
 
-  %body
+  %body{ :'ng-controller' => 'MainCtrl', :'ng-keyup' => 'keypress()'}
     .row
       #sidebar.span3
         = render 'layouts/sidebar'

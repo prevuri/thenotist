@@ -24,3 +24,12 @@ db/schema.rb
 Gemfile.lock
 
 .DS_Store
+
+.ext/
+.ruby-version
+GNUmakefile
+Makefile
+config.log
+config.status
+ruby-1.9.pc
+uncommon.mk

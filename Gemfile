@@ -43,7 +43,8 @@ group :assets do
   gem 'twitter-bootstrap-rails'
   gem 'flat-ui-rails'
   gem 'underscore-rails'
-  gem 'font-awesome-rails'
+  gem "font-awesome-rails"
+  gem "angularjs-rails"
   gem 'nokogiri'
   # => install pdf2htmlex... Available in brew
   gem 'kristin'
@@ -73,6 +74,9 @@ group :development, :test do
   gem 'zeus-parallel_tests'
   gem 'launchy'
   gem 'debugger'
+  gem 'teaspoon'
+  gem 'phantomjs'
+
   # gem 'factory_girl_rails'
   # gem 'rb-inotify', :require => false
   # gem 'rb-fsevent', :require => false

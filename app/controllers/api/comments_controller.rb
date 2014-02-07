@@ -19,7 +19,7 @@ class Api::CommentsController < ApplicationController
     @comments = @file.top_level_comments
     return render :json => {
       :success => true,
-      :comments => @comments.map { |c| c.as_json }
+      :comments => @comments.map { |c| c.as_json(:current_user => current_user) }
     }
   end
 
@@ -57,7 +57,7 @@ class Api::CommentsController < ApplicationController
     @comments = @file.top_level_comments
     return render :json => {
       :success => true,
-      :comments_html => render_to_string(:partial => "notes/comments", :object => @comments)
+      :comments => @comments.map { |c| c.as_json(:current_user => current_user) }
     }
   end
 
