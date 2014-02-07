@@ -99,6 +99,7 @@ $thumbnail-height: 330px;
     position:relative;
     .page {
       width: 100%;
+      overflow-x: hidden;
     }
 
     .file-container {
