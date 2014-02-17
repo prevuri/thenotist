@@ -156,47 +156,8 @@ $thumbnail-height: 330px;
 
 }
 
-#new-comment-container {
-  position: fixed;
-  width: 100%;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.8);
-  z-index: 10;
+#new-comment-button {
   display: none;
-}
-
-#new-comment-header-container {
-  background-color: #34495E;
-  color: white;
-  padding: 5px 10px;
-  z-index: 100000;
-  display: none;
-  position: fixed;
-  right: 0;
-  top: 0;
-  height: 35px;
-  width: $comments-sidebar-width - 20px;
-  text-align: center;
-  box-shadow: #000 2px 0px 2px;
-
-  .new-comment-cancel {
-    float: left;
-    font-size: 1.5em;
-    padding-bottom: 10px;
-    -webkit-user-select: none;
-  }
-
-  h3 {
-    font-size: 1.5em;
-    line-height: 1.4;
-    margin-right: 35px;
-  }
-}
-
-.tooltip.right {
-  padding: 0;
 }
 
 #new-comment-panel {
@@ -205,32 +166,13 @@ $thumbnail-height: 330px;
   min-width: 100%;
   -webkit-transition: top 0.2s ease;
   top: 50px;
-  left: 5px;
+  left: 0px;
   
-  border-radius: 4px;
-  // border: 4px solid $highlight-color;
-  box-shadow: #888 1px 1px 5px;
-  z-index: 100;
-
-  
-  .tooltip-inner {
-    min-width: 100%;
-    background-color: #fffff2;
-    padding: 0;
-    position: relative;
-  }
-
-  .tooltip-arrow {
-    // border: none;
-    left: -8px;
-    border-right-color: #ffffff;
-
-  }
 
   #newcomment {
     width: 97%;
     padding-left: 3%;
-    min-height: 100px;
+    min-height: 40px;
     resize: none;
     border: none;
     border-bottom: 1px solid #aaa;
@@ -238,13 +180,18 @@ $thumbnail-height: 330px;
     margin: 0;
   }
 
-  .btndiv { 
-    text-align: right;
-    .btn {
-      display: inline-block;
-      margin: 6px 5px;
-    }
+  .new-comment-submit {
+    outline: none;
+    
   }
+
+  // .btndiv { 
+  //   text-align: right;
+  //   .btn {
+  //     display: inline-block;
+  //     margin: 6px 5px;
+  //   }
+  // }
 
 }
 
@@ -290,8 +237,9 @@ $thumbnail-height: 330px;
   margin-top: 10px;
   margin-right: 10px;
   overflow: scroll;
+}
 
-  .comment {
+.comment {
     margin-left: 10px;
     position: relative;
 
@@ -366,7 +314,6 @@ $thumbnail-height: 330px;
       }
     }
   }
-}
 
 .circular {
   width: 300px;

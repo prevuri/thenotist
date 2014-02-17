@@ -5,3 +5,4 @@
       - comment.child_comments.each do |child_comment|
         .comment.reply{ :'comment-id' => child_comment.id }
           = render :partial => 'notes/comment', :object => child_comment, :locals => {:no_reply => true}
+      

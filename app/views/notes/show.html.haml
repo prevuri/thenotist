@@ -17,23 +17,25 @@
               - @html = open(file.public_path).read
               = @html.html_safe
         .comment-buttons-container  
-          - file.top_level_comments.each do |comment|
-            .comment-button{:line_id => "#{comment.line_id}"}
-              %i.icon-comments
+          = render :partial => 'comment_buttons', :object => file.top_level_comments, as: 'comments'
+          .comment-button#new-comment-button
+            %i.icon-comments
         .comments-container
           .comments
             = render :partial => 'comments', :object => file.top_level_comments
-          .tooltip.fade.right.in#new-comment-panel
-            .tooltip-arrow
-            .tooltip-inner
-              #new-comment-position-line
-                / .left-arrow
-              = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
-              .btndiv
-                .new-comment-cancel.btn
+          .comment.parent#new-comment-panel{ :'file-id' => file.id}
+            .comment-inner
+              .profile-container.circular
+                .profile-image.circular{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}
+              .comment-body
+                .user
+                  .name
+                    = current_user.name
+                .comment-text
+                  = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here'
+              .bottom
+                %a.new-comment-cancel.text-link
                   Cancel
-                = submit_tag 'Submit', :id => 'new-comment-submit', :class => 'btn btn-primary'
-
-#new-comment-header-container
-  .new-comment-cancel.btn x
-  %h3 New Comment
+                %a.new-comment-submit.text-link
+                  Submit
+              .clear

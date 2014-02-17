@@ -27,17 +27,17 @@ Commenting = () ->
 
   $('body').on "click", ".reply-button", (e) =>
     commentDiv = $(e.target).parents('.comment')[0]
-    @fileComments = $(e.target).parents('.comments')  
+    @fileComments = $(e.target).parents('.comments')
     @fileCommentContainer = $(e.target).parents('.comments-container')
     @setCommentPanelPositionReply(commentDiv.offsetTop + commentDiv.clientHeight + 10)
     @parentId = $(commentDiv).attr('comment-id')
     @fileId = $(commentDiv).attr('file-id')
     @replyClick(@fileCommentContainer)
 
-  $('.tooltip #new-comment-submit').click ->
+  $('.new-comment-submit').click ->
     if !$(this).hasClass('disabled') 
       $(this).addClass('disabled')
-      @selector = $(this).parents('.tooltip-inner')
+      @selector = $(this).parents('.comment-inner')
       _this.submitComment(@selector)
 
   $('body').on "click", ".comment", (e) ->
@@ -61,7 +61,7 @@ Commenting = () ->
   @submitComment = () ->
   @submitComment = (selector) ->
     if !@submitting
-      @commentText = $(selector).children('#newcomment').val()
+      @commentText = $(selector).find('#newcomment').val()
       @makeNewCommentRequest()
 
   @makeNewCommentRequest = () =>
@@ -82,7 +82,9 @@ Commenting = () ->
       if !response.success
         alert response.error
       else
+        $(@fileButtonContainer).html(" ").html(response['comment_buttons_html'] )
         $(@fileComments).html(" ").html( response['comments_html'] )
+        @orderComments()
         @hideNewCommentField()
 
       @submitting = false
@@ -96,34 +98,31 @@ Commenting = () ->
 
   @showNewCommentFieldParent = () =>
     @newCommentShowing = true 
-    $(@fileCommentContainer).children('#new-comment-panel .tooltip-arrow').show();
+    $(@fileCommentContainer).children('#new-comment-panel').show();
     @showNewCommentField(@fileCommentContainer)
 
   @showNewCommentFieldReply = () =>
     @newCommentShowing = true 
-    $(@fileCommentContainer).children('#new-comment-panel .tooltip-arrow').hide();
+    $(@fileCommentContainer).children('#new-comment-panel').hide();
     @showNewCommentField(@fileCommentContainer)
 
   @showNewCommentField = () =>
     $(@fileCommentContainer).children('#new-comment-panel').show(200, () ->
       $(@fileCommentContainer).children('#newcomment').focus()
     )
-    $('#new-comment-position-line').show(200)
 
   @hideNewCommentField = () =>
     @newCommentShowing = false
-    $(@fileCommentContainer).children('.tooltip #new-comment-position-line').hide(200)
-    $(@fileCommentContainer).children('.tooltip').hide(200, () ->
-      $('.tooltip #new-comment-submit').removeClass('disabled')
-      $('.tooltip #newcomment').val('')
+    $(@fileCommentContainer).children('#new-comment-panel').hide(200, () ->
+      $('#new-comment-panel .new-comment-submit').removeClass('disabled')
+      $('.comment-inner #newcomment').val('')
     )
 
   @hideAllCommentField = () =>
     @newCommentShowing = false
-    $('.tooltip #new-comment-position-line').hide()
-    $('.tooltip').hide( () ->
-      $('.tooltip #new-comment-submit').removeClass('disabled')
-      $('.tooltip #newcomment').val('')
+    $('.comment #new-comment-panel').hide( () ->
+      $('.comment #new-comment-submit').removeClass('disabled')
+      $('.comment-inner #newcomment').val('')
     )
 
   @lineClick = (e) =>
@@ -203,11 +202,14 @@ Commenting = () ->
       error: (response) ->
         alert response.error
 
+    elementButton = element
     if $(element).hasClass('parent')
       # If comment is parent, remove while thread, not just comment
+      elementButton = $('.comment-button[line_id='+$(element).attr('line_id')+']')
       element = $(element).parents('.comment-thread-container') 
     $(element).hide(200, () ->
       $(element).remove()
+      $(elementButton).remove()
     )
 
     return false  # Stop comment click action from happening
