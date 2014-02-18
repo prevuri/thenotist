@@ -15,18 +15,21 @@
         # TODO: error message of some sort
     )
 
-  $scope.submitComment = (id) ->
+  $scope.newComment = (lineId) ->
+    $scope.lineId = lineId
+    showNewComment = true
+
+  $scope.submitComment = () ->
     if !$scope.submitting
       data = {
         comment: {
           text: $scope.newCommentText
-        },
-        file_id: id
+        }
       }
       if $scope.parentId
         data['comment']['parent_id'] = $scope.parentId
       else
-        data['comment']['line_id'] = "1"
+        data['comment']['line_id'] = $scope.lineId
 
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).

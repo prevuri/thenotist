@@ -15,7 +15,7 @@
           .file-container{:'ng-click' => 'showNewComment = true', :'ng-init' => "getComments(#{file.id})"}
             .page-container
               %a{ :name => "Page-#{file.page_number}"}
-              .note-page{:'file-id' => file.id, :'ng-click' => 'showNewComment = true', :'ng-init' => "fileId = #{file.id}"}  
+              .note-page{:'file-id' => file.id, :'ng-init' => "fileId = #{file.id}"}  
                 - @html = open(file.public_path).read
                 = @html.html_safe
           .comment-buttons-container  
