@@ -15,6 +15,6 @@
       %a.delete-button.text-link{:'ng-if' => "#{comment}.owned_by_user"}
         Delete
   .clear
-  .delete-confirm-panel
-    .delete-cancel.btn Cancel
+  .delete-confirm-panel{:'ng-show' => "#{comment}.showDeleteConfirm"}
+    .delete-cancel.btn{:'ng-click' => "#{comment}.showDeleteConfirm = false"} Cancel
     .delete-confirm.btn.btn-danger Delete

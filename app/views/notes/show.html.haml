@@ -12,18 +12,18 @@
     .note-pages
       - @note.uploaded_files.each_with_index do |file, i|
         .page
-          .file-container{:'ng-click' => 'showNewComment = true'}
+          .file-container{:'ng-click' => 'showNewComment = true', :'ng-init' => "getComments(#{file.id})"}
             .page-container
               %a{ :name => "Page-#{file.page_number}"}
-              .note-page{:'file-id' => file.id, :'ng-click' => 'showNewComment = true'}  
+              .note-page{:'file-id' => file.id, :'ng-click' => 'showNewComment = true', :'ng-init' => "fileId = #{file.id}"}  
                 - @html = open(file.public_path).read
                 = @html.html_safe
           .comment-buttons-container
-            .comment-button{:'ng-repeat' => "comment in comments", :line_id => "{{comment.line_id}}", :'ng-click' => 'comment.expanded = !comment.expanded'}
+            .comment-button{:'ng-repeat' => "comment in files[#{file.id}].comments", :line_id => "{{comment.line_id}}", :'ng-click' => 'comment.expanded = !comment.expanded'}
               %i.icon-comments
           .comments-container
             .comments
-              = render :partial => 'comments'
+              = render :partial => 'comments', :locals => {:fileId => file.id}
             .tooltip.fade.right.in#new-comment-panel{:'ng-show' => 'showNewComment'}
               .tooltip-arrow
               .tooltip-inner

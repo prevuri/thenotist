@@ -1,4 +1,4 @@
-.comment-thread-container{:'ng-repeat' => 'comment in comments'}
+.comment-thread-container{:'ng-repeat' => "comment in files[#{fileId}].comments"}
   .comment.parent{:'ng-show' => 'comment.expanded'}
     = render :partial => 'notes/comment', :object => 'comment'
     .comment.reply{:'ng-repeat' => 'childComment in comment.child_comments' }

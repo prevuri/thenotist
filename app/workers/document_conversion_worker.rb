@@ -20,6 +20,7 @@ class DocumentConversionWorker
 
       converted_doc.css(".t, .bi").each do |line|
         line['data-guid'] = SecureRandom.hex
+        line['ng-click'] = 'newComment(#{file.id}, ' + line['data-guid'] + ')'
       end
 
       converted_css = converted_doc.css("style")
