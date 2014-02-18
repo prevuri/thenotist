@@ -23,7 +23,7 @@
         .comments-container
           .comments
             = render :partial => 'comments', :object => file.top_level_comments
-          .comment.parent#new-comment-panel{ :'file-id' => file.id}
+          .comment#new-comment-panel{ :'file-id' => file.id}
             .comment-inner
               .profile-container.circular
                 .profile-image.circular{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}

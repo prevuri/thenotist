@@ -7,7 +7,7 @@ Commenting = () ->
     for commentContainer in @commentContainers
       $(commentContainer).css('top', $(commentContainer).parents('.page').find('.page-container').offset().top - 105)
 
-    @commentButtons = $('.comment-button')
+    @commentButtons = $('.comment-button[line_id]')
     for commentButton in @commentButtons
       lineId = $(commentButton).attr("line_id")
       topCss = $('[data-guid='+lineId+']').offset().top - $('.file-container').offset().top
@@ -26,13 +26,7 @@ Commenting = () ->
     # show comment button ghost
 
   $('body').on "click", ".reply-button", (e) =>
-    commentDiv = $(e.target).parents('.comment')[0]
-    @fileComments = $(e.target).parents('.comments')
-    @fileCommentContainer = $(e.target).parents('.comments-container')
-    @setCommentPanelPositionReply(commentDiv.offsetTop + commentDiv.clientHeight + 10)
-    @parentId = $(commentDiv).attr('comment-id')
-    @fileId = $(commentDiv).attr('file-id')
-    @replyClick(@fileCommentContainer)
+    @replyClick(e)
 
   $('.new-comment-submit').click ->
     if !$(this).hasClass('disabled') 
@@ -82,13 +76,14 @@ Commenting = () ->
       if !response.success
         alert response.error
       else
+        @hideNewCommentField()
         $(@fileButtonContainer).html(" ").html(response['comment_buttons_html'] )
         $(@fileComments).html(" ").html( response['comments_html'] )
         @orderComments()
-        @hideNewCommentField()
 
       @submitting = false
     )
+
 
   @setCommentPanelPositionReply = (yCoord) =>
     $(@fileCommentContainer).children('#new-comment-panel').css('top', yCoord + 'px')
@@ -98,11 +93,13 @@ Commenting = () ->
 
   @showNewCommentFieldParent = () =>
     @newCommentShowing = true 
+    $('.comment #new-comment-panel').removeClass('reply').addClass('parent')
     $(@fileCommentContainer).children('#new-comment-panel').show();
     @showNewCommentField(@fileCommentContainer)
 
   @showNewCommentFieldReply = () =>
     @newCommentShowing = true 
+    $('.comment #new-comment-panel').removeClass('parent').addClass('reply')
     $(@fileCommentContainer).children('#new-comment-panel').hide();
     @showNewCommentField(@fileCommentContainer)
 
@@ -125,12 +122,14 @@ Commenting = () ->
       $('.comment-inner #newcomment').val('')
     )
 
+
+
   @lineClick = (e) =>
     if !@submitting
       @line = if ($(e.target).hasClass('t') || $(e.target).hasClass('bi')) then $(e.target) else $(e.target).parents('.t, .bi')
-      @notePage = @line.parents('.note-pages')
+      @notePage = @line.parents('.page')
       @fileContainer = @line.parents('.file-container')
-      @yCoord = @line.offset().top - @fileContainer.offset().top - 75
+      @yCoord = @line.offset().top - @fileContainer.offset().top - 10
 
       @line_id = @line.attr('data-guid')
       @fileId = @line.parents('.note-page').attr('file-id')
@@ -149,12 +148,27 @@ Commenting = () ->
     #   if !@submitting
 
 
-  @replyClick = () =>
+  @replyClick = (e) =>
+
+    parentComment = $(e.target).parents('.comment')[0]
+    @fileComments = $(e.target).parents('.comments')
+    @fileCommentContainer = $(e.target).parents('.comments-container')
+
+    commentThreadContainer = $(e.target).parents('.comment-thread-container')
+
+    @setCommentPanelPositionReply($(parentComment).offset().top + $(commentThreadContainer).height() + 10 - @fileCommentContainer.offset().top)
+    @parentId = $(parentComment).attr('comment-id')
+  
+    # @line_id = @line.attr('data-guid')
+    @fileId = $(parentComment).attr('file-id')
+  
     if !@newCommentShowing
-        @showNewCommentFieldReply()
-      else if !$(@fileCommentContainer).children('#new-comment-panel').is(':visible')
-        @hideAllCommentField()
-        @showNewCommentFieldReply()
+      @showNewCommentFieldReply()
+    else if !$(@fileCommentContainer).children('#new-comment-panel').is(':visible')
+      @hideAllCommentField()
+      @showNewCommentFieldReply()
+
+
 
   @setActive = (clickedComment) ->
     if (@activeComment)
