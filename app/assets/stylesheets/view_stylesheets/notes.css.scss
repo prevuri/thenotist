@@ -142,9 +142,21 @@ $thumbnail-height: 330px;
 
 #new-comment-panel {
   position: absolute;
-  -webkit-transition: top 0.2s ease;
   margin-top: -30px;
-  right: -230px;
+  left: 956px;
+
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  opacity: 1;
+
+  &.ng-hide-add, &.ng-hide-remove {
+    display: block !important;
+  }
+  &.ng-hide {
+    opacity: 0;
+    left: 936px;
+  }
   
   #newcomment {
     width: 97%;
@@ -647,6 +659,3 @@ $thumbnail-height: 330px;
 
   }
 }
-
-
-

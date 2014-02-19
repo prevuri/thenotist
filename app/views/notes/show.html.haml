@@ -26,7 +26,7 @@
           .comments-container
             .comments
               = render :partial => 'comments', :locals => {:fileId => file.id}
-    .comment#new-comment-panel{:'ng-show' => 'showNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
+    #new-comment-panel.comment{:'ng-show' => 'showNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
       .comment-inner
         .profile-container.circular
           .profile-image.circular{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}
