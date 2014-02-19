@@ -23,6 +23,7 @@ TheNotist::Application.routes.draw do
   match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
 
   resources :profile
+  resources :flag_reports, :only => [:index]
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]
   match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note

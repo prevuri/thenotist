@@ -13,7 +13,7 @@ class Api::FlagReportsController < ApplicationController
 
   def create
     begin
-      @flagreport = @note.flag_reports.create
+      @flagreport = @note.flag_reports.create(:report_resolved => false)
       return render :json => {
         :success => true
       }

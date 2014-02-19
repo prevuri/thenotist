@@ -2,7 +2,8 @@ class FlagReportsController < ApplicationController
   before_filter :get_note_id, :only => [ :create ]
 
   def index
-  	@flagreports = FlagReport.all
+  	@flagreports = FlagReport.where(:report_resolved => false) # find(:report_resolved => false) #FlagReport.all
+
   end
 
   def create
@@ -18,7 +19,8 @@ class FlagReportsController < ApplicationController
     # logger.info "*****************************"
     
     @note = Note.find_by_id(@note_id)
-    @flagreport = @note.flag_reports.create
+    # Note.first.flag_reports.create(:report_resolved => true, :description => "hello world")
+    # @flagreport = @note.flag_reports.create(:report_resolved => false)
     redirect_to note_path(@note), :notice => "This note has been flagged"
   end
 
