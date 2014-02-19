@@ -17,7 +17,10 @@
 
   $scope.newComment = (lineId) ->
     $scope.lineId = lineId
-    showNewComment = true
+
+  $scope.newCommentClick = (event) ->
+    $scope.newCommentY = event.pageY
+    $scope.showNewComment = true
 
   $scope.submitComment = () ->
     if !$scope.submitting

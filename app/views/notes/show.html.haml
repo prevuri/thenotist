@@ -15,7 +15,7 @@
           .file-container{:'ng-click' => 'showNewComment = true', :'ng-init' => "getComments(#{file.id})"}
             .page-container
               %a{ :name => "Page-#{file.page_number}"}
-              .note-page{:'file-id' => file.id, :'ng-init' => "fileId = #{file.id}"}  
+              .note-page{:'file-id' => file.id, :'ng-click' => 'newCommentClick($event)', :'ng-init' => "fileId = #{file.id}"}  
                 - @html = open(file.public_path).read
                 = @html.html_safe
           .comment-buttons-container  
@@ -26,7 +26,7 @@
           .comments-container
             .comments
               = render :partial => 'comments', :locals => {:fileId => file.id}
-            .comment#new-comment-panel{:'ng-show' => 'showNewComment', :'file-id' => file.id}
+            .comment#new-comment-panel{:'ng-show' => 'showNewComment', :'file-id' => file.id, :'ng-style' => "{'top': newCommentY+'px' }"}
               .comment-inner
                 .profile-container.circular
                   .profile-image.circular{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}
