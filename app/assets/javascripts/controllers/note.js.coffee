@@ -15,14 +15,14 @@
         # TODO: error message of some sort
     )
 
-  $scope.newComment = (lineId) ->
+  $scope.lineClick = (lineId) ->
     $scope.newCommentLineId = lineId
     $scope.parentId = null
     $scope.showNewComment = true
-
-  $scope.newCommentClick = (event, fileId) ->
-    $scope.newCommentY = event.pageY
-    $scope.newCommentFileId = fileId
+    lineEl = $('[data-guid='+lineId+']')
+    $scope.newCommentY = $(lineEl).offset().top
+    $scope.newCommentFileId = $(lineEl).parents('.note-page').attr('file-id')
+    $scope.expandedCommentLine = null
 
   $scope.commentY = (lineId) ->
     $('[data-guid='+lineId+']').position().top
@@ -58,6 +58,7 @@
           $scope.files[fileId].comments = data.comments
           $scope.showNewComment = false
           $scope.submitting = false
+          $scope.newCommentText = null
         ).error( (data, status, headers, config) ->
           # TODO: error message of some sort
           $scope.submitting = false

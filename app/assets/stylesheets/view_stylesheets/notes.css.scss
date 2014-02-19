@@ -157,10 +157,10 @@ $thumbnail-height: 330px;
     opacity: 0;
     left: 936px;
   }
-  
+}
+ 
+#new-comment-panel, .new-reply-panel { 
   #newcomment {
-    width: 97%;
-    padding-left: 3%;
     min-height: 40px;
     resize: none;
     border: none;
