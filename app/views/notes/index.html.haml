@@ -1,4 +1,4 @@
-.notes-index-page
+.notes-index-page{ :'ng-controller' => 'NotesCtrl' }
   %h1 Notes
 
   = render 'upload_form'
@@ -7,14 +7,14 @@
     .notes-list
       %ul
         - @notes.each_with_index do |note, index|
-          %li.notes-list-item{ :data => {:id => note.id} }
+          %li.notes-list-item{ :data => {:id => note.id}, :'ng-mouseover' => 'hideTooltip()' }
             = render 'grid_item', :note => note, :shared => false, :index => index
         - @shared_notes.each do |note|
           %li.notes-list-item{ :data => {:id => note.id} }
             = render 'grid_item', :note => note, :shared => true
                   
-  .modal-container-container.hidden
-    .modal-container
-  .full-screen-overlay.hidden
-.template.thumb-container
-  %img.thumb-image
+  .modal-container-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
+    .modal-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
+      %a.thumb-container{ :'ng-repeat' => "image in overview.images", :'ng-href' => "{{image.pageUrl}}" }
+        %img.thumb-image{ :'ng-src' => "{{image.src}}" }
+  .full-screen-overlay{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }

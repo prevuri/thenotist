@@ -158,9 +158,10 @@ $sidebar-trans-time: 0.5s;
 
 #sidebar {
   // box-shadow: 2px 0 2px $sidebar-shadow-color;
-  position:fixed;
+  position: fixed;
   top: 0;
   bottom: 0;
+  z-index: 1000;
   background-color: $sidebar-background;
 
   .sidebar-nav {
