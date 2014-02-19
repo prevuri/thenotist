@@ -50,7 +50,6 @@ $thumbnail-height: 330px;
   .thumb-container {
     display: inline-block;
     width: $thumbnail-width;
-    // height: 100%;//$thumbnail-height;
     border: 3px solid;
     border-color: transparent;
     &:hover {
@@ -61,16 +60,14 @@ $thumbnail-height: 330px;
 
 #note-header {
   width: 100%;
-  height: 100px;
+  height: 65px;
   margin-left: -30px;
   overflow: visible;
-  border-bottom: solid 5px #f4f4f4;
+  border-bottom: solid 1px rgba(245, 245, 245, 0.9);
   position: fixed;
   top: 0px;
   z-index: 10;
-  background-color: #fff;
-
-  // margin-right: -30px;
+  background-color: rgba(250, 250, 250, 0.9);
   
   .note-title {
     font-family: Helvetica Neue;
@@ -81,14 +78,11 @@ $thumbnail-height: 330px;
 }
 
 #note-main {
-  // margin-left: -30px;
-  min-width: 1024px;
-  margin-top: 95px;
-  z-index: 0;
+  padding-top: 70px;
+  position: relative;
 
   &.new-comment-showing {
-    margin-right: 0;
-    padding-right: 50px + $comments-sidebar-width;
+    // padding-right: 50px + $comments-sidebar-width;
   }
 
   .note-description {
@@ -96,46 +90,32 @@ $thumbnail-height: 330px;
   }
   
   .note-pages {
-    position:relative;
     .page {
-      width: 100%;
-      overflow-x: hidden;
+      white-space: nowrap;
+      & > * {
+        display: inline-block;
+        vertical-align: top;
+      }
     }
 
     .file-container {
-      height: 100%;
-      max-width: 57%;
-      min-width: 950px;
-
       .page-container {
-        overflow: auto;
-        float:left;
-        display: inline-block;;
         border-bottom: solid 3px #F2F5F6;
         border-right: 3px solid #F2F5F6;
       }
     }
 
     .comments-container {
-      left: 960px;
-      top: 0px;
-      width: 30%;
-      min-width: 250px;
-      position: absolute;
-      height: 1191px;
-      overflow: visible;
+
     } 
 
     .comment-buttons-container {
-      float: left;
-      max-width: 7%;
-      height: 100%;
       position: relative;
-      width: 4%;
+      width: 25px;
 
       .comment-button {
         position: absolute;
-        left: 10px;
+        left: 5px;
 
         i {
           font-size: 1.5em;
@@ -162,12 +142,10 @@ $thumbnail-height: 330px;
 
 #new-comment-panel {
   position: absolute;
-  min-width: 100%;
   -webkit-transition: top 0.2s ease;
-  top: 50px;
-  left: 0px;
+  margin-top: -30px;
+  right: -230px;
   
-
   #newcomment {
     width: 97%;
     padding-left: 3%;
@@ -180,67 +158,20 @@ $thumbnail-height: 330px;
   }
 
   .new-comment-submit {
-    outline: none;
-    
+    outline: none; 
   }
 
-  // .btndiv { 
-  //   text-align: right;
-  //   .btn {
-  //     display: inline-block;
-  //     margin: 6px 5px;
-  //   }
-  // }
-
-}
-
-#new-comment-position-line {
-  position: absolute;
-  bottom: 38px;
-  left: -14px;
-  width: 0px;
-  height: 4px;
-  background-color: $highlight-color;
-
-  .left-arrow {
-    position: relative;
-    top: -8px;
-    left: -10px;
-    width: 0;
-    height: 0;
-    border-top: 22px solid transparent;
-    border-bottom: 22px solid transparent;
-    border-right: 10px solid $highlight-color;
-  }
-}
-
-.comments-sidebar {
-  background-color: #34495E;
-  width: 20%;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  overflow-y: auto;
-  padding: 10px;
-  box-shadow: -2px 0 2px #bbc;
-  z-index: 100;
 }
 
 
 .comment-thread-container {
-  position: absolute;
-  // height: 100%;
-  // right: 0px; 
-  width: 100%;
-  margin-top: 10px;
-  margin-right: 10px;
-  overflow: scroll;
+
 }
 
 .comment {
     margin-left: 10px;
-    position: relative;
+    width: 300px;
+    // position: relative;
 
     .comment-inner {
       border-radius: 10px 4px 4px;

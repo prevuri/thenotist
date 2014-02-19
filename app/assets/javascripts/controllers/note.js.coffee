@@ -17,10 +17,10 @@
 
   $scope.newComment = (lineId) ->
     $scope.lineId = lineId
+    $scope.showNewComment = true
 
   $scope.newCommentClick = (event) ->
     $scope.newCommentY = event.pageY
-    $scope.showNewComment = true
 
   $scope.submitComment = () ->
     if !$scope.submitting
@@ -32,7 +32,7 @@
       if $scope.parentId
         data['comment']['parent_id'] = $scope.parentId
       else
-        data['comment']['line_id'] = $scope.lineId
+        data['line_id'] = $scope.lineId
 
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).
