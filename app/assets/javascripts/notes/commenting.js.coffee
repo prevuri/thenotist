@@ -10,7 +10,7 @@ Commenting = () ->
     @commentButtons = $('.comment-button[line_id]')
     for commentButton in @commentButtons
       lineId = $(commentButton).attr("line_id")
-      topCss = $('[data-guid='+lineId+']').offset().top - $('.file-container').offset().top
+      topCss = $('[data-guid='+lineId+']').position().top
       commentBox = $('.comment[line_id='+lineId+']')
       $(commentButton).css('top', topCss)
       $(commentBox).parents('.comment-thread-container').css('top', topCss - 20)
