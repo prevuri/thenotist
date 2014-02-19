@@ -106,7 +106,7 @@ $thumbnail-height: 330px;
     }
 
     .comments-container {
-
+      position: relative;
     } 
 
     .comment-buttons-container {
@@ -177,7 +177,7 @@ $thumbnail-height: 330px;
 
 
 .comment-thread-container {
-
+  position: absolute;
 }
 
 .comment {
@@ -245,7 +245,6 @@ $thumbnail-height: 330px;
       margin-left: 10px;
     }
     .delete-confirm-panel {
-      display: none;
       background-color: #bbb;
       border-top: 1px solid #999;
       margin: 10px -8px -5px;
