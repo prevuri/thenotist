@@ -1,5 +1,5 @@
 .note-item{ :data => {:id => note.id} }
-  %i.icon-th.btn.overview-btn.appear-hover{ :data => {:path => api_note_path(note)} }
+  %i.icon-th.btn.overview-btn.appear-hover{ :'ng-click' => "showOverview('#{api_note_path(note)}')", :data => {:path => api_note_path(note)} }
   = link_to note_path(note) do
     .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}    
   .btn-group.appear-hover
@@ -42,7 +42,7 @@
               Share
 
 
-  #list-footer
+  #list-footer{ :'ng-hide' => 'hide' }
     .big-info
       = link_to note.title, note_path(note), :class => 'text-link'
       .description= note.description

@@ -1,8 +1,21 @@
-- comments.each do |comment|
-  .comment-thread-container
-    .comment.parent{:style => "display: none", :'line_id' => comment.line_id, :'comment-id' => comment.id, :'file-id' => comment.uploaded_file_id }
-      = render :partial => 'notes/comment', :object => comment
-      - comment.child_comments.each do |child_comment|
-        .comment.reply{ :'comment-id' => child_comment.id }
-          = render :partial => 'notes/comment', :object => child_comment, :locals => {:no_reply => true}
-      
+.comment-thread-container{:'ng-repeat' => "comment in files[#{fileId}].comments", :'ng-style' => "{top: commentY(comment.line_id)+'px'}"}
+  .comment.parent{:'ng-show' => 'expandedCommentLine == comment.line_id'}
+    = render :partial => 'notes/comment', :object => 'comment'
+    .new-reply-panel.comment{:'ng-show' => 'comment.showNewReply'}
+      .comment-inner
+        .profile-container.circular
+          .profile-image.circular{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}
+        .comment-body
+          .user
+            .name
+              = current_user.name
+          .comment-text
+            = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here', :'ng-model' => 'comment.newReplyText'
+        .bottom
+          %a.new-comment-cancel.text-link{:'ng-click' => 'comment.showNewReply = false'}
+            Cancel
+          %a.new-comment-submit.text-link{:'ng-click' => "submitReply(comment, #{fileId})"}
+            Submit
+        .clear
+    .comment.reply{:'ng-repeat' => 'childComment in comment.child_comments' }
+      = render :partial => 'notes/comment', :object => 'childComment'
