@@ -52,6 +52,8 @@ Commenting = () ->
   $('body').on "click", ".comment-button", (e) =>
     @showComment(e.target)
 
+
+####COMMENT SUBMISSION#####
   @submitComment = () ->
   @submitComment = (selector) ->
     if !@submitting
@@ -66,10 +68,12 @@ Commenting = () ->
       file_id: @fileId
     }
 
+    activeCommentButton
+
     if @parentId
-      data['comment']['parent_id'] = @parentId
+      activeCommentButton = data['comment']['parent_id'] = @parentId
     else
-      data['comment']['line_id'] = @line_id
+      activeCommentButton = data['comment']['line_id'] = @line_id
 
     @submitting = true
     $.post('/api/comments', data, (response) =>
@@ -80,11 +84,12 @@ Commenting = () ->
         $(@fileButtonContainer).html(" ").html(response['comment_buttons_html'] )
         $(@fileComments).html(" ").html( response['comments_html'] )
         @orderComments()
+        @showComment($('.comment-button[line_id='+activeCommentButton+'] .icon-comments'))
 
       @submitting = false
     )
 
-
+#####HELPER FUNCTIONS####
   @setCommentPanelPositionReply = (yCoord) =>
     $(@fileCommentContainer).children('#new-comment-panel').css('top', yCoord + 'px')
 
@@ -95,6 +100,7 @@ Commenting = () ->
     @newCommentShowing = true 
     $('.comment #new-comment-panel').removeClass('reply').addClass('parent')
     $(@fileCommentContainer).children('#new-comment-panel').show();
+    hideActiveComment()
     @showNewCommentField(@fileCommentContainer)
 
   @showNewCommentFieldReply = () =>
@@ -121,8 +127,16 @@ Commenting = () ->
       $('.comment #new-comment-submit').removeClass('disabled')
       $('.comment-inner #newcomment').val('')
     )
+  @hideActiveComment = () =>
+    $(@activeComment).hide(200)  
+    $(@activeCommentButton).removeClass('active')
+    @activeComment = null
+    @activeCommentButton = null
 
 
+####CLICK HANDLERS####
+  # @lineHover = (e) =>
+  #   if !@submitting
 
   @lineClick = (e) =>
     if !@submitting
@@ -143,10 +157,6 @@ Commenting = () ->
       else
         @hideAllCommentField()
         @showNewCommentFieldParent()
-
-    # @lineHover = (e) =>
-    #   if !@submitting
-
 
   @replyClick = (e) =>
 
@@ -169,7 +179,7 @@ Commenting = () ->
       @showNewCommentFieldReply()
 
 
-
+####COMMENT VISIBILITY HANDLERS####
   @setActive = (clickedComment) ->
     if (@activeComment)
       $(@activeComment).removeClass('active')
@@ -195,6 +205,8 @@ Commenting = () ->
       @activeComment = null
       @activeCommentButton = null
 
+
+####DELETE FUNCTIONALITY#####
   @deleteClicked = (e) =>
     $(e.target).fadeOut(150)
     @showDeleteConfirmation($(e.target).parents('.comment')[0])
