@@ -1,8 +1,21 @@
-.notes-index-page
+.notes-header
   %h1 Notes
+  .sorting-options
+    %ul
+      %li.btn
+        Name
+      %li.btn
+        Date
+      %li.btn
+        Shared
+      %li.btn
+        Uploaded
+  .upload-form
+    = render 'upload_form'
 
-  = render 'upload_form'
 
+
+.notes-index-page
   .notes-list-container
     .notes-list
       %ul

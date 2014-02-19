@@ -7,7 +7,26 @@ $highlight-color: #27F;
 $thumbnail-width: 240px;
 $thumbnail-height: 330px;
 
+.notes-header {
+  height: 100px;
+  border-bottom: #ECF0F1 solid 2px;
+  h1 {
+    float: left;
+    clear: both;
+  }
+  .upload-form {
+    float: right;
+    margin-top: 10px;
+    clear: both;
+  }
+  .sorting-options {
+    float: right;
+    list-style-type: none;
+  }
+}
+
 .notes-index-page {
+  padding-top: 20px;
   .full-screen-overlay {
     // position: absolute;
     position: fixed;
