@@ -35,11 +35,11 @@ ActiveRecord::Schema.define(:version => 20140120234551) do
   end
 
   create_table "comments", :force => true do |t|
-    t.integer  "uploaded_file_id"
+    t.integer  "uploaded_html_file_id"
     t.integer  "user_id"
     t.text     "text"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.integer  "parent_comment_id"
     t.string   "line_id"
   end

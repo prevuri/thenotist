@@ -7,17 +7,17 @@
     .note-description= @note.description
     #header-border
   #note-main
-    
+
     .note-pages
-      - @note.uploaded_files.each_with_index do |file, i|
+      - @note.uploaded_html_files.each_with_index do |file, i|
         .page
           .file-container{:'ng-click' => 'showNewComment = true', :'ng-init' => "getComments(#{file.id})"}
             .page-container
               %a{ :name => "Page-#{file.page_number}"}
-              .note-page{:'file-id' => file.id, :'ng-click' => "newCommentClick($event, #{file.id})", :'ng-init' => "fileId = #{file.id}"}  
+              .note-page{:'file-id' => file.id, :'ng-click' => "newCommentClick($event, #{file.id})", :'ng-init' => "fileId = #{file.id}"}
                 - @html = open(file.public_path).read
                 = @html.html_safe
-          .comment-buttons-container  
+          .comment-buttons-container
             .comment-button{:'ng-repeat' => "comment in files[#{file.id}].comments", :line_id => "{{comment.line_id}}", :'ng-click' => 'expandCommentLine(comment.line_id)', :'ng-style' => "{top: commentY(comment.line_id)+'px'}"}
               %i.icon-comments
             .comment-button#new-comment-button

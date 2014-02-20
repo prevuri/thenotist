@@ -1,7 +1,7 @@
 .note-item{ :data => {:id => note.id} }
   %i.icon-th.btn.overview-btn.appear-hover{ :'ng-click' => "showOverview('#{api_note_path(note)}')", :data => {:path => api_note_path(note)} }
   = link_to note_path(note) do
-    .img-preview{:style => "background-image: url(#{note.uploaded_files.first.public_path})"}    
+    .img-preview{:style => "background-image: url(#{note.uploaded_html_files.first.public_path})"}
   .btn-group.appear-hover
     - if shared
       = link_to unsubscribe_note_path(note), :class => 'btn usub' do
@@ -15,7 +15,7 @@
         %i.icon-edit.btn
       = link_to note_path(note), :method => :delete do
         %i.icon-remove.btn
-  
+
   - unless shared
     .share-note-form-container.modal.hide.fade{ :id => "container-#{index}", :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
       .share-note-container.modal-body
@@ -33,7 +33,7 @@
                 .delete-contrib
                   %i.icon-remove.btn
                 / TODO: create a delete friend link and connect it to the delete friend for the API
-      
+
       .share-interaction.modal-footer
         .error-label.hidden
         .btn.btn-primary.share-button
@@ -64,4 +64,4 @@
       .ui-widget.tooltip-inner
         %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
 
-/ %img{:src => "#{note.uploaded_files.first.public_path}"}
+/ %img{:src => "#{note.uploaded_html_files.first.public_path}"}

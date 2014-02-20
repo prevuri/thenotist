@@ -1,6 +1,6 @@
 class Api::FilesController < ApplicationController
   include ApiHelper
-  
+
   before_filter :check_authenticated_user!
   before_filter :get_note_id, :only => :index
   before_filter :get_file_id, :only => :show
@@ -15,7 +15,7 @@ class Api::FilesController < ApplicationController
       }
     end
 
-    @files = @note.uploaded_files
+    @files = @note.uploaded_html_files
     return render :json => {
       :success => true,
       :files => @files.map { |f| f.as_json }
@@ -24,7 +24,7 @@ class Api::FilesController < ApplicationController
 
   def show
     begin
-      @file = current_user.uploaded_files.find(@uploaded_file_id) # throws an exception if nothing found
+      @file = current_user.uploaded_html_files.find(@uploaded_html_file_id) # throws an exception if nothing found
     rescue
       return render :json => {
         :success => false,
@@ -44,6 +44,6 @@ private
   end
 
   def get_file_id
-    @uploaded_file_id = params[:id]
+    @uploaded_html_file_id = params[:id]
   end
 end

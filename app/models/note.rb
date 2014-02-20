@@ -7,10 +7,10 @@ class Note < ActiveRecord::Base
   belongs_to :user
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
   has_many :contributing_users, through: :contributors, source: :user
-  #What was this made for? contibutors should cover this #What was this made for? 
-  has_many :uploaded_files, dependent: :destroy
+  #What was this made for? contibutors should cover this #What was this made for?
+  has_many :uploaded_html_files, dependent: :destroy
   has_many :uploaded_css_files, dependent: :destroy
-  has_many :comments, :through => :uploaded_files
+  has_many :comments, :through => :uploaded_html_files
 
   # want to assume that we are processing a file right away
   before_create :start_processing!
@@ -29,7 +29,7 @@ class Note < ActiveRecord::Base
   end
 
 
-  def share! user 
+  def share! user
     contributors.create!(user_id: user.id)
   end
 
@@ -44,10 +44,10 @@ class Note < ActiveRecord::Base
   def noncontributors user
     nc = user.buddies - contributing_users
     nonContrib = Hash.new
-    
+
     nc.each do |n|
       nonContrib[n.id] = n.name
-    end 
+    end
     nonContrib
   end
 
@@ -65,7 +65,7 @@ class Note < ActiveRecord::Base
       :id => id,
       :title => title,
       :description => description,
-      :uploaded_files => uploaded_files.map { |f| f.as_json },
+      :uploaded_html_files => uploaded_html_files.map { |f| f.as_json },
       :uploaded_css_files => uploaded_css_files.map { |f| f.as_json },
       :user => user.as_json,
       :processed => processed,

@@ -17,8 +17,6 @@ TheNotist::Application.routes.draw do
     delete 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
-  resources :uploaded_files
-
   resources :notes
   match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
 
