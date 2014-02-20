@@ -16,6 +16,11 @@ class NotesController < ApplicationController
       begin
         @note = current_user.notes.create(:title => params[:new_note][:title], :description => params[:new_note][:description])
         track_activity @note
+
+        local_pdf_file = params[:new_note][:file].tempfile.path
+        # User: BrowserUploader
+        # Access Key ID: AKIAJI6W3FE2PF4OXO4Q
+        # Secret Access Key: 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
       rescue
         @fail_reason = "unknown"
       end

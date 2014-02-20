@@ -23,6 +23,7 @@
 //= require jquery.ui.autocomplete
 //= require underscore
 //= require magicsuggest-1.3.1
+//= require s3_direct_upload
 //
 // Removing these requirements for gem
 // require bootstrap

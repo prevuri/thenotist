@@ -1,3 +1,11 @@
+.direct-to-s3-container
+  %div{:'ng-controller' => 'DirectToS3Ctrl', :'ng-init' => "init()"}
+    = s3_uploader_form id: 'direct-to-s3-uploader', key: "test_pdf_store/#{SecureRandom.uuid}.pdf", key_starts_with: 'test_pdf_store/', acl: 'public-read' do
+      = file_field_tag :file, multiple: false
+
+
+
+
 .create-new-note-container{:'ng-controller' => 'UploadCtrl' }
   .create-new-note-button.btn.btn-large.btn-primary{ "data-toggle" => "modal", "data-target" => ".new-note-form-container" }
     %i.icon-circle-arrow-up.icon-white

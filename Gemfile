@@ -10,6 +10,7 @@ gem 'koala', '~> 1.6.0'
 gem 'omniauth-facebook'
 gem 'haml-rails'
 gem 'pg'
+gem 's3_direct_upload'
 
 # Gems used only for assets and not required
 # in production environments by default.
