@@ -8,14 +8,39 @@ $thumbnail-width: 240px;
 $thumbnail-height: 330px;
 
 .notes-header {
-  height: 100px;
+  height: 120px;
   border-bottom: #ECF0F1 solid 2px;
   position: relative;
   h1 {
     float: left;
     clear: both;
   }
+  
+  .search-box {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    input {
+      width: 280px;
+      border-radius: 2px;
+      &:active {
+        border-color: #22B498 !important;
+      }
+    }
 
+    .input-icon {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      line-height: 37px;
+      vertical-align: middle;
+      font-size: 20px;
+      color: #b2bcc5;
+      background-color: transparent;
+      padding: 0 12px 0 0;
+      border-radius: 6px;
+    }
+  }
   .sorting-options {
     list-style-type: none;
     position: absolute;
@@ -25,6 +50,7 @@ $thumbnail-height: 330px;
     .btn {
       background-color: transparent;
       color: inherit;
+      border-radius: 2px;
 
       &:hover {
         background-color: #ECF0F1;
@@ -329,7 +355,7 @@ $thumbnail-height: 330px;
     }
 
     .notes-list-item {
-      background-color: #BEB5AA;
+      background-color: #999999;
       min-height: 200px;
       padding: 1px;
       margin-top: 10px;
@@ -345,6 +371,13 @@ $thumbnail-height: 330px;
         .appear-hover {
           opacity: 0;
           -webkit-transition: opacity 0.2s ease;
+          .btn {
+            border-radius: 0 !important;
+            background-color: transparent;
+            &:hover {
+              background-color: #999999;
+            }
+          }
         }
 
         &:hover {
@@ -358,7 +391,7 @@ $thumbnail-height: 330px;
           position: relative;
           bottom: 55px;
           width: 100%;
-          background-color:rgba(0,0,0,0.8);
+          // background-color:rgba(0,0,0,0.8);
           z-index: 100;
           overflow: hidden;
           
@@ -381,7 +414,34 @@ $thumbnail-height: 330px;
               text-overflow: ellipsis;
               font-weight: lighter;
               font-family: ‘Arial Narrow’, sans-serif;
-            }   
+            } 
+
+            .contributors {
+              margin-left: 10px;
+              margin-bottom: 10px;
+              display: inline-block;
+              .profile-container {
+                height: 45px;
+                width: 45px;
+                padding: 0;
+                box-shadow: none;
+                border: solid #ECF0F1 1px;
+                float: left;
+                margin-right: 10px;
+                position: relative;
+                i {
+                  color: #999999;
+                  font-size: 1.8em;
+                  position: absolute;
+                  top: 27%;
+                  left: 27%;
+                }
+
+                &:hover {
+                  background-color: #dadada;
+                }
+              }
+            }
           }
 
           .info {
