@@ -7,8 +7,14 @@
 # Ignore bundler config
 /.bundle
 
+# Ignore RBENV configs
+/.ruby-version
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
+
+# Ignore the test DB
+/db/test*
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
@@ -19,10 +25,13 @@
 /public/user_uploads/*
 /public/data
 
+# Ignore precompiled assets
+/public/assets
 db/schema.rb
 *.orig
 Gemfile.lock
 
+.sass-cache/
 .DS_Store
 
 .ext/

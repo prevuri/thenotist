@@ -1,0 +1,53 @@
+---
+- !ruby/object:Rubber::Configuration::InstanceItem
+  name: production
+  domain: foo.com
+  roles:
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: apache
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: app
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: passenger
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: common
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: collectd
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: monit
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: haproxy
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: web
+    options: {}
+  instance_id: i-fd8ac3dd
+  image_type: m1.small
+  image_id: ami-b6089bdf
+  security_groups:
+  - thenotist_production_default
+  - thenotist_production_web
+  - thenotist_production_production
+  - thenotist_production_apache
+  - thenotist_production_app
+  - thenotist_production_passenger
+  - thenotist_production_common
+  - thenotist_production_collectd
+  - thenotist_production_monit
+  - thenotist_production_haproxy
+  external_host: ec2-54-234-186-137.compute-1.amazonaws.com
+  external_ip: 54.234.186.137
+  internal_host: ip-10-181-138-222.ec2.internal
+  internal_ip: 10.181.138.222
+  zone: us-east-1a
+  provider: aws
+  platform: linux
+  root_device_type: instance-store
+- volumes: {}
+  static_ips: {}
