@@ -570,15 +570,30 @@ $thumbnail-height: 330px;
 
 // NOTE UPLOAD SECTION
 .upload-form {
+  background-color: #0FB598 !important; 
+  position: relative;
   min-width: 448px;
-  height: 280px;
+
+  &:hover {
+    background-color: lighten(#0FB598, 7) !important; 
+  }
 }
 
 .create-new-note-container {
+  width: 448px;
+  height: 280px;
+  color: #FFF;
+
   .create-new-note-button {
+    position: absolute;
+    top: 27%;
+    left: 27%;
+    // width: 400px;
     i {
-      margin-right: 5px;
+      margin-left: 31%;
       margin-top: 3px;
+      font-size: 7em;
+      clear: both;
     }
   }
 
