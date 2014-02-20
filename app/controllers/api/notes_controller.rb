@@ -2,7 +2,7 @@ class Api::NotesController < ApplicationController
   include ApiHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs ]
+  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs, :destroy ]
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
 
@@ -28,6 +28,13 @@ class Api::NotesController < ApplicationController
     return render :json => {
       :success => true,
       :note => @note.as_json
+    }
+  end
+
+  def destroy
+    @note.destroy
+    return render :json => {
+      :success => true
     }
   end
 

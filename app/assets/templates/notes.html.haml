@@ -1,17 +1,15 @@
-.notes-index-page{ :'ng-controller' => 'NotesCtrl' }
+.notes-index-page{ :'ng-controller' => 'NotesCtrl', :'ng-init' => 'init()' }
   %h1 Notes
 
-  = render 'upload_form'
+  %ng-include{:src => "'/assets/upload_form.html'"}
 
   .notes-list-container
     .notes-list
       %ul
-        - @notes.each_with_index do |note, index|
-          %li.notes-list-item{ :data => {:id => note.id}, :'ng-mouseover' => 'hideTooltip()' }
-            = render 'grid_item', :note => note, :shared => false, :index => index
-        - @shared_notes.each do |note|
-          %li.notes-list-item{ :data => {:id => note.id} }
-            = render 'grid_item', :note => note, :shared => true
+        %li.notes-list-item{ :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
+          %ng-include{:src => "'/assets/grid_item.html'"}
+        %li.notes-list-item{ :'ng-repeat' => 'note in sharedNotes' }
+          %ng-include{:src => "'/assets/grid_item.html'"}
                   
   .modal-container-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
     .modal-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }

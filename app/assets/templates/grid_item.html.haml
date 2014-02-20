@@ -1,0 +1,63 @@
+.note-item
+  %i.icon-th.btn.overview-btn.appear-hover{ :'ng-click' => "showOverview('{{api_note_path(note)}}')" }
+  %a{:'ng-href' => '/notes/{{note.id}}'}
+    .img-preview{:'ng-style' => "{'background-image': 'url(' + note.uploaded_files[0].public_path + ')'}"}    
+  .btn-group.appear-hover
+    %div{:'ng-if' => 'note.isShared'}
+      %a.btn.usub{:'ng-href' => '{{note.unsubscribe_url}}'}
+        %i.icon-remove
+    %div{:'ng-if' => '!note.isShared'}
+      %a.share-note-link
+        %i.icon-share.share-note.btn{ "data-toggle" => "modal" }
+      %a{:'ng-click' => 'editNote(note, $index)'}
+        %i.icon-edit.btn
+      %a{:'ng-click' => 'deleteNote(note)'}
+        %i.icon-remove.btn
+  
+  %div{:'ng-if' => 'note.isShared'}
+    .share-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
+      .share-note-container.modal-body
+        .form-container
+          .form
+        %h4 Note Shared With:
+        .contributor-list
+          .contrib-list-item{:'ng-repeat' => 'contrib in note.contributors'}
+            .contrib-info
+              .profile-container.circular
+                %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+              .profile-link-container
+                %a{:'ng-href' => '{{profilePath(contrib.user)}}'} {{contrib.user.name}}
+              .delete-contrib
+                %i.icon-remove.btn
+              / TODO: create a delete friend link and connect it to the delete friend for the API
+      
+      .share-interaction.modal-footer
+        .error-label.hidden
+        .btn.btn-primary.share-button
+          %i.icon-share-alt.share-note-icon
+            .share-action-text
+              Share
+
+
+  #list-footer{ :'ng-hide' => 'hide' }
+    .big-info
+      %a.text-link{:'ng-href' => '{{note.url}}'} {{note.title}}
+      .description {{note.description}}
+      .info
+        %div{:'ng-if' => 'note.isShared'}
+          Shared by {{note.user.name}}
+        %div{:'ng-if' => '!note.isShared'}
+          %div{:'ng-if' => 'note.contributing_users.length > 0'}
+            Shared with {{note.contributing_users.first.name}}
+          %div{:'ng-if' => 'note.contributing_users.length > 1'}
+            and {{note.contributing_users.length-1}} others
+    .tiny-info
+      %i.icon-comments {{note.comment_count}}
+
+  %div{:'ng-if' => '!note.isShared'}
+    .tooltip.fade.bottom.in.hidden{:'ng-hide' => 'note.tooltipHidden'}
+      .tooltip-arrow
+      .ui-widget.tooltip-inner
+        %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+
+/ %img{:src => "#{note.uploaded_files.first.public_path}"}

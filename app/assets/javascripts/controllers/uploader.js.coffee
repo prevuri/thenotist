@@ -52,11 +52,10 @@
 
   $scope.uploadDone = (data) ->
     if (data.result["success"])
-      alert "Your data is being processed. This can take a few minutes. Don't worry, we'll let you know when it's done."
+      $scope.setAlert("File uploaded successful. Processing may take a few minutes.", true)
       $scope.modalShowing = false
-      location.reload()
     else
-      $scope.handleError()
+      $scope.setAlert("Error uploading file.", false)
 
   $scope.uploadFail = (data) ->
     $scope.handleError()

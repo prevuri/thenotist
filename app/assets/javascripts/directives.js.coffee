@@ -1,8 +1,4 @@
-notistApp = angular.module('notistApp', ['ngAnimate'])
-
-notistApp.config(['$httpProvider', ($httpProvider) ->
-  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-])
+notistApp = angular.module('notistApp')
 
 # For use with progress spinners - starts a jQuery spin animation
 #    set ng-spin="attr" where attr is boolean for spinning on/off

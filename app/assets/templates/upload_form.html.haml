@@ -11,15 +11,16 @@
         .upload-status-text-secondary {{statusText2}}
 
       .form-container
-        =form_for :new_note, :html => { :id => "upload_form_tag", :'ng-submit' => 'submit()' } , :url => notes_path, :method => :post do |f|
+        %form#upload_form_tag{:action => '/notes', :enctype => 'multipart/form-data', :'accept-charset' => 'UTF-8', :method => 'post', 'ng-submit' => 'submit()' }
           #title-field.text-field.control-group{:'ng-class' => "{error: titleError, success: !titleError && modified}" }
-            =f.text_field :title, :id => 'note-title-field', :placeholder => "Enter note title", :'ng-model' => 'newNote.title', :'ng-disabled' => '!controlsEnabled', :'ng-keyup' => 'validateUploadForm()'
+            %input#note-title-field{:name => 'new_note[title]', :type => 'text', :placeholder => "Enter note title", :'ng-model' => 'newNote.title', :'ng-disabled' => '!controlsEnabled', :'ng-keyup' => 'validateUploadForm()'}
             %i.status-icon.success-icon.icon-check-sign{:'ng-hide' => '!validated'}
             %i.status-icon.error-icon.icon-ban-circle.hidden{:'ng-hide' => 'fileError || titleError'}
 
           #description-field.text-field
-            =f.text_field :description, :id => 'note-description-field', :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description'
-          %p.new-file-upload.hidden= f.file_field :file, :id => 'file-picker', :'ng-upload' => 'uploadAdd(data)'
+            %input#note-description-field{:name => 'new_note[description]', :type => 'text',  :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description'}
+          %p.new-file-upload.hidden
+            %input#file-picker{:name => 'new_note[file]', :type => 'file', :'ng-upload' => 'uploadAdd(data)'}
           %input#upload-submit-btn.hidden.submit-btn-placeholder{:type => 'submit'}
 
     .upload-interaction.modal-footer

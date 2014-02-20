@@ -71,12 +71,19 @@ class Note < ActiveRecord::Base
       :processed => processed,
       :aborted => aborted,
       :processing_started_at => processing_started_at,
-      :created_at => created_at
+      :created_at => created_at,
+      :comment_count => comment_count()
     }
   end
 
 private
   def start_processing!
     self.processing_started_at = Time.now
+  end
+
+  def comment_count
+    total = 0
+    uploaded_files.each{ |f| total += f.comments.length }
+    total
   end
 end

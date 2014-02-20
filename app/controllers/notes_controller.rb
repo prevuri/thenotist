@@ -2,6 +2,7 @@ class NotesController < ApplicationController
   before_filter :authenticate_user!
   before_filter :get_note_id, :except => [ :index, :create ]
   before_filter :abort_timed_out_notes
+  layout false
 
   def index
     @notes = current_user.notes.select { |n| n.processed }

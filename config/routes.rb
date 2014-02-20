@@ -18,8 +18,8 @@ TheNotist::Application.routes.draw do
   end
 
   resources :uploaded_files
-  
-  resources :notes
+    
+  resources :notes, :only => [:create]
   match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
 
   resources :profile
@@ -31,11 +31,13 @@ TheNotist::Application.routes.draw do
     resources :buddies, :only => [ :index ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]
-    resources :notes, :only => [ :index, :show, :update]
+    resources :notes, :only => [ :index, :show, :update, :destroy]
     match 'notes/share/' => 'notes#share', :as => :share_note
     match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
   end
+
+  match "/*path" => redirect("/?goto=%{path}")
 
   # mount sidekiq so we can monitor jobs
   mount Sidekiq::Web, :at => '/sidekiq'
