@@ -50,10 +50,10 @@
   #list-footer{ :'ng-hide' => 'hide' }
     .big-info
       .contributors
-        - note.contributors.each do |contrib|
+        - note.contributors.each  do |contrib|
           .profile-container.circular
             %img.profile-image.circular{:src => contrib.user.user_fb_data.profile_image}
-        .profile-container.circular.share-add{:note_id => note.id}
+        .profile-container.circular.share-note{:note_id => note.id}
           %i.icon-plus{ "data-toggle" => "modal", "data-target" => "#container-#{index}" }
       .description= note.description
     .tiny-info  

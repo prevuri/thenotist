@@ -349,7 +349,8 @@ $thumbnail-height: 330px;
       li {
         display: inline-block;
         width: 300px;
-        margin-left: 5px;
+        margin-top: 10px;
+        margin-left: 10px;
         vertical-align: top;
       } 
     }
@@ -358,7 +359,6 @@ $thumbnail-height: 330px;
       background-color: #999999;
       min-height: 200px;
       padding: 1px;
-      margin-top: 10px;
       border: 1px solid #ddd;
 
       &:hover {
@@ -643,17 +643,22 @@ $thumbnail-height: 330px;
   width: 448px;
   height: 280px;
   color: #FFF;
+  
+  .big-button-container {
+    width: 100%;
+    height: 100%;
 
-  .create-new-note-button {
-    position: absolute;
-    top: 27%;
-    left: 27%;
-    // width: 400px;
-    i {
-      margin-left: 31%;
-      margin-top: 3px;
-      font-size: 7em;
-      clear: both;
+    .create-new-note-button {
+      position: absolute;
+      top: 27%;
+      left: 27%;
+      // width: 400px;
+      i {
+        margin-left: 31%;
+        margin-top: 3px;
+        font-size: 7em;
+        clear: both;
+      }
     }
   }
 

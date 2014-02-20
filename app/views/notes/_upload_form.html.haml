@@ -1,8 +1,9 @@
-.create-new-note-container{:'ng-controller' => 'UploadCtrl', "data-toggle" => "modal", "data-target" => ".new-note-form-container" }
-  .create-new-note-button
-    %i.icon-circle-arrow-up.icon-white
-    %h2
-      Upload a new note
+.create-new-note-container{:'ng-controller' => 'UploadCtrl'}
+  .big-button-container{"data-toggle" => "modal", "data-target" => ".new-note-form-container" } 
+    .create-new-note-button
+      %i.icon-circle-arrow-up.icon-white
+      %h2
+        Upload a new note
 
   .new-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true }
     .upload_form-container.modal-body
