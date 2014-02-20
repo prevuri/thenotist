@@ -88,15 +88,13 @@ ActiveRecord::Schema.define(:version => 20140120234551) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "uploaded_files", :force => true do |t|
+  create_table "uploaded_html_files", :force => true do |t|
     t.integer  "note_id"
     t.integer  "page_number"
-    t.integer  "height"
-    t.integer  "width"
     t.string   "public_path"
+    t.string   "thumb_url"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "thumb_url"
   end
 
   create_table "user_fb_data", :force => true do |t|
