@@ -1,4 +1,5 @@
 class NotesController < ApplicationController
+  include NotesHelper
   before_filter :authenticate_user!
   before_filter :get_note_id, :except => [ :index, :create ]
   before_filter :abort_timed_out_notes
@@ -14,15 +15,17 @@ class NotesController < ApplicationController
       @fail_reason = "Can't upload more than one file at a time"
     else
       begin
-        @note = current_user.notes.create(:title => params[:new_note][:title], :description => params[:new_note][:description])
+        @note = current_user.notes.create(:title => "TestTitle", :description => "TestDescription")
         track_activity @note
 
-        local_pdf_file = params[:new_note][:file].tempfile.path
-        # User: BrowserUploader
-        # Access Key ID: AKIAJI6W3FE2PF4OXO4Q
-        # Secret Access Key: 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
-      rescue
+        debugger
+        s3_key = s3_key_from_filepath params[:filepath]
+        queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
+        queue.send_message(sqs_message(@note.id, s3_key))
+      rescue => ex
         @fail_reason = "unknown"
+        @note.delete
+        raise ex
       end
     end
   end

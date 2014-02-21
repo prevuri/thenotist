@@ -1,6 +1,11 @@
 .direct-to-s3-container
   %div{:'ng-controller' => 'DirectToS3Ctrl', :'ng-init' => "init()"}
-    = s3_uploader_form id: 'direct-to-s3-uploader', key: "test_pdf_store/#{SecureRandom.uuid}.pdf", key_starts_with: 'test_pdf_store/', acl: 'public-read' do
+    = s3_uploader_form id: 'direct-to-s3-uploader',     |
+      callback_url: notes_path,                         |
+      callback_mathod: 'POST',                          |
+      key: "test_pdf_store/#{SecureRandom.uuid}.pdf",   |
+      key_starts_with: 'test_pdf_store/',               |
+      acl: 'public-read' do
       = file_field_tag :file, multiple: false
 
 

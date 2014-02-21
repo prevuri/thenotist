@@ -1,0 +1,14 @@
+development:
+  sqs_pdf_conversion_queue_name: document_conversion_queue
+  s3_bucket_name: thenotist
+  converted_file_prefix: test_page_store
+
+test:
+  sqs_pdf_conversion_queue_name: document_conversion_queue
+  s3_bucket_name: thenotist
+  converted_file_prefix: page_store
+
+production:
+  sqs_pdf_conversion_queue_name: document_conversion_queue
+  s3_bucket_name: thenotist
+  converted_file_prefix: page_store
