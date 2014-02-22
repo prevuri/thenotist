@@ -21,9 +21,9 @@ NoteProcessingFooter = () ->
       async: false,
       success: (response) ->
         num_processing = 0
-        _.each response.notes, (n) -> 
-          if !n.processed
-            ++num_processing 
+        _.each response.notes, (n) ->
+          if !n.processed && !n.aborted
+            ++num_processing
             processing_id = n.id
         if num_processing == 0
           clearInterval(timer)

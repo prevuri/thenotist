@@ -16,7 +16,8 @@ module NotesHelper
       :s3_key => s3_key,
       :s3_bucket_name => ApplicationSettings.config[:s3_bucket_name],
       :output_html_prefix => ApplicationSettings.config[:output_html_prefix],
-      :output_css_prefix => ApplicationSettings.config[:output_css_prefix]
+      :output_css_prefix => ApplicationSettings.config[:output_css_prefix],
+      :output_thumb_prefix => ApplicationSettings.config[:output_thumb_prefix]
     }.to_yaml
   end
 end

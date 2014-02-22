@@ -3,9 +3,28 @@
 
 %div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init(#{@note.id})"}
   #note-header
-    %h1.note-title= @note.title
+    %h1
+      = @note.title
     .note-description= @note.description
-    #header-border
+    .page-number
+      .pages
+        Page
+        %span
+          1 
+        of 4
+      .profile-container.circular.prev-page
+        %i.icon-angle-left
+      .profile-container.circular.next-page
+        %i.icon-angle-right
+      .profile-container.circular.flag
+        %i.icon-exclamation
+    .contributors
+      .profile-container.circular.share-note{:note_id => @note.id}
+        %i.icon-plus
+      - @note.contributors.each  do |contrib|
+        .profile-container.circular
+          %img.profile-image.circular{:src => contrib.user.user_fb_data.profile_image}
+      
   #note-main
     .note-pages
       - @note.uploaded_html_files.each_with_index do |file, i|

@@ -1,8 +1,17 @@
 .wrapper
-	%h2 Activities
+  .feed-header
+    %h1 Activities
+    .sorting-options
+      %ul
+        %li.btn.active
+          Date
+        %li.btn
+          Comments
+        %li.btn
+          Uploads
 
-	.feed-wrapper
-		- unless @aasctivities.nil?
-			- @activities.each do |activity|
-				= render 'activity', :activity => activity
-				
+
+  .feed-wrapper
+    - unless @activities.nil?
+      - @activities.each do |activity|
+        = render 'activity', :activity => activity

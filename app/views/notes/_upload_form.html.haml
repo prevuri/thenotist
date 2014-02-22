@@ -13,13 +13,13 @@
         .upload-status-text-secondary {{statusText2}}
 
       .form-container
-        - s3_key = "#{ApplicationSettings.config[:output_pdf_prefix]}/#{SecureRandom.uuid}.pdf"
+        - s3_key = "#{ApplicationSettings.config[:output_pdf_prefix]}/#{SecureRandom.hex(8)}.pdf"
         =hidden_field_tag "s3_key", s3_key, :id => 's3_key_tag'
         =s3_uploader_form :id => "upload_form_tag",               |
           :key => s3_key,                                         |
           :key_starts_with => 'test_pdf_store/',                  |
           :acl => 'public-read' do
-          .new-file-upload.hidden= file_field_tag :file, :id => 'file-picker', multiple: false, :'ng-upload' => 'uploadAdd(data)'
+          %p.new-file-upload.hidden= file_field_tag :file, :id => 'file-picker', :multiple => false, :'ng-upload' => 'uploadAdd(data)'
           .direct-upload-submit.hidden Submit
 
         #title-field.text-field.control-group{:'ng-class' => "{error: titleError, success: !titleError && modified}" }

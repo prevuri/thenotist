@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
 
   def has_note_processing?
-    self.notes.select { |n| !n.processed }.count > 0
+    self.notes.select { |n| !n.processed && !n.aborted }.count > 0
   end
 
   def abort_timed_out_notes!

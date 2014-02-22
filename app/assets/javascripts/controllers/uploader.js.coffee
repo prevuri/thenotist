@@ -27,6 +27,7 @@
   $scope.init = ->
     $("#upload_form_tag").S3Uploader
       remove_completed_progress_bar: false
+      allow_multiple_files: false
       click_submit_target: $('.direct-upload-submit')
 
     $("#upload_form_tag").bind "s3_upload_complete", (e, content) ->
@@ -53,6 +54,7 @@
     if $scope.validated
       $scope.uploadShowing = true
       $scope.controlsEnabled = false
+      alert "about to upload!"
       $('.direct-upload-submit').trigger('click')
 
   $scope.uploadAdd = (data) ->
@@ -118,3 +120,4 @@
     type = /(\.|\/)(pdf)$/i
     file = fileData.files[0]
     return type.test(file.type) || type.test(file.name)
+
