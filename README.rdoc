@@ -2,7 +2,8 @@
 DATABASE SETUP
 -----------------------------------------------
 1) Download this: http://postgresapp.com/
-2) Do this in command line (NOTE: replace "vladimir" with your username)
+2) brew install postgresql
+3) Do this in command line (NOTE: replace "vladimir" with your username)
       > psql postgres
       CREATE USER notistapp;
       ALTER ROLE notistapp CREATEDB;
