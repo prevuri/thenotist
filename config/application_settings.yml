@@ -1,5 +1,5 @@
 development:
-  sqs_pdf_conversion_queue_name: document_conversion_queue_vlad
+  sqs_pdf_conversion_queue_name: document_conversion_queue_piyush
   s3_bucket_name: thenotist
   converted_file_prefix: test_page_store
 
