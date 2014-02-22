@@ -1,18 +1,10 @@
 .note-item{ :data => {:id => note.id} }
-  / %i.icon-th.btn.overview-btn.appear-hover{ :'ng-click' => "showOverview('#{api_note_path(note)}')", :data => {:path => api_note_path(note)} }
   = link_to note_path(note) do
     .img-preview
       %h2
         = link_to note.title, note_path(note), :class => 'text-link'
-      / .info
-      /   - if shared
-      /     Shared by #{note.user.name}
-      /   - else
-      /     - unless note.contributing_users.empty?
-      /       Shared with #{note.contributing_users.first.name}
-      /     - if note.contributing_users.length > 1
-      /       and #{note.contributing_users.length-1} others
-    / {:style => "background-image: url(#{note.uploaded_files.first.public_path})"}    
+      %h4.description
+        = note.description   
   .btn-group.appear-hover
     - if shared
       = link_to unsubscribe_note_path(note), :class => 'btn usub' do
@@ -26,7 +18,6 @@
       .share-note-container.modal-body
         .form-container
           .form
-        /   %input#tagsinput.tagsinput{:name => "tagsinput", :style => "display: none;"}
         %h4 Note Shared With:
         .contributor-list
           - note.contributors.each do |contrib|
@@ -55,7 +46,6 @@
             %img.profile-image.circular{:src => contrib.user.user_fb_data.profile_image}
         .profile-container.circular.share-note{:note_id => note.id}
           %i.icon-plus{ "data-toggle" => "modal", "data-target" => "#container-#{index}" }
-      .description= note.description
     .tiny-info  
       %i.icon-comments
         = note.comments.length

@@ -356,7 +356,7 @@ $thumbnail-height: 330px;
     }
 
     .notes-list-item {
-      background-color: #999999;
+      background-color: #C5C5C5;
       min-height: 200px;
       padding: 1px;
       border: 1px solid #ddd;
@@ -367,6 +367,7 @@ $thumbnail-height: 330px;
 
       .note-item {
         position: relative;
+        height: 100%;
 
         .appear-hover {
           opacity: 0;
@@ -398,23 +399,6 @@ $thumbnail-height: 330px;
           .big-info {
             float: left; 
             width: 80%;        
-
-            .description {
-              width: 100%;
-              font-size: 1em;
-              margin-left: 20px;
-              margin-bottom: 20px;
-              color: #dadada;
-              clear: both;
-              overflow: hidden;
-              white-space: wrap;
-              display: -webkit-box;
-              -webkit-line-clamp: 6;
-              -webkit-box-orient: vertical;
-              text-overflow: ellipsis;
-              font-weight: lighter;
-              font-family: ‘Arial Narrow’, sans-serif;
-            } 
 
             .contributors {
               margin-left: 10px;
@@ -544,6 +528,19 @@ $thumbnail-height: 330px;
           background-repeat: no-repeat;
           background-size: 100%;
           overflow: hidden;
+
+          .description {
+            width: 80%;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            color: #EEE;
+            clear: both;
+            overflow: hidden;
+            white-space: wrap;
+            text-overflow: ellipsis;
+            font-weight: lighter;
+            font-family: ‘Arial Narrow’, sans-serif;
+          } 
         }
       }
     }
