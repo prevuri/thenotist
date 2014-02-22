@@ -45,6 +45,7 @@
 
     $('#upload_form_tag').bind "s3_upload_failed", (e, content) ->
       $scope.handleError()
+
     return false
 
   $scope.submitClicked = () ->
