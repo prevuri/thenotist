@@ -1,7 +1,11 @@
 .note-item
-  %i.icon-th.btn.overview-btn.appear-hover{ :'ng-click' => "showOverview('{{api_note_path(note)}}')" }
+  / %i.icon-th.btn.overview-btn.appear-hover{ :'ng-click' => "showOverview('{{api_note_path(note)}}')" }
   %a{:'ng-href' => '/notes/{{note.id}}'}
-    .img-preview{:'ng-style' => "{'background-image': 'url(' + note.uploaded_files[0].public_path + ')'}"}    
+    .img-preview
+      %h2
+        %a.text-link{:'ng-href' => '/notes/ + {{note.id}}'} {{note.title}}
+      %h4.description
+        {{note.description}}
   .btn-group.appear-hover
     %div{:'ng-if' => 'note.isShared'}
       %a.btn.usub{:'ng-href' => '{{note.unsubscribe_url}}'}
@@ -9,8 +13,8 @@
     %div{:'ng-if' => '!note.isShared'}
       %a.share-note-link
         %i.icon-share.share-note.btn{ "data-toggle" => "modal" }
-      %a{:'ng-click' => 'editNote(note, $index)'}
-        %i.icon-edit.btn
+      / %a{:'ng-click' => 'editNote(note, $index)'}
+      /   %i.icon-edit.btn
       %a{:'ng-click' => 'deleteNote(note)'}
         %i.icon-remove.btn
   
@@ -41,16 +45,12 @@
 
   #list-footer{ :'ng-hide' => 'hide' }
     .big-info
-      %a.text-link{:'ng-href' => '{{note.url}}'} {{note.title}}
-      .description {{note.description}}
-      .info
-        %div{:'ng-if' => 'note.isShared'}
-          Shared by {{note.user.name}}
-        %div{:'ng-if' => '!note.isShared'}
-          %div{:'ng-if' => 'note.contributing_users.length > 0'}
-            Shared with {{note.contributing_users.first.name}}
-          %div{:'ng-if' => 'note.contributing_users.length > 1'}
-            and {{note.contributing_users.length-1}} others
+      .contributors
+        %div{:'ng-repeat' => 'contrib in note.contributors'}
+          .profile-container.circular
+            %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+        .profile-container.circular.share-note
+          %i.icon-plus{:'ng-click' => 'showContributorsModal()'}
     .tiny-info
       %i.icon-comments {{note.comment_count}}
 

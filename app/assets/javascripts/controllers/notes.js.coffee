@@ -28,7 +28,7 @@
       success( (data, status, headers, config) ->
         $scope.overview.images = []
         $scope.overview.urls = []
-        for page in data.note.uploaded_files
+        for page in data.note.uploaded_html_files
           imageObject = {
             'src': page.thumb_url,
             'pageUrl': "/notes/" + data.note.id + "#Page-" + page.page_number

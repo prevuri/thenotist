@@ -7,7 +7,65 @@ $highlight-color: #27F;
 $thumbnail-width: 240px;
 $thumbnail-height: 330px;
 
+.notes-header {
+  height: 120px;
+  border-bottom: #ECF0F1 solid 2px;
+  position: relative;
+  h1 {
+    float: left;
+    clear: both;
+  }
+
+  .search-box {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    input {
+      width: 280px;
+      border-radius: 2px;
+      &:active {
+        border-color: #22B498 !important;
+      }
+    }
+
+    .input-icon {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      line-height: 37px;
+      vertical-align: middle;
+      font-size: 20px;
+      color: #b2bcc5;
+      background-color: transparent;
+      padding: 0 12px 0 0;
+      border-radius: 6px;
+    }
+  }
+  .sorting-options {
+    list-style-type: none;
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+
+    .btn {
+      background-color: transparent;
+      color: inherit;
+      border-radius: 2px;
+
+      &:hover {
+        background-color: #ECF0F1;
+      }
+
+      &.active {
+        background-color: #22B498;
+      }
+    }
+  }
+}
+
 .notes-index-page {
+  padding-top: 20px;
+
   .full-screen-overlay {
     // position: absolute;
     position: fixed;
@@ -68,7 +126,7 @@ $thumbnail-height: 330px;
   top: 0px;
   z-index: 10;
   background-color: rgba(250, 250, 250, 0.9);
-  
+
   .note-title {
     font-family: Helvetica Neue;
     font-weight: 300;
@@ -88,7 +146,7 @@ $thumbnail-height: 330px;
   .note-description {
     font-size: 2em;
   }
-  
+
   .note-pages {
     .page {
       white-space: nowrap;
@@ -107,7 +165,7 @@ $thumbnail-height: 330px;
 
     .comments-container {
       position: relative;
-    } 
+    }
 
     .comment-buttons-container {
       position: relative;
@@ -129,11 +187,9 @@ $thumbnail-height: 330px;
             color: #228;
           }
         }
-      }  
+      }
     }
   }
-
-
 }
 
 #new-comment-button {
@@ -158,8 +214,8 @@ $thumbnail-height: 330px;
     left: 936px;
   }
 }
- 
-#new-comment-panel, .new-reply-panel { 
+
+#new-comment-panel, .new-reply-panel {
   #newcomment {
     min-height: 40px;
     resize: none;
@@ -170,10 +226,10 @@ $thumbnail-height: 330px;
   }
 
   .new-comment-submit {
-    outline: none; 
+    outline: none;
   }
 
-  // .btndiv { 
+  // .btndiv {
   //   text-align: right;
   //   .btn {
   //     display: inline-block;
@@ -205,7 +261,7 @@ $thumbnail-height: 330px;
     &.reply {
       margin-left: 15px;
       margin-top: 5px;
-      
+
       .comment-inner {
         // background-color: #f7f7f9;
         // border-color: #d5d5d5;
@@ -247,7 +303,7 @@ $thumbnail-height: 330px;
         float: right;
         color: #34495E;
         font-weight: normal;
-      }    
+      }
     }
     .reply-button {
       margin-left: 10px;
@@ -291,15 +347,16 @@ $thumbnail-height: 330px;
       li {
         display: inline-block;
         width: 300px;
-        margin-left: 5px;
+        margin-top: 10px;
+        margin-left: 10px;
         vertical-align: top;
-      } 
+      }
     }
+
     .notes-list-item {
-      background-color: #BEB5AA;
+      background-color: #C5C5C5;
       min-height: 200px;
       padding: 1px;
-      margin-top: 10px;
       border: 1px solid #ddd;
 
       &:hover {
@@ -308,10 +365,18 @@ $thumbnail-height: 330px;
 
       .note-item {
         position: relative;
+        height: 100%;
 
         .appear-hover {
           opacity: 0;
           -webkit-transition: opacity 0.2s ease;
+          .btn {
+            border-radius: 0 !important;
+            background-color: transparent;
+            &:hover {
+              background-color: #999999;
+            }
+          }
         }
 
         &:hover {
@@ -325,30 +390,39 @@ $thumbnail-height: 330px;
           position: relative;
           bottom: 55px;
           width: 100%;
-          background-color:rgba(0,0,0,0.8);
+          // background-color:rgba(0,0,0,0.8);
           z-index: 100;
           overflow: hidden;
-          
-          .big-info {
-            float: left; 
-            width: 80%;        
 
-            .description {
-              width: 100%;
-              font-size: 1em;
-              margin-left: 20px;
-              margin-bottom: 20px;
-              color: #dadada;
-              clear: both;
-              overflow: hidden;
-              white-space: wrap;
-              display: -webkit-box;
-              -webkit-line-clamp: 6;
-              -webkit-box-orient: vertical;
-              text-overflow: ellipsis;
-              font-weight: lighter;
-              font-family: ‘Arial Narrow’, sans-serif;
-            }   
+          .big-info {
+            float: left;
+            width: 80%;
+            .contributors {
+              margin-left: 10px;
+              margin-bottom: 10px;
+              display: inline-block;
+              .profile-container {
+                height: 45px;
+                width: 45px;
+                padding: 0;
+                box-shadow: none;
+                border: solid #ECF0F1 1px;
+                float: left;
+                margin-right: 10px;
+                position: relative;
+                i {
+                  color: #999999;
+                  font-size: 1.8em;
+                  position: absolute;
+                  top: 27%;
+                  left: 27%;
+                }
+
+                &:hover {
+                  background-color: #dadada;
+                }
+              }
+            }
           }
 
           .info {
@@ -388,7 +462,7 @@ $thumbnail-height: 330px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          
+
 
         }
 
@@ -451,6 +525,19 @@ $thumbnail-height: 330px;
           background-repeat: no-repeat;
           background-size: 100%;
           overflow: hidden;
+
+          .description {
+            width: 80%;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            color: #EEE;
+            clear: both;
+            overflow: hidden;
+            white-space: wrap;
+            text-overflow: ellipsis;
+            font-weight: lighter;
+            font-family: ‘Arial Narrow’, sans-serif;
+          }
         }
       }
     }
@@ -475,7 +562,7 @@ $thumbnail-height: 330px;
     .contributor-list {
       height: 300px;
       overflow-y: scroll;
-      
+
       .contrib-list-item {
         // width: 290px;
         height: 50px;
@@ -536,19 +623,45 @@ $thumbnail-height: 330px;
 
 
 // NOTE UPLOAD SECTION
-.create-new-note-container {
-  margin-bottom: 20px;
+.upload-form {
+  background-color: #0FB598 !important;
+  position: relative;
+  min-width: 448px;
 
-  .create-new-note-button {
-    i {
-      margin-right: 5px;
-      margin-top: 3px;
+  &:hover {
+    background-color: lighten(#0FB598, 7) !important;
+  }
+}
+
+.create-new-note-container {
+  width: 448px;
+  height: 280px;
+  color: #FFF;
+
+  .big-button-container {
+    width: 100%;
+    height: 100%;
+
+    .create-new-note-button {
+      position: absolute;
+      top: 27%;
+      left: 27%;
+      // width: 400px;
+      i {
+        margin-left: 31%;
+        margin-top: 3px;
+        font-size: 7em;
+        clear: both;
+      }
     }
   }
 
   .new-note-form-container {
     label {
       cursor: default;
+    }
+    #upload_form_tag {
+      margin: 0px;
     }
     .text-field {
       position: relative;

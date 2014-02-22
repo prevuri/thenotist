@@ -1,10 +1,12 @@
 class Api::NotesController < ApplicationController
   include ApiHelper
+  include NotesHelper
 
   before_filter :check_authenticated_user!
   before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs, :destroy ]
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
+  before_filter :abort_timed_out_notes
 
   UserInfo = Struct.new(:id, :name, :image)
 
@@ -13,6 +15,35 @@ class Api::NotesController < ApplicationController
       :success => true,
       :notes => current_user.notes.map { |n| n.as_json }
     }
+  end
+
+  def create
+    # don't allow a user to process more than one note at a time
+    if current_user.has_note_processing?
+      @fail_reason = "Can't upload more than one file at a time"
+    else
+      begin
+        @note = current_user.notes.create(:title => params[:title], :description => params[:description])
+        track_activity @note
+
+        # s3_key = s3_key_from_filepath params[:filepath]
+        s3_key = params[:s3_key]
+        queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
+        queue.send_message(sqs_message(@note.id, s3_key))
+        return render :json => {
+          :success => true
+        }
+      rescue => ex
+        @fail_reason = "unknown"
+        @note.delete
+        return render :json => {
+          :success => false,
+          :error_message => ex.message
+        }
+      end
+    end
+
+
   end
 
   def show
@@ -59,7 +90,7 @@ class Api::NotesController < ApplicationController
       @user_ids.each do |user_id|
         @users << User.find_by_id(user_id)
       end
-    
+
     rescue
       return render :json => {
         :success => false,
@@ -68,7 +99,7 @@ class Api::NotesController < ApplicationController
     end
     #TODO: Set up multiple user activity
 
-    begin 
+    begin
       @users.each do |user|
         @contrib = @note.share!(user)
         track_activity @contrib
@@ -83,11 +114,11 @@ class Api::NotesController < ApplicationController
     return render :json => {
       :success => true,
       :note => @note.as_json
-    }    
+    }
   end
 
   def unshare
-    begin 
+    begin
       @user = User.find_by_id(params[:userid])
     rescue
       return render :json => {
@@ -144,5 +175,9 @@ private
 
   def cannot_revoke_error
     "Cannot remove contributor"
+  end
+
+  def abort_timed_out_notes
+    current_user.abort_timed_out_notes!
   end
 end

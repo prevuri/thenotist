@@ -1,4 +1,4 @@
-require 'sidekiq/web'
+# require 'sidekiq/web'
 TheNotist::Application.routes.draw do
   resources :activities
 
@@ -7,19 +7,16 @@ TheNotist::Application.routes.draw do
   get "main/index"
 
   root :to => 'main#index'
-  
 
-  devise_for :users, :controllers => { 
+
+  devise_for :users, :controllers => {
     :omniauth_callbacks => "users/omniauth_callbacks"
-  }, :skip => [:sessions, :registrations, :passwords] 
+  }, :skip => [:sessions, :registrations, :passwords]
   as :user do
     get 'signin' => 'main#index', :as => :new_user_session
     delete 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
-  resources :uploaded_files
-    
-  resources :notes, :only => [:create]
   match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
 
   resources :profile
@@ -31,7 +28,7 @@ TheNotist::Application.routes.draw do
     resources :buddies, :only => [ :index ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]
-    resources :notes, :only => [ :index, :show, :update, :destroy]
+    resources :notes, :only => [ :index, :show, :update, :destroy, :create ]
     match 'notes/share/' => 'notes#share', :as => :share_note
     match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
@@ -40,7 +37,7 @@ TheNotist::Application.routes.draw do
   match "/*path" => redirect("/?goto=%{path}")
 
   # mount sidekiq so we can monitor jobs
-  mount Sidekiq::Web, :at => '/sidekiq'
+  # mount Sidekiq::Web, :at => '/sidekiq'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

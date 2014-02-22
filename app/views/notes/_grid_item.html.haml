@@ -1,0 +1,58 @@
+.note-item{ :data => {:id => note.id} }
+  = link_to note_path(note) do
+    .img-preview
+      %h2
+        = link_to note.title, note_path(note), :class => 'text-link'
+      %h4.description
+        = note.description
+  .btn-group.appear-hover
+    - if shared
+      = link_to unsubscribe_note_path(note), :class => 'btn usub' do
+        %i.icon-remove
+    - else
+      = link_to note_path(note), :method => :delete do
+        %i.icon-remove.btn
+
+  - unless shared
+    .share-note-form-container.modal.hide.fade{ :id => "container-#{index}", :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
+      .share-note-container.modal-body
+        .form-container
+          .form
+        %h4 Note Shared With:
+        .contributor-list
+          - note.contributors.each do |contrib|
+            .contrib-list-item{:data => {:id => contrib.user.id} }
+              .contrib-info
+                .profile-container.circular
+                  %img.profile-image.circular{:src => contrib.user.user_fb_data.profile_image}
+                .profile-link-container= link_to contrib.user.name, profile_path(contrib.user)
+                .delete-contrib
+                  %i.icon-remove.btn
+                / TODO: create a delete friend link and connect it to the delete friend for the API
+
+      .share-interaction.modal-footer
+        .error-label.hidden
+        .btn.btn-primary.share-button
+          %i.icon-share-alt.share-note-icon
+            .share-action-text
+              Share
+
+
+  #list-footer{ :'ng-hide' => 'hide' }
+    .big-info
+      .contributors
+        - note.contributors.each  do |contrib|
+          .profile-container.circular
+            %img.profile-image.circular{:src => contrib.user.user_fb_data.profile_image}
+        .profile-container.circular.share-note{:note_id => note.id}
+          %i.icon-plus{ "data-toggle" => "modal", "data-target" => "#container-#{index}" }
+    .tiny-info
+      %i.icon-comments
+        = note.comments.length
+  - if !shared
+    .tooltip.fade.bottom.in.hidden
+      .tooltip-arrow
+      .ui-widget.tooltip-inner
+        %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+
+/ %img{:src => "#{note.uploaded_html_files.first.public_path}"}

@@ -1,11 +1,7 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
 development:
-  adapter: sqlite3
-  database: db/development.sqlite3
+  adapter: postgresql
+  database: NotistAppDev
+  username: notistapp
   pool: 5
   timeout: 5000
 
@@ -13,16 +9,19 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test: &test
-  adapter: sqlite3
-  database: db/test<%= ENV['TEST_ENV_NUMBER'] %>
+  adapter: postgresql
+  database: NotistAppTest
+  username: notistapp
   pool: 5
   timeout: 5000
 
-# pool set to 25: that is the number of concurrent connections
-#                 needs to be 25 because that's the max for sidekiq
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+  adapter: postgresql
+  database: NotistApp
+  username: notistapp
+  password: notablenotist
+  host: notistapppgdb.ci7lbldq35nq.us-east-1.rds.amazonaws.com
+  port: 5432
   pool: 25
   timeout: 5000
 

@@ -1,6 +1,6 @@
 - if activity.trackable != nil
   - present = false
-  - if activity.trackable_type == "Comment" and (activity.trackable.uploaded_file.note.user == current_user or activity.trackable.uploaded_file.note.contributing_users.include? current_user)
+  - if activity.trackable_type == "Comment" and (activity.trackable.uploaded_html_file.note.user == current_user or activity.trackable.uploaded_html_file.note.contributing_users.include? current_user)
     - present = true
   - elsif activity.trackable_type == "Contributor" and (activity.trackable.user == current_user)
     - present = true

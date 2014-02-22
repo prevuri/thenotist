@@ -1,6 +1,6 @@
 .notes-show-grid-page
   %div.container
-    - @note.uploaded_files.each_with_index do |file, i|
+    - @note.uploaded_html_files.each_with_index do |file, i|
       %div.float
         = link_to image_tag(file.thumb_url), note_path(@note)+"#Page-#{file.page_number}"
         %br

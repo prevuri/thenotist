@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_one  :user_fb_data
   has_many :activities
   has_many :notes
-  has_many :uploaded_files, through: :notes
+  has_many :uploaded_html_files, through: :notes
   has_many :comments
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :buddies, through: :relationships, source: :buddy
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   has_many :followers, through: :reverse_relationships, source: :follower
   has_many :contributed_to, class_name: "Contributor", dependent: :destroy
   has_many :shared_notes, through: :contributed_to
-  has_many :shared_uploaded_files, through: :shared_notes, source: :uploaded_files
+  has_many :shared_uploaded_html_files, through: :shared_notes, source: :uploaded_html_files
 
 
   def has_note_processing?
@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 
   def abort_timed_out_notes!
     timed_out = self.notes.select { |n| n.processing_timeout? }
-    timed_out.each do |n| 
+    timed_out.each do |n|
       n.abort_processing!
       # TODO: destroy activity
     end
@@ -61,10 +61,10 @@ class User < ActiveRecord::Base
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
 
     #Check if the user has an account but has not logged in with provider
-    unless user 
+    unless user
       user = User.find_by_email(auth.info.email.downcase)
-      if user 
-        user.update_attributes(name: auth.extra.raw_info.name, 
+      if user
+        user.update_attributes(name: auth.extra.raw_info.name,
                              provider: auth.provider,
                              uid: auth.uid,
                              fb_access_token: auth.credentials.token,
@@ -93,7 +93,7 @@ class User < ActiveRecord::Base
       profile_image = @graph.get_picture(user.uid, {:width => 300, :height => 300})
       user.user_fb_data = UserFbData.create(uid:user.uid,
                                 profile_image:profile_image,
-                                link:profile["link"])      
+                                link:profile["link"])
       user
     end
 	end
