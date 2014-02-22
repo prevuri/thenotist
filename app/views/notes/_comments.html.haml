@@ -1,7 +1,7 @@
 .comment-thread-container{:'ng-repeat' => "comment in files[#{fileId}].comments", :'ng-style' => "{top: commentY(comment.line_id)+'px'}"}
   .comment.parent{:'ng-show' => 'expandedCommentLine == comment.line_id'}
     = render :partial => 'notes/comment', :object => 'comment'
-    .new-reply-panel.comment{:'ng-show' => 'comment.showNewReply'}
+    .new-reply-panel.comment.reply{:'ng-show' => 'comment.showNewReply'}
       .comment-inner
         .profile-container.circular
           .profile-image.circular{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}
