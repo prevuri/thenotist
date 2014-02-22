@@ -54,7 +54,6 @@
     if $scope.validated
       $scope.uploadShowing = true
       $scope.controlsEnabled = false
-      alert "about to upload!"
       $('.direct-upload-submit').trigger('click')
 
   $scope.uploadAdd = (data) ->
