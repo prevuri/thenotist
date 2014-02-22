@@ -1,14 +1,20 @@
 development:
   sqs_pdf_conversion_queue_name: document_conversion_queue_vlad
   s3_bucket_name: thenotist
-  converted_file_prefix: test_page_store
+  output_html_prefix: test_html_store
+  output_css_prefix: test_css_store
+  output_pdf_prefix: test_pdf_store
 
 test:
   sqs_pdf_conversion_queue_name: test_document_conversion_queue
   s3_bucket_name: thenotist
-  converted_file_prefix: test_page_store
+  output_html_prefix: test_html_store
+  output_css_prefix: test_css_store
+  output_pdf_prefix: test_pdf_store
 
 production:
   sqs_pdf_conversion_queue_name: document_conversion_queue
   s3_bucket_name: thenotist
-  converted_file_prefix: page_store
+  output_html_prefix: html_store
+  output_css_prefix: css_store
+  output_pdf_prefix: pdf_store

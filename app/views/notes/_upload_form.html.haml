@@ -13,7 +13,7 @@
         .upload-status-text-secondary {{statusText2}}
 
       .form-container
-        - s3_key = "test_pdf_store/#{SecureRandom.uuid}.pdf"
+        - s3_key = "#{ApplicationSettings.config[:output_pdf_prefix]}/#{SecureRandom.uuid}.pdf"
         =hidden_field_tag "s3_key", s3_key, :id => 's3_key_tag'
         =s3_uploader_form :id => "upload_form_tag",               |
           :key => s3_key,                                         |
