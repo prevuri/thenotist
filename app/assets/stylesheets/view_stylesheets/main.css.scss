@@ -12,6 +12,38 @@ $user-type-color: #A5BA3D;
 	margin: 0 auto;
 	margin-top: 20px;
 }
+
+.feed-header {
+  height: 120px;
+  border-bottom: #ECF0F1 solid 2px;
+  position: relative;
+  h1 {
+    float: left;
+    clear: both;
+  }
+  
+  .sorting-options {
+    list-style-type: none;
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+
+    .btn {
+      background-color: transparent;
+      color: inherit;
+      border-radius: 2px;
+
+      &:hover {
+        background-color: #ECF0F1;
+      }
+
+      &.active {
+        background-color: #22B498;
+      }
+    }
+  }
+}
+
 .activity-item {
 	width: 100%;
 	position: relative;
