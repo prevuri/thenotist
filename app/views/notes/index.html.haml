@@ -1,11 +1,27 @@
-.notes-index-page{ :'ng-controller' => 'NotesCtrl' }
+.notes-header
   %h1 Notes
+  .search-box.form-group
+    %input.form-control{:type => 'text'}
+    %span.input-icon.icon-search
+  .sorting-options
+    %ul
+      %li.btn.active
+        Name
+      %li.btn
+        Date
+      %li.btn
+        Shared
+      %li.btn
+        Uploaded
 
-  = render 'upload_form'
 
+
+.notes-index-page{ :'ng-controller' => 'NotesCtrl' }
   .notes-list-container
     .notes-list
       %ul
+        %li.notes-list-item.upload-form
+          = render 'upload_form'
         - @notes.each_with_index do |note, index|
           %li.notes-list-item{ :data => {:id => note.id}, :'ng-mouseover' => 'hideTooltip()' }
             = render 'grid_item', :note => note, :shared => false, :index => index

@@ -10,7 +10,7 @@
     .note-pages
       - @note.uploaded_html_files.each_with_index do |file, i|
         .page
-          .file-container{:'ng-click' => 'showNewComment = true', :'ng-init' => "getComments(#{file.id})"}
+          .file-container{:'ng-init' => "getComments(#{file.id})"}
             .page-container
               %a{ :name => "Page-#{file.page_number}"}
               .note-page{:'file-id' => file.id, :'ng-click' => "newCommentClick($event, #{file.id})", :'ng-init' => "fileId = #{file.id}"}

@@ -71,6 +71,7 @@ Sharing = () ->
                 '</div>' +
             '</div><div style="clear:both;"></div>';
         })
+      # $('#ms-input-0').addClass('form-control')
       )
 
   @shareWithUser = (event) =>

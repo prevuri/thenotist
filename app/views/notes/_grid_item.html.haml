@@ -1,18 +1,15 @@
 .note-item{ :data => {:id => note.id} }
-  %i.icon-th.btn.overview-btn.appear-hover{ :'ng-click' => "showOverview('#{api_note_path(note)}')", :data => {:path => api_note_path(note)} }
   = link_to note_path(note) do
-    .img-preview{:style => "background-image: url(#{note.uploaded_html_files.first.public_path})"}
+    .img-preview
+      %h2
+        = link_to note.title, note_path(note), :class => 'text-link'
+      %h4.description
+        = note.description
   .btn-group.appear-hover
     - if shared
       = link_to unsubscribe_note_path(note), :class => 'btn usub' do
         %i.icon-remove
     - else
-      %a.share-note-link{:note_id => note.id}
-        %i.icon-share.share-note.btn{ "data-toggle" => "modal", "data-target" => "#container-#{index}" }
-      / = link_to '', :note_id => note.id do
-      /   %i.icon-share.share-note.btn
-      = link_to edit_note_path(note) do
-        %i.icon-edit.btn
       = link_to note_path(note), :method => :delete do
         %i.icon-remove.btn
 
@@ -21,7 +18,6 @@
       .share-note-container.modal-body
         .form-container
           .form
-        /   %input#tagsinput.tagsinput{:name => "tagsinput", :style => "display: none;"}
         %h4 Note Shared With:
         .contributor-list
           - note.contributors.each do |contrib|
@@ -44,20 +40,15 @@
 
   #list-footer{ :'ng-hide' => 'hide' }
     .big-info
-      = link_to note.title, note_path(note), :class => 'text-link'
-      .description= note.description
-      .info
-        - if shared
-          Shared by #{note.user.name}
-        - else
-          - unless note.contributing_users.empty?
-            Shared with #{note.contributing_users.first.name}
-          - if note.contributing_users.length > 1
-            and #{note.contributing_users.length-1} others
+      .contributors
+        - note.contributors.each  do |contrib|
+          .profile-container.circular
+            %img.profile-image.circular{:src => contrib.user.user_fb_data.profile_image}
+        .profile-container.circular.share-note{:note_id => note.id}
+          %i.icon-plus{ "data-toggle" => "modal", "data-target" => "#container-#{index}" }
     .tiny-info
       %i.icon-comments
         = note.comments.length
-
   - if !shared
     .tooltip.fade.bottom.in.hidden
       .tooltip-arrow
