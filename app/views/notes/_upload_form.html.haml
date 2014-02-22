@@ -30,13 +30,6 @@
           =text_field_tag :description, nil, :id => 'note-description-field', :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description'
 
     .upload-interaction.modal-footer
-      / .upload-progress{:'ng-hide' => '!uploadShowing'}
-      /   .spinner-container
-      /   .upload-progress-text
-      /     {{progressText}}
-      /   .progress.progress-success
-      /     .bar{ :'ng-style' => "{'width':progressPercent}" }
-      / .spinner-container{:'ng-hide' => '!processingShowing', :'ng-spinner' => '{{processingShowing}}'}
       .processing-label{:'ng-hide' => '!processingShowing'} This can take several minutes. You will be automatically redirected to your note when processing is done.
       .btn.btn-primary.submit-action{:'ng-disabled' => '!controlsEnabled || !validated', :'ng-click' => 'submitClicked()'}
         %i.submit-action-icon.icon-cloud-upload
