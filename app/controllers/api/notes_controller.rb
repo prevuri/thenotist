@@ -26,7 +26,6 @@ class Api::NotesController < ApplicationController
         @note = current_user.notes.create(:title => params[:title], :description => params[:description])
         track_activity @note
 
-        # s3_key = s3_key_from_filepath params[:filepath]
         s3_key = params[:s3_key]
         queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
         queue.send_message(sqs_message(@note.id, s3_key))
