@@ -9,7 +9,7 @@ class UploadedHtmlFile < ActiveRecord::Base
     comments.select { |c| c.parent_comment.nil? }
   end
 
-  def as_json options = {}
+  def as_json
     {
       :id => id,
       :page_number => page_number,
