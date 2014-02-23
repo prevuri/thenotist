@@ -1,10 +1,12 @@
 .note-item{ :data => {:id => note.id} }
-  = link_to note_path(note) do
-    .img-preview
-      %h2
-        = link_to note.title, note_path(note), :class => 'text-link'
-      %h4.description
-        = note.description
+  / %a{:href => '/notes/#{note.id}'}  
+  = link_to '', note_path(note), :class => 'big-link'
+  .img-preview{:style => "background: url(#{note.uploaded_thumb_files.first.public_path})"}
+  .info-preview
+    %h2.title
+      = link_to note.title, note_path(note), :class => 'text-link'
+    %h3.description
+      = note.description
   .btn-group.appear-hover
     - if shared
       = link_to unsubscribe_note_path(note), :class => 'btn usub' do
