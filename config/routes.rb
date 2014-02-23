@@ -33,6 +33,7 @@ TheNotist::Application.routes.draw do
     match 'notes/share/' => 'notes#share', :as => :share_note
     match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
+    match 'notes/paginate/:id' => 'notes#paginate', :as => :note_paginate, :via => :get
   end
 
   # mount sidekiq so we can monitor jobs

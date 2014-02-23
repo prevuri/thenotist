@@ -5,14 +5,10 @@ module ApiHelper
   end
 
   def note_not_found_error
-    "File with id #{@note_id} not found"
+    "Note with id #{@note_id} not found"
   end
 
   def file_not_found_error
-    "File with id #{@uploaded_html_file_id} not found"
-  end
-
-  def uploaded_html_file_not_found_error
     "File with id #{@uploaded_html_file_id} not found"
   end
 
