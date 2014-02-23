@@ -142,6 +142,12 @@ class Api::NotesController < ApplicationController
 
   end
 
+  def upload_form_html
+    render :json => {
+      :success => true,
+      :html => render_to_string(:partial => 'notes/s3_upload_form')
+    }
+  end
 
 
 private

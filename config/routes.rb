@@ -25,6 +25,7 @@ TheNotist::Application.routes.draw do
   match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
 
   namespace :api do
+    match 'notes/upload_form_html' => 'notes#upload_form_html', :as => :upload_form_html
     resources :buddies, :only => [ :index ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]

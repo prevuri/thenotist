@@ -1,4 +1,4 @@
-@NotesCtrl = ($scope, $http, NotesApi) ->
+@NotesCtrl = ($scope, $http, $sce, NotesApi) ->
 
   $scope.overview = {
     'images': '',

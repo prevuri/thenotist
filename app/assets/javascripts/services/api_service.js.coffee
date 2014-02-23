@@ -7,4 +7,8 @@ service.factory("NotesApi", ($resource) ->
       method: 'DELETE'
     }
   )
+).factory("UploadFormHtml", ($resource) ->
+  $resource(
+    "/api/notes/upload_form_html", {}
+  )
 )

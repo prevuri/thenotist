@@ -1,4 +1,4 @@
-@UploadCtrl = ($scope, $http) ->
+@UploadCtrl = ($scope, $http, $sce, UploadFormHtml) ->
 
   @statusTextDefault = "Choose file"
   @statusText2Default = ".pdf"
@@ -25,29 +25,28 @@
   $scope.newNote = {}
 
   $scope.init = ->
-    $("#upload_form_tag").S3Uploader
+    $scope.getUploadFormHtml()
+    return false
+
+  $scope.s3uploadFormInit = () ->
+    $('#upload_form_tag').S3Uploader
       remove_completed_progress_bar: false
       allow_multiple_files: false
       click_submit_target: $('.direct-upload-submit')
 
-    $("#upload_form_tag").bind "s3_upload_complete", (e, content) ->
+    $('#upload_form_tag').bind "s3_upload_complete", (e, content) ->
       s3_key_val = $('#s3_key_tag').val()
-      $http({method: 'POST', url: '/api/notes', params: {
-          s3_key: s3_key_val,
-          title: $scope.newNote.title,
-          description: $scope.newNote.description
-        }}).
-        success( (data, status, headers, config) ->
-          location.reload()
-        )
-        .error( (data, status, headers, config) ->
-          $scope.handleError()
-        )
+      $scope.s3UploadComplete(s3_key_val)
 
     $('#upload_form_tag').bind "s3_upload_failed", (e, content) ->
       $scope.handleError()
 
-    return false
+  $scope.getUploadFormHtml = () ->
+    success = (data) ->
+      $scope.uploadFormHtml = $sce.trustAsHtml(data.html)
+    error = (data) ->
+      alert(data) 
+    UploadFormHtml.get(success, error)
 
   $scope.submitClicked = () ->
     $scope.validateUploadForm()
@@ -56,6 +55,19 @@
       $scope.controlsEnabled = false
       alert "about to upload!"
       $('.direct-upload-submit').trigger('click')
+
+  $scope.s3UploadComplete = (s3KeyVal) ->
+    $http({method: 'POST', url: '/api/notes', params: {
+      s3_key: s3KeyVal,
+      title: $scope.newNote.title,
+      description: $scope.newNote.description
+    }}).
+    success( (data, status, headers, config) ->
+      location.reload()
+    )
+    .error( (data, status, headers, config) ->
+      $scope.handleError()
+    )
 
   $scope.uploadAdd = (data) ->
     file = data.files[0]

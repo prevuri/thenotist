@@ -13,35 +13,14 @@
         .upload-status-text-secondary {{statusText2}}
 
       .form-container
-/ <<<<<<< HEAD:app/assets/templates/upload_form.html.haml
-        %form#upload_form_tag{:action => '/notes', :enctype => 'multipart/form-data', :'accept-charset' => 'UTF-8', :method => 'post', 'ng-submit' => 'submit()' }
-          #title-field.text-field.control-group{:'ng-class' => "{error: titleError, success: !titleError && modified}" }
-            %input#note-title-field{:name => 'new_note[title]', :type => 'text', :placeholder => "Enter note title", :'ng-model' => 'newNote.title', :'ng-disabled' => '!controlsEnabled', :'ng-keyup' => 'validateUploadForm()'}
-            %i.status-icon.success-icon.icon-check-sign{:'ng-hide' => '!validated'}
-            %i.status-icon.error-icon.icon-ban-circle.hidden{:'ng-hide' => 'fileError || titleError'}
+        %div{:'ng-bind-html' => 'uploadFormHtml', :compile => true}
+        #title-field.text-field.control-group{:'ng-class' => "{error: titleError, success: !titleError && modified}" }
+          %input#note-title-field{:name => 'new_note[title]', :type => 'text', :placeholder => "Enter note title", :'ng-model' => 'newNote.title', :'ng-disabled' => '!controlsEnabled', :'ng-keyup' => 'validateUploadForm()'}
+          %i.status-icon.success-icon.icon-check-sign{:'ng-hide' => '!validated'}
+          %i.status-icon.error-icon.icon-ban-circle.hidden{:'ng-hide' => 'fileError || titleError'}
+        #description-field.text-field
+          %input#note-description-field{:name => 'new_note[description]', :type => 'text',  :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description'}
 
-          #description-field.text-field
-            %input#note-description-field{:name => 'new_note[description]', :type => 'text',  :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description'}
-          %p.new-file-upload.hidden
-            %input#file-picker{:name => 'new_note[file]', :type => 'file', :'ng-upload' => 'uploadAdd(data)'}
-          %input#upload-submit-btn.hidden.submit-btn-placeholder{:type => 'submit'}
-/ =======
-/         - s3_key = "test_pdf_store/#{SecureRandom.uuid}.pdf"
-/         =hidden_field_tag "s3_key", s3_key, :id => 's3_key_tag'
-/         =s3_uploader_form :id => "upload_form_tag",               |
-/           :key => s3_key,                                         |
-/           :key_starts_with => 'test_pdf_store/',                  |
-/           :acl => 'public-read' do
-/           .new-file-upload.hidden= file_field_tag :file, :id => 'file-picker', multiple: false, :'ng-upload' => 'uploadAdd(data)'
-/           .direct-upload-submit.hidden Submit
-
-/         #title-field.text-field.control-group{:'ng-class' => "{error: titleError, success: !titleError && modified}" }
-/           =text_field_tag :title, nil, :id => 'note-title-field', :placeholder => "Enter note title", :'ng-model' => 'newNote.title', :'ng-disabled' => '!controlsEnabled', :'ng-keyup' => 'validateUploadForm()'
-/           %i.status-icon.success-icon.icon-check-sign{:'ng-hide' => '!validated'}
-/           %i.status-icon.error-icon.icon-ban-circle.hidden{:'ng-hide' => 'fileError || titleError'}
-/         #description-field.text-field
-/           =text_field_tag :description, nil, :id => 'note-description-field', :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description'
-/ >>>>>>> origin/sqs-integration:app/views/notes/_upload_form.html.haml
 
     .upload-interaction.modal-footer
       / .upload-progress{:'ng-hide' => '!uploadShowing'}
