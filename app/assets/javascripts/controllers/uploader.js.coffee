@@ -63,7 +63,10 @@
       description: $scope.newNote.description
     }}).
     success( (data, status, headers, config) ->
-      location.reload()
+      $scope.modalShowing = false
+      $('.new-note-form-container').modal('hide');
+      $scope.resetUI()
+      $scope.$parent.init()
     )
     .error( (data, status, headers, config) ->
       $scope.handleError()

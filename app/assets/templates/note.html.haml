@@ -9,7 +9,7 @@
   #note-main
     
     .note-pages
-      .page{:'ng-repeat' => 'file in note.uploaded_files'}
+      .page{:'ng-repeat' => 'file in note.uploaded_html_files'}
         .file-container{:'ng-init' => "getComments(file.id, $index)"}
           .page-container
             %a{ :name => "Page-{{file.page_number}}"}

@@ -3,7 +3,7 @@
   %a{:'ng-href' => '/notes/{{note.id}}'}
     .img-preview
       %h2
-        %a.text-link{:'ng-href' => '/notes/ + {{note.id}}'} {{note.title}}
+        %a.text-link{:'ng-href' => '/notes/{{note.id}}'} {{note.title}}
       %h4.description
         {{note.description}}
   .btn-group.appear-hover
@@ -11,8 +11,8 @@
       %a.btn.usub{:'ng-href' => '{{note.unsubscribe_url}}'}
         %i.icon-remove
     %div{:'ng-if' => '!note.isShared'}
-      %a.share-note-link
-        %i.icon-share.share-note.btn{ "data-toggle" => "modal" }
+      / %a.share-note-link
+      /   %i.icon-share.share-note.btn{ "data-toggle" => "modal" }
       / %a{:'ng-click' => 'editNote(note, $index)'}
       /   %i.icon-edit.btn
       %a{:'ng-click' => 'deleteNote(note)'}

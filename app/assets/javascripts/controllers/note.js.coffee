@@ -11,13 +11,13 @@
     NotesApi.get({id: $routeParams.noteId}, success, error)
 
   $scope.trustURLs = () ->
-    for file in $scope.note.uploaded_files
+    for file in $scope.note.uploaded_html_files
       file.trusted_path = $sce.trustAsResourceUrl(file.public_path)
 
   $scope.getComments = (id, index) ->
     $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
       success( (data, status, headers, config) ->
-        $scope.note.uploaded_files[index].comments = data.comments
+        $scope.note.uploaded_html_files[index].comments = data.comments
       ).error( (data, status, headers, config) ->
         $scope.setAlert("Error loading comments from server", false)
     )
@@ -63,7 +63,7 @@
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
-          $scope.note.uploaded_files[fileIndex].comments = data.comments
+          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
           $scope.showNewComment = false
           $scope.submitting = false
           $scope.newCommentText = null
