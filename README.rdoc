@@ -31,3 +31,12 @@ DOCUMENT CONVERSION WORKER
 USEFUL COMMANDS
 -----------------------------------------------
 * DB Debugging: 'rails dbconsole'
+
+-----------------------------------------------
+DEPLOYMENTS
+-----------------------------------------------
+* cap rubber:create_staging
+* cap rubber:bootstrap
+* cap deploy:cold          -- migrations
+* cap rubber:tail_logs
+* cap -T rubber

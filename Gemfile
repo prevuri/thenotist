@@ -53,13 +53,7 @@ group :development, :test do
   gem 'phantomjs'
 end
 
-# Deploy with Capistrano
-# the commands are:
-# cap rubber:create_staging
-# cap rubber:bootstrap
-# cap deploy:cold          -- migrations
-# cap rubber:tail_logs
-# cap -T rubber
+# Deployments with Capistrano and Rubber
 gem 'capistrano'
 gem 'rubber'
 gem 'open4'
