@@ -3,9 +3,10 @@ class Api::NotesController < ApplicationController
   include NotesHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs ]
+  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs, :paginate ]
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
+  before_filter :get_page_range, :only => [ :paginate ]
   before_filter :abort_timed_out_notes
 
   UserInfo = Struct.new(:id, :name, :image)
@@ -132,10 +133,15 @@ class Api::NotesController < ApplicationController
       :success => true,
       :note => @note.as_json
     }
-
   end
 
-
+  def paginate
+    html_files = @note.uploaded_html_files.where(:page_number => [@start_page..@end_page])
+    return render :json => {
+      :success => true,
+      :html_files => html_files.map(&:as_json)
+    }
+  end
 
 private
   def get_note
@@ -157,8 +163,31 @@ private
     @description = params[:description]
   end
 
+  def get_page_range
+    @start_page = params[:start_page]
+    @end_page = params[:end_page]
+    if @start_page.nil? && @end_page.nil?
+      return render :json => {
+        :success => false,
+        :error => invalid_page_range_error
+      }
+    end
+
+    num_pages = @note.uploaded_html_files.count
+    @start_page ||= 0
+    @end_page ||= num_pages-1
+    @start_page = @start_page.to_i
+    @end_page = @end_page.to_i
+    if @end_page < @start_page || @start_page > num_pages-1 || @end_page < 0
+      return render :json => {
+        :success => false,
+        :error => invalid_page_range_error
+      }
+    end
+  end
+
   def user_not_found_error
-    "User not found :("
+    "User not found."
   end
 
   def already_shared_error
@@ -166,7 +195,11 @@ private
   end
 
   def cannot_revoke_error
-    "Cannot remove contributor"
+    "Cannot remove contributor."
+  end
+
+  def invalid_page_range_error
+    "Invalid page range."
   end
 
   def abort_timed_out_notes
