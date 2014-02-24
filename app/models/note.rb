@@ -68,6 +68,7 @@ class Note < ActiveRecord::Base
       :description => description,
       :uploaded_html_files => uploaded_html_files.map { |f| f.as_json },
       :uploaded_css_files => uploaded_css_files.map { |f| f.as_json },
+      :uploaded_thumb_files => uploaded_thumb_files.map { |f| f.as_json },
       :user => user.as_json,
       :processed => processed,
       :aborted => aborted,
