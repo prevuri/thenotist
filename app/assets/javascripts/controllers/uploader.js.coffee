@@ -45,7 +45,7 @@
     success = (data) ->
       $scope.uploadFormHtml = $sce.trustAsHtml(data.html)
     error = (data) ->
-      alert(data) 
+      $scope.setAlert("Error loading uploader", false)
     UploadFormHtml.get(success, error)
 
   $scope.submitClicked = () ->
@@ -126,7 +126,7 @@
     $scope.updateFileName()
 
   $scope.handleError = () ->
-    alert "Something went wrong, try again later."
+    $scope.setAlert("Error uploading note to server", false)
     $scope.modalShowing = false
     $scope.resetUI()
 

@@ -164,8 +164,9 @@ private
     rescue
       return render :json => {
         :success => false,
-        :error => note_not_found_error
-      }
+        :error => note_not_found_error,
+      },
+      :status => 404
     end
   end
 

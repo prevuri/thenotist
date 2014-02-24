@@ -4,5 +4,5 @@
     success = (data) ->
       $scope.activityHtml = $sce.trustAsHtml(data.html)
     error = (data) ->
-      alert(data) 
+      $scope.setAlert(data, false) 
     ActivityHtml.get(success, error)

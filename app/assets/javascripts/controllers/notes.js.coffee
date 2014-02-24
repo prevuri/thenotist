@@ -9,14 +9,14 @@
     success = (data) ->
       $scope.notes = data.notes
     error = (data) ->
-      alert(data) 
+      $scope.setAlert("Error loading notes list", false)
     NotesApi.get(success, error)
 
   $scope.deleteNote = (note, index) ->
     success = (data) ->
       $scope.notes.splice(index, 1)
     error = (data) ->
-      alert(data) 
+      $scope.setAlert("Error deleting note", false)
     NotesApi.delete({id: note.id}, success, error)
 
   $scope.$on('escapePressed', () ->

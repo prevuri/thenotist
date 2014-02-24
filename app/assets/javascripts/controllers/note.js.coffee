@@ -7,7 +7,7 @@
       $scope.note = data.note
       $scope.trustURLs()
     error = (data) ->
-      alert(data)
+      $scope.setAlert("Error loading note data", false)
     NotesApi.get({id: $routeParams.noteId}, success, error)
 
   $scope.trustURLs = () ->
@@ -79,6 +79,6 @@
         success( (data, status, headers, config) ->
           comment.deleted = true
         ).error( (data, status, headers, config) ->
-          alert('Error deleting comment')
+          $scope.setAlert("Error deleting comment", false) 
           comment.deleteFade = false
       )
