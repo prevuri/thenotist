@@ -28,6 +28,7 @@ TheNotist::Application.routes.draw do
 
   namespace :api do
     match 'notes/upload_form_html' => 'notes#upload_form_html', :as => :upload_form_html
+    match 'activity/user' => 'activity#user', :as => :user_activity
     resources :activity
     resources :users, :only => [ :show ]
     match 'users/:id/buddies' => 'users#buddies', :as => :user_buddies, :via => :get

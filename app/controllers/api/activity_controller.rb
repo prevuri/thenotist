@@ -3,14 +3,28 @@ class Api::ActivityController < ApplicationController
   before_filter :check_authenticated_user!
 
   def index
-    html = ""
-    current_user.activities.order("created_at desc").each do |activity|
-      html += render_to_string(:partial => 'main/activity', :object => activity)
-    end
     render :json => {
       :success => true,
-      :html => html
+      :html => activity_html(current_user.buddy_activities)
     }
   end
+
+  def user
+    render :json => {
+      :success => true,
+      :html => activity_html(current_user.activities)
+    }
+  end
+
+private
+
+  def activity_html (activities)
+    html = ""
+    activities.order("created_at desc").each do |activity|
+      html += render_to_string(:partial => 'main/activity', :object => activity)
+    end
+    html
+  end
+
 
 end

@@ -15,4 +15,8 @@ service.factory("NotesApi", ($resource) ->
   $resource(
     "/api/activity", {}
   )
+).factory("UserActivityHtml", ($resource) ->
+  $resource(
+    "/api/activity/user", {}
+  )
 )

@@ -1,4 +1,4 @@
-.wrapper
+.wrapper{:'ng-controller' => 'ActivityCtrl', :'ng-init' => 'init()'}
   .feed-header
     %h1 Activities
     .sorting-options
@@ -12,6 +12,4 @@
 
 
   .feed-wrapper
-    - unless @activities.nil?
-      - @activities.each do |activity|
-        = render 'activity', :activity => activity
+    %div{:'ng-bind-html' => "activityHtml"}

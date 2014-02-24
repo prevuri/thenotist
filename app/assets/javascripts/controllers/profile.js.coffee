@@ -1,8 +1,8 @@
-@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, ActivityHtml) ->
+@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, UserActivityHtml) ->
 
   $scope.init = () ->
     success = (data) ->
       $scope.activityHtml = $sce.trustAsHtml(data.html)
     error = (data) ->
       alert(data) 
-    ActivityHtml.get(success, error)
+    UserActivityHtml.get(success, error)
