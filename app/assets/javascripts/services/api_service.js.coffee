@@ -17,6 +17,14 @@ service.factory("NotesApi", ($resource) ->
   )
 ).factory("UserActivityHtml", ($resource) ->
   $resource(
-    "/api/activity/user", {}
+    "/api/activity/user/:id", {}
+  )
+).factory("UserApi", ($resource) ->
+  $resource(
+    "/api/users/:id", {}
+  )
+).factory("UserBuddiesApi", ($resource) ->
+  $resource(
+    "/api/users/:id/buddies", {}
   )
 )

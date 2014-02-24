@@ -21,6 +21,7 @@ TheNotist::Application.routes.draw do
 
   resources :notes
   match "/profile" => redirect("/?goto=profile")
+  match "/profile/*id" => redirect("/?goto=profile/%{id}")
   resources :profile
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]
@@ -28,9 +29,10 @@ TheNotist::Application.routes.draw do
 
   namespace :api do
     match 'notes/upload_form_html' => 'notes#upload_form_html', :as => :upload_form_html
+    match 'activity/user/:id' => 'activity#show', :as => :buddy_activity
     match 'activity/user' => 'activity#user', :as => :user_activity
     resources :activity
-    resources :users, :only => [ :show ]
+    resources :users, :only => [ :index, :show ]
     match 'users/:id/buddies' => 'users#buddies', :as => :user_buddies, :via => :get
 
     resources :comments, :only => [ :index, :create, :destroy ]

@@ -3,6 +3,13 @@ class Api::UsersController < ApplicationController
 
   before_filter :get_user, :only => [ :show, :buddies ]
 
+  def index
+    return render :json => {
+      :success => true,
+      :user => current_user.as_json
+    }
+  end
+
   def show
     return render :json => {
       :success => true,

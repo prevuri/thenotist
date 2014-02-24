@@ -16,6 +16,14 @@ class Api::ActivityController < ApplicationController
     }
   end
 
+  def show
+    @user = User.find(params[:id])
+    render :json => {
+      :success => true,
+      :html => activity_html(@user.activities)
+    }
+  end
+
 private
 
   def activity_html (activities)

@@ -22,6 +22,10 @@ notistApp.config(['$httpProvider', ($httpProvider) ->
         templateUrl: '/assets/profile.html',
         controller: 'ProfileCtrl'
       }).
+      when('/profile/:profileId', {
+        templateUrl: '/assets/profile.html',
+        controller: 'ProfileCtrl'
+      }).
       when('/', {
         templateUrl: '/assets/index.html',
         controller: 'ActivityCtrl',
