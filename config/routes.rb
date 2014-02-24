@@ -20,6 +20,7 @@ TheNotist::Application.routes.draw do
   match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
 
   resources :notes
+  match "/profile" => redirect("/?goto=profile")
   resources :profile
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]
