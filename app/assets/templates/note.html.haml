@@ -5,9 +5,26 @@
   #note-header
     %h1.note-title  {{note.title}}
     .note-description {{note.description}}
-    #header-border
+    .page-number
+      .pages
+        /TODO make dynamic
+        Page
+        %span
+          1 
+        of 4
+      .profile-container.circular.prev-page
+        %i.icon-angle-left
+      .profile-container.circular.next-page
+        %i.icon-angle-right
+      .profile-container.circular.flag
+        %i.icon-exclamation
+    .contributors
+      .profile-container.circular.share-note
+        %i.icon-plus
+      .profile-container.circular{:'ng-repeat' => 'contrib in note.contributors'}
+        %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+
   #note-main
-    
     .note-pages
       .page{:'ng-repeat' => 'file in note.uploaded_html_files'}
         .file-container{:'ng-init' => "getComments(file.id, $index)"}
