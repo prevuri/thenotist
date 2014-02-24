@@ -10,6 +10,7 @@ class Note < ActiveRecord::Base
   #What was this made for? contibutors should cover this #What was this made for?
   has_many :uploaded_html_files, dependent: :destroy
   has_many :uploaded_css_files, dependent: :destroy
+  has_many :uploaded_thumb_files, dependent: :destroy
   has_many :comments, :through => :uploaded_html_files
 
   # want to assume that we are processing a file right away

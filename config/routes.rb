@@ -28,13 +28,16 @@ TheNotist::Application.routes.draw do
   namespace :api do
     match 'notes/upload_form_html' => 'notes#upload_form_html', :as => :upload_form_html
     resources :activity
-    resources :buddies, :only => [ :index ]
+    resources :users, :only => [ :show ]
+    match 'users/:id/buddies' => 'users#buddies', :as => :user_buddies, :via => :get
+
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]
     resources :notes, :only => [ :index, :show, :update, :destroy, :create ]
     match 'notes/share/' => 'notes#share', :as => :share_note
     match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
+    match 'notes/paginate/:id' => 'notes#paginate', :as => :note_paginate, :via => :get
   end
 
   match "/*path" => redirect("/?goto=%{path}")

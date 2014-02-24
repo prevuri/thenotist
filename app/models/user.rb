@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
       :name => name,
       :email => email,
       :member_since => created_at,
-      :user_fb_data => user_fb_data
+      :user_fb_data => user_fb_data.as_json
     }
   end
 end

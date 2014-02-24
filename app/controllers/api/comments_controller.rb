@@ -11,7 +11,7 @@ class Api::CommentsController < ApplicationController
     rescue
       return render :json => {
         :success => false,
-        :error => uploaded_html_file_not_found_error
+        :error => file_not_found_error
       }
     end
 
@@ -29,7 +29,7 @@ class Api::CommentsController < ApplicationController
     if @file.blank?
       return render :json => {
         :success => false,
-        :error => uploaded_html_file_not_found_error
+        :error => file_not_found_error
       }
     end
 
@@ -68,7 +68,7 @@ class Api::CommentsController < ApplicationController
     if @comment.blank?
       return render :json => {
         :success => false,
-        :error => uploaded_html_file_not_found_error
+        :error => file_not_found_error
       }
     end
 
