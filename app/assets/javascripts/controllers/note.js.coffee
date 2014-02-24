@@ -3,8 +3,10 @@
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
   $scope.init = () ->
+    $scope.$root.section = 'notes'
     success = (data) ->
       $scope.note = data.note
+      $scope.$root.title = $scope.note.title
       $scope.trustURLs()
     error = (data) ->
       $scope.setAlert("Error loading note data", false)

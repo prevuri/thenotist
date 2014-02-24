@@ -6,6 +6,8 @@
   }
 
   $scope.init = () ->
+    $scope.$root.title = 'Notes'
+    $scope.$root.section = 'notes'
     success = (data) ->
       $scope.notes = data.notes
     error = (data) ->
