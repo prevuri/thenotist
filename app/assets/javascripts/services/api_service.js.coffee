@@ -11,4 +11,8 @@ service.factory("NotesApi", ($resource) ->
   $resource(
     "/api/notes/upload_form_html", {}
   )
+).factory("ActivityHtml", ($resource) ->
+  $resource(
+    "/api/activity", {}
+  )
 )

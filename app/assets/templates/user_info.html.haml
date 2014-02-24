@@ -1,0 +1,16 @@
+%ul.inline
+  %li.profile-image-section
+    %a{:'ng-href' => '{{linkToProfile ? profilePath(user.id) : null}}', :'ng-class' => 'linkToProfile ? "profile-link" : "no-link"'}
+      .profile-container.circular
+        .profile-image.circular{:'ng-style' => "{background: 'url(' + user.user_fb_data.profile_image + ') no-repeat'}"}
+
+  %li.profile-section
+    .info
+      %h2
+        %a{:'ng-href' => '{{linkToProfile ? profilePath(user.id) : null}}', :'ng-class' => 'linkToProfile ? "text-link" : "no-link"'}
+          {{user.name}}
+      .profile-info {{user.notes.length}} notes
+      .profile-info {{user.buddies.length}} buddies
+      .profile-info {{user.followers.length}} followers
+      .profile-buttons{:'ng-if' => 'showButtons'}
+        

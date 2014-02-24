@@ -19,6 +19,7 @@ TheNotist::Application.routes.draw do
 
   match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
 
+  resources :notes
   resources :profile
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]
@@ -26,6 +27,7 @@ TheNotist::Application.routes.draw do
 
   namespace :api do
     match 'notes/upload_form_html' => 'notes#upload_form_html', :as => :upload_form_html
+    resources :activity
     resources :buddies, :only => [ :index ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]

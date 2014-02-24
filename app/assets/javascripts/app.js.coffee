@@ -18,9 +18,13 @@ notistApp.config(['$httpProvider', ($httpProvider) ->
         templateUrl: '/assets/note.html',
         controller: 'NoteCtrl'
       }).
+      when('/profile', {
+        templateUrl: '/assets/profile.html',
+        controller: 'ProfileCtrl'
+      }).
       when('/', {
         templateUrl: '/assets/index.html',
-        controller: 'ActivityController',
+        controller: 'ActivityCtrl',
         redirectTo: (current, path, search) ->
           if (search.goto)
             '/' + search.goto

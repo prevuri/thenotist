@@ -1,7 +1,0 @@
-.profile
-  = render :partial => 'user_info', :object => @user, :locals => {:show_buttons => true}
-  
-  .activity-list-container
-    - if @activities
-      - @activities.each do |a|
-        = render 'main/activity', :activity => a
