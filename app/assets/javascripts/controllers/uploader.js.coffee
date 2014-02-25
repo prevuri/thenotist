@@ -1,4 +1,4 @@
-@UploadCtrl = ($scope, $http) ->
+@UploadCtrl = ($scope, $http, $sce, UploadFormHtml) ->
 
   @statusTextDefault = "Choose file"
   @statusText2Default = ".pdf"
@@ -25,29 +25,28 @@
   $scope.newNote = {}
 
   $scope.init = ->
-    $("#upload_form_tag").S3Uploader
+    $scope.getUploadFormHtml()
+    return false
+
+  $scope.s3uploadFormInit = () ->
+    $('#upload_form_tag').S3Uploader
       remove_completed_progress_bar: false
       allow_multiple_files: false
       click_submit_target: $('.direct-upload-submit')
 
-    $("#upload_form_tag").bind "s3_upload_complete", (e, content) ->
+    $('#upload_form_tag').bind "s3_upload_complete", (e, content) ->
       s3_key_val = $('#s3_key_tag').val()
-      $http({method: 'POST', url: '/api/notes', params: {
-          s3_key: s3_key_val,
-          title: $scope.newNote.title,
-          description: $scope.newNote.description
-        }}).
-        success( (data, status, headers, config) ->
-          location.reload()
-        )
-        .error( (data, status, headers, config) ->
-          $scope.handleError()
-        )
+      $scope.s3UploadComplete(s3_key_val)
 
     $('#upload_form_tag').bind "s3_upload_failed", (e, content) ->
       $scope.handleError()
 
-    return false
+  $scope.getUploadFormHtml = () ->
+    success = (data) ->
+      $scope.uploadFormHtml = $sce.trustAsHtml(data.html)
+    error = (data) ->
+      $scope.setAlert("Error loading uploader", false)
+    UploadFormHtml.get(success, error)
 
   $scope.submitClicked = () ->
     $scope.validateUploadForm()
@@ -55,6 +54,22 @@
       $scope.uploadShowing = true
       $scope.controlsEnabled = false
       $('.direct-upload-submit').trigger('click')
+
+  $scope.s3UploadComplete = (s3KeyVal) ->
+    $http({method: 'POST', url: '/api/notes', params: {
+      s3_key: s3KeyVal,
+      title: $scope.newNote.title,
+      description: $scope.newNote.description
+    }}).
+    success( (data, status, headers, config) ->
+      $scope.modalShowing = false
+      $('.new-note-form-container').modal('hide');
+      $scope.resetUI()
+      $scope.$parent.init()
+    )
+    .error( (data, status, headers, config) ->
+      $scope.handleError()
+    )
 
   $scope.uploadAdd = (data) ->
     file = data.files[0]
@@ -75,6 +90,16 @@
     else
       $scope.progressText = Math.round((data.loaded / 1000)) + "KB / " + Math.round((data.total / 1000)) + "KB"
       $scope.progressPercent = parseInt(data.loaded / data.total * 100, 10) + '%'
+
+  $scope.uploadDone = (data) ->
+    if (data.result["success"])
+      $scope.setAlert("File uploaded successful. Processing may take a few minutes.", true)
+      $scope.modalShowing = false
+    else
+      $scope.setAlert("Error uploading file.", false)
+
+  $scope.uploadFail = (data) ->
+    $scope.handleError()
 
   $scope.validateUploadForm = () ->
     $scope.modified = true
@@ -101,7 +126,7 @@
     $scope.updateFileName()
 
   $scope.handleError = () ->
-    alert "Something went wrong, try again later."
+    $scope.setAlert("Error uploading note to server", false)
     $scope.modalShowing = false
     $scope.resetUI()
 

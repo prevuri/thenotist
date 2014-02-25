@@ -1,12 +1,25 @@
-@NotesCtrl = ($scope, $http) ->
+@NotesCtrl = ($scope, $http, $sce, NotesApi) ->
 
   $scope.overview = {
     'images': '',
     'showing': false
   }
 
-  $scope.hideTooltip = ->
-    $(this).find('.tooltip').addClass('hidden').fadeOut(150)
+  $scope.init = () ->
+    $scope.$root.title = 'Notes'
+    $scope.$root.section = 'notes'
+    success = (data) ->
+      $scope.notes = data.notes
+    error = (data) ->
+      $scope.setAlert("Error loading notes list", false)
+    NotesApi.get(success, error)
+
+  $scope.deleteNote = (note, index) ->
+    success = (data) ->
+      $scope.notes.splice(index, 1)
+    error = (data) ->
+      $scope.setAlert("Error deleting note", false)
+    NotesApi.delete({id: note.id}, success, error)
 
   $scope.$on('escapePressed', () ->
     $scope.hideOverview()

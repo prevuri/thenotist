@@ -3,7 +3,7 @@ class Api::NotesController < ApplicationController
   include NotesHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs, :paginate ]
+  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs, :destroy, :paginate ]
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
   before_filter :get_page_range, :only => [ :paginate ]
@@ -59,6 +59,13 @@ class Api::NotesController < ApplicationController
     return render :json => {
       :success => true,
       :note => @note.as_json
+    }
+  end
+
+  def destroy
+    @note.destroy
+    return render :json => {
+      :success => true
     }
   end
 
@@ -135,6 +142,13 @@ class Api::NotesController < ApplicationController
     }
   end
 
+  def upload_form_html
+    render :json => {
+      :success => true,
+      :html => render_to_string(:partial => 'notes/s3_upload_form')
+    }
+  end
+
   def paginate
     html_files = @note.uploaded_html_files.where(:page_number => [@start_page..@end_page])
     return render :json => {
@@ -150,8 +164,9 @@ private
     rescue
       return render :json => {
         :success => false,
-        :error => note_not_found_error
-      }
+        :error => note_not_found_error,
+      },
+      :status => 404
     end
   end
 

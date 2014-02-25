@@ -99,6 +99,15 @@ a.text-link {
   }
 }
 
+a.no-link {
+  font-weight: inherit;
+  text-decoration: inherit;
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
+}
+
 #main {
   overflow: auto;
   padding: 10px 30px;

@@ -1,0 +1,5 @@
+.profile{:'ng-controller' => 'ProfileCtrl', :'ng-init' => 'init()'}
+  %ng-include{:src => "'/assets/user_info.html'"}
+  
+  .activity-list-container
+    %div{:'ng-bind-html' => "activityHtml"}

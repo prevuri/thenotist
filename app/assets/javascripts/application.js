@@ -15,6 +15,8 @@
 //= require twitter/bootstrap
 //= require angular
 //= require angular-animate
+//= require angular-route
+//= require angular-resource
 //= require_tree .
 //
 //= require jquery-fileupload/basic

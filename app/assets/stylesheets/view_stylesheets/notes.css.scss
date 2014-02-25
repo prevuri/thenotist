@@ -410,12 +410,8 @@ $thumbnail-height: 330px;
   overflow: hidden;
 
   .notes-list {
+
     margin: 0;
-    // ul {
-    //   list-style: none;
-    //   display: inline;
-    //   margin: 0;
-    // }
 
     .notes-list-item {
       display: inline-block;
@@ -423,7 +419,6 @@ $thumbnail-height: 330px;
       height: 280px;
       width: 448px;
       vertical-align: top;
-
 
       &:hover {
         background-color: #8A847D;//#696662;

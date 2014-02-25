@@ -1,8 +1,4 @@
-notistApp = angular.module('notistApp', ['ngAnimate'])
-
-notistApp.config(['$httpProvider', ($httpProvider) ->
-  $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content')
-])
+notistApp = angular.module('notistApp')
 
 # For use with progress spinners - starts a jQuery spin animation
 #    set ng-spin="attr" where attr is boolean for spinning on/off
@@ -22,7 +18,7 @@ notistApp.directive('ngSpinner', () ->
 )
 
 # For file upload forms to detect when a file has been selected
-notistApp.directive('ngUpload', () ->
+.directive('ngUpload', () ->
   (scope, el, attr) ->
     $(el).fileupload
       dataType: 'json'
@@ -41,11 +37,21 @@ notistApp.directive('ngUpload', () ->
 )
 
 # Make clicking an element simulate the click of another, specified by ID
-notistApp.directive('ngSimulateClick', () ->
+.directive('ngSimulateClick', () ->
   (scope, el, attr) ->
     if attr.ngSimulateClick
       $(el).on('click', () ->
         document.getElementById(attr.ngSimulateClick).click()
         scope.$apply()
       )
+)
+
+.directive('compile', ($compile, $parse) ->
+  link: (scope, el, attr) ->
+    parsed = $parse(attr.ngBindHtml)
+    getStringValue = () ->
+      (parsed(scope) || '').toString()
+    scope.$watch(getStringValue, () ->
+      $compile(el, null, -9999)(scope)
+    )
 )
