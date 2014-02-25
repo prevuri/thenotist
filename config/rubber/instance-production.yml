@@ -13,10 +13,10 @@
     name: passenger
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
-    name: common
+    name: collectd
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
-    name: collectd
+    name: common
     options: {}
   - !ruby/object:Rubber::Configuration::RoleItem
     name: monit
@@ -27,24 +27,36 @@
   - !ruby/object:Rubber::Configuration::RoleItem
     name: web
     options: {}
-  instance_id: i-fd8ac3dd
-  image_type: m1.small
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: web_tools
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: graphite_server
+    options: {}
+  - !ruby/object:Rubber::Configuration::RoleItem
+    name: graphite_web
+    options: {}
+  instance_id: i-b9617399
+  image_type: c3.large
   image_id: ami-b6089bdf
   security_groups:
   - thenotist_production_default
   - thenotist_production_web
+  - thenotist_production_web_tools
   - thenotist_production_production
   - thenotist_production_apache
   - thenotist_production_app
   - thenotist_production_passenger
-  - thenotist_production_common
   - thenotist_production_collectd
+  - thenotist_production_common
   - thenotist_production_monit
   - thenotist_production_haproxy
-  external_host: ec2-54-234-186-137.compute-1.amazonaws.com
-  external_ip: 54.234.186.137
-  internal_host: ip-10-181-138-222.ec2.internal
-  internal_ip: 10.181.138.222
+  - thenotist_production_graphite_server
+  - thenotist_production_graphite_web
+  external_host: ec2-54-197-22-69.compute-1.amazonaws.com
+  external_ip: 54.197.22.69
+  internal_host: ip-10-123-136-6.ec2.internal
+  internal_ip: 10.123.136.6
   zone: us-east-1a
   provider: aws
   platform: linux

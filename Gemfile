@@ -53,8 +53,6 @@ group :development, :test do
   gem 'phantomjs'
 end
 
-# Deployments with Capistrano and Rubber
-gem 'capistrano'
 gem 'rubber'
 gem 'open4'
 gem 'gelf'

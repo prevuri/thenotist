@@ -6,7 +6,7 @@ app_user: app
 
 # REQUIRED: Notification emails (e.g. monit) get sent to this address
 #
-admin_email: "vlad@thenotist.com"
+admin_email: "lee.vlad@gmail.com"
 
 # OPTIONAL: If not set, you won't be able to access web_tools
 # server (graphite, graylog, monit status, haproxy status, etc)
@@ -86,7 +86,8 @@ cloud_providers:
     # Ubuntu 12.04 Precise instance-store 64-bit: ami-eafa5883
     #
     # m1.small or m1.large or m1.xlarge
-    image_type: m1.small
+    # image_type: m1.small
+    image_type: c3.large
     image_id: ami-b6089bdf
 
     # OPTIONAL: EC2 spot instance request support.
