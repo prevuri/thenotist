@@ -42,3 +42,6 @@ config.log
 config.status
 ruby-1.9.pc
 uncommon.mk
+
+# ignore deployment data
+vendor/bundle/

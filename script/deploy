@@ -1,0 +1,11 @@
+#!/bin/bash
+
+RAILS_ENV=production bundle --without development test --deployment
+RAILS_ENV=production bundle exec rake db:migrate
+RAILS_ENV=production bundle exec rake assets:precompile
+rm tmp/restart.txt
+touch tmp/restart.txt
+/opt/nginx/sbin/nginx -s stop
+/opt/nginx/sbin/nginx
+curl 0.0.0.0:80 > /dev/null
+
