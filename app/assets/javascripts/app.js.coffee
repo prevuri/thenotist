@@ -11,23 +11,23 @@ notistApp.config(['$httpProvider', ($httpProvider) ->
 ]).config(['$routeProvider', ($routeProvider) ->
     $routeProvider.
       when('/notes', {
-        templateUrl: '/assets/notes.html',
+        templateUrl: '/client_views/notes.html',
         controller: 'NotesCtrl'
       }).
       when('/notes/:noteId', {
-        templateUrl: '/assets/note.html',
+        templateUrl: '/client_views/note.html',
         controller: 'NoteCtrl'
       }).
       when('/profile', {
-        templateUrl: '/assets/profile.html',
+        templateUrl: '/client_views/profile.html',
         controller: 'ProfileCtrl'
       }).
       when('/profile/:profileId', {
-        templateUrl: '/assets/profile.html',
+        templateUrl: '/client_views/profile.html',
         controller: 'ProfileCtrl'
       }).
       when('/', {
-        templateUrl: '/assets/index.html',
+        templateUrl: '/client_views/index.html',
         controller: 'ActivityCtrl',
         redirectTo: (current, path, search) ->
           if (search.goto)
