@@ -12,7 +12,7 @@
       %a.btn.usub{:'ng-href' => '{{note.unsubscribe_url}}'}
         %i.icon-remove
     %div{:'ng-if' => '!note.isShared'}
-      %a{:'ng-click' => 'deleteNote(note)'}
+      %a{:'ng-click' => 'deleteNote(note, $index)'}
         %i.icon-remove.btn
   
   %div{:'ng-if' => 'note.isShared'}
