@@ -209,6 +209,7 @@ $thumbnail-height: 330px;
 #note-main {
   padding-top: 125px;
   position: relative;
+  height: 100%;
 
   &.new-comment-showing {
     // padding-right: 50px + $comments-sidebar-width;
@@ -453,7 +454,6 @@ $thumbnail-height: 330px;
           bottom: 0px;
           width: 100%;
           // background-color:rgba(0,0,0,0.8);
-          z-index: 104;
           overflow: hidden;
 
           .big-info {
@@ -472,6 +472,8 @@ $thumbnail-height: 330px;
                 float: left;
                 margin-right: 10px;
                 position: relative;
+                z-index: 103;
+
                 i {
                   color: #999999;
                   font-size: 1.8em;
@@ -512,6 +514,7 @@ $thumbnail-height: 330px;
             margin-top: 15px;
             color: #fff;
             text-align: right;
+            z-index: 103;
           }
         }
 
@@ -587,7 +590,7 @@ $thumbnail-height: 330px;
           height: 100%;//275px;
           width: 100%;
           position: absolute;
-          z-index: 102;
+          z-index: 103;
         }
 
         .img-preview {
@@ -607,7 +610,7 @@ $thumbnail-height: 330px;
           position: absolute;
           width: 100%;
           height: 100%;
-          z-index: 103;
+          z-index: 102;
 
           &.hottest {
             background-color: RGBA(199, 27, 27, 0.7);
@@ -743,6 +746,10 @@ $thumbnail-height: 330px;
         margin-top: 3px;
         font-size: 7em;
         clear: both;
+
+        &.icon-refresh {
+          margin-left: 45%;
+        }
       }
     }
   }

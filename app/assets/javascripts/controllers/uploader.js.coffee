@@ -53,6 +53,7 @@
     if $scope.validated
       $scope.uploadShowing = true
       $scope.controlsEnabled = false
+      $scope.modalShowing = false
       $('.direct-upload-submit').trigger('click')
 
   $scope.s3UploadComplete = (s3KeyVal) ->
@@ -62,7 +63,6 @@
       description: $scope.newNote.description
     }}).
     success( (data, status, headers, config) ->
-      $scope.modalShowing = false
       $('.new-note-form-container').modal('hide');
       $scope.resetUI()
       $scope.$parent.init()

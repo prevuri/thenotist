@@ -5,11 +5,19 @@
     'showing': false
   }
 
+  $scope.noteProcessing = false
+
+  # $scope.updateProcessingNotes
+
   $scope.init = () ->
     $scope.$root.title = 'Notes'
     $scope.$root.section = 'notes'
     success = (data) ->
       $scope.notes = data.notes
+      for note in $scope.notes
+        if note.processing
+          $scope.noteProcessing = true
+          break
     error = (data) ->
       $scope.setAlert("Error loading notes list", false)
     NotesApi.get(success, error)
