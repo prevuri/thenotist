@@ -415,7 +415,7 @@ $thumbnail-height: 330px;
 
     .notes-list-item {
       display: inline-block;
-      margin-left: -0.28em;
+      // margin-left: -0.28em;
       height: 280px;
       width: 448px;
       vertical-align: top;
@@ -431,6 +431,7 @@ $thumbnail-height: 330px;
         .appear-hover {
           opacity: 0;
           -webkit-transition: opacity 0.2s ease;
+          z-index: 104;
           .btn {
             border-radius: 0 !important;
             background-color: transparent;
@@ -452,7 +453,7 @@ $thumbnail-height: 330px;
           bottom: 0px;
           width: 100%;
           // background-color:rgba(0,0,0,0.8);
-          z-index: 100;
+          z-index: 104;
           overflow: hidden;
 
           .big-info {
@@ -593,7 +594,7 @@ $thumbnail-height: 330px;
           vertical-align: top;
           height: 100%;//275px;
           width: 100%;
-          background-position: 10% 10%;
+          background-position: 30% 30%;
           // background-position:top;
           background-repeat: no-repeat;
           background-size: cover;
@@ -606,6 +607,27 @@ $thumbnail-height: 330px;
           position: absolute;
           width: 100%;
           height: 100%;
+          z-index: 103;
+
+          &.hottest {
+            background-color: RGBA(199, 27, 27, 0.7);
+          }
+
+          &.hot {
+            background-color: RGBA(213, 186, 138, 0.7);
+          }
+
+          &.cool {
+            background-color: RGBA(1, 116, 103, 0.7);
+          }
+
+          &.cooling {
+            background-color: RGBA(224, 143, 35, 0.7);
+          }
+
+          &.cold {
+            background-color: RGBA(11, 13, 12, 0.7);
+          }
         }
       }
     }
@@ -694,6 +716,7 @@ $thumbnail-height: 330px;
 .upload-form {
   background-color: #0FB598 !important;
   position: relative;
+  margin-right: -0.3em;
   min-width: 448px;
 
   &:hover {
