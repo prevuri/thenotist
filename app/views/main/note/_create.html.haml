@@ -1,5 +1,5 @@
 uploaded a new note: 
 - if activity.user == current_user
-  = link_to activity.trackable.title, note_path(activity.trackable)
+  %a{:'href' => "/notes/#{activity.trackable.id}"} #{activity.trackable.title}
 - else
-  = "#{activity.trackable.title}"
+  #{activity.trackable.title}

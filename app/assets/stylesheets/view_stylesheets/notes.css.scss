@@ -431,7 +431,7 @@ $thumbnail-height: 330px;
         .appear-hover {
           opacity: 0;
           -webkit-transition: opacity 0.2s ease;
-          z-index: 103;
+          z-index: 104;
           .btn {
             border-radius: 0 !important;
             background-color: transparent;
@@ -453,7 +453,7 @@ $thumbnail-height: 330px;
           bottom: 0px;
           width: 100%;
           // background-color:rgba(0,0,0,0.8);
-          z-index: 100;
+          z-index: 104;
           overflow: hidden;
 
           .big-info {
@@ -607,6 +607,7 @@ $thumbnail-height: 330px;
           position: absolute;
           width: 100%;
           height: 100%;
+          z-index: 103;
 
           &.hottest {
             background-color: RGBA(199, 27, 27, 0.7);
