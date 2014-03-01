@@ -24,7 +24,7 @@
       .profile-container.circular{:'ng-repeat' => 'contrib in note.contributors'}
         %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
 
-  #note-main
+  #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
     .note-pages
       .page{:'ng-repeat' => 'file in note.uploaded_html_files'}
         .file-container{:'ng-init' => "getComments(file.id, $index)"}
@@ -37,10 +37,10 @@
             %i.icon-comments
           .comment-button#new-comment-button
             %i.icon-comments
-        .comments-container
+        .comments-container{:'ng-class' => 'expandedCommentLine == null ? "comments-hidden" : ""'}
           .comments
             %ng-include{:src => '"/client_views/comments.html"'}
-    #new-comment-panel.comment{:'ng-show' => 'showNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
+    #new-comment-panel.comment{:'ng-show' => 'showingNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
       .comment-inner
         .profile-container.circular
           .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
@@ -51,8 +51,10 @@
           .comment-text
             %input#newcomment.new_comment_text_field{:type => 'textarea', :placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText'}
         .bottom
-          %a.new-comment-cancel.text-link{:'ng-click' => 'showNewComment = false'}
+          %a.new-comment-cancel.text-link{:'ng-click' => 'showNewComment(false)'}
             Cancel
           %a.new-comment-submit.text-link{:'ng-click' => 'submitParentComment($index)'}
             Submit
         .clear
+
+    #note-shift-overlay{:'ng-show' => 'expandedCommentLine != null', :'ng-click' => 'expandCommentLine(null)'}

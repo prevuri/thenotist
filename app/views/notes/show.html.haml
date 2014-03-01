@@ -44,7 +44,7 @@
           .comments-container
             .comments
               = render :partial => 'comments', :locals => {:fileId => file.id}
-    #new-comment-panel.comment{:'ng-show' => 'showNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
+    #new-comment-panel.comment{:'ng-show' => 'showingNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
       .comment-inner
         .profile-container.circular
           .profile-image.circular{:style => "background:url(#{current_user.user_fb_data.profile_image}) no-repeat"}
@@ -55,7 +55,7 @@
           .comment-text
             = text_area_tag 'newcomment', nil, :class => 'new_comment_text_field', :placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText'
         .bottom
-          %a.new-comment-cancel.text-link{:'ng-click' => 'showNewComment = false'}
+          %a.new-comment-cancel.text-link{:'ng-click' => 'showNewComment(false)'}
             Cancel
           %a.new-comment-submit.text-link{:'ng-click' => 'submitParentComment()'}
             Submit

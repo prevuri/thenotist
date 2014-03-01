@@ -7,6 +7,8 @@ $highlight-color: #27F;
 $thumbnail-width: 240px;
 $thumbnail-height: 330px;
 
+$shift-max-width: 1400px;
+
 .notes-header {
   height: 120px;
   border-bottom: #ECF0F1 solid 2px;
@@ -118,8 +120,9 @@ $thumbnail-height: 330px;
 #note-header {
   height: 120px;
   position: fixed;
-  top: 0px;
-  width: calc(100% - 160px);
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 101;
   border-bottom: #ECF0F1 solid 2px;
   background-color: rgba(255, 255, 255, 0.95);
@@ -127,13 +130,14 @@ $thumbnail-height: 330px;
 
   h1 {
     float: left;
+    margin-left: 130px;
   }
   .contributors {
     margin-left: 10px;
     margin-bottom: 10px;
     display: inline-block;
     position: absolute;
-    right: 10px;
+    right: 40px;
     bottom: 0px;
     div {
       float: left;
@@ -143,7 +147,7 @@ $thumbnail-height: 330px;
   .page-number {
     display: inline-block;
     position: absolute;
-    right: 10px;
+    right: 40px;
     top: 10px;
     div {
       float: left;
@@ -206,10 +210,44 @@ $thumbnail-height: 330px;
   }
 }
 
+#sidebar.shifted, #sidebar.shifted + #sidebar-placeholder  {
+  @media (max-width: $shift-max-width) {
+    margin-left: -100px;
+  }
+}
+
+#sidebar, #sidebar-placeholder {
+  -webkit-transition: margin 0.2s linear;
+}
+
 #note-main {
   padding-top: 125px;
   position: relative;
   height: 100%;
+
+  #note-shift-overlay {
+    display: none;
+  }
+
+  &.shifted {
+    @media (max-width: $shift-max-width) {
+      margin-left: -500px;
+      .page {
+        text-align: right;
+        margin-right: 300px;
+      }
+    }
+
+    #note-shift-overlay {
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 340px;
+      cursor: pointer;
+    }
+  }
 
   &.new-comment-showing {
     // padding-right: 50px + $comments-sidebar-width;
@@ -225,6 +263,7 @@ $thumbnail-height: 330px;
       & > * {
         display: inline-block;
         vertical-align: top;
+        text-align: left;
       }
     }
 
@@ -232,11 +271,38 @@ $thumbnail-height: 330px;
       .page-container {
         border-bottom: solid 3px #F2F5F6;
         border-right: 3px solid #F2F5F6;
+
+        .t {
+          cursor: pointer;
+          &:hover {
+            background-color: rgba(40, 120, 200, 0.1);
+            &:after {
+              content: "+";
+              color: white;
+              position: absolute;
+              z-index: 99999;
+              line-height: 0.8;
+              right: -50px;
+              bottom: 0;
+              z-index: 9999;
+              padding: 4px 5px 8px;
+              border-radius: 20px;
+              font-size: 30px;
+              font-family: Verdana;
+              background-color: rgba(40, 120, 200, 0.5);
+            }
+          }
+        }
       }
     }
 
     .comments-container {
       position: relative;
+
+      &.comments-hidden {
+        // Prevents bug where hidden comments still create width
+        overflow: hidden;
+      }
     }
 
     .comment-buttons-container {
@@ -272,6 +338,11 @@ $thumbnail-height: 330px;
   position: absolute;
   margin-top: -30px;
   left: 956px;
+
+  @media (max-width: $shift-max-width) {
+    left: auto;
+    right: 0px;
+  }
 
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
