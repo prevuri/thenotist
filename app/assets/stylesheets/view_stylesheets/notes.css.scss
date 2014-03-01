@@ -307,31 +307,51 @@ $shift-max-width: 1400px;
 
     .comment-buttons-container {
       position: relative;
-      width: 25px;
+      width: 35px;
 
       .comment-button {
         position: absolute;
         left: 5px;
 
-        i {
-          font-size: 1.5em;
-          color: #88b;
-          -webkit-transition: color 0.1s ease;
-          &:hover {
-            color: #55a;
-            cursor: pointer;
+        .profile-container {
+          width: 25px;
+          height: 25px;
+          padding: 0px;
+          border: 1px solid #ccc;
+          -webkit-transition: all 0.1s linear;
+          .overlay {
+            -webkit-transition: background-color 0.1s linear;
+            background-color: rgba(255,255,255,0.3);
           }
-          &:active, &.active {
-            color: #228;
+          &:active {
+            border-color: #888;
+            .overlay {
+              background-color: transparent;
+            }
           }
         }
+
+        &.inactive {
+          .profile-container {
+            box-shadow: none;
+          }
+        }
+
+        &.active {
+          .profile-container {
+            width: 40px;
+            height: 40px;
+            padding: 1px;
+            border: none;
+            .overlay {
+              background-color: transparent;
+            }
+          }
+        }
+
       }
     }
   }
-}
-
-#new-comment-button {
-  display: none;
 }
 
 #new-comment-panel {
@@ -402,12 +422,14 @@ $shift-max-width: 1400px;
     }
 
     &.reply {
-      margin-left: 15px;
+      margin-left: -20px;
       margin-top: 5px;
 
       .comment-inner {
-        // background-color: #f7f7f9;
-        // border-color: #d5d5d5;
+        margin-left: 34px;
+      }
+      .profile-container {
+        margin-top: 0px;
       }
     }
 
@@ -422,7 +444,7 @@ $shift-max-width: 1400px;
     .profile-container {
       width: 40px;
       height: 40px;
-      padding: 2px;
+      padding: 1px;
       float: left;
       margin-right: 10px;
       margin-left: -10px;

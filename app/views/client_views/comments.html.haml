@@ -1,10 +1,14 @@
 .comment-thread-container{:'ng-repeat' => "parentComment in file.comments", :'ng-style' => "{top: commentY(parentComment.line_id)+'px'}"}
   .comment.parent{:'ng-show' => 'expandedCommentLine == parentComment.line_id'}
     %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
+    .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments' }
+      .profile-container.circular
+        .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
+      %ng-include{:src => '"/client_views/comment.html"'}
     .new-reply-panel.comment.reply{:'ng-show' => 'parentComment.showNewReply'}
+      .profile-container.circular
+        .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
       .comment-inner
-        .profile-container.circular
-          .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
         .comment-body
           .user
             .name {{currentUser.name}}
@@ -16,5 +20,3 @@
           %a.new-comment-submit.text-link{:'ng-click' => "submitReply(parentComment, file.id, $parent.$index)"}
             Submit
         .clear
-    .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments' }
-      %ng-include{:src => '"/client_views/comment.html"'}

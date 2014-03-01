@@ -1,6 +1,4 @@
 .comment-inner{:'ng-hide' => "comment.deleted", :'ng-style' => "{opacity: comment.deleteFade ? '0.5' : '1'}"}
-  .profile-container.circular
-    .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
   .comment-body
     .user
       .name {{comment.user.name}}
