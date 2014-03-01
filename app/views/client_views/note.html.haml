@@ -1,5 +1,5 @@
 %div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init()"}
-  
+
   %link{:'ng-repeat' => 'css_file in note.uploaded_css_files', :type => "text/css", :rel => "stylesheet", :'ng-href' => "{{css_file.public_path}}"}
 
   #note-header
@@ -10,7 +10,7 @@
         /TODO make dynamic
         Page
         %span
-          1 
+          1
         of {{note.uploaded_html_files.length}}
       .profile-container.circular.prev-page
         %i.icon-angle-left
@@ -30,16 +30,16 @@
         .file-container{:'ng-init' => "getComments(file.id, $index)"}
           .page-container
             %a{ :name => "Page-{{file.page_number}}"}
-            .note-page{:'file-id' => '{{file.id}}'}  
+            .note-page{:'file-id' => '{{file.id}}'}
               %div{:'ng-include' => 'file.trusted_path'}
-        .comment-buttons-container  
+        .comment-buttons-container
           .comment-button{:'ng-repeat' => "comment in file.comments", :line_id => "{{comment.line_id}}", :'ng-click' => 'expandCommentLine(comment.line_id)', :'ng-style' => "{top: commentY(comment.line_id)+'px'}"}
             %i.icon-comments
           .comment-button#new-comment-button
             %i.icon-comments
         .comments-container
           .comments
-            %ng-include{:src => '"/assets/comments.html"'}
+            %ng-include{:src => '"/client_views/comments.html"'}
     #new-comment-panel.comment{:'ng-show' => 'showNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
       .comment-inner
         .profile-container.circular

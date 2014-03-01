@@ -19,12 +19,12 @@
     .notes-list-container
       .notes-list
         .notes-list-item.upload-form
-          %ng-include{:src => "'/assets/upload_form.html'"}
+          %ng-include{:src => "'/client_views/upload_form.html'"}
         .notes-list-item{ :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
-          %ng-include{:src => "'/assets/grid_item.html'"}
+          %ng-include{:src => "'/client_views/grid_item.html'"}
         .notes-list-item{ :'ng-repeat' => 'note in sharedNotes' }
-          %ng-include{:src => "'/assets/grid_item.html'"}
-                    
+          %ng-include{:src => "'/client_views/grid_item.html'"}
+
     .modal-container-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
       .modal-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
         %a.thumb-container{ :'ng-repeat' => "image in overview.images", :'ng-href' => "{{image.pageUrl}}" }
