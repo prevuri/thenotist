@@ -1,5 +1,7 @@
 development:
-  sqs_pdf_conversion_queue_name: document_conversion_queue_piyush
+  sqs_pdf_conversion_queue_name: document_conversion_queue_vlad
+  ddb_one_word_reverse_index_table_name: one_word_reverse_index
+  stop_word_file: config/stop_words.txt
   s3_bucket_name: thenotist
   output_html_prefix: test_html_store
   output_css_prefix: test_css_store
@@ -8,6 +10,8 @@ development:
 
 test:
   sqs_pdf_conversion_queue_name: test_document_conversion_queue
+  ddb_one_word_reverse_index_table_name: one_word_reverse_index
+  stop_word_file: config/stop_words.txt
   s3_bucket_name: thenotist
   output_html_prefix: test_html_store
   output_css_prefix: test_css_store
@@ -16,6 +20,8 @@ test:
 
 production:
   sqs_pdf_conversion_queue_name: document_conversion_queue
+  ddb_one_word_reverse_index_table_name: one_word_reverse_index
+  stop_word_file: config/stop_words.txt
   s3_bucket_name: thenotist
   output_html_prefix: html_store
   output_css_prefix: css_store
