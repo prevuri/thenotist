@@ -43,7 +43,10 @@ class Api::NotesController < ApplicationController
       end
     end
 
-
+    return render :json => {
+      :success => false,
+      :error_message => @fail_reason,
+    }, :status => 409
   end
 
   def show
