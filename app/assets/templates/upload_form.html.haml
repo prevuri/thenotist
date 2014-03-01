@@ -1,10 +1,11 @@
 .create-new-note-container{:'ng-controller' => 'UploadCtrl', :'ng-init' => "init()"}
-  .big-button-container{"data-toggle" => "modal", "data-target" => ".new-note-form-container" }
-    .create-new-note-button{:'ng-hide' => 'uploadShowing'}
+  .big-button-container{:'ng-hide' => 'uploadShowing', "data-toggle" => "modal", "data-target" => ".new-note-form-container" }
+    .create-new-note-button
       %i.icon-circle-arrow-up.icon-white
       %h2
         Upload a new note
-    .create-new-note-button{:'ng-show' => 'uploadShowing'}
+  .big-button-container{:'ng-show' => 'uploadShowing'}
+    .create-new-note-button
       %i.icon-refresh.icon-white.icon-spin
 
 
