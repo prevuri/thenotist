@@ -3,7 +3,7 @@
   .img-preview{:'ng-show' => 'note.processed', :style => 'background: url({{note.uploaded_thumb_files[0].public_path}}) no-repeat 50% 10%'}
   .process-spinner{:'ng-show' => '!note.processed'}
     %i.icon-refresh.icon-white.icon-spin
-    %h4
+    %h2
       Processing...
   .info-preview
     %h2{:'ng-show' => 'note.processed'}
