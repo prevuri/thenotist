@@ -25,8 +25,29 @@
         .notes-list-item{ :'ng-repeat' => 'note in sharedNotes' }
           %ng-include{:src => "'/client_views/grid_item.html'"}
 
-    .modal-container-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
-      .modal-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
-        %a.thumb-container{ :'ng-repeat' => "image in overview.images", :'ng-href' => "{{image.pageUrl}}" }
-          %img.thumb-image{ :'ng-src' => "{{image.src}}" }
-    .full-screen-overlay{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
+    .share-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
+      .share-note-container.modal-body
+        .form-container
+          .form
+        %h4 Note Shared With:
+        .contributor-list
+          .contrib-list-item{:'ng-repeat' => 'contrib in note.contributors'}
+            .contrib-info
+              .profile-container.circular
+                %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+              .profile-link-container
+                %a{:'ng-href' => '{{profilePath(contrib.user)}}'} {{contrib.user.name}}
+              .delete-contrib
+                %i.icon-remove.btn
+      .share-interaction.modal-footer
+        .error-label.hidden
+        .btn.btn-primary.share-button{:'ng-click' => 'shareNote($event)'}
+          %i.icon-share-alt.share-note-icon
+            .share-action-text
+              Share                 
+
+    / .modal-container-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
+    /   .modal-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
+    /     %a.thumb-container{ :'ng-repeat' => "image in overview.images", :'ng-href' => "{{image.pageUrl}}" }
+    /       %img.thumb-image{ :'ng-src' => "{{image.src}}" }
+    / .full-screen-overlay{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }

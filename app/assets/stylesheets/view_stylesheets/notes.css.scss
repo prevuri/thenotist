@@ -736,6 +736,21 @@ $shift-max-width: 1400px;
           position: absolute;
         }
 
+        .process-spinner {
+          position: absolute;
+          z-index: 103;
+          top: calc(50% - 69px);
+          left: calc(50% - 72px);
+          font-size: 7em;
+          color: #fff;
+          
+          i {
+            margin-left: 24px;
+          }
+
+        }
+
+
         .info-preview {
           background-color: RGBA(160, 65, 54, 0.7);
           position: absolute;
@@ -869,8 +884,13 @@ $shift-max-width: 1400px;
 
     .create-new-note-button {
       position: absolute;
-      top: 27%;
-      left: 27%;
+      top: calc(50% - 76px);
+      left: calc(50% - 105px);
+  
+      h2.process {
+        margin-left: 30px;
+      }
+
       // width: 400px;
       i {
         margin-left: 31%;
@@ -879,7 +899,7 @@ $shift-max-width: 1400px;
         clear: both;
 
         &.icon-refresh {
-          margin-left: 72%;
+          margin-left: 59px;
         }
       }
     }
