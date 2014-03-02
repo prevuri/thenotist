@@ -6,6 +6,8 @@
       = sidebar_link 'Profile', '/profile', 'icon-user icon-2x'
       = sidebar_link 'Notes', '/notes', 'icon-file icon-2x'
       = sidebar_link 'Buddies', '/buddies', 'icon-group icon-2x'
+      - if current_user.admin?
+        = sidebar_link 'Admin', '/admin', 'icon-group icon-2x'
     .nav.nav-list-bottom
       = sidebar_link 'Settings', '/settings', 'icon-cog'
       %li

@@ -73,3 +73,25 @@
           alert('Error deleting comment')
           comment.deleteFade = false
       )
+
+  $scope.resetFlagReportForm = () ->
+    $('#flag-description-field').val('')
+    $("input:radio[name=flag_report_category][id=default]").prop('checked', true) 
+
+
+  $scope.submitReport = (noteId) ->
+    
+    data = {'note_id': noteId, 'report_type': $("input:radio[name=flag_report_category]").val(), 'report_description': $('#flag-description-field').val(),
+          }
+    $http({method: 'POST', url: '/api/flag_reports', params: data}).
+      success( (data, status, headers, config) ->
+        console.log("Flag Report has been sent")
+        $('.flag-report-form-container').modal('hide');
+        $scope.resetFlagReportForm();
+        #TODO update with angular alerts
+        alert "Thank you! Your flag report has been sent."
+      ).error( (data, status, headers, config) ->
+        alert data        
+        #TODO update with angular alerts
+        alert "Sorry! Your flag report failed to send."
+      )

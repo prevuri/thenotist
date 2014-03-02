@@ -22,6 +22,9 @@ class User < ActiveRecord::Base
   has_many :shared_notes, through: :contributed_to
   has_many :shared_uploaded_files, through: :shared_notes, source: :uploaded_files
 
+  def admin?
+    AdminUsers.find_by_uid(self.uid) != nil
+  end
 
   def has_note_processing?
     self.notes.select { |n| !n.processed }.count > 0

@@ -5,6 +5,7 @@ class CreateFlagReports < ActiveRecord::Migration
       t.boolean :report_resolved
       t.boolean :doc_removed
       t.string :description
+      t.string :report_type
 
       t.timestamps
     end

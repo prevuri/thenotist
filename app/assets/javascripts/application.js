@@ -27,4 +27,5 @@
 // Removing these requirements for gem
 // require bootstrap
 //= require_directory ../../../vendor/assets/javascripts/flat-ui/
+//= require d3
 

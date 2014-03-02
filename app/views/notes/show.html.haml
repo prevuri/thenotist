@@ -1,14 +1,31 @@
+%div{:'ng-controller' => 'NoteCtrl'}
 - @note.uploaded_css_files.each do |css_file|
   %link{:type => "text/css", :rel => "stylesheet", :href => css_file.public_path}
 %div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init(#{@note.id})"}
-
   #note-header
     %h1.note-title= @note.title
-	.btn.btn-large.btn-primary#flag_report_btn{ :note_id => @note.id } Flag as Spam
+    / .btn.btn-large.btn-primary#flag_report_btn{ :note_id => @note.id, :'ng-click' => "submitReport(#{@note.id})" } Flag as Spam
+    .btn.btn-large.btn-primary#flag_report_btn{ "data-toggle" => "modal", "data-target" => ".flag-report-form-container" } Flag as Spam
     .note-description= @note.description
     #header-border
+
+  .flag-report-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true }
+    .form-container.modal-body
+      .form-container
+        =form_for :new_flag_report, :html => { :id => "flag_report_form_tag", :'ng-submit' => 'submit()' } , :url => api_flag_reports_path, :method => :post do |f|
+          %input{:type => "radio", :name => "flag_report_category", :id => "default", :value => "Legal - Privacy, Copyright, or Other", :checked => "checked" } Privacy, copyright, or or other legal complaints
+          %br
+          %input{:type => "radio", :name => "flag_report_category", :value => "Content - Intentionally Inaccurate"} Intentionally inaccurate content
+          %br
+          %input{:type => "radio", :name => "flag_report_category", :value => "Content - Hateful or Abusive"} Hateful or abusive content
+          %br
+          %input{:type => "radio", :name => "flag_report_category", :value => "Content - Violent or Repulsive"} Violent or repulsive content
+          #description-field.text-field
+            =f.text_field :description, :id => 'flag-description-field', :placeholder => "Enter note description (optional)"
+    .form-container.modal-footer
+      .btn.btn-primary.submit-action{ :note_id => @note.id, :'ng-disabled' => '!controlsEnabled', :'ng-click' => "submitReport(#{@note.id})" }
+        .submit-action-text Send Report
   #note-main
-    
     .note-pages
       - @note.uploaded_files.each_with_index do |file, i|
         .page

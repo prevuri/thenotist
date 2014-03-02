@@ -1,5 +1,7 @@
 require 'sidekiq/web'
 TheNotist::Application.routes.draw do
+  get "admin/index"
+
   resources :activities
 
   get "buddies/index"
@@ -22,6 +24,7 @@ TheNotist::Application.routes.draw do
   resources :notes
   match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
 
+  resources :admin, :only => [:index]
   resources :profile
   resources :flag_reports, :only => [:index]
   resources :buddies, :only => [:index]
@@ -29,7 +32,7 @@ TheNotist::Application.routes.draw do
   match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
 
   namespace :api do
-    resources :flag_reports, :only => [ :index, :create ]
+    resources :flag_reports, :only => [ :index, :create, :update ]
     resources :buddies, :only => [ :index ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]

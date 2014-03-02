@@ -7,6 +7,11 @@ $highlight-color: #27F;
 $thumbnail-width: 240px;
 $thumbnail-height: 330px;
 
+#flag_report_btn {
+  float: right;
+  margin-right: 10%;
+}
+
 .notes-index-page {
   .full-screen-overlay {
     // position: absolute;
@@ -74,6 +79,10 @@ $thumbnail-height: 330px;
     font-weight: 300;
     color: #5B5B5B;
     margin-left: 30px;
+  }
+
+  .header {
+    display: table-cell;
   }
 }
 

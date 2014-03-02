@@ -2,7 +2,7 @@ class Api::FlagReportsController < ApplicationController
   include ApiHelper
 
   # before_filter :check_authenticated_user! # TODO: UNCOMMENT ME
-  before_filter :get_note, :only => [ :create ]
+  before_filter :get_type, :get_note, :get_description, :only => [ :create ]
 
   def index
     return render :json => {
@@ -13,7 +13,8 @@ class Api::FlagReportsController < ApplicationController
 
   def create
     begin
-      @flagreport = @note.flag_reports.create(:report_resolved => false)
+      @flagreport = @note.flag_reports.create(:report_resolved => false, :description => @description, :report_type => @type)
+
       return render :json => {
         :success => true
       }
@@ -25,11 +26,29 @@ class Api::FlagReportsController < ApplicationController
     end
   end
 
+  def update
+    @report = FlagReport.find(params[:report_id])
+    if(@report.report_resolved == true)
+      @report.update_attributes(:report_resolved => false)
+    else
+      @report.update_attributes(:report_resolved => true)
+    end
+    return render :json => {
+      :success => true
+    }
+  end
+
 private
+  def get_type
+    @type = params[:report_type]
+  end
+  def get_description
+    @description = params[:report_description]
+  end
   def get_note
     current_user = User.first # TODO: REMOVE ME
     begin
-      @note = current_user.notes.find(params[:note_id]) # throws an exception if nothing is found
+      @note = current_user.notes.find(params[:note_id]) # throws an exception if nothing is found      
     rescue
       return render :json => {
         :success => false,

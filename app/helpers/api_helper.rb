@@ -1,5 +1,9 @@
 module ApiHelper
   # custom error messages
+  def flag_report_create_error
+    "Failed to create flag report"
+  end
+
   def user_not_logged_in_error
     "No user currently logged in."
   end
