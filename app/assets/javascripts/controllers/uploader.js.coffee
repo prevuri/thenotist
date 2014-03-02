@@ -65,7 +65,7 @@
     }}).
     success( (data, status, headers, config) ->
       $scope.resetUI()
-      $scope.$parent.init()
+      $scope.$parent.updateNotes()
     )
     .error( (data, status, headers, config) ->
       $scope.handleError()

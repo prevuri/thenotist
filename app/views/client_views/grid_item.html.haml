@@ -1,13 +1,18 @@
 .note-item
-  / %i.icon-th.btn.overview-btn.appear-hover{ :'ng-click' => "showOverview('{{api_note_path(note)}}')" }
-  %a.big-link{:'ng-href' => '/notes/{{note.id}}'}
-  .img-preview{:style => 'background: url({{note.uploaded_thumb_files[0].public_path}}) no-repeat 50% 10%'}
+  %a.big-link{:'ng-show' => 'note.processed',:'ng-href' => '/notes/{{note.id}}'}
+  .img-preview{:'ng-show' => 'note.processed', :style => 'background: url({{note.uploaded_thumb_files[0].public_path}}) no-repeat 50% 10%'}
+  .process-spinner{:'ng-show' => '!note.processed'}
+    %i.icon-refresh.icon-white.icon-spin
+    %h4
+      Processing...
   .info-preview
-    %h2
+    %h2{:'ng-show' => 'note.processed'}
       %a.text-link{:'ng-href' => '/notes/{{note.id}}'} {{note.title}}
-    %h4.description
+    %h2{:'ng-show' => '!note.processed'}
+      %a.text-link{:'ng-href' => '#'} {{note.title}}
+    %h4.description{:'ng-show' => 'note.processed'}
       {{note.description}}
-  .btn-group.appear-hover
+  .btn-group.appear-hover{:'ng-show' => 'note.processed'}
     %div{:'ng-if' => 'note.isShared'}
       %a.btn.usub{:'ng-href' => '{{note.unsubscribe_url}}'}
         %i.icon-remove
@@ -15,32 +20,32 @@
       %a{:'ng-click' => 'deleteNote(note, $index)'}
         %i.icon-remove.btn
   
-  %div{:'ng-if' => 'note.isShared'}
-    .share-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
-      .share-note-container.modal-body
-        .form-container
-          .form
-        %h4 Note Shared With:
-        .contributor-list
-          .contrib-list-item{:'ng-repeat' => 'contrib in note.contributors'}
-            .contrib-info
-              .profile-container.circular
-                %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
-              .profile-link-container
-                %a{:'ng-href' => '{{profilePath(contrib.user)}}'} {{contrib.user.name}}
-              .delete-contrib
-                %i.icon-remove.btn
-              / TODO: create a delete friend link and connect it to the delete friend for the API
+  / %div{:'ng-if' => 'note.isShared'}
+  /   .share-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
+  /     .share-note-container.modal-body
+  /       .form-container
+  /         .form
+  /       %h4 Note Shared With:
+  /       .contributor-list
+  /         .contrib-list-item{:'ng-repeat' => 'contrib in note.contributors'}
+  /           .contrib-info
+  /             .profile-container.circular
+  /               %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+  /             .profile-link-container
+  /               %a{:'ng-href' => '{{profilePath(contrib.user)}}'} {{contrib.user.name}}
+  /             .delete-contrib
+  /               %i.icon-remove.btn
+  /             / TODO: create a delete friend link and connect it to the delete friend for the API
       
-      .share-interaction.modal-footer
-        .error-label.hidden
-        .btn.btn-primary.share-button
-          %i.icon-share-alt.share-note-icon
-            .share-action-text
-              Share
+  /     .share-interaction.modal-footer
+  /       .error-label.hidden
+  /       .btn.btn-primary.share-button
+  /         %i.icon-share-alt.share-note-icon
+  /           .share-action-text
+  /             Share
 
 
-  #list-footer{ :'ng-hide' => 'hide' }
+  #list-footer{:'ng-show' => 'note.processed'}
     .big-info
       .contributors
         %div{:'ng-repeat' => 'contrib in note.contributors'}
