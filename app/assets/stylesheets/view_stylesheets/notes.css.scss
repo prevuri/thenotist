@@ -218,6 +218,8 @@ $shift-max-width: 1400px;
 
 #sidebar, #sidebar-placeholder {
   -webkit-transition: margin 0.2s linear;
+  -moz-transition: margin 0.2s linear;
+  transition: margin 0.2s linear;
 }
 
 #note-main {
@@ -236,16 +238,16 @@ $shift-max-width: 1400px;
         text-align: right;
         margin-right: 300px;
       }
-    }
 
-    #note-shift-overlay {
-      display: block;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 340px;
-      cursor: pointer;
+      #note-shift-overlay {
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 340px;
+        cursor: pointer;
+      }
     }
   }
 
@@ -318,9 +320,13 @@ $shift-max-width: 1400px;
           height: 25px;
           padding: 0px;
           border: 1px solid #ccc;
-          -webkit-transition: all 0.1s linear;
+          -webkit-transition: all 0.2s linear;
+          -moz-transition: all 0.2s linear;
+          transition: all 0.2s linear;
           .overlay {
             -webkit-transition: background-color 0.1s linear;
+            -moz-transition: background-color 0.1s linear;
+            transition: background-color 0.1s linear;
             background-color: rgba(255,255,255,0.3);
           }
           &:active {
@@ -364,9 +370,9 @@ $shift-max-width: 1400px;
     right: 0px;
   }
 
-  -webkit-transition: all 0.3s ease;
-  -moz-transition: all 0.3s ease;
-  transition: all 0.3s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  transition: all 0.2s ease;
   opacity: 1;
 
   &.ng-hide-add, &.ng-hide-remove {
@@ -375,33 +381,37 @@ $shift-max-width: 1400px;
   &.ng-hide {
     opacity: 0;
     left: 936px;
+    @media (max-width: $shift-max-width) {
+      left: auto;
+      right: 20px;
+    }
   }
 }
 
-#new-comment-panel, .new-reply-panel {
-  #newcomment {
-    min-height: 40px;
-    resize: none;
+#new-comment-panel, .comment .new-reply-panel {
+  .comment-inner {
     border: none;
-    border-bottom: 1px solid #aaa;
-    border-radius: 4px 4px 0 0;
-    margin: 0;
+    margin-left: 10px;
   }
-
-  .new-comment-submit {
-    outline: none;
-  }
-
-  // .btndiv {
-  //   text-align: right;
-  //   .btn {
-  //     display: inline-block;
-  //     margin: 6px 5px;
-  //   }
-  // }
-
 }
 
+#newcomment, .comment .new-reply-panel .newreply {
+  min-height: 60px;
+  overflow: hidden;
+  width: 100%;
+  resize: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #f2f2f0;
+
+  // Don't change margin/padding, affects autoresizing
+  margin: 0; 
+  padding: 0;
+}
+
+.new-comment-submit {
+  outline: none;
+}
 
 .comment-thread-container {
   position: absolute;
@@ -410,7 +420,17 @@ $shift-max-width: 1400px;
 .comment {
     margin-left: 10px;
     width: 300px;
-    // position: relative;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+    &.ng-hide-add, &.ng-hide-remove {
+      display: block !important;
+    }
+    &.ng-hide {
+      opacity: 0;
+      margin-top: -20px;
+      margin-left: -20px;
+    }
 
     .comment-inner {
       border-radius: 10px 4px 4px;
@@ -424,7 +444,9 @@ $shift-max-width: 1400px;
     &.reply {
       margin-left: -20px;
       margin-top: 5px;
-
+      .profile-container {
+        margin-left: -10px;
+      }
       .comment-inner {
         margin-left: 34px;
       }
@@ -439,7 +461,7 @@ $shift-max-width: 1400px;
 
     .user {
       font-weight: bold;
-      margin-bottom: 3px;
+      margin-bottom: 5px;
     }
     .profile-container {
       width: 40px;
@@ -447,31 +469,45 @@ $shift-max-width: 1400px;
       padding: 1px;
       float: left;
       margin-right: 10px;
-      margin-left: -10px;
-      margin-top: -10px;
+      margin-left: -34px;
     }
     .comment-body {
       overflow: auto;
     }
     .comment-text {
       color: #222;
+      white-space: normal;
     }
     .bottom {
       margin-top: 4px;
+      .text-link {
+        float: left;
+        color: #34495E;
+        font-weight: normal;
+        margin-right: 20px;
+        line-height: 20px;
+        &:hover {
+          text-decoration: none;
+        }
+        &.primary {
+          color: #268;
+          font-weight: bold;
+          &:hover {
+            color: #024;
+          }
+        }
+        &.secondary {
+          color: #aaa;
+          float: left;
+          &:hover {
+            color: #666;
+          }
+        }
+      }
     }
     .comment-date {
       color: #aaa;
-      float: left;
-    }
-    .bottom {
-      .text-link {
-        float: right;
-        color: #34495E;
-        font-weight: normal;
-      }
-    }
-    .reply-button {
-      margin-left: 10px;
+      float: right;
     }
     .delete-confirm-panel {
       background-color: #bbb;
@@ -525,6 +561,8 @@ $shift-max-width: 1400px;
         .appear-hover {
           opacity: 0;
           -webkit-transition: opacity 0.2s ease;
+          -moz-transition: opacity 0.2s ease;
+          transition: opacity 0.2s ease;
           z-index: 104;
           .btn {
             border-radius: 0 !important;

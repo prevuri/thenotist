@@ -13,10 +13,10 @@
           .user
             .name {{currentUser.name}}
           .comment-text
-            %input#newcomment.new_comment_text_field{:type => 'textarea', :placeholder => 'Enter your comment here', :'ng-model' => 'parentComment.newReplyText'}
+            %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'parentComment.newReplyText', :'textarea-autoheight' => true, :autofocus => 'parentComment.showNewReply'}
         .bottom
-          %a.new-comment-cancel.text-link{:'ng-click' => 'parentComment.showNewReply = false'}
+          %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, $parent.$index)"}
+            Add Comment
+          %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'parentComment.showNewReply = false'}
             Cancel
-          %a.new-comment-submit.text-link{:'ng-click' => "submitReply(parentComment, file.id, $parent.$index)"}
-            Submit
         .clear

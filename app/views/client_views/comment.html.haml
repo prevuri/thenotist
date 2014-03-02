@@ -4,11 +4,11 @@
       .name {{comment.user.name}}
     .comment-text {{comment.text}}
   .bottom
-    .comment-date {{comment.time_string}}
-    %a.reply-button.text-link{:'ng-if' => "canReply(comment)", :'ng-click' => "comment.showNewReply = true"}
+    %a.reply-button.primary.text-link{:'ng-if' => "canReply(comment)", :'ng-click' => "comment.showNewReply = true"}
       Reply
-    %a.delete-button.text-link{:'ng-if' => "comment.owned_by_user", :'ng-click' => "comment.showDeleteConfirm = true"}
+    %a.delete-button.secondary.text-link{:'ng-if' => "comment.owned_by_user", :'ng-click' => "comment.showDeleteConfirm = true"}
       Delete
+    .comment-date {{comment.time_string}}
   .clear
   .delete-confirm-panel{:'ng-show' => "comment.showDeleteConfirm"}
     .delete-cancel.btn{:'ng-click' => "comment.showDeleteConfirm = false"} Cancel
