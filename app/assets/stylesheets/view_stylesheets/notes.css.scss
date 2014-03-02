@@ -216,12 +216,6 @@ $shift-max-width: 1400px;
   }
 }
 
-#sidebar, #sidebar-placeholder {
-  -webkit-transition: margin 0.2s linear;
-  -moz-transition: margin 0.2s linear;
-  transition: margin 0.2s linear;
-}
-
 #note-main {
   padding-top: 125px;
   position: relative;
