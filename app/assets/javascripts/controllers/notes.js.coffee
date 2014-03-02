@@ -14,7 +14,9 @@
     console.log '[Angular] NotesCtrl being initialized'
     $scope.$root.title = 'Notes'
     $scope.$root.section = 'notes'
+    $scope.button = 'name'
     $scope.updateNotes()
+    $scope.colorize()
 
   $scope.updateNotes = () ->
     success = (data) ->
@@ -26,6 +28,12 @@
     error = (data) ->
       $scope.setAlert("Error loading notes list", false)
     NotesApi.get(success, error)
+
+  $scope.colorize = () ->
+    $(".info-preview").each( () ->
+      hue = 'rgba(' + (Math.floor((256-199)*Math.random())) + ',' + (Math.floor((256-199)*Math.random())) + ',' + (Math.floor((256-199)*Math.random())) + ', 0.7)';
+      $(this).css("background-color", hue)
+    )
 
   $scope.deleteNote = (note, index) ->
     success = (data) ->

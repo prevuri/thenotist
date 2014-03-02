@@ -2,25 +2,25 @@
   .notes-header
     %h1 Notes
     .search-box.form-group
-      %input.form-control{:type => 'text'}
+      %input.form-control{:type => 'text', :'ng-model' => 'searchText'}
       %span.input-icon.icon-search
     .sorting-options
       %ul
-        %li.btn.active
+        %li.btn{:'ng-click'=> "predicate='title'; reverse=!reverse; button='name'", :'ng-class'=>"{ 'active' : button == 'name' }"}
           Name
-        %li.btn
+        %li.btn{:'ng-click'=> "predicate='created_at'; reverse=!reverse; button='date'", :'ng-class'=>"{ 'active' : button == 'date' }"}
           Date
-        %li.btn
-          Shared
-        %li.btn
-          Uploaded
+        / %li.btn{:'ng-click'=> "predicate='title'; reverse=false; button='name'", :'ng-class'=>"{ 'active' : button == 'name' }"}
+        /   Shared
+        / %li.btn{:'ng-click'=> "predicate='title'; reverse=false; button='name'", :'ng-class'=>"{ 'active' : button == 'name' }"}
+        /   Uploaded
 
   .notes-index-page
     .notes-list-container
       .notes-list
         .notes-list-item.upload-form
           %ng-include{:src => "'/client_views/upload_form.html'"}
-        .notes-list-item{ :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
+        .notes-list-item{ :'ng-repeat' => 'note in notes | filter:searchText | orderBy:predicate:reverse', :'ng-mouseover' => 'note.tooltipHidden = true' }
           %ng-include{:src => "'/client_views/grid_item.html'"}
         .notes-list-item{ :'ng-repeat' => 'note in sharedNotes' }
           %ng-include{:src => "'/client_views/grid_item.html'"}
