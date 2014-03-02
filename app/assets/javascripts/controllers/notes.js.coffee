@@ -14,6 +14,7 @@
     console.log '[Angular] NotesCtrl being initialized'
     $scope.$root.title = 'Notes'
     $scope.$root.section = 'notes'
+    $scope.button = 'name'
     $scope.updateNotes()
     $scope.colorize()
 
