@@ -22,6 +22,11 @@
     success = (data) ->
       $scope.notes = data.notes
       for note in $scope.notes
+        if note.user.id == $scope.currentUser.id
+          note.shared = false
+        else
+          note.shared = true
+
         if !note.processed
           $scope.notesProcessing.push note.id
           $scope.initPolling(note.id)
