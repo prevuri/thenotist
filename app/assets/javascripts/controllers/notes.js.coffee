@@ -65,6 +65,12 @@
   #   $scope.notesProcessing.push args.id
   #   $scope.initPolling(args.id)
   # )
+  
+  $scope.noteInNotes = (noteId) ->
+    for note in $scope.notes
+      if noteId == note.id
+        return note
+    null
 
   $scope.checkNoteStatus = (noteId) ->
     success = (data) ->
