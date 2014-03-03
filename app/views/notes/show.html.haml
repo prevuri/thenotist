@@ -5,7 +5,6 @@
 %div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init(#{@note.id})"}
   #note-header
     %h1.note-title= @note.title
-    / .btn.btn-large.btn-primary#flag_report_btn{ :note_id => @note.id, :'ng-click' => "submitReport(#{@note.id})" } Flag as Spam
     .btn.btn-large.btn-primary#flag_report_btn{ "data-toggle" => "modal", "data-target" => ".flag-report-form-container" } Flag as Spam
     .note-description= @note.description
     .page-number

@@ -1,6 +1,7 @@
 # require 'sidekiq/web'
 TheNotist::Application.routes.draw do
-  get "admin/index"
+  # get "admin/index"
+  # get "flag_reports/index"
 
   resources :activities
 
@@ -25,6 +26,9 @@ TheNotist::Application.routes.draw do
   # resources :notes
   match "/profile" => redirect("/?goto=profile")
   match "/profile/*id" => redirect("/?goto=profile/%{id}")
+
+  match "/admin" => redirect("/?goto=admin")
+  match "/flag_reports" => redirect("/?goto=flag_reports")
 
   resources :profile
   resources :flag_reports, :only => [:index]

@@ -12,11 +12,11 @@
         %a.btn.btn-large.btn-block{:href => '/notes', :'ng-class' => "{active: section == 'notes'}"}
           %i.icon-file.icon-2x
           .text Notes
-	  - if current_user.admin?
-		%li
-        	%a.btn.btn-large.btn-block{:href => '/admin', :'ng-class' => "{active: section == 'admin'}"}
-          		%i.icon-file.icon-2x
-          		.text Admin
+      - if current_user.admin?
+        %li
+          %a.btn.btn-large.btn-block{:href => '/admin', :'ng-class' => "{active: section == 'admin'}"}
+            %i.icon-file.icon-2x
+            .text Admin
     .nav.nav-list-bottom
       %li
         %a.btn.btn-large.btn-block{:href => '/settings'}

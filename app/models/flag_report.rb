@@ -4,7 +4,8 @@ class FlagReport < ActiveRecord::Base
 
   def as_json
     {
-      :created_at => created_at, 
+      :id => id,
+      :created_at => created_at.to_formatted_s(:long_ordinal), 
       :description => description, 
       :note => note.as_json,
       :doc_removed => doc_removed,
