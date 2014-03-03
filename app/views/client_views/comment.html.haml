@@ -2,7 +2,7 @@
   .comment-body
     .user
       .name {{comment.user.name}}
-    .comment-text {{comment.text}}
+    %textarea.comment-text{:'textarea-autoheight-readonly' => true, :readonly => true} {{comment.text}}
   .bottom
     %a.reply-button.primary.text-link{:'ng-if' => "canReply(comment)", :'ng-click' => "comment.showNewReply = true"}
       Reply

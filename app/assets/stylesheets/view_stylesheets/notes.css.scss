@@ -389,18 +389,20 @@ $shift-max-width: 1400px;
   }
 }
 
-#newcomment, .comment .new-reply-panel .newreply {
-  min-height: 60px;
+textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   overflow: hidden;
   width: 100%;
   resize: none;
   border: none;
   border-radius: 0;
-  border-bottom: 1px solid #f2f2f0;
-
   // Don't change margin/padding, affects autoresizing
   margin: 0; 
   padding: 0;
+}
+
+#newcomment, .comment .new-reply-panel .newreply {
+  min-height: 60px;
+  border-bottom: 1px solid #f2f2f0;
 }
 
 .new-comment-submit {
@@ -471,6 +473,7 @@ $shift-max-width: 1400px;
       overflow: auto;
     }
     .comment-text {
+      background-color: inherit;
       color: #222;
       white-space: normal;
     }

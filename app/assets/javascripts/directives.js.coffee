@@ -65,6 +65,13 @@ notistApp.directive('ngSpinner', () ->
     scope.$watch('newCommentText', setHeight, true)
 )
 
+.directive('textareaAutoheightReadonly', () ->
+  link: (scope, el, attrs) ->
+    scope.$watch('expandedCommentLine', () ->
+      $(el).height(el[0].scrollHeight)
+    , true)
+)
+
 .directive('autofocus', () ->
   link: (scope, el, attrs) ->
     setFocus = (value) ->
