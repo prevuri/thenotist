@@ -9,7 +9,7 @@
 
   %body{ :'ng-controller' => 'MainCtrl', :'ng-keyup' => 'keypress()', :'ng-init' => "currentUser = #{current_user.as_json.to_json}"}
     .row
-      #sidebar.span3
+      #sidebar.span3{ :'ng-class' => 'pageShifted ? "shifted" : ""'}
         = render 'layouts/sidebar'
       #sidebar-placeholder.span3
       #main{:role => "main"}

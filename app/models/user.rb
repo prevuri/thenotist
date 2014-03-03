@@ -103,6 +103,7 @@ class User < ActiveRecord::Base
 
   def as_json
     {
+      :id => id,
       :name => name,
       :email => email,
       :member_since => created_at,

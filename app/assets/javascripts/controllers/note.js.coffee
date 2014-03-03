@@ -24,10 +24,14 @@
         $scope.setAlert("Error loading comments from server", false)
     )
 
+  $scope.showNewComment = (show) ->
+    $scope.showingNewComment = show
+    $scope.$root.pageShifted = show
+
   $scope.lineClick = (lineId) ->
     $scope.newCommentLineId = lineId
     $scope.parentId = null
-    $scope.showNewComment = true
+    $scope.showNewComment(true)
     lineEl = $('[data-guid='+lineId+']')
     $scope.newCommentY = $(lineEl).offset().top
     $scope.newCommentFileId = this.$parent.file.id
@@ -35,13 +39,17 @@
     $scope.expandedCommentLine = null
 
   $scope.commentY = (lineId) ->
-    $('[data-guid='+lineId+']').position().top
+    el = $('[data-guid='+lineId+']')
+    $(el).offset().top - $(el).parents('.note-page').offset().top
 
   $scope.canReply = (comment) ->
     comment.parent_comment_id == null
 
   $scope.expandCommentLine = (lineId) ->
     $scope.expandedCommentLine = if $scope.expandedCommentLine == lineId then null else lineId
+    $scope.$root.pageShifted = $scope.expandedCommentLine != null
+    if $scope.expandedCommentLine != null
+      $scope.showingNewComment = false
 
   $scope.submitParentComment = () ->
     $scope.submitComment($scope.newCommentText, $scope.newCommentFileId, null, $scope.newCommentFileIndex)
@@ -66,7 +74,7 @@
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
           $scope.note.uploaded_html_files[fileIndex].comments = data.comments
-          $scope.showNewComment = false
+          $scope.showNewComment(false)
           $scope.submitting = false
           $scope.newCommentText = null
         ).error( (data, status, headers, config) ->

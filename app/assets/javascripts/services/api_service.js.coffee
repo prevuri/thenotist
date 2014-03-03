@@ -5,6 +5,9 @@ service.factory("NotesApi", ($resource) ->
     "/api/notes/:id", {},
     delete: {
       method: 'DELETE'
+    },
+    update: {
+      method: 'PUT'
     }
   )
 ).factory("FlagReportsApi", ($resource) ->

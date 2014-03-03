@@ -31,7 +31,8 @@ class Api::NotesController < ApplicationController
         queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
         queue.send_message(sqs_message(@note.id, s3_key))
         return render :json => {
-          :success => true
+          :success => true,
+          :noteId => @note.id
         }
       rescue => ex
         @fail_reason = "unknown"
@@ -43,7 +44,10 @@ class Api::NotesController < ApplicationController
       end
     end
 
-
+    return render :json => {
+      :success => false,
+      :error_message => @fail_reason,
+    }, :status => 409
   end
 
   def show

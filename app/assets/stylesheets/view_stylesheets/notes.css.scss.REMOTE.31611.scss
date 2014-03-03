@@ -7,14 +7,7 @@ $highlight-color: #27F;
 $thumbnail-width: 240px;
 $thumbnail-height: 330px;
 
-<<<<<<< HEAD
-#flag_report_btn {
-  float: right;
-  margin-right: 10%;
-}
-=======
 $shift-max-width: 1400px;
->>>>>>> 4e63e75f0826acabe47c47c2c2cbbc19ba17162a
 
 .notes-header {
   height: 120px;
@@ -250,14 +243,6 @@ $shift-max-width: 1400px;
         cursor: pointer;
       }
     }
-  }
-
-  #flag_report_btn {
-    float:right;
-  }
-
-  #flag_report_btn {
-    float:right;
   }
 
   &.new-comment-showing {

@@ -1,8 +1,5 @@
 # require 'sidekiq/web'
 TheNotist::Application.routes.draw do
-  # get "admin/index"
-  # get "flag_reports/index"
-
   resources :activities
 
   get "buddies/index"
