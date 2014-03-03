@@ -1,0 +1,20 @@
+.share-note-form-container.modal.hide.fade{ :'ng-controller' => 'ShareCtrl', :'ng-init' => "init()", :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
+  .share-note-container.modal-body
+    .form-container
+      .form
+    %h4 Note Shared With:
+    .contributor-list
+      .contrib-list-item{:'ng-repeat' => 'contrib in note.contributors'}
+        .contrib-info
+          .profile-container.circular
+            %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+          .profile-link-container
+            %a{:'ng-href' => '{{profilePath(contrib.user)}}'} {{contrib.user.name}}
+          .delete-contrib
+            %i.icon-remove.btn
+  .share-interaction.modal-footer
+    .error-label.hidden
+    .btn.btn-primary.share-button{:'ng-click' => 'shareNote($event)'}
+      %i.icon-share-alt.share-note-icon
+        .share-action-text
+          Share  

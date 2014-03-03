@@ -54,7 +54,7 @@
       $scope.uploadShowing = true
       $scope.controlsEnabled = false
       $scope.modalShowing = false
-      $('.new-note-form-container').modal('hide');
+      $('.new-note-form-container').modal('hide')
       $('.direct-upload-submit').trigger('click')
 
   $scope.s3UploadComplete = (s3KeyVal) ->

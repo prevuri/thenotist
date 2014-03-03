@@ -47,6 +47,9 @@
       $scope.setAlert("Error deleting note", false)
     NotesApi.delete({id: note.id}, success, error)
 
+  $scope.shareNote = (noteId) ->
+    $scope.$broadcast('shareNoteClick', {id: noteId})
+    
   # $scope.shareNote = () ->
   #   success = (data) ->
   #     $scope.notes = data.notes
