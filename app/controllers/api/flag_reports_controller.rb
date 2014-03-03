@@ -7,7 +7,9 @@ class Api::FlagReportsController < ApplicationController
   def index
     return render :json => {
       :success => true,
-      :flag_reports => FlagReport.all.map { |n| n.as_json }
+      :flag_reports => FlagReport.all.map { |n| n.as_json },
+      :unresolvedflagreports => FlagReport.where(:report_resolved => false).map { |n| n.as_json },
+      :resolvedflagreports => FlagReport.where(:report_resolved => true).map { |n| n.as_json }
     }
   end
 
@@ -37,6 +39,19 @@ class Api::FlagReportsController < ApplicationController
       :success => true
     }
   end
+
+
+  # def get_note
+  #   begin
+  #     @note = current_user.notes.find(params[:id]) # throws an exception if nothing is found
+  #   rescue
+  #     return render :json => {
+  #       :success => false,
+  #       :error => note_not_found_error,
+  #     },
+  #     :status => 404
+  #   end
+  # end
 
 private
   def get_type

@@ -25,10 +25,13 @@
 /public/user_uploads/*
 /public/data
 
+# Ignore precompiled assets
+/public/assets
 db/schema.rb
 *.orig
 Gemfile.lock
 
+.sass-cache/
 .DS_Store
 
 .ext/
@@ -39,3 +42,6 @@ config.log
 config.status
 ruby-1.9.pc
 uncommon.mk
+
+# ignore deployment data
+vendor/bundle/

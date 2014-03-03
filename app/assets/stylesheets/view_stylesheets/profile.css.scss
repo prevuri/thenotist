@@ -17,6 +17,10 @@ $profile-image-size: 180px;
 
   h2 {
     margin-top: 0;
+
+    .text-link {
+      font-weight: normal;
+    }
   }
 }
 
@@ -41,7 +45,7 @@ $profile-image-size: 180px;
 
 }
 
-a > .profile-container:active {
+a.profile-link > .profile-container:active {
   box-shadow: #444 0px 0px 4px;
   margin-top: 1px;
   margin-bottom: 0;

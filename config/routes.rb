@@ -1,4 +1,4 @@
-require 'sidekiq/web'
+# require 'sidekiq/web'
 TheNotist::Application.routes.draw do
   get "admin/index"
 
@@ -9,22 +9,23 @@ TheNotist::Application.routes.draw do
   get "main/index"
 
   root :to => 'main#index'
-  
 
-  devise_for :users, :controllers => { 
+
+  devise_for :users, :controllers => {
     :omniauth_callbacks => "users/omniauth_callbacks"
-  }, :skip => [:sessions, :registrations, :passwords] 
+  }, :skip => [:sessions, :registrations, :passwords]
   as :user do
     get 'signin' => 'main#index', :as => :new_user_session
     delete 'signout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
 
-  resources :uploaded_files
-  
-  resources :notes
-  match 'notes/grid/:id' => 'notes#show_grid', :as => :grid_note
+  resources :client_views, :only => [:show]
 
   resources :admin, :only => [:index]
+  # resources :notes
+  match "/profile" => redirect("/?goto=profile")
+  match "/profile/*id" => redirect("/?goto=profile/%{id}")
+
   resources :profile
   resources :flag_reports, :only => [:index]
   resources :buddies, :only => [:index]
@@ -32,18 +33,27 @@ TheNotist::Application.routes.draw do
   match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
 
   namespace :api do
+    match 'notes/upload_form_html' => 'notes#upload_form_html', :as => :upload_form_html
+    match 'activity/user/:id' => 'activity#show', :as => :buddy_activity
+    match 'activity/user' => 'activity#user', :as => :user_activity
+    resources :activity
+    resources :users, :only => [ :index, :show ]
+    match 'users/:id/buddies' => 'users#buddies', :as => :user_buddies, :via => :get
+
     resources :flag_reports, :only => [ :index, :create, :update ]
-    resources :buddies, :only => [ :index ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]
-    resources :notes, :only => [ :index, :show, :update]
+    resources :notes, :only => [ :index, :show, :update, :destroy, :create ]
     match 'notes/share/' => 'notes#share', :as => :share_note
     match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
+    match 'notes/paginate/:id' => 'notes#paginate', :as => :note_paginate, :via => :get
   end
 
+  match "/*path" => redirect("/?goto=%{path}")
+
   # mount sidekiq so we can monitor jobs
-  mount Sidekiq::Web, :at => '/sidekiq'
+  # mount Sidekiq::Web, :at => '/sidekiq'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

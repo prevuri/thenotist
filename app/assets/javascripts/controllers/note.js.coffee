@@ -1,28 +1,38 @@
-@NoteCtrl = ($scope, $http) ->
+@NoteCtrl = ($scope, $http, $route, $routeParams, $sce, NotesApi) ->
 
-  $scope.files = []
+  $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
-  $scope.init = (id) ->
-    $scope.id = id
-    # $scope.getComments()
+  $scope.init = () ->
+    $scope.$root.section = 'notes'
+    success = (data) ->
+      $scope.note = data.note
+      $scope.$root.title = $scope.note.title
+      $scope.trustURLs()
+    error = (data) ->
+      $scope.setAlert("Error loading note data", false)
+    NotesApi.get({id: $routeParams.noteId}, success, error)
 
-  $scope.getComments = (id) ->
-    $scope.files[id] = {}
+  $scope.trustURLs = () ->
+    for file in $scope.note.uploaded_html_files
+      file.trusted_path = $sce.trustAsResourceUrl(file.public_path)
+
+  $scope.getComments = (id, index) ->
     $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
       success( (data, status, headers, config) ->
-        $scope.files[id].comments = data.comments
+        $scope.note.uploaded_html_files[index].comments = data.comments
       ).error( (data, status, headers, config) ->
-        # TODO: error message of some sort
+        $scope.setAlert("Error loading comments from server", false)
     )
 
-  $scope.newComment = (lineId) ->
+  $scope.lineClick = (lineId) ->
     $scope.newCommentLineId = lineId
     $scope.parentId = null
     $scope.showNewComment = true
-
-  $scope.newCommentClick = (event, fileId) ->
-    $scope.newCommentY = event.pageY
-    $scope.newCommentFileId = fileId
+    lineEl = $('[data-guid='+lineId+']')
+    $scope.newCommentY = $(lineEl).offset().top
+    $scope.newCommentFileId = this.$parent.file.id
+    $scope.newCommentFileIndex = this.$parent.$index
+    $scope.expandedCommentLine = null
 
   $scope.commentY = (lineId) ->
     $('[data-guid='+lineId+']').position().top
@@ -34,12 +44,12 @@
     $scope.expandedCommentLine = if $scope.expandedCommentLine == lineId then null else lineId
 
   $scope.submitParentComment = () ->
-    $scope.submitComment($scope.newCommentText, $scope.newCommentFileId, null)
+    $scope.submitComment($scope.newCommentText, $scope.newCommentFileId, null, $scope.newCommentFileIndex)
 
-  $scope.submitReply = (parentComment, fileId) ->
-    $scope.submitComment(parentComment.newReplyText, fileId, parentComment.id)
+  $scope.submitReply = (parentComment, fileId, fileIndex) ->
+    $scope.submitComment(parentComment.newReplyText, fileId, parentComment.id, fileIndex)
 
-  $scope.submitComment = (text, fileId, parentId) ->
+  $scope.submitComment = (text, fileId, parentId, fileIndex) ->
     if !$scope.submitting
       data = {
         comment: {
@@ -55,9 +65,10 @@
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
-          $scope.files[fileId].comments = data.comments
+          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
           $scope.showNewComment = false
           $scope.submitting = false
+          $scope.newCommentText = null
         ).error( (data, status, headers, config) ->
           # TODO: error message of some sort
           $scope.submitting = false
@@ -70,7 +81,7 @@
         success( (data, status, headers, config) ->
           comment.deleted = true
         ).error( (data, status, headers, config) ->
-          alert('Error deleting comment')
+          $scope.setAlert("Error deleting comment", false) 
           comment.deleteFade = false
       )
 

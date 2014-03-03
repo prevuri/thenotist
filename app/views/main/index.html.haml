@@ -1,8 +1,0 @@
-.wrapper
-	%h2 Activities
-
-	.feed-wrapper
-		- unless @activities.nil?
-			- @activities.each do |activity|
-				= render 'activity', :activity => activity
-				

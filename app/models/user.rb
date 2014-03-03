@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_one  :user_fb_data
   has_many :activities
   has_many :notes
-  has_many :uploaded_files, through: :notes
+  has_many :uploaded_html_files, through: :notes
   has_many :comments
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :buddies, through: :relationships, source: :buddy
@@ -20,14 +20,14 @@ class User < ActiveRecord::Base
   has_many :followers, through: :reverse_relationships, source: :follower
   has_many :contributed_to, class_name: "Contributor", dependent: :destroy
   has_many :shared_notes, through: :contributed_to
-  has_many :shared_uploaded_files, through: :shared_notes, source: :uploaded_files
+  has_many :shared_uploaded_html_files, through: :shared_notes, source: :uploaded_html_files
 
   def admin?
     AdminUsers.find_by_uid(self.uid) != nil
   end
 
   def has_note_processing?
-    self.notes.select { |n| !n.processed }.count > 0
+    self.notes.select { |n| !n.processed && !n.aborted }.count > 0
   end
 
   def abort_timed_out_notes!
@@ -105,7 +105,8 @@ class User < ActiveRecord::Base
     {
       :name => name,
       :email => email,
-      :member_since => created_at
+      :member_since => created_at,
+      :user_fb_data => user_fb_data.as_json
     }
   end
 end

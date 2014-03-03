@@ -1,0 +1,32 @@
+#notes-main{ :'ng-controller' => 'NotesCtrl', :'ng-init' => 'init()' }
+  .notes-header
+    %h1 Notes
+    .search-box.form-group
+      %input.form-control{:type => 'text'}
+      %span.input-icon.icon-search
+    .sorting-options
+      %ul
+        %li.btn.active
+          Name
+        %li.btn
+          Date
+        %li.btn
+          Shared
+        %li.btn
+          Uploaded
+
+  .notes-index-page
+    .notes-list-container
+      .notes-list
+        .notes-list-item.upload-form
+          %ng-include{:src => "'/client_views/upload_form.html'"}
+        .notes-list-item{ :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
+          %ng-include{:src => "'/client_views/grid_item.html'"}
+        .notes-list-item{ :'ng-repeat' => 'note in sharedNotes' }
+          %ng-include{:src => "'/client_views/grid_item.html'"}
+
+    .modal-container-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
+      .modal-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
+        %a.thumb-container{ :'ng-repeat' => "image in overview.images", :'ng-href' => "{{image.pageUrl}}" }
+          %img.thumb-image{ :'ng-src' => "{{image.src}}" }
+    .full-screen-overlay{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }

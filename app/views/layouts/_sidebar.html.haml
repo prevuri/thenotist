@@ -2,14 +2,26 @@
   .sidebar-inner
     .nav.nav-list
       .logo
-        = sidebar_logo_link
-      = sidebar_link 'Profile', '/profile', 'icon-user icon-2x'
-      = sidebar_link 'Notes', '/notes', 'icon-file icon-2x'
-      = sidebar_link 'Buddies', '/buddies', 'icon-group icon-2x'
-      - if current_user.admin?
-        = sidebar_link 'Admin', '/admin', 'icon-group icon-2x'
+        %li
+          %a.btn.btn-large.btn-block.notist-logo{:href => '/', :'ng-class' => "{active: section == 'home'}"}
+      %li
+        %a.btn.btn-large.btn-block{:href => '/profile', :'ng-class' => "{active: section == 'profile'}"}
+          %i.icon-user.icon-2x
+          .text Profile
+      %li
+        %a.btn.btn-large.btn-block{:href => '/notes', :'ng-class' => "{active: section == 'notes'}"}
+          %i.icon-file.icon-2x
+          .text Notes
+	  - if current_user.admin?
+		%li
+        	%a.btn.btn-large.btn-block{:href => '/admin', :'ng-class' => "{active: section == 'admin'}"}
+          		%i.icon-file.icon-2x
+          		.text Admin
     .nav.nav-list-bottom
-      = sidebar_link 'Settings', '/settings', 'icon-cog'
+      %li
+        %a.btn.btn-large.btn-block{:href => '/settings'}
+          %i.icon-cog
+          .text Settings
       %li
         - if current_user
           = link_to destroy_user_session_path, :method=>'delete', :class => 'btn btn-large btn-block' do

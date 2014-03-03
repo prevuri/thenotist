@@ -2,16 +2,16 @@ class Api::CommentsController < ApplicationController
   include ApiHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_uploaded_file_id, :only => [ :index, :create ]
+  before_filter :get_uploaded_html_file_id, :only => [ :index, :create ]
   before_filter :get_comment_id, :only => :destroy
 
   def index
     begin
-      @file = current_user.uploaded_files.find(@uploaded_file_id) # throws an exception if nothing found
+      @file = current_user.uploaded_html_files.find(@uploaded_html_file_id) # throws an exception if nothing found
     rescue
       return render :json => {
         :success => false,
-        :error => uploaded_file_not_found_error
+        :error => file_not_found_error
       }
     end
 
@@ -24,12 +24,12 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    @file = current_user.uploaded_files.find_by_id(@uploaded_file_id) # does not throw an exception if nothing found
-    @file = current_user.shared_uploaded_files.find_by_id(@uploaded_file_id) unless @file
+    @file = current_user.uploaded_html_files.find_by_id(@uploaded_html_file_id) # does not throw an exception if nothing found
+    @file = current_user.shared_uploaded_html_files.find_by_id(@uploaded_html_file_id) unless @file
     if @file.blank?
       return render :json => {
         :success => false,
-        :error => uploaded_file_not_found_error
+        :error => file_not_found_error
       }
     end
 
@@ -37,8 +37,8 @@ class Api::CommentsController < ApplicationController
     begin
       parent_comment = params[:comment][:parent_id].nil? ? nil : Comment.find(params[:comment][:parent_id])
       @comment = current_user.comments.create({
-        :uploaded_file => @file, 
-        :text => params[:comment][:text], 
+        :uploaded_html_file => @file,
+        :text => params[:comment][:text],
         :line_id => params[:comment][:line_id],
         :parent_comment => parent_comment
       })
@@ -68,7 +68,7 @@ class Api::CommentsController < ApplicationController
     if @comment.blank?
       return render :json => {
         :success => false,
-        :error => uploaded_file_not_found_error
+        :error => file_not_found_error
       }
     end
 
@@ -85,15 +85,15 @@ class Api::CommentsController < ApplicationController
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
     # @comments = @file.top_level_comments
-    return render :json => { 
+    return render :json => {
       :success => true
       # :comments => @comments.map { |c| c.as_json }
     }
   end
 
 private
-  def get_uploaded_file_id
-    @uploaded_file_id = params[:file_id]
+  def get_uploaded_html_file_id
+    @uploaded_html_file_id = params[:file_id]
   end
 
   def get_comment_id

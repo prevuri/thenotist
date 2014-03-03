@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20140222041557) do
+=======
+ActiveRecord::Schema.define(:version => 20140222221601) do
+>>>>>>> 2e762f6b76a405336f0b1b351979a9cbe58951e4
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -42,11 +46,11 @@ ActiveRecord::Schema.define(:version => 20140222041557) do
   end
 
   create_table "comments", :force => true do |t|
-    t.integer  "uploaded_file_id"
+    t.integer  "uploaded_html_file_id"
     t.integer  "user_id"
     t.text     "text"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.integer  "parent_comment_id"
     t.string   "line_id"
   end
@@ -105,15 +109,21 @@ ActiveRecord::Schema.define(:version => 20140222041557) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "uploaded_files", :force => true do |t|
+  create_table "uploaded_html_files", :force => true do |t|
     t.integer  "note_id"
     t.integer  "page_number"
-    t.integer  "height"
-    t.integer  "width"
     t.string   "public_path"
+    t.string   "thumb_url"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "thumb_url"
+  end
+
+  create_table "uploaded_thumb_files", :force => true do |t|
+    t.string   "public_path"
+    t.integer  "note_id"
+    t.integer  "page_number"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "user_fb_data", :force => true do |t|

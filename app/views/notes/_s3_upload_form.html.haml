@@ -1,0 +1,9 @@
+- s3_key = "test_pdf_store/#{SecureRandom.hex(8)}.pdf"
+=hidden_field_tag "s3_key", s3_key, :id => 's3_key_tag'
+=s3_uploader_form :id => "upload_form_tag",       |
+  :class => 'ng-init: s3uploadFormInit()',        |
+  :key => s3_key,                                 |
+  :key_starts_with => 'test_pdf_store/',          |
+  :acl => 'public-read' do
+  .new-file-upload.hidden= file_field_tag :file, :id => 'file-picker', :'ng-upload' => 'uploadAdd(data)'
+  .direct-upload-submit.hidden Submit

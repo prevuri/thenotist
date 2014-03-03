@@ -1,5 +1,5 @@
-class UploadedFile < ActiveRecord::Base
-  attr_accessible :height, :page_number, :public_path, :width, :thumb_url
+class UploadedHtmlFile < ActiveRecord::Base
+  attr_accessible :page_number, :public_path, :thumb_url
 
   belongs_to :note
   has_one :user, :through => :note
@@ -9,11 +9,9 @@ class UploadedFile < ActiveRecord::Base
     comments.select { |c| c.parent_comment.nil? }
   end
 
-  def as_json options = {}
+  def as_json
     {
       :id => id,
-      :height => height,
-      :width => width,
       :page_number => page_number,
       :public_path => public_path,
       :created_at => created_at,

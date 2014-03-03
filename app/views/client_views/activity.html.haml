@@ -1,0 +1,11 @@
+.activity-item
+  %a{:'ng-href' => "{{profilePath(activity.user.id)}}"}
+    .profile-container.circular
+      %img.profile-image.circular#activity-image{:'ng-style' => "{background: 'url('+ activity.user.user_fb_data.profile_image + '') no-repeat'"}
+  .act.tooltip.fade.right.in
+    .tooltip-arrow
+    .tooltip-inner
+      .activity-type
+        %div{:'ng-class' => 'activity.trackable.class.name.downcase + "-type"' }
+          {{activityTypeString()}}
+      = ActivityPresenter.new(activity, self).render_activity

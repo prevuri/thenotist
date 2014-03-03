@@ -1,10 +1,13 @@
 class Api::NotesController < ApplicationController
   include ApiHelper
+  include NotesHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs ]
+  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs, :destroy, :paginate ]
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
+  before_filter :get_page_range, :only => [ :paginate ]
+  before_filter :abort_timed_out_notes
 
   UserInfo = Struct.new(:id, :name, :image)
 
@@ -13,6 +16,34 @@ class Api::NotesController < ApplicationController
       :success => true,
       :notes => current_user.notes.map { |n| n.as_json }
     }
+  end
+
+  def create
+    # don't allow a user to process more than one note at a time
+    if current_user.has_note_processing?
+      @fail_reason = "Can't upload more than one file at a time"
+    else
+      begin
+        @note = current_user.notes.create(:title => params[:title], :description => params[:description])
+        track_activity @note
+
+        s3_key = params[:s3_key]
+        queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
+        queue.send_message(sqs_message(@note.id, s3_key))
+        return render :json => {
+          :success => true
+        }
+      rescue => ex
+        @fail_reason = "unknown"
+        @note.delete
+        return render :json => {
+          :success => false,
+          :error_message => ex.message
+        }
+      end
+    end
+
+
   end
 
   def show
@@ -28,6 +59,13 @@ class Api::NotesController < ApplicationController
     return render :json => {
       :success => true,
       :note => @note.as_json
+    }
+  end
+
+  def destroy
+    @note.destroy
+    return render :json => {
+      :success => true
     }
   end
 
@@ -52,7 +90,7 @@ class Api::NotesController < ApplicationController
       @user_ids.each do |user_id|
         @users << User.find_by_id(user_id)
       end
-    
+
     rescue
       return render :json => {
         :success => false,
@@ -61,7 +99,7 @@ class Api::NotesController < ApplicationController
     end
     #TODO: Set up multiple user activity
 
-    begin 
+    begin
       @users.each do |user|
         @contrib = @note.share!(user)
         track_activity @contrib
@@ -76,11 +114,11 @@ class Api::NotesController < ApplicationController
     return render :json => {
       :success => true,
       :note => @note.as_json
-    }    
+    }
   end
 
   def unshare
-    begin 
+    begin
       @user = User.find_by_id(params[:userid])
     rescue
       return render :json => {
@@ -102,10 +140,22 @@ class Api::NotesController < ApplicationController
       :success => true,
       :note => @note.as_json
     }
-
   end
 
+  def upload_form_html
+    render :json => {
+      :success => true,
+      :html => render_to_string(:partial => 'notes/s3_upload_form')
+    }
+  end
 
+  def paginate
+    html_files = @note.uploaded_html_files.where(:page_number => [@start_page..@end_page])
+    return render :json => {
+      :success => true,
+      :html_files => html_files.map(&:as_json)
+    }
+  end
 
 private
   def get_note
@@ -114,8 +164,9 @@ private
     rescue
       return render :json => {
         :success => false,
-        :error => note_not_found_error
-      }
+        :error => note_not_found_error,
+      },
+      :status => 404
     end
   end
 
@@ -127,8 +178,31 @@ private
     @description = params[:description]
   end
 
+  def get_page_range
+    @start_page = params[:start_page]
+    @end_page = params[:end_page]
+    if @start_page.nil? && @end_page.nil?
+      return render :json => {
+        :success => false,
+        :error => invalid_page_range_error
+      }
+    end
+
+    num_pages = @note.uploaded_html_files.count
+    @start_page ||= 0
+    @end_page ||= num_pages-1
+    @start_page = @start_page.to_i
+    @end_page = @end_page.to_i
+    if @end_page < @start_page || @start_page > num_pages-1 || @end_page < 0
+      return render :json => {
+        :success => false,
+        :error => invalid_page_range_error
+      }
+    end
+  end
+
   def user_not_found_error
-    "User not found :("
+    "User not found."
   end
 
   def already_shared_error
@@ -136,6 +210,14 @@ private
   end
 
   def cannot_revoke_error
-    "Cannot remove contributor"
+    "Cannot remove contributor."
+  end
+
+  def invalid_page_range_error
+    "Invalid page range."
+  end
+
+  def abort_timed_out_notes
+    current_user.abort_timed_out_notes!
   end
 end

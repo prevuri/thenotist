@@ -12,7 +12,64 @@ $thumbnail-height: 330px;
   margin-right: 10%;
 }
 
+.notes-header {
+  height: 120px;
+  border-bottom: #ECF0F1 solid 2px;
+  position: relative;
+  h1 {
+    float: left;
+  }
+
+  .search-box {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    input {
+      width: 280px;
+      border-radius: 2px;
+      &:active {
+        border-color: #22B498 !important;
+      }
+    }
+
+    .input-icon {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      line-height: 37px;
+      vertical-align: middle;
+      font-size: 20px;
+      color: #b2bcc5;
+      background-color: transparent;
+      padding: 0 12px 0 0;
+      border-radius: 6px;
+    }
+  }
+  .sorting-options {
+    list-style-type: none;
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+
+    .btn {
+      background-color: transparent;
+      color: inherit;
+      border-radius: 2px;
+
+      &:hover {
+        background-color: #ECF0F1;
+      }
+
+      &.active {
+        background-color: #22B498;
+      }
+    }
+  }
+}
+
 .notes-index-page {
+  padding-top: 20px;
+
   .full-screen-overlay {
     // position: absolute;
     position: fixed;
@@ -64,30 +121,98 @@ $thumbnail-height: 330px;
 }
 
 #note-header {
-  width: 100%;
-  height: 65px;
-  margin-left: -30px;
-  overflow: visible;
-  border-bottom: solid 1px rgba(245, 245, 245, 0.9);
+  height: 120px;
   position: fixed;
   top: 0px;
-  z-index: 10;
-  background-color: rgba(250, 250, 250, 0.9);
-  
-  .note-title {
-    font-family: Helvetica Neue;
-    font-weight: 300;
-    color: #5B5B5B;
-    margin-left: 30px;
+  width: calc(100% - 160px);
+  z-index: 101;
+  border-bottom: #ECF0F1 solid 2px;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(245, 245, 245, 0.85);
+
+  h1 {
+    float: left;
+  }
+  .contributors {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    div {
+      float: left;
+    }
   }
 
-  .header {
-    display: table-cell;
+  .page-number {
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    div {
+      float: left;
+    }
+
+    .pages {
+      float: left;
+      margin-right: 20px;
+      line-height: 50px;
+      font-size: 1.5em;
+      color: #999999;
+      span {
+        color: #34495e;
+      }
+    }
+  }
+
+  .profile-container {
+    padding: 0;
+    box-shadow: none;
+    border: solid #ECF0F1 1px;
+    margin-right: 10px;
+    position: relative;
+  
+    &.share-note {
+      height: 45px;
+      width: 45px;
+      float: right;
+    }
+
+    &.prev-page, &.next-page{
+      height: 45px;
+      width: 45px;
+    }
+    &.flag {
+      height: 45px;
+      width: 45px;
+      margin-left: 15px; 
+    }
+
+    i {
+      color: #999999;
+      font-size: 1.8em;
+      position: absolute;
+      
+      &.icon-plus {
+        top: 27%;
+        left: 27%;
+      }
+
+      &.icon-angle-right, &.icon-angle-left, &.icon-exclamation {
+        top: 25%;
+        left: 37%;
+      }
+    }
+
+    &:hover {
+      background-color: #dadada;
+    }
   }
 }
 
 #note-main {
-  padding-top: 70px;
+  padding-top: 125px;
   position: relative;
 
   #flag_report_btn {
@@ -105,7 +230,7 @@ $thumbnail-height: 330px;
   .note-description {
     font-size: 2em;
   }
-  
+
   .note-pages {
     .page {
       white-space: nowrap;
@@ -124,7 +249,7 @@ $thumbnail-height: 330px;
 
     .comments-container {
       position: relative;
-    } 
+    }
 
     .comment-buttons-container {
       position: relative;
@@ -146,11 +271,9 @@ $thumbnail-height: 330px;
             color: #228;
           }
         }
-      }  
+      }
     }
   }
-
-
 }
 
 #new-comment-button {
@@ -174,10 +297,10 @@ $thumbnail-height: 330px;
     opacity: 0;
     left: 936px;
   }
-  
+}
+
+#new-comment-panel, .new-reply-panel {
   #newcomment {
-    width: 97%;
-    padding-left: 3%;
     min-height: 40px;
     resize: none;
     border: none;
@@ -187,10 +310,10 @@ $thumbnail-height: 330px;
   }
 
   .new-comment-submit {
-    outline: none; 
+    outline: none;
   }
 
-  // .btndiv { 
+  // .btndiv {
   //   text-align: right;
   //   .btn {
   //     display: inline-block;
@@ -222,7 +345,7 @@ $thumbnail-height: 330px;
     &.reply {
       margin-left: 15px;
       margin-top: 5px;
-      
+
       .comment-inner {
         // background-color: #f7f7f9;
         // border-color: #d5d5d5;
@@ -264,7 +387,7 @@ $thumbnail-height: 330px;
         float: right;
         color: #34495E;
         font-weight: normal;
-      }    
+      }
     }
     .reply-button {
       margin-left: 10px;
@@ -297,27 +420,18 @@ $thumbnail-height: 330px;
 }
 
 .notes-list-container {
-  border-radius: 8px;
   overflow: hidden;
 
   .notes-list {
-    ul {
-      list-style: none;
-      display: inline;
-      margin: 0;
-      li {
-        display: inline-block;
-        width: 300px;
-        margin-left: 5px;
-        vertical-align: top;
-      } 
-    }
+
+    margin: 0;
+
     .notes-list-item {
-      background-color: #BEB5AA;
-      min-height: 200px;
-      padding: 1px;
-      margin-top: 10px;
-      border: 1px solid #ddd;
+      display: inline-block;
+      // margin-left: -0.28em;
+      height: 280px;
+      width: 448px;
+      vertical-align: top;
 
       &:hover {
         background-color: #8A847D;//#696662;
@@ -325,10 +439,19 @@ $thumbnail-height: 330px;
 
       .note-item {
         position: relative;
+        height: 100%;
 
         .appear-hover {
           opacity: 0;
           -webkit-transition: opacity 0.2s ease;
+          z-index: 104;
+          .btn {
+            border-radius: 0 !important;
+            background-color: transparent;
+            &:hover {
+              background-color: #999999;
+            }
+          }
         }
 
         &:hover {
@@ -339,33 +462,47 @@ $thumbnail-height: 330px;
 
         #list-footer {
           height: 55px;
-          position: relative;
-          bottom: 55px;
+          position: absolute;
+          bottom: 0px;
           width: 100%;
-          background-color:rgba(0,0,0,0.8);
-          z-index: 100;
+          // background-color:rgba(0,0,0,0.8);
+          z-index: 104;
           overflow: hidden;
-          
-          .big-info {
-            float: left; 
-            width: 80%;        
 
-            .description {
-              width: 100%;
-              font-size: 1em;
-              margin-left: 20px;
-              margin-bottom: 20px;
-              color: #dadada;
-              clear: both;
-              overflow: hidden;
-              white-space: wrap;
-              display: -webkit-box;
-              -webkit-line-clamp: 6;
-              -webkit-box-orient: vertical;
-              text-overflow: ellipsis;
-              font-weight: lighter;
-              font-family: ‘Arial Narrow’, sans-serif;
-            }   
+          .big-info {
+            float: left;
+            width: 80%;
+            .contributors {
+              margin-left: 10px;
+              margin-bottom: 10px;
+              display: inline-block;
+              .profile-container {
+                height: 45px;
+                width: 45px;
+                padding: 0;
+                box-shadow: none;
+                border: solid #ECF0F1 1px;
+                float: left;
+                margin-right: 10px;
+                position: relative;
+                i {
+                  color: #999999;
+                  font-size: 1.8em;
+                  position: absolute;
+                  top: 27%;
+                  left: 27%;
+                }
+
+                &.share-note {
+                  background-color: rgba(255, 255, 255, 0.7);
+                }
+
+                &:hover {
+                  background-color: #eaeaea;
+                }
+
+              }
+            }
           }
 
           .info {
@@ -405,7 +542,7 @@ $thumbnail-height: 330px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          
+
 
         }
 
@@ -458,16 +595,52 @@ $thumbnail-height: 330px;
             }
           }
         }
+        
+        .big-link {
+          height: 100%;//275px;
+          width: 100%;
+          position: absolute;
+          z-index: 102;
+        }
 
         .img-preview {
           vertical-align: top;
-          height: 280px;//275px;
+          height: 100%;//275px;
           width: 100%;
-          background-position: 10% 10%;
-          background-position:top;
+          background-position: 30% 30%;
+          // background-position:top;
           background-repeat: no-repeat;
-          background-size: 100%;
+          background-size: cover;
           overflow: hidden;
+          position: absolute;
+        }
+
+        .info-preview {
+          background-color: RGBA(160, 65, 54, 0.7);
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: 103;
+
+          &.hottest {
+            background-color: RGBA(199, 27, 27, 0.7);
+          }
+
+          &.hot {
+            background-color: RGBA(213, 186, 138, 0.7);
+          }
+
+          &.cool {
+            background-color: RGBA(1, 116, 103, 0.7);
+          }
+
+          &.cooling {
+            background-color: RGBA(224, 143, 35, 0.7);
+          }
+
+          &.cold {
+            background-color: RGBA(11, 13, 12, 0.7);
+          }
         }
       }
     }
@@ -492,7 +665,7 @@ $thumbnail-height: 330px;
     .contributor-list {
       height: 300px;
       overflow-y: scroll;
-      
+
       .contrib-list-item {
         // width: 290px;
         height: 50px;
@@ -553,19 +726,46 @@ $thumbnail-height: 330px;
 
 
 // NOTE UPLOAD SECTION
-.create-new-note-container {
-  margin-bottom: 20px;
+.upload-form {
+  background-color: #0FB598 !important;
+  position: relative;
+  margin-right: -0.3em;
+  min-width: 448px;
 
-  .create-new-note-button {
-    i {
-      margin-right: 5px;
-      margin-top: 3px;
+  &:hover {
+    background-color: lighten(#0FB598, 7) !important;
+  }
+}
+
+.create-new-note-container {
+  width: 448px;
+  height: 280px;
+  color: #FFF;
+
+  .big-button-container {
+    width: 100%;
+    height: 100%;
+
+    .create-new-note-button {
+      position: absolute;
+      top: 27%;
+      left: 27%;
+      // width: 400px;
+      i {
+        margin-left: 31%;
+        margin-top: 3px;
+        font-size: 7em;
+        clear: both;
+      }
     }
   }
 
   .new-note-form-container {
     label {
       cursor: default;
+    }
+    #upload_form_tag {
+      margin: 0px;
     }
     .text-field {
       position: relative;
