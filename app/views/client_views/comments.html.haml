@@ -1,22 +1,23 @@
-.comment-thread-container{:'ng-repeat' => "parentComment in file.comments", :'ng-style' => "{top: commentY(parentComment.line_id)+'px'}"}
-  .comment.parent{:'ng-show' => 'expandedCommentLine == parentComment.line_id'}
-    %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
-    .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments' }
-      .profile-container.circular
-        .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
-      %ng-include{:src => '"/client_views/comment.html"'}
-    .new-reply-panel.comment.reply{:'ng-show' => 'parentComment.showNewReply'}
-      .profile-container.circular
-        .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
-      .comment-inner
-        .comment-body
-          .user
-            .name {{currentUser.name}}
-          .comment-text
-            %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'parentComment.newReplyText', :'textarea-autoheight' => true, :autofocus => 'parentComment.showNewReply'}
-        .bottom
-          %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, $parent.$index)"}
-            Add Comment
-          %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'parentComment.showNewReply = false'}
-            Cancel
-        .clear
+.comment-group-container{:'ng-repeat' => 'commentGroup in file.groupedComments', :'ng-show' => 'expandedCommentLine == commentGroup.lineId', :'ng-style' => "{top: commentGroup.yCoord+'px'}"}
+  .comment-thread-container{:'ng-repeat' => "parentComment in commentGroup.comments"}
+    .comment.parent
+      %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
+      .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments' }
+        .profile-container.circular
+          .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
+        %ng-include{:src => '"/client_views/comment.html"'}
+      .new-reply-panel.comment.reply{:'ng-show' => 'parentComment.showNewReply'}
+        .profile-container.circular
+          .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
+        .comment-inner
+          .comment-body
+            .user
+              .name {{currentUser.name}}
+            .comment-text
+              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'parentComment.newReplyText', :'textarea-autoheight' => true, :autofocus => 'parentComment.showNewReply'}
+          .bottom
+            %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, $parent.$parent.$index)"}
+              Add Comment
+            %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'parentComment.showNewReply = false'}
+              Cancel
+          .clear

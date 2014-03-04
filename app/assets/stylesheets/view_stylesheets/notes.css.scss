@@ -310,6 +310,7 @@ $shift-max-width: 1400px;
         left: 5px;
 
         .profile-container {
+          position: absolute;
           width: 25px;
           height: 25px;
           padding: 0px;
@@ -356,8 +357,12 @@ $shift-max-width: 1400px;
 
 #new-comment-panel {
   position: absolute;
-  margin-top: -30px;
   left: 956px;
+  padding-left: 35px;
+  background: linear-gradient(to bottom , rgba(255,255,255,0), white 40%,white 60%, rgba(255,255,255,0));
+  margin-top: -100px;
+  padding-top: 70px;
+  padding-bottom: 25px;
 
   @media (max-width: $shift-max-width) {
     left: auto;
@@ -408,7 +413,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   outline: none;
 }
 
-.comment-thread-container {
+.comment-group-container {
   position: absolute;
 }
 

@@ -1,10 +1,13 @@
-@NoteCtrl = ($scope, $http, $route, $routeParams, $sce, NotesApi) ->
+@NoteCtrl = ($scope, $http, $route, $routeParams, $sce, $timeout, NotesApi) ->
 
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
   $scope.$on('$destroy', () ->
     $scope.$root.pageShifted = false
   )
+
+  # Group comment lines up to this nubmer of pixels apart
+  @groupThreshold = 60
 
   $scope.init = () ->
     $scope.$root.section = 'notes'
@@ -20,10 +23,27 @@
     for file in $scope.note.uploaded_html_files
       file.trusted_path = $sce.trustAsResourceUrl(file.public_path)
 
+  $scope.getGroupedComments = (file) ->
+    file.groupedComments = $scope.groupComments(file.comments)
+    if file.groupedComments == null
+      $timeout(() =>
+        file.groupErrorCount = if file.groupErrorCount then file.groupErrorCount+1 else 1
+        if file.groupErrorCount < 10
+          angular.element(document).ready( () ->
+            $scope.getGroupedComments(file)
+          )
+        else
+          $scope.setAlert("Error processing note comment data")
+      , 500)
+    else
+
   $scope.getComments = (id, index) ->
     $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
       success( (data, status, headers, config) ->
         $scope.note.uploaded_html_files[index].comments = data.comments
+        angular.element(document).ready( () ->
+          $scope.getGroupedComments($scope.note.uploaded_html_files[index])
+        )
       ).error( (data, status, headers, config) ->
         $scope.setAlert("Error loading comments from server", false)
     )
@@ -42,9 +62,13 @@
     $scope.newCommentFileIndex = this.$parent.$index
     $scope.expandedCommentLine = null
 
-  $scope.commentY = (lineId) ->
+  $scope.commentY = (lineId) =>
     el = $('[data-guid='+lineId+']')
-    $(el).offset().top - $(el).parents('.note-page').offset().top
+    if el.length == 0
+      @stillLoading = true
+      null
+    else
+      $(el).offset().top - $(el).parents('.note-page').offset().top
 
   $scope.canReply = (comment) ->
     comment.parent_comment_id == null
@@ -78,6 +102,7 @@
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
           $scope.note.uploaded_html_files[fileIndex].comments = data.comments
+          $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
           $scope.showNewComment(false)
           $scope.submitting = false
           $scope.newCommentText = null
@@ -96,3 +121,25 @@
           $scope.setAlert("Error deleting comment", false) 
           comment.deleteFade = false
       )
+
+  $scope.groupComments = (comments) =>
+    groupedComments = []
+    for comment in comments
+      if $scope.commentY(comment.line_id) == null
+        return null
+      groupedComments.push {
+        lineId: comment.line_id,
+        yCoord: $scope.commentY(comment.line_id),
+        comments: [comment]
+      }
+    groupedComments.sort((a, b) ->
+      a.yCoord > b.yCoord
+    )
+    i = 1
+    while i < groupedComments.length
+      if groupedComments[i].yCoord - groupedComments[i-1].yCoord < @groupThreshold
+        groupedComments[i-1].comments = groupedComments[i-1].comments.concat(groupedComments[i].comments)
+        groupedComments.splice(i, 1)
+      else
+        i++
+    groupedComments

@@ -33,8 +33,8 @@
             .note-page{:'file-id' => '{{file.id}}'}
               %div{:'ng-include' => 'file.trusted_path'}
         .comment-buttons-container
-          .comment-button{:'ng-repeat' => "comment in file.comments", :line_id => "{{comment.line_id}}", :'ng-click' => 'expandCommentLine(comment.line_id)', :'ng-style' => "{top: commentY(comment.line_id)+'px'}", :'ng-class' => 'expandedCommentLine == comment.line_id ? "active" : "inactive"'}
-            .profile-container.circular
+          .comment-button{:'ng-repeat' => 'commentGroup in file.groupedComments', :line_id => "{{commentGroup.lineId}}", :'ng-click' => 'expandCommentLine(commentGroup.lineId)', :'ng-style' => "{top: commentGroup.yCoord+'px'}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
+            .profile-container.circular{:'ng-repeat' => 'comment in commentGroup.comments'}
               .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
                 .profile-image.circular.overlay
         .comments-container{:'ng-class' => 'expandedCommentLine == null ? "comments-hidden" : ""'}
