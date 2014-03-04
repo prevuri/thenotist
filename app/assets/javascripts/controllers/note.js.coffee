@@ -2,6 +2,10 @@
 
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
+  $scope.$on('$destroy', () ->
+    $scope.$root.pageShifted = false
+  )
+
   $scope.init = () ->
     $scope.$root.section = 'notes'
     success = (data) ->
