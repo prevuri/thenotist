@@ -32,11 +32,6 @@
             %a{ :name => "Page-{{file.page_number}}"}
             .note-page{:'file-id' => '{{file.id}}'}
               %div{:'ng-include' => 'file.trusted_path'}
-        .comment-buttons-container
-          .comment-button{:'ng-repeat' => 'commentGroup in file.groupedComments', :line_id => "{{commentGroup.lineId}}", :'ng-click' => 'expandCommentLine(commentGroup.lineId)', :'ng-style' => "{top: commentGroup.yCoord+'px'}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
-            .profile-container.circular{:'ng-repeat' => 'comment in commentGroup.comments'}
-              .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
-                .profile-image.circular.overlay
         .comments-container{:'ng-class' => 'expandedCommentLine == null ? "comments-hidden" : ""'}
           .comments
             %ng-include{:src => '"/client_views/comments.html"'}

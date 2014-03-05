@@ -1,6 +1,10 @@
-.comment-group-container{:'ng-repeat' => 'commentGroup in file.groupedComments', :'ng-show' => 'expandedCommentLine == commentGroup.lineId', :'ng-style' => "{top: commentGroup.yCoord+'px'}"}
+.comment-group-container{:'ng-repeat' => 'commentGroup in file.groupedComments', :'ng-style' => "{top: commentGroup.yCoord+'px'}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
   .comment-thread-container{:'ng-repeat' => "parentComment in commentGroup.comments"}
-    .comment.parent
+    .comment-button{:'ng-click' => 'expandCommentLine(commentGroup.lineId)', :'ng-style' => "{'margin-left': $index*0.16 + 'em', 'z-index': '99'-$index}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
+      .profile-container.circular
+        .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
+          .profile-image.circular.overlay
+    .comment.parent{:'ng-show' => 'expandedCommentLine == commentGroup.lineId'}
       %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
       .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments' }
         .profile-container.circular
