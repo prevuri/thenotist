@@ -1,4 +1,4 @@
-@NoteCtrl = ($scope, $http, $route, $routeParams, $sce, $timeout, NotesApi) ->
+@NoteCtrl = ($scope, $http, $route, $routeParams, $sce, $timeout, $interval, NotesApi) ->
 
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
@@ -15,6 +15,7 @@
       $scope.note = data.note
       $scope.$root.title = $scope.note.title
       $scope.trustURLs()
+      $scope.pollComments()
     error = (data) ->
       $scope.setAlert("Error loading note data", false)
     NotesApi.get({id: $routeParams.noteId}, success, error)
@@ -36,6 +37,12 @@
           $scope.setAlert("Error processing note comment data")
       , 500)
     else
+
+  $scope.pollComments = () ->
+      $interval( () =>
+        for file, i in $scope.note.uploaded_html_files
+          $scope.getComments(file.id, i)
+      , 5000)
 
   $scope.getComments = (id, index) ->
     $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
