@@ -774,30 +774,31 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 
 
         .info-preview {
-          background-color: rgba(155, 125, 125, 0.7);
           position: absolute;
           width: 100%;
           height: 100%;
           z-index: 102;
 
-          &.hottest {
+          &.color0 {
+            background-color: rgba(160, 65, 54, 0.7);
+          }
+          &.color1 {
             background-color: RGBA(199, 27, 27, 0.7);
           }
-
-          &.hot {
+          &.color2 {
             background-color: RGBA(213, 186, 138, 0.7);
           }
-
-          &.cool {
+          &.color3 {
             background-color: RGBA(1, 116, 103, 0.7);
           }
-
-          &.cooling {
+          &.color4 {
             background-color: RGBA(224, 143, 35, 0.7);
           }
-
-          &.cold {
+          &.color5 {
             background-color: RGBA(11, 13, 12, 0.7);
+          }
+          &.color6 {
+            background-color: RGBA(80, 160, 200, 0.7);
           }
         }
       }
