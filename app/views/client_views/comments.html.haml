@@ -1,16 +1,16 @@
 .comment-group-container{:'ng-repeat' => 'commentGroup in file.groupedComments', :'ng-style' => "{top: commentGroup.yCoord+'px'}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
-  .comment-thread-container{:'ng-repeat' => "parentComment in commentGroup.comments"}
+  .comment-thread-container{:'ng-repeat' => "parentComment in commentGroup.comments", :'ng-hide' => "parentComment.deleted"}
     .comment-button{:'ng-click' => 'expandCommentLine(commentGroup.lineId)', :'ng-style' => "{'margin-left': $index*0.16 + 'em', 'z-index': '99'-$index}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
       .profile-container.circular
         .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
           .profile-image.circular.overlay
     .comment.parent{:'ng-show' => 'expandedCommentLine == commentGroup.lineId'}
       %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
-      .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments' }
+      .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments', :'ng-hide' => "comment.deleted"}
         .profile-container.circular
           .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
         %ng-include{:src => '"/client_views/comment.html"'}
-      .new-reply-panel.comment.reply{:'ng-show' => 'parentComment.showNewReply'}
+      .new-reply-panel.comment.reply{:'ng-show' => 'repliesShowing[parentComment.id] == true'}
         .profile-container.circular
           .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
         .comment-inner
@@ -18,10 +18,10 @@
             .user
               .name {{currentUser.name}}
             .comment-text
-              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'parentComment.newReplyText', :'textarea-autoheight' => true, :autofocus => 'parentComment.showNewReply'}
+              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'replyText[parentComment.id]', :'textarea-autoheight' => 'replyText[parentComment.id]', :'textarea-autofocus' => 'repliesShowing[parentComment.id]'}
           .bottom
             %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, $parent.$parent.$index)"}
               Add Comment
-            %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'parentComment.showNewReply = false'}
+            %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'repliesShowing[parentComment.id] = false'}
               Cancel
           .clear

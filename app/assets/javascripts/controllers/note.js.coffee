@@ -6,6 +6,10 @@
     $scope.$root.pageShifted = false
   )
 
+  $scope.repliesShowing = {}
+  $scope.replyText = {}
+  $scope.showDeleteConfirm = {global: null}
+
   # Group comment lines up to this nubmer of pixels apart
   @groupThreshold = 60
 
@@ -42,15 +46,24 @@
       $interval( () =>
         for file, i in $scope.note.uploaded_html_files
           $scope.getComments(file.id, i)
-      , 5000)
+      , 10000)
 
   $scope.getComments = (id, index) ->
     $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
       success( (data, status, headers, config) ->
-        $scope.note.uploaded_html_files[index].comments = data.comments
-        angular.element(document).ready( () ->
-          $scope.getGroupedComments($scope.note.uploaded_html_files[index])
-        )
+        shouldUpdate = false
+        if !$scope.note.uploaded_html_files[index].comments
+          shouldUpdate = true
+        else
+          oldComments = $scope.note.uploaded_html_files[index].comments.map((value) -> 
+            angular.copy(value)
+          )
+          shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(data.comments)
+        if shouldUpdate
+          $scope.note.uploaded_html_files[index].comments = data.comments
+          angular.element(document).ready( () ->
+            $scope.getGroupedComments($scope.note.uploaded_html_files[index])
+          )
       ).error( (data, status, headers, config) ->
         $scope.setAlert("Error loading comments from server", false)
     )
@@ -90,7 +103,7 @@
     $scope.submitComment($scope.newCommentText, $scope.newCommentFileId, null, $scope.newCommentFileIndex)
 
   $scope.submitReply = (parentComment, fileId, fileIndex) ->
-    $scope.submitComment(parentComment.newReplyText, fileId, parentComment.id, fileIndex)
+    $scope.submitComment($scope.replyText[parentComment.id], fileId, parentComment.id, fileIndex)
 
   $scope.submitComment = (text, fileId, parentId, fileIndex) ->
     if !$scope.submitting
@@ -110,16 +123,20 @@
         success( (data, status, headers, config) ->
           $scope.note.uploaded_html_files[fileIndex].comments = data.comments
           $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
-          $scope.showNewComment(false)
           $scope.submitting = false
-          $scope.newCommentText = null
+          if parentId
+            $scope.repliesShowing[parentId] = false
+            $scope.replyText[parentId] = null
+          else
+            $scope.showNewComment(false)
+            $scope.newCommentText = null
         ).error( (data, status, headers, config) ->
           # TODO: error message of some sort
           $scope.submitting = false
       )
 
   $scope.deleteComment = (comment) ->
-    comment.showDeleteConfirm = false
+    $scope.showDeleteConfirm.global = null
     comment.deleteFade = true
     $http({method: 'DELETE', url: '/api/comments/' + comment.id}).
         success( (data, status, headers, config) ->
@@ -145,6 +162,8 @@
     i = 1
     while i < groupedComments.length
       if groupedComments[i].yCoord - groupedComments[i-1].yCoord < @groupThreshold
+        if groupedComments[i].lineId == $scope.expandedCommentLine
+          $scope.expandedCommentLine = groupedComments[i-1].lineId
         groupedComments[i-1].comments = groupedComments[i-1].comments.concat(groupedComments[i].comments)
         groupedComments.splice(i, 1)
       else

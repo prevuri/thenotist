@@ -44,7 +44,7 @@
             .name
               {{currentUser.name}}
           .comment-text
-            %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => true, :autofocus => 'showingNewComment'}
+            %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => 'newCommentText', :'textarea-autofocus' => 'showingNewComment'}
         .bottom
           %a.new-comment-submit.primary.text-link{:'ng-click' => 'submitParentComment($index)'}
             Add Comment

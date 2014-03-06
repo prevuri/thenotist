@@ -336,6 +336,7 @@ $shift-max-width: 1400px;
         -webkit-transition: all 0.2s linear;
         -moz-transition: all 0.2s linear;
         transition: all 0.2s linear;
+        box-shadow: none;
 
         .overlay {
           -webkit-transition: background-color 0.1s linear;
@@ -351,18 +352,14 @@ $shift-max-width: 1400px;
         }
       }
 
-      &.inactive {
-        .profile-container {
-          box-shadow: none;
-        }
-      }
-
       &.active {
         .profile-container {
           width: 40px;
           height: 40px;
           padding: 1px;
-          border: none;
+          // Box shadow flashes when comments refresh
+          box-shadow: none;
+          border: 1px solid #ccc;
           .overlay {
             background-color: transparent;
           }
@@ -456,7 +453,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       .profile-container {
         width: 35px;
         height: 35px;
-        margin-left: 10px;
+        margin-left: 8px;
+        // Box shadow flashes when comments refresh
+        box-shadow: none;
+        border: 1px solid #ccc;
       }
       .comment-inner {
         margin-left: 49px;
