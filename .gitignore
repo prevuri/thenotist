@@ -29,7 +29,6 @@
 /public/assets
 db/schema.rb
 *.orig
-Gemfile.lock
 
 .sass-cache/
 .DS_Store
