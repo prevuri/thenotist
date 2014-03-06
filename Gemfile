@@ -11,6 +11,7 @@ gem 'omniauth-facebook'
 gem 'haml-rails'
 gem 'pg'
 gem 's3_direct_upload'
+gem 'fast-stemmer'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -1,11 +1,11 @@
-.note-item
+.note-item{:'ng-init' => 'itemIndex = $index'}
   %a.big-link{:'ng-show' => 'note.processed',:'ng-href' => '/notes/{{note.id}}'}
   .img-preview{:'ng-show' => 'note.processed', :style => 'background: url({{note.uploaded_thumb_files[0].public_path}}) no-repeat 50% 10%'}
   .process-spinner{:'ng-show' => '!note.processed'}
     %i.icon-refresh.icon-white.icon-spin
     %h2
       Processing...
-  .info-preview
+  .info-preview{:'ng-class' => '"color" + itemIndex%7'}
     %h2{:'ng-show' => 'note.processed'}
       %a.text-link{:'ng-href' => '/notes/{{note.id}}'} {{note.title}}
     %h2{:'ng-show' => '!note.processed'}
@@ -13,14 +13,14 @@
     %h4.description{:'ng-show' => 'note.processed'}
       {{note.description}}
   .btn-group.appear-hover{:'ng-show' => 'note.processed'}
-    %div{:'ng-if' => 'note.isShared'}
+    %div{:'ng-if' => 'note.shared'}
       %a.btn.usub{:'ng-href' => '{{note.unsubscribe_url}}'}
         %i.icon-remove
-    %div{:'ng-if' => '!note.isShared'}
+    %div{:'ng-if' => '!note.shared'}
       %a{:'ng-click' => 'deleteNote(note, $index)'}
         %i.icon-remove.btn
   
-  / %div{:'ng-if' => 'note.isShared'}
+  / %div{:'ng-if' => 'note.shared'}
   /   .share-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
   /     .share-note-container.modal-body
   /       .form-container
@@ -56,7 +56,7 @@
     .tiny-info
       %i.icon-comments {{note.comment_count}}
 
-  %div{:'ng-if' => '!note.isShared'}
+  %div{:'ng-if' => '!note.shared'}
     .tooltip.fade.bottom.in.hidden{:'ng-hide' => 'note.tooltipHidden'}
       .tooltip-arrow
       .ui-widget.tooltip-inner

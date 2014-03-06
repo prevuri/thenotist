@@ -104,7 +104,10 @@ class User < ActiveRecord::Base
       :name => name,
       :email => email,
       :member_since => created_at,
-      :user_fb_data => user_fb_data.as_json
+      :user_fb_data => user_fb_data.as_json,
+      :notes => {:length => notes.length},
+      :buddies => {:length => buddies.length},
+      :followers => {:length => followers.length}
     }
   end
 end

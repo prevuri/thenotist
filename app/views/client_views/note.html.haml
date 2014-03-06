@@ -32,11 +32,6 @@
             %a{ :name => "Page-{{file.page_number}}"}
             .note-page{:'file-id' => '{{file.id}}'}
               %div{:'ng-include' => 'file.trusted_path'}
-        .comment-buttons-container
-          .comment-button{:'ng-repeat' => "comment in file.comments", :line_id => "{{comment.line_id}}", :'ng-click' => 'expandCommentLine(comment.line_id)', :'ng-style' => "{top: commentY(comment.line_id)+'px'}", :'ng-class' => 'expandedCommentLine == comment.line_id ? "active" : "inactive"'}
-            .profile-container.circular
-              .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
-                .profile-image.circular.overlay
         .comments-container{:'ng-class' => 'expandedCommentLine == null ? "comments-hidden" : ""'}
           .comments
             %ng-include{:src => '"/client_views/comments.html"'}
@@ -49,7 +44,7 @@
             .name
               {{currentUser.name}}
           .comment-text
-            %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => true, :autofocus => 'showingNewComment'}
+            %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => 'newCommentText', :'textarea-autofocus' => 'showingNewComment'}
         .bottom
           %a.new-comment-submit.primary.text-link{:'ng-click' => 'submitParentComment($index)'}
             Add Comment

@@ -61,23 +61,25 @@ notistApp.directive('ngSpinner', () ->
     setHeight = () ->
       $(el).height(0) # Reset height to put scrollHeight at minimum value, so textarea shrinks when text is deleted
       $(el).height(el[0].scrollHeight)
-    $(el).bind('input propertychange', setHeight)
-    scope.$watch('newCommentText', setHeight, true)
+    $(el).bind('input propertychange focus', setHeight)
+    scope.$watch(attrs.textareaAutoheight, setHeight, true)
 )
 
 .directive('textareaAutoheightReadonly', () ->
   link: (scope, el, attrs) ->
-    scope.$watch('expandedCommentLine', () ->
+    setHeight = () ->
+      $(el).height(0)
       $(el).height(el[0].scrollHeight)
-    , true)
+    $(el).ready(setHeight)
+    scope.$watch('expandedCommentLine', setHeight, true)
 )
 
-.directive('autofocus', () ->
+.directive('textareaAutofocus', ($timeout) ->
   link: (scope, el, attrs) ->
     setFocus = (value) ->
       if value
-        setTimeout( () ->
+        $timeout( () ->
           $(el).focus()
         , 10)
-    scope.$watch(attrs.autofocus, setFocus, true)
+    scope.$watch(attrs.textareaAutofocus, setFocus, true)
 )
