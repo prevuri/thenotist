@@ -27,7 +27,7 @@
 
 # Ignore precompiled assets
 /public/assets
-db/schema.rb
+/db/schema.rb
 *.orig
 
 .sass-cache/
