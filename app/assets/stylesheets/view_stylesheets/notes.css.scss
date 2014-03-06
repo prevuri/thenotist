@@ -2,7 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/`
 
-$comments-sidebar-width: 300px;
 $highlight-color: #27F;
 $thumbnail-width: 240px;
 $thumbnail-height: 330px;
@@ -123,7 +122,7 @@ $shift-max-width: 1400px;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 101;
+  z-index: 300;
   border-bottom: #ECF0F1 solid 2px;
   background-color: rgba(255, 255, 255, 0.95);
   border-color: rgba(245, 245, 245, 0.85);
@@ -230,7 +229,7 @@ $shift-max-width: 1400px;
       margin-left: -500px;
       .page {
         text-align: right;
-        margin-right: 300px;
+        margin-right: 325px;
       }
 
       #note-shift-overlay {
@@ -243,10 +242,6 @@ $shift-max-width: 1400px;
         cursor: pointer;
       }
     }
-  }
-
-  &.new-comment-showing {
-    // padding-right: 50px + $comments-sidebar-width;
   }
 
   .note-description {
@@ -294,58 +289,79 @@ $shift-max-width: 1400px;
 
     .comments-container {
       position: relative;
-
-      &.comments-hidden {
-        // Prevents bug where hidden comments still create width
-        overflow: hidden;
-      }
     }
 
-    .comment-buttons-container {
-      position: relative;
-      width: 35px;
+    .comment-group-container {
+      position: absolute;
+      -webkit-transition: background 0.2s ease;
 
-      .comment-button {
-        position: absolute;
-        left: 5px;
+      &.active {
+        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.7) 20%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0));
+        z-index: 200;
+        padding-bottom: 20px;
+      }
 
-        .profile-container {
-          width: 25px;
-          height: 25px;
-          padding: 0px;
-          border: 1px solid #ccc;
-          -webkit-transition: all 0.2s linear;
-          -moz-transition: all 0.2s linear;
-          transition: all 0.2s linear;
-          .overlay {
-            -webkit-transition: background-color 0.1s linear;
-            -moz-transition: background-color 0.1s linear;
-            transition: background-color 0.1s linear;
-            background-color: rgba(255,255,255,0.3);
-          }
-          &:active {
+      &.inactive {
+        &:hover {
+          .comment-button {
+            font-size: 12.2em;
             border-color: #888;
             .overlay {
               background-color: transparent;
             }
           }
         }
+      }
+    }
 
-        &.inactive {
-          .profile-container {
-            box-shadow: none;
+    .comment-button {
+      position: absolute;
+      
+      &.inactive {
+        top: 0;
+        -webkit-transition: margin 0.2s ease;
+      }
+
+      &.active {
+        margin: 0 !important;
+        z-index: 100 !important;
+      }
+
+      .profile-container {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        padding: 0px;
+        border: 1px solid #ccc;
+        -webkit-transition: all 0.2s linear;
+        -moz-transition: all 0.2s linear;
+        transition: all 0.2s linear;
+        box-shadow: none;
+
+        .overlay {
+          -webkit-transition: background-color 0.1s linear;
+          -moz-transition: background-color 0.1s linear;
+          transition: background-color 0.1s linear;
+          background-color: rgba(255,255,255,0.3);
+        }
+        &:active {
+          border-color: #888;
+          .overlay {
+            background-color: transparent;
           }
         }
+      }
 
-        &.active {
-          .profile-container {
-            width: 40px;
-            height: 40px;
-            padding: 1px;
-            border: none;
-            .overlay {
-              background-color: transparent;
-            }
+      &.active {
+        .profile-container {
+          width: 40px;
+          height: 40px;
+          padding: 1px;
+          // Box shadow flashes when comments refresh
+          box-shadow: none;
+          border: 1px solid #ccc;
+          .overlay {
+            background-color: transparent;
           }
         }
 
@@ -356,8 +372,14 @@ $shift-max-width: 1400px;
 
 #new-comment-panel {
   position: absolute;
-  margin-top: -30px;
+  width: 290px;
   left: 956px;
+  padding-left: 38px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), white 40%,white 60%, rgba(255,255,255,0));
+  margin-top: -100px;
+  padding-top: 70px;
+  padding-bottom: 25px;
+  z-index: 101;
 
   @media (max-width: $shift-max-width) {
     left: auto;
@@ -391,6 +413,7 @@ $shift-max-width: 1400px;
 
 textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   overflow: hidden;
+  min-height: 25px;
   width: 100%;
   resize: none;
   border: none;
@@ -401,7 +424,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 }
 
 #newcomment, .comment .new-reply-panel .newreply {
-  min-height: 60px;
   border-bottom: 1px solid #f2f2f0;
 }
 
@@ -409,27 +431,15 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   outline: none;
 }
 
-.comment-thread-container {
-  position: absolute;
+.comment.parent {
+  margin-left: 45px;
 }
 
 .comment {
     margin-left: 10px;
-    width: 300px;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-    &.ng-hide-add, &.ng-hide-remove {
-      display: block !important;
-    }
-    &.ng-hide {
-      opacity: 0;
-      margin-top: -20px;
-      margin-left: -20px;
-    }
+    width: 280px;
 
     .comment-inner {
-      border-radius: 10px 4px 4px;
       padding: 10px 8px;
       // background-color: white;
       // border: 1px solid #ddd;
@@ -443,7 +453,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       .profile-container {
         width: 35px;
         height: 35px;
-        margin-left: 10px;
+        margin-left: 8px;
+        // Box shadow flashes when comments refresh
+        box-shadow: none;
+        border: 1px solid #ccc;
       }
       .comment-inner {
         margin-left: 49px;
@@ -484,7 +497,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         color: #34495E;
         font-weight: normal;
         margin-right: 20px;
-        line-height: 20px;
+        line-height: 22px;
         &:hover {
           text-decoration: none;
         }
@@ -533,6 +546,16 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   margin-left: 30px;
   margin-bottom: 15px;
   color: grey;
+}
+
+.notes-list-item {
+  margin: 2px;
+  &:first-child {
+    margin-right: 0px;
+  }
+  &:nth-child(2) {
+    margin-left: 0px;
+  }
 }
 
 .notes-list-container {
@@ -751,30 +774,31 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 
 
         .info-preview {
-          background-color: RGBA(160, 65, 54, 0.7);
           position: absolute;
           width: 100%;
           height: 100%;
           z-index: 102;
 
-          &.hottest {
+          &.color0 {
+            background-color: rgba(160, 65, 54, 0.7);
+          }
+          &.color1 {
             background-color: RGBA(199, 27, 27, 0.7);
           }
-
-          &.hot {
+          &.color2 {
             background-color: RGBA(213, 186, 138, 0.7);
           }
-
-          &.cool {
+          &.color3 {
             background-color: RGBA(1, 116, 103, 0.7);
           }
-
-          &.cooling {
+          &.color4 {
             background-color: RGBA(224, 143, 35, 0.7);
           }
-
-          &.cold {
+          &.color5 {
             background-color: RGBA(11, 13, 12, 0.7);
+          }
+          &.color6 {
+            background-color: RGBA(80, 160, 200, 0.7);
           }
         }
       }
