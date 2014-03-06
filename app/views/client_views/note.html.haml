@@ -7,14 +7,10 @@
     .note-description {{note.description}}
     .page-number
       .pages
-        /TODO make dynamic
-        Page
-        %span
-          1
-        of {{note.uploaded_html_files.length}}
-      .profile-container.circular.prev-page
+        Page {{currentPage}} of {{note.uploaded_html_files.length}}
+      .profile-container.circular.prev-page{:'ng-click' => 'decrementPage()'}
         %i.icon-angle-left
-      .profile-container.circular.next-page
+      .profile-container.circular.next-page{:'ng-click' => 'incrementPage()'}
         %i.icon-angle-right
       .profile-container.circular.flag
         %i.icon-exclamation
@@ -26,7 +22,7 @@
 
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
     .note-pages
-      .page{:'ng-repeat' => 'file in note.uploaded_html_files'}
+      .page{:'ng-repeat' => 'file in note.uploaded_html_files', :'page-buttons-scroll' => true}
         .file-container{:'ng-init' => "getComments(file.id, $index)"}
           .page-container
             %a{ :name => "Page-{{file.page_number}}"}

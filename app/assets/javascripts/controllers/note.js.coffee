@@ -9,6 +9,7 @@
   $scope.repliesShowing = {}
   $scope.replyText = {}
   $scope.showDeleteConfirm = {global: null}
+  $scope.currentPage = 1
 
   # Group comment lines up to this nubmer of pixels apart
   @groupThreshold = 60
@@ -169,3 +170,11 @@
       else
         i++
     groupedComments
+
+  $scope.incrementPage = () ->
+    if $scope.currentPage < $scope.note.uploaded_html_files.length
+      $scope.currentPage++
+
+  $scope.decrementPage = () ->
+    if $scope.currentPage > 1
+      $scope.currentPage--

@@ -83,3 +83,18 @@ notistApp.directive('ngSpinner', () ->
         , 10)
     scope.$watch(attrs.textareaAutofocus, setFocus, true)
 )
+
+.directive('pageButtonsScroll', () ->
+  link: (scope, el, attrs) ->
+    scrollToElement = () =>
+      if scope.$parent.currentPage == scope.$index+1
+        document.body.scrollTop = el[0].offsetTop-$('#note-header').height()
+    changeCurrentPage = () =>
+      if document.body.scrollTop - el[0].offsetTop < 200 && document.body.scrollTop - el[0].offsetTop > -200
+        scope.$parent.currentPage = scope.$index+1
+        scope.$apply()
+    scope.$parent.$watch('currentPage', scrollToElement, false)
+    $(document).ready( () =>
+      $(window).scroll(changeCurrentPage)
+    )
+)
