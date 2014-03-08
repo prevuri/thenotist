@@ -24,11 +24,11 @@ Sharing = () ->
           notediv.attr("data-footer-expanded", parseInt(notediv.attr("data-footer-expanded"))+ notedivInfo.height()+15)
         else if(response.contributors.length == 1)
           notedivInfo.html("Shared with " + response.contributors[0].name)
-          notediv.attr("data-footer-expanded", parseInt(notediv.attr("data-footer-expanded"))+ notedivInfo.height()+15)          
+          notediv.attr("data-footer-expanded", parseInt(notediv.attr("data-footer-expanded"))+ notedivInfo.height()+15)
         else if(response.contributors.length == 0)
           notedivInfo.html("")
           notediv.attr("data-footer-expanded", parseInt(notedivInfo.attr('data-footer')))
-          
+
 
         shareDiv.empty()
 
@@ -75,7 +75,7 @@ Sharing = () ->
       )
 
   @shareWithUser = (event) =>
-    shareIds = $(event.target).parents('.share-note-form-container').find('#ms-sel-ctn-0 input[type=hidden]').val()
+    shareIds = $(event.target).parents
     note_id = $(event.target).parents('.notes-list-item').attr('data-id')
     data = {
       id: note_id,
@@ -90,7 +90,7 @@ Sharing = () ->
         @updateNote(note_id)
     )
 
-    
+
 
   @removeSharedUser = (e) =>
 
@@ -102,7 +102,7 @@ Sharing = () ->
       id: note_id,
       userid: shared_user
     }
-    
+
     $.post('/api/notes/unshare', data, (response) =>
       if !response.success
         @showErrorCode(response)
@@ -122,7 +122,7 @@ Sharing = () ->
   $('.share-button').click (e) =>
     @shareWithUser(e)
 
-  
+
   # @attain
   # @shareWithUser = (event, ui, note_id) =>
   #   $('.tooltip').addClass("hidden", 1000)
@@ -157,8 +157,8 @@ Sharing = () ->
   #     })
   #   )
   #   $(e.target).parents('.note-item').children('.tooltip').toggleClass("hidden", 1000)
-    
-  # return false  
+
+  # return false
 $ ->
   if $('.share-note').length > 0
     Sharing()

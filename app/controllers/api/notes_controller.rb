@@ -12,9 +12,10 @@ class Api::NotesController < ApplicationController
   UserInfo = Struct.new(:id, :name, :image)
 
   def index
+    @notes = current_user.notes + current_user.shared_notes
     return render :json => {
       :success => true,
-      :notes => current_user.notes.map { |n| n.as_json }
+      :notes => @notes.map { |n| n.as_json }
     }
   end
 
@@ -91,8 +92,12 @@ class Api::NotesController < ApplicationController
       @useridstring = @userstring[1..@userstring.length - 2]
       @user_ids = @useridstring.split(",").map { |id| id.chomp('"').reverse.chomp('"').reverse}
       @users = []
+      @graph = Koala::Facebook::API.new(current_user.fb_access_token)
       @user_ids.each do |user_id|
-        @users << User.find_by_id(user_id)
+        user = current_user.buddies.find_by_id(user_id)
+        if user != nil
+          @users << user
+        end
       end
 
     rescue
@@ -166,11 +171,15 @@ private
     begin
       @note = current_user.notes.find(params[:id]) # throws an exception if nothing is found
     rescue
-      return render :json => {
-        :success => false,
-        :error => note_not_found_error,
-      },
-      :status => 404
+      begin
+        @note = current_user.shared_notes.find(params[:id]) # throws an exception if nothing is found
+      rescue
+        return render :json => {
+          :success => false,
+          :error => note_not_found_error,
+        },
+        :status => 404
+      end
     end
   end
 

@@ -4,17 +4,18 @@
       .form
     %h4 Note Shared With:
     .contributor-list
-      .contrib-list-item{:'ng-repeat' => 'contrib in note.contributors'}
+      .contrib-list-item{:'ng-repeat' => 'contrib in sharedNote.contributing_users'}
         .contrib-info
           .profile-container.circular
-            %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+            %img.profile-image.circular{:'ng-src' => 'contrib.user_fb_data.profile_image'}
           .profile-link-container
-            %a{:'ng-href' => '{{profilePath(contrib.user)}}'} {{contrib.user.name}}
+            -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
+            {{contrib.name}}
           .delete-contrib
             %i.icon-remove.btn
   .share-interaction.modal-footer
     .error-label.hidden
-    .btn.btn-primary.share-button{:'ng-click' => 'shareNote($event)'}
+    .btn.btn-primary.share-button{:'ng-click' => 'shareNote()'}
       %i.icon-share-alt.share-note-icon
         .share-action-text
-          Share  
+          Share

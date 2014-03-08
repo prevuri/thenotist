@@ -9,7 +9,7 @@
         %li.btn{:'ng-click'=> "setFilter = {shared: true, shared: false}; predicate='created_at'; reverse=!reverse; button='date'", :'ng-class'=>"{ 'active' : button == 'date' }"}
           Date
         %li.btn{:'ng-click'=> "setFilter = {shared: true, shared: false}; predicate='title'; reverse=!reverse; button='name'", :'ng-class'=>"{ 'active' : button == 'name' }"}
-          Name 
+          Name
         %li.btn{:'ng-click'=> "setFilter = {shared: false}; button='uploaded'", :'ng-class'=>"{ 'active' : button == 'uploaded' }"}
           Uploaded
         %li.btn{:'ng-click'=> "setFilter = {shared: true}; button='shared'", :'ng-class'=>"{ 'active' : button == 'shared' }"}
@@ -24,12 +24,5 @@
           %ng-include{:src => "'/client_views/grid_item.html'"}
         .notes-list-item{ :'ng-repeat' => 'note in sharedNotes' }
           %ng-include{:src => "'/client_views/grid_item.html'"}
-  
+
   %ng-include{:src => "'/client_views/share_form.html'"}
-
-
-    / .modal-container-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
-    /   .modal-container{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }
-    /     %a.thumb-container{ :'ng-repeat' => "image in overview.images", :'ng-href' => "{{image.pageUrl}}" }
-    /       %img.thumb-image{ :'ng-src' => "{{image.src}}" }
-    / .full-screen-overlay{ :'ng-class' => "{hidden: !overview.showing}", :'ng-click' => "hideOverview()" }

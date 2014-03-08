@@ -19,31 +19,6 @@
     %div{:'ng-if' => '!note.shared'}
       %a{:'ng-click' => 'deleteNote(note, $index)'}
         %i.icon-remove.btn
-  
-  / %div{:'ng-if' => 'note.shared'}
-  /   .share-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
-  /     .share-note-container.modal-body
-  /       .form-container
-  /         .form
-  /       %h4 Note Shared With:
-  /       .contributor-list
-  /         .contrib-list-item{:'ng-repeat' => 'contrib in note.contributors'}
-  /           .contrib-info
-  /             .profile-container.circular
-  /               %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
-  /             .profile-link-container
-  /               %a{:'ng-href' => '{{profilePath(contrib.user)}}'} {{contrib.user.name}}
-  /             .delete-contrib
-  /               %i.icon-remove.btn
-  /             / TODO: create a delete friend link and connect it to the delete friend for the API
-      
-  /     .share-interaction.modal-footer
-  /       .error-label.hidden
-  /       .btn.btn-primary.share-button
-  /         %i.icon-share-alt.share-note-icon
-  /           .share-action-text
-  /             Share
-
 
   #list-footer{:'ng-show' => 'note.processed'}
     .big-info
@@ -51,8 +26,8 @@
         %div{:'ng-repeat' => 'contrib in note.contributors'}
           .profile-container.circular
             %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
-        .profile-container.circular.share-note
-          %i.icon-plus{:'ng-click' => 'showContributorsModal()'}
+        .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
+          %i.icon-plus
     .tiny-info
       %i.icon-comments {{note.comment_count}}
 

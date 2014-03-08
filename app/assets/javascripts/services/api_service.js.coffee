@@ -10,6 +10,13 @@ service.factory("NotesApi", ($resource) ->
       method: 'PUT'
     }
   )
+).factory("NotesShareApi", ($resource) ->
+    $resource(
+      "/api/notes/share", {},
+      share: {
+        method: 'POST'
+      }
+    )
 ).factory("UploadFormHtml", ($resource) ->
   $resource(
     "/api/notes/upload_form_html", {}
@@ -26,8 +33,8 @@ service.factory("NotesApi", ($resource) ->
   $resource(
     "/api/users/:id", {}
   )
-).factory("UserBuddiesApi", ($resource) ->
+).factory("UserFriendsApi", ($resource) ->
   $resource(
-    "/api/users/:id/buddies", {}
+    "/api/users/:id/friends", {}
   )
 )

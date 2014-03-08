@@ -66,6 +66,7 @@ class Note < ActiveRecord::Base
       :id => id,
       :title => title,
       :description => description,
+      :contributing_users => contributing_users.map { |u| u.as_json },
       :uploaded_html_files => uploaded_html_files.map { |f| f.as_json },
       :uploaded_css_files => uploaded_css_files.map { |f| f.as_json },
       :uploaded_thumb_files => uploaded_thumb_files.map { |f| f.as_json },

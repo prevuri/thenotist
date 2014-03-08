@@ -33,7 +33,7 @@ TheNotist::Application.routes.draw do
     match 'activity/user' => 'activity#user', :as => :user_activity
     resources :activity
     resources :users, :only => [ :index, :show ]
-    match 'users/:id/buddies' => 'users#buddies', :as => :user_buddies, :via => :get
+    match 'users/:id/friends' => 'users#friends', :as => :user_friends, :via => :get
 
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]
@@ -107,5 +107,3 @@ TheNotist::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 end
-
-
