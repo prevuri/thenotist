@@ -41,11 +41,12 @@
     )
 
   $scope.deleteNote = (note, index) ->
-    success = (data) ->
-      $scope.notes.splice(index, 1)
-    error = (data) ->
-      $scope.setAlert("Error deleting note", false)
-    NotesApi.delete({id: note.id}, success, error)
+    if confirm("Are you sure you want to delete " + note.title)
+      success = (data) ->
+        $scope.notes.splice(index, 1)
+      error = (data) ->
+        $scope.setAlert("Error deleting note", false)
+      NotesApi.delete({id: note.id}, success, error)
 
   # $scope.shareNote = () ->
   #   success = (data) ->
@@ -65,7 +66,7 @@
 
   $scope.checkNoteStatus = (noteId) ->
     success = (data) ->
-      procNote = data.note 
+      procNote = data.note
       if procNote.processed
         existingNote = $filter('filter')($scope.notes, {id: data.note.id}, true)[0]
         existingNote.processed = true
@@ -77,7 +78,7 @@
         clearInterval($scope.promises[noteId])
         delete $scope.promises[noteId]
     error = (data) ->
-      $scope.setAlert("Error getting note", false)
+      clearInterval($scope.promises[noteId])
     NotesApi.get({id: noteId}, success, error)
 
   $scope.initPolling = (noteId) ->

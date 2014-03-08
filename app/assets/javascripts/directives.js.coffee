@@ -98,3 +98,12 @@ notistApp.directive('ngSpinner', () ->
       $(window).scroll(changeCurrentPage)
     )
 )
+
+.directive('ngEnter', () ->
+  (scope,element,attrs) ->
+    element.bind('keydown keypress', (event) ->
+      if event.which == 13
+        scope.$eval(attrs.ngEnter)
+        event.preventDefault()
+    )
+)

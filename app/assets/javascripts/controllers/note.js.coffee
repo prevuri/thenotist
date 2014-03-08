@@ -1,4 +1,9 @@
 @NoteCtrl = ($scope, $http, $route, $routeParams, $sce, $timeout, $interval, NotesApi) ->
+  # Group comment lines up to this nubmer of pixels apart
+  @groupThreshold = 60
+
+  # number of pages to loaded in the browser at any given time
+  @prefetchSize = 7
 
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
@@ -10,14 +15,13 @@
   $scope.replyText = {}
   $scope.showDeleteConfirm = {global: null}
   $scope.currentPage = 1
-
-  # Group comment lines up to this nubmer of pixels apart
-  @groupThreshold = 60
+  $scope.visiblePages = []
 
   $scope.init = () ->
     $scope.$root.section = 'notes'
     success = (data) ->
       $scope.note = data.note
+      $scope.loadMoreVisiblePages()
       $scope.$root.title = $scope.note.title
       $scope.trustURLs()
       $scope.pollComments()
@@ -38,14 +42,14 @@
           angular.element(document).ready( () ->
             $scope.getGroupedComments(file)
           )
-        else
-          $scope.setAlert("Error processing note comment data")
+        # else
+          # $scope.setAlert("Error processing note comment data")
       , 500)
     else
 
   $scope.pollComments = () ->
       $interval( () =>
-        for file, i in $scope.note.uploaded_html_files
+        for file, i in $scope.visiblePages
           $scope.getComments(file.id, i)
       , 10000)
 
@@ -53,17 +57,17 @@
     $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
       success( (data, status, headers, config) ->
         shouldUpdate = false
-        if !$scope.note.uploaded_html_files[index].comments
+        if !$scope.visiblePages[index].comments
           shouldUpdate = true
         else
-          oldComments = $scope.note.uploaded_html_files[index].comments.map((value) -> 
+          oldComments = $scope.visiblePages[index].comments.map((value) ->
             angular.copy(value)
           )
           shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(data.comments)
         if shouldUpdate
-          $scope.note.uploaded_html_files[index].comments = data.comments
+          $scope.visiblePages[index].comments = data.comments
           angular.element(document).ready( () ->
-            $scope.getGroupedComments($scope.note.uploaded_html_files[index])
+            $scope.getGroupedComments($scope.visiblePages[index])
           )
       ).error( (data, status, headers, config) ->
         $scope.setAlert("Error loading comments from server", false)
@@ -122,8 +126,8 @@
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
-          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
-          $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
+          $scope.visiblePages[fileIndex].comments = data.comments
+          $scope.visiblePages[fileIndex].groupedComments = $scope.groupComments(data.comments)
           $scope.submitting = false
           if parentId
             $scope.repliesShowing[parentId] = false
@@ -143,7 +147,7 @@
         success( (data, status, headers, config) ->
           comment.deleted = true
         ).error( (data, status, headers, config) ->
-          $scope.setAlert("Error deleting comment", false) 
+          $scope.setAlert("Error deleting comment", false)
           comment.deleteFade = false
       )
 
@@ -178,3 +182,12 @@
   $scope.decrementPage = () ->
     if $scope.currentPage > 1
       $scope.currentPage--
+
+  $scope.loadMoreVisiblePages = () =>
+    if !$scope.note
+      return false
+    if $scope.note && $scope.note.uploaded_html_files.length == $scope.visiblePages.length
+      return false
+    rangeEnd = Math.min($scope.visiblePages.length + @prefetchSize, $scope.note.uploaded_html_files.length)
+    $scope.visiblePages = $scope.note.uploaded_html_files.slice(0, rangeEnd)
+    return false

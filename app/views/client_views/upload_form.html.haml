@@ -1,4 +1,4 @@
-.create-new-note-container{:'ng-controller' => 'UploadCtrl', :'ng-init' => "init()"}
+.create-new-note-container{:'ng-controller' => 'UploadCtrl', :'ng-init' => "init()", :'ng-enter' => "submitClicked()"}
   .big-button-container{:'ng-hide' => 'uploadShowing', "data-toggle" => "modal", "data-target" => ".new-note-form-container" }
     .create-new-note-button
       %i.icon-circle-arrow-up.icon-white
@@ -9,8 +9,6 @@
       %i.icon-refresh.icon-white.icon-spin
       %h2.process
         Uploading...
-
-
 
   .new-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true }
     .upload_form-container.modal-body
@@ -30,13 +28,6 @@
 
 
     .upload-interaction.modal-footer
-      / .upload-progress{:'ng-hide' => '!uploadShowing'}
-      /   .spinner-container
-      /   .upload-progress-text
-      /     {{progressText}}
-      /   .progress.progress-success
-      /     .bar{ :'ng-style' => "{'width':progressPercent}" }
-      / .spinner-container{:'ng-hide' => '!processingShowing', :'ng-spinner' => '{{processingShowing}}'}
       .processing-label{:'ng-hide' => '!processingShowing'} This can take several minutes. You will be automatically redirected to your note when processing is done.
       .btn.btn-primary.submit-action{:'ng-disabled' => '!controlsEnabled || !validated', :'ng-click' => 'submitClicked()'}
         %i.submit-action-icon.icon-cloud-upload

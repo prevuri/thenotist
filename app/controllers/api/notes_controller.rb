@@ -7,7 +7,7 @@ class Api::NotesController < ApplicationController
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
   before_filter :get_page_range, :only => [ :paginate ]
-  before_filter :abort_timed_out_notes
+  before_filter :abort_timed_out_notes, :only => [ :index ]
 
   UserInfo = Struct.new(:id, :name, :image)
 
@@ -19,35 +19,25 @@ class Api::NotesController < ApplicationController
   end
 
   def create
-    # don't allow a user to process more than one note at a time
-    if current_user.has_note_processing?
-      @fail_reason = "Can't upload more than one file at a time"
-    else
-      begin
-        @note = current_user.notes.create(:title => params[:title], :description => params[:description])
-        track_activity @note
+    begin
+      @note = current_user.notes.create(:title => params[:title], :description => params[:description])
+      track_activity @note
 
-        s3_key = params[:s3_key]
-        queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
-        queue.send_message(sqs_message(@note.id, s3_key))
-        return render :json => {
-          :success => true,
-          :noteId => @note.id
-        }
-      rescue => ex
-        @fail_reason = "unknown"
-        @note.delete
-        return render :json => {
-          :success => false,
-          :error_message => ex.message
-        }
-      end
+      s3_key = params[:s3_key]
+      queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
+      queue.send_message(sqs_message(@note.id, s3_key))
+      return render :json => {
+        :success => true,
+        :noteId => @note.id
+      }
+    rescue => ex
+      @fail_reason = "unknown"
+      @note.delete
+      return render :json => {
+        :success => false,
+        :error_message => ex.message
+      }, :status => 500
     end
-
-    return render :json => {
-      :success => false,
-      :error_message => @fail_reason,
-    }, :status => 409
   end
 
   def show
@@ -222,6 +212,6 @@ private
   end
 
   def abort_timed_out_notes
-    current_user.abort_timed_out_notes!
+    current_user.notes.each &:abort_if_timed_out!
   end
 end

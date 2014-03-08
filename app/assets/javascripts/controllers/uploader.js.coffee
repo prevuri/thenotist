@@ -48,6 +48,7 @@
       $scope.setAlert("Error loading uploader", false)
     UploadFormHtml.get(success, error)
 
+
   $scope.submitClicked = () ->
     $scope.validateUploadForm()
     if $scope.validated
@@ -105,7 +106,7 @@
     $scope.modified = true
     $scope.fileError = !$scope.newNote.fileData || !$scope.newNote.fileData.files[0].name.length
     $scope.titleError = $.trim( $scope.newNote.title ) == ''
-    $scope.typeError = $scope.isPdf($scope.newNote.fileData)
+    $scope.typeError = $scope.isPdf($scope.newNote.fileData) if !$scope.fileError
     $scope.validated = !$scope.fileError && !$scope.titleError
 
   $scope.updateFileName = () =>
