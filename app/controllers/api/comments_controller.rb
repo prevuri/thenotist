@@ -9,10 +9,14 @@ class Api::CommentsController < ApplicationController
     begin
       @file = current_user.uploaded_html_files.find(@uploaded_html_file_id) # throws an exception if nothing found
     rescue
-      return render :json => {
-        :success => false,
-        :error => file_not_found_error
-      }
+      begin
+        @file = current_user.shared_uploaded_html_files.find(@uploaded_html_file_id) # throws an exception if nothing found
+      rescue
+        return render :json => {
+          :success => false,
+          :error => file_not_found_error
+        }
+      end
     end
 
     # only render top-level comments, because their children will be rendered recursively
