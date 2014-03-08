@@ -3,7 +3,7 @@
   @groupThreshold = 60
 
   # number of pages to loaded in the browser at any given time
-  @prefetchSize = 7
+  @prefetchSize = 10
 
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
