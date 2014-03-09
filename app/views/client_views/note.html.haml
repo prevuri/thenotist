@@ -21,7 +21,7 @@
         %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
 
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
-    .note-pages{:'infinite-scroll' => 'loadMoreVisiblePages()', :'infinite-scroll-immediate-check' => false, :'infinite-scroll-distance' => 1}
+    .note-pages{:'infinite-scroll' => 'loadMoreVisiblePages()', :'infinite-scroll-immediate-check' => false, :'infinite-scroll-distance' => 0}
       .page{:'ng-repeat' => 'file in visiblePages', :'page-buttons-scroll' => true}
         .file-container{:'ng-init' => "getComments(file.id, $index)"}
           .page-container

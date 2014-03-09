@@ -57,6 +57,8 @@
       $scope.modalShowing = false
       $('.new-note-form-container').modal('hide');
       $('.direct-upload-submit').trigger('click')
+    return false
+
 
   $scope.s3UploadComplete = (s3KeyVal) ->
     $http({method: 'POST', url: '/api/notes', params: {

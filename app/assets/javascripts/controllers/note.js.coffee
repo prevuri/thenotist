@@ -26,7 +26,7 @@
       $scope.trustURLs()
       $scope.pollComments()
     error = (data) ->
-      $scope.setAlert("Error loading note data", false)
+      console.log "Error loading note data"
     NotesApi.get({id: $routeParams.noteId}, success, error)
 
   $scope.trustURLs = () ->
@@ -42,8 +42,8 @@
           angular.element(document).ready( () ->
             $scope.getGroupedComments(file)
           )
-        # else
-          # $scope.setAlert("Error processing note comment data")
+        else
+          console.log "Error processing note comment data"
       , 500)
     else
 
@@ -70,7 +70,7 @@
             $scope.getGroupedComments($scope.visiblePages[index])
           )
       ).error( (data, status, headers, config) ->
-        $scope.setAlert("Error loading comments from server", false)
+        console.log "Error loading comments from server", false
     )
 
   $scope.showNewComment = (show) ->

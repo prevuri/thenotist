@@ -25,7 +25,7 @@ class Note < ActiveRecord::Base
   end
 
   def abort_if_timed_out!
-    self.update_attributes(:aborted => true) if !processed && (Time.now - created_at > 120.minutes)
+    abort_processing! if !processed && (Time.now - created_at > 120.minutes)
   end
 
   def share! user
