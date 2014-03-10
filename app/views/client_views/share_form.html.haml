@@ -7,7 +7,7 @@
     %div
       %h4 {{sharedNote.title}} shared with:
     .contributor-list
-      .contrib-list-item{:'ng-repeat' => 'contrib in sharedNote.contributing_users | filter:searchFriends'}
+      .contrib-list-item{:'ng-repeat' => 'contrib in sharedNote.contributing_users | filter:searchFriends', :'ng-click' => 'unshareNote(contrib)'}
         .contrib-info
           .profile-container.circular
             %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
@@ -15,14 +15,14 @@
             -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
             {{contrib.name}}
           .delete-contrib
-            .btn{:'ng-click' => 'unshareNote(contrib)'}
+            .btn
               %span Remove
               %i.icon-remove
 
     %div
       %h4.friend Friends:
     .contributor-list
-      .contrib-list-item{:'ng-repeat' => 'friend in friends | filter: searchFriends'}
+      .contrib-list-item{:'ng-repeat' => 'friend in friends | filter: searchFriends', :'ng-click' => 'shareNote(friend)'}
         .contrib-info
           .profile-container.circular
             %img.profile-image.circular{:'ng-src' => '{{friend.user_fb_data.profile_image}}'}
@@ -30,7 +30,7 @@
             -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
             {{friend.name}}
           .add-contrib
-            .btn{:'ng-click' => 'shareNote(friend)'}
+            .btn
               %span Share
               %i.icon-plus
   .share-interaction.modal-footer

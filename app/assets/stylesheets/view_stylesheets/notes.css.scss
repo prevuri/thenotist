@@ -199,7 +199,8 @@ $shift-max-width: 1400px;
       font-size: 1.8em;
       position: absolute;
 
-      &.icon-plus {
+      &.icon-share {
+        font-size: 1.8em;
         top: 27%;
         left: 27%;
       }
@@ -637,10 +638,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 
                 i {
                   color: #fff;
-                  font-size: 1.8em;
+                  font-size: 1.4em;
                   position: absolute;
-                  top: 27%;
-                  left: 27%;
+                  top: 32%;
+                  left: 32%;
                 }
 
                 &.share-note {
@@ -829,6 +830,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 
 // NOTE SHARING SECTION
 .share-note-form-container {
+  background-color: #F5F5F5;
 
   h4 {
     margin-top: 0px;
@@ -879,17 +881,22 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
     .contributor-list {
       height: 220px;
       overflow-y: scroll;
+      background-color: #fff;
 
       .contrib-list-item {
         // width: 290px;
-        height: 70px;
+        height: 66px;
         padding: 5px;
         padding-left: 15px;
-        border-bottom: 1px #ccc solid;
+        cursor: pointer;
+        // border-bottom: 1px #ccc solid;
         clear: both;
 
         &:hover {
           background-color: #eaeaea;
+          .contrib-info .delete-contrib .btn, .contrib-info .add-contrib .btn {
+            width: 100px;
+          }
         }
         .contrib-info {
           width: 100%;
@@ -939,10 +946,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
                 right: 10px;
                 bottom: 5px;
               }
-            }
-
-            .btn:hover {
-              width: 100px;
             }
           }
         }

@@ -22,7 +22,7 @@
         %i.icon-exclamation
     .contributors
       .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote()', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
-        %i.icon-plus
+        %i.icon-share
       .profile-container.circular{:'ng-if' => 'note.shared'}
         %img.profile-image.circular{:'ng-src' => '{{note.user.user_fb_data.profile_image}}'}
       %div{:'ng-repeat' => 'contrib in note.contributing_users'}
