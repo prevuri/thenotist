@@ -6,9 +6,9 @@
       %span.input-icon.icon-search
     .sorting-options
       %ul
-        %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='created_at'; reverse=!reverse; button='date'", :'ng-class'=>"{ 'active' : button == 'date' }"}
+        %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='created_at'; button='date'; reverse=setReverse('date')", :'ng-class'=>"{ 'active' : button == 'date' }"}
           Date
-        %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='title'; reverse=!reverse; button='name'", :'ng-class'=>"{ 'active' : button == 'name' }"}
+        %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='title'; button='name'; reverse=setReverse('name')", :'ng-class'=>"{ 'active' : button == 'name' }"}
           Name
         %li.btn{:'ng-click'=> "setFilter = {shared: false}; button='uploaded'", :'ng-class'=>"{ 'active' : button == 'uploaded' }"}
           Uploaded
