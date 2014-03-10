@@ -84,6 +84,7 @@ class User < ActiveRecord::Base
         notist_friend = User.find_by_uid(friend["id"])
         if notist_friend != nil and !(user.buddies.include? notist_friend)
           user.follow!(notist_friend)
+          notist_friend.follow!(user)
         end
       end
       user
