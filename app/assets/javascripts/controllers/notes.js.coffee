@@ -36,6 +36,7 @@
   # Sets the current note being shared for the sharing modal
   $scope.setSharedNote = (note) ->
     $scope.sharedNote = note
+    $scope.$broadcast('shareInit')
 
   # Deletes a user note
   $scope.deleteNote = (note, index) ->

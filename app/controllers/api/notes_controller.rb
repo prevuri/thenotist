@@ -88,17 +88,7 @@ class Api::NotesController < ApplicationController
 
   def share
     begin
-      @userstring = params[:userids]
-      @useridstring = @userstring[1..@userstring.length - 2]
-      @user_ids = @useridstring.split(",").map { |id| id.chomp('"').reverse.chomp('"').reverse}
-      @users = []
-      @graph = Koala::Facebook::API.new(current_user.fb_access_token)
-      @user_ids.each do |user_id|
-        user = current_user.buddies.find_by_id(user_id)
-        if user != nil
-          @users << user
-        end
-      end
+      @user = current_user.buddies.find(params[:userid])
 
     rescue
       return render :json => {
@@ -106,13 +96,10 @@ class Api::NotesController < ApplicationController
         :error => user_not_found_error + " " + @userstring
       }
     end
-    #TODO: Set up multiple user activity
 
     begin
-      @users.each do |user|
-        @contrib = @note.share!(user)
-        track_activity @contrib
-      end
+      @contrib = @note.share!(@user)
+      track_activity @contrib
     rescue
       return render :json => {
         :success => false,
@@ -128,7 +115,7 @@ class Api::NotesController < ApplicationController
 
   def unshare
     begin
-      @user = User.find_by_id(params[:userid])
+      @user = current_user.buddies.find_by_id(params[:userid])
     rescue
       return render :json => {
         :success => false,

@@ -17,12 +17,21 @@
     $scope.$root.section = 'notes'
     success = (data) ->
       $scope.note = data.note
+      if $scope.note.user.id == $scope.currentUser.id
+        $scope.note.shared = false
+      else
+        $scope.note.shared = true
       $scope.$root.title = $scope.note.title
       $scope.trustURLs()
       $scope.pollComments()
     error = (data) ->
       $scope.setAlert("Error loading note data", false)
     NotesApi.get({id: $routeParams.noteId}, success, error)
+
+  # Sets the current note being shared for the sharing modal
+  $scope.setSharedNote = () ->
+    $scope.sharedNote = $scope.note
+    $scope.$broadcast('shareInit')
 
   $scope.trustURLs = () ->
     for file in $scope.note.uploaded_html_files
@@ -55,7 +64,7 @@
         if !$scope.note.uploaded_html_files[index].comments
           shouldUpdate = true
         else
-          oldComments = $scope.note.uploaded_html_files[index].comments.map((value) -> 
+          oldComments = $scope.note.uploaded_html_files[index].comments.map((value) ->
             angular.copy(value)
           )
           shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(data.comments)
@@ -142,7 +151,7 @@
         success( (data, status, headers, config) ->
           comment.deleted = true
         ).error( (data, status, headers, config) ->
-          $scope.setAlert("Error deleting comment", false) 
+          $scope.setAlert("Error deleting comment", false)
           comment.deleteFade = false
       )
 

@@ -17,6 +17,13 @@ service.factory("NotesApi", ($resource) ->
         method: 'POST'
       }
     )
+).factory("NotesUnshareApi", ($resource) ->
+    $resource(
+      "/api/notes/unshare", {},
+      remove: {
+        method: 'POST'
+      }
+    )
 ).factory("UploadFormHtml", ($resource) ->
   $resource(
     "/api/notes/upload_form_html", {}

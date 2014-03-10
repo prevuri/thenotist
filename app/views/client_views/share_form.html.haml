@@ -1,21 +1,40 @@
 .share-note-form-container.modal.hide.fade{ :'ng-controller' => 'ShareCtrl', :'ng-init' => "init()", :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
   .share-note-container.modal-body
     .form-container
-      .form
-    %h4 Note Shared With:
+      .search-friend-box.form-group
+        %input.form-control{:type => 'text', :'ng-model' => 'searchFriends'}
+        %span.input-icon.icon-search
+    %div
+      %h4 {{sharedNote.title}} shared with:
     .contributor-list
-      .contrib-list-item{:'ng-repeat' => 'contrib in sharedNote.contributing_users'}
+      .contrib-list-item{:'ng-repeat' => 'contrib in sharedNote.contributing_users | filter:searchFriends'}
         .contrib-info
           .profile-container.circular
-            %img.profile-image.circular{:'ng-src' => 'contrib.user_fb_data.profile_image'}
+            %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
           .profile-link-container
             -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
             {{contrib.name}}
           .delete-contrib
-            %i.icon-remove.btn
+            .btn{:'ng-click' => 'unshareNote(contrib)'}
+              %span Remove
+              %i.icon-remove
+
+    %div
+      %h4.friend Friends:
+    .contributor-list
+      .contrib-list-item{:'ng-repeat' => 'friend in friends | filter: searchFriends'}
+        .contrib-info
+          .profile-container.circular
+            %img.profile-image.circular{:'ng-src' => '{{friend.user_fb_data.profile_image}}'}
+          .profile-link-container
+            -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
+            {{friend.name}}
+          .add-contrib
+            .btn{:'ng-click' => 'shareNote(friend)'}
+              %span Share
+              %i.icon-plus
   .share-interaction.modal-footer
     .error-label.hidden
-    .btn.btn-primary.share-button{:'ng-click' => 'shareNote()'}
-      %i.icon-share-alt.share-note-icon
-        .share-action-text
-          Share
+    .btn.btn-primary.share-button{:'ng-click' => 'hideShareModal()'}
+      .share-action-text
+        OK

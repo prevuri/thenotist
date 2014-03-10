@@ -170,7 +170,14 @@ $shift-max-width: 1400px;
     border: solid #ECF0F1 1px;
     margin-right: 10px;
     position: relative;
-  
+    height: 45px;
+    width: 45px;
+
+    // .profile-image {
+    //   width: 50px;
+    //   height: 50px;
+    // }
+
     &.share-note {
       height: 45px;
       width: 45px;
@@ -184,14 +191,14 @@ $shift-max-width: 1400px;
     &.flag {
       height: 45px;
       width: 45px;
-      margin-left: 15px; 
+      margin-left: 15px;
     }
 
     i {
       color: #999999;
       font-size: 1.8em;
       position: absolute;
-      
+
       &.icon-plus {
         top: 27%;
         left: 27%;
@@ -316,7 +323,7 @@ $shift-max-width: 1400px;
 
     .comment-button {
       position: absolute;
-      
+
       &.inactive {
         top: 0;
         -webkit-transition: margin 0.2s ease;
@@ -419,7 +426,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   border: none;
   border-radius: 0;
   // Don't change margin/padding, affects autoresizing
-  margin: 0; 
+  margin: 0;
   padding: 0;
 }
 
@@ -616,6 +623,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
               margin-left: 10px;
               margin-bottom: 10px;
               display: inline-block;
+              width: 100%;
               .profile-container {
                 height: 45px;
                 width: 45px;
@@ -628,7 +636,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
                 z-index: 103;
 
                 i {
-                  color: #999999;
+                  color: #fff;
                   font-size: 1.8em;
                   position: absolute;
                   top: 27%;
@@ -636,11 +644,20 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
                 }
 
                 &.share-note {
-                  background-color: rgba(255, 255, 255, 0.7);
+                  background-color: rgba(255, 255, 255, 0.2);
+                  span {
+                    color: #fff;
+                    font-size: 1.2em;
+                    top: 28%;
+                    left: 16%;
+                    position: absolute;
+                    text-align: center;
+                    width: 30px;
+                  }
                 }
 
                 &:hover {
-                  background-color: #eaeaea;
+                  background-color: rgba(255, 255, 255, 0.5);
                 }
 
               }
@@ -738,7 +755,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             }
           }
         }
-        
+
         .big-link {
           height: 100%;//275px;
           width: 100%;
@@ -765,7 +782,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           left: calc(50% - 72px);
           font-size: 7em;
           color: #fff;
-          
+
           i {
             margin-left: 24px;
           }
@@ -814,26 +831,68 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 .share-note-form-container {
 
   h4 {
-    margin-top: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px #ccc solid;
+  }
+
+  h4.friend {
+    border-top: 1px #ccc solid;
   }
 
   .modal-body {
-    padding-top: 35px;
-    padding-bottom: 35px;
+    padding: 0px;
+    max-height: 600px;
     overflow-y: visible;
+
+    .search-friend-box {
+      position: relative;
+      margin-top: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+
+      input {
+        width: calc(100% - 15px);
+        border-radius: 2px;
+        &:active {
+          border-color: #22B498 !important;
+        }
+      }
+
+      .input-icon {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        line-height: 37px;
+        vertical-align: middle;
+        font-size: 20px;
+        color: #b2bcc5;
+        background-color: transparent;
+        padding: 0 12px 0 0;
+        border-radius: 6px;
+      }
+    }
+
     .contributor-list {
-      height: 300px;
+      height: 220px;
       overflow-y: scroll;
 
       .contrib-list-item {
         // width: 290px;
-        height: 50px;
-        margin-top: 10px;
-        margin-right: 10px;
-        border-top: 1px #ccc solid;
+        height: 70px;
+        padding: 5px;
+        padding-left: 15px;
+        border-bottom: 1px #ccc solid;
         clear: both;
+
+        &:hover {
+          background-color: #eaeaea;
+        }
         .contrib-info {
-          width: 80%;
+          width: 100%;
           margin-top: 7px;
           margin-bottom: 7px;
           .profile-container {
@@ -855,6 +914,36 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             text-overflow: ellipsis;
             margin-top: 16px;
             white-space: nowrap;
+          }
+
+          .delete-contrib, .add-contrib {
+            float:right;
+            margin-top: 10px;
+            .btn {
+              position: relative;
+              background-color: transparent;
+              color: #34495E;
+              overflow: hidden;
+              padding: 0px;
+              width: 30px;
+              height: 30px;
+
+              span {
+                position: absolute;
+                right: 30px;
+                bottom: 5px;
+              }
+
+              i {
+                position: absolute;
+                right: 10px;
+                bottom: 5px;
+              }
+            }
+
+            .btn:hover {
+              width: 100px;
+            }
           }
         }
       }
@@ -909,7 +998,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       position: absolute;
       top: calc(50% - 76px);
       left: calc(50% - 105px);
-  
+
       h2.process {
         margin-left: 30px;
       }

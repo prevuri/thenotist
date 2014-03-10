@@ -1,33 +1,27 @@
-@ShareCtrl = ($scope, $http, $sce, $filter, NotesShareApi, UserFriendsApi) ->
+@ShareCtrl = ($scope, $http, $sce, $filter, $route, NotesShareApi, NotesUnshareApi, UserFriendsApi) ->
+
 
   $scope.init = () ->
-    $scope.initializeDropdown()
 
+    # $scope.initializeShareModal()
 
+  $scope.$on('shareInit', () ->
+    $scope.initializeShareModal()
+  )
 
-  $scope.initializeDropdown = () ->
-    $scope.shareForm = $('.share-note-form-container').find('.form')
+  $scope.initializeShareModal = () ->
     success = (data) ->
-      $scope.friends = $filter('orderBy')(data.friends, 'name')
-      $scope.msForm = $($scope.shareForm).magicSuggest({
-        width: 530,
-        height: 200,
-        toggleOnClick: true,
-        emptyText: 'Search for friends or groups to share note with!'
-        data: $.map($scope.friends, (value, key) =>
-          return {
-            id: value.id,
-            name: value.name,
-            image: value.image
-          }),
-        renderer: (v) =>
-          return '<div>' +
-            '<div style="float:left;"><img class="profile-image circular" style="width:50px;height:50px"src="' + v.image + '"/></div>' +
-            '<div style="padding-left: 85px;">' +
-                '<div style="padding-top: 20px;font-style:bold;font-size:120%;color:#333">' + v.name + '</div>' +
-                '</div>' +
-            '</div><div style="clear:both;"></div>';
-        })
+      contributingIds = Array()
+      nonContributingFriends = Array()
+
+      for contrib in $scope.sharedNote.contributing_users
+        contributingIds.push(contrib.id)
+
+      for friend in data.friends
+        if friend.id not in contributingIds
+          nonContributingFriends.push(friend)
+      $scope.friends = $filter('orderBy')(nonContributingFriends, 'name')
+      $('.search-friend-box .form-control').focus()
     error = (data) ->
       $scope.setAlert("Error loading friends list", false)
     UserFriendsApi.get({id: $scope.currentUser.id}, success, error)
@@ -35,15 +29,34 @@
   $scope.hideShareModal = () ->
     $('.share-note-form-container').modal('hide')
 
-  $scope.shareNote = () ->
-    shareIds = $('.share-note-form-container').find('#ms-sel-ctn-0 input[type=hidden]').val()
+  $scope.shareNote = (user) ->
     post_data = {
       id: $scope.sharedNote.id,
-      userids: shareIds
+      userid: user.id
     }
     success = (data) ->
-      $scope.$parent.updateNotes()
-      $scope.hideShareModal()
+      userIn = $scope.friends.indexOf(user)
+      $scope.friends.splice(userIn, 1)
+      $scope.sharedNote.contributing_users.push(user)
+      if $route.current.controller == "NotesCtrl"
+        $scope.searchFriends = ""
+        $scope.$parent.updateNotes()
     error = (data) ->
-      $scope.setAlert("Error loading friends list", false)
+      $scope.setAlert("Error sharing the note", false)
     NotesShareApi.share({}, post_data, success, error)
+
+  $scope.unshareNote = (user) ->
+    post_data = {
+      id: $scope.sharedNote.id,
+      userid: user.id
+    }
+    success = (data) ->
+      userIn = $scope.sharedNote.contributing_users.indexOf(user)
+      $scope.sharedNote.contributing_users.splice(userIn, 1)
+      $scope.friends.push(user)
+      if $route.current.controller == "NotesCtrl"
+        $scope.searchFriends = ""
+        $scope.$parent.updateNotes()
+    error = (data) ->
+      $scope.setAlert("Error sharing the note", false)
+    NotesUnshareApi.remove({}, post_data, success, error)

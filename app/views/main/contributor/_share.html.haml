@@ -2,8 +2,8 @@
   shared a note with you:
 - else
   = "shared a note with "
-  %a{:'ng-href' => '/profile/#{activity.trackable.user.id}'}
+  %a{:'href' => "/profile/#{activity.trackable.user.id}"}
     #{activity.trackable.user.name.split[0]}
   = ": "
-%a{:'ng-href' => '/notes/#{activity.trackable.shared_note.id}'}
+%a{:'href' => "/notes/#{activity.trackable.shared_note.id}"}
   #{activity.trackable.shared_note.title}

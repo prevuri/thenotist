@@ -2,6 +2,8 @@
 
   %link{:'ng-repeat' => 'css_file in note.uploaded_css_files', :type => "text/css", :rel => "stylesheet", :'ng-href' => "{{css_file.public_path}}"}
 
+  %ng-include{:src => "'/client_views/share_form.html'"}
+
   #note-header
     %h1.note-title  {{note.title}}
     .note-description {{note.description}}
@@ -19,10 +21,13 @@
       .profile-container.circular.flag
         %i.icon-exclamation
     .contributors
-      .profile-container.circular.share-note
+      .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote()', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
         %i.icon-plus
-      .profile-container.circular{:'ng-repeat' => 'contrib in note.contributors'}
-        %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+      .profile-container.circular{:'ng-if' => 'note.shared'}
+        %img.profile-image.circular{:'ng-src' => '{{note.user.user_fb_data.profile_image}}'}
+      %div{:'ng-repeat' => 'contrib in note.contributing_users'}
+        .profile-container.circular{:'ng-if' => 'contrib.id != currentUser.id'}
+          %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
 
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
     .note-pages

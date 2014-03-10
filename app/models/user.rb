@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
 
   has_one  :user_fb_data
   # has_many :fb_friends, dependent: :destroy
-  # has_many :friends, through: :users
   has_many :activities
   has_many :notes
   has_many :uploaded_html_files, through: :notes

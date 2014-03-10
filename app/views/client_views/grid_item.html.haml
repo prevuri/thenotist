@@ -23,9 +23,14 @@
   #list-footer{:'ng-show' => 'note.processed'}
     .big-info
       .contributors
-        %div{:'ng-repeat' => 'contrib in note.contributors'}
-          .profile-container.circular
-            %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
+        .profile-container.circular{:'ng-if' => 'note.shared'}
+          %img.profile-image.circular{:'ng-src' => '{{note.user.user_fb_data.profile_image}}'}
+        %div{:'ng-repeat' => 'contrib in note.contributing_users | orderBy:name | limitTo:4'}
+          .profile-container.circular{:'ng-if' => 'contrib.id != currentUser.id'}
+            %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
+        .profile-container.circular.share-note{:'ng-show' => 'note.contributing_users.length > 4'}
+          %span
+            {{note.contributing_users.length}}
         .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
           %i.icon-plus
     .tiny-info
