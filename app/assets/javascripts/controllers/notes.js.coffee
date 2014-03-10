@@ -12,14 +12,14 @@
     $scope.$root.title = 'Notes'
     $scope.$root.section = 'notes'
     $scope.button = 'date'
-    $scope.reverse = false
+    $scope.reverse = true
     $scope.updateNotes()
     # $scope.colorize()
 
   # Updates all the notes on the page
   $scope.updateNotes = () ->
     success = (data) ->
-      $scope.notes = $filter('orderBy')(data.notes, 'created_at')
+      $scope.notes = $filter('orderBy')(data.notes, 'created_at', true)
       for note in $scope.notes
         if note.user.id == $scope.currentUser.id
           note.shared = false
@@ -32,6 +32,15 @@
     error = (data) ->
       $scope.setAlert("Error loading notes list", false)
     NotesApi.get(success, error)
+
+  # Computes Reversing
+  $scope.setReverse = (name) ->
+    if $scope.button == name
+      return !$scope.reverse
+    else if $scope.button == 'date'
+      return true
+    else if $scope.button == 'name'
+      return true
 
   # Sets the current note being shared for the sharing modal
   $scope.setSharedNote = (note) ->

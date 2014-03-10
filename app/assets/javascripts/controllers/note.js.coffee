@@ -8,6 +8,7 @@
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
   $scope.$on('$destroy', () ->
+    $interval.cancel($scope.pollPromise)
     $scope.$root.pageShifted = false
   )
 
@@ -57,10 +58,10 @@
     else
 
   $scope.pollComments = () ->
-      $interval( () =>
+      $scope.pollPromise = $interval( () =>
         for file, i in $scope.visiblePages
           $scope.getComments(file.id, i)
-      , 10000)
+      , 30000)
 
   $scope.getComments = (id, index) ->
     $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
