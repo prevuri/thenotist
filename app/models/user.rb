@@ -28,14 +28,6 @@ class User < ActiveRecord::Base
     self.notes.select { |n| !n.processed && !n.aborted }.count > 0
   end
 
-  def abort_timed_out_notes!
-    timed_out = self.notes.select { |n| n.processing_timeout? }
-    timed_out.each do |n|
-      n.abort_processing!
-      # TODO: destroy activity
-    end
-  end
-
   def following?(other_user)
     relationships.find_by_buddy_id(other_user.id)
   end

@@ -24,11 +24,9 @@ class Note < ActiveRecord::Base
     self.update_attribute :aborted, true
   end
 
-  def processing_timeout?
-    start_time = self.processing_started_at.nil? ? Time.now : self.processing_started_at
-    !processed && (Time.now - start_time > 10.minutes)
+  def abort_if_timed_out!
+    abort_processing! if !processed && (Time.now - created_at > 120.minutes)
   end
-
 
   def share! user
     contributors.create!(user_id: user.id)

@@ -1,7 +1,8 @@
 notistApp = angular.module('notistApp', [
   'ngRoute',
   'ngAnimate',
-  'apiService'
+  'apiService',
+  'infinite-scroll'
   ])
 
 notistApp.config(['$httpProvider', ($httpProvider) ->

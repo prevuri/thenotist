@@ -1,4 +1,9 @@
 @NoteCtrl = ($scope, $http, $route, $routeParams, $sce, $timeout, $interval, NotesApi) ->
+  # Group comment lines up to this nubmer of pixels apart
+  @groupThreshold = 60
+
+  # number of pages to loaded in the browser at any given time
+  @prefetchSize = 10
 
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
@@ -9,9 +14,8 @@
   $scope.repliesShowing = {}
   $scope.replyText = {}
   $scope.showDeleteConfirm = {global: null}
-
-  # Group comment lines up to this nubmer of pixels apart
-  @groupThreshold = 60
+  $scope.currentPage = 1
+  $scope.visiblePages = []
 
   $scope.init = () ->
     $scope.$root.section = 'notes'
@@ -21,11 +25,12 @@
         $scope.note.shared = false
       else
         $scope.note.shared = true
+      $scope.loadMoreVisiblePages()
       $scope.$root.title = $scope.note.title
       $scope.trustURLs()
       $scope.pollComments()
     error = (data) ->
-      $scope.setAlert("Error loading note data", false)
+      console.log "Error loading note data"
     NotesApi.get({id: $routeParams.noteId}, success, error)
 
   # Sets the current note being shared for the sharing modal
@@ -47,13 +52,13 @@
             $scope.getGroupedComments(file)
           )
         else
-          $scope.setAlert("Error processing note comment data")
+          console.log "Error processing note comment data"
       , 500)
     else
 
   $scope.pollComments = () ->
       $interval( () =>
-        for file, i in $scope.note.uploaded_html_files
+        for file, i in $scope.visiblePages
           $scope.getComments(file.id, i)
       , 10000)
 
@@ -61,20 +66,20 @@
     $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
       success( (data, status, headers, config) ->
         shouldUpdate = false
-        if !$scope.note.uploaded_html_files[index].comments
+        if !$scope.visiblePages[index].comments
           shouldUpdate = true
         else
-          oldComments = $scope.note.uploaded_html_files[index].comments.map((value) ->
+          oldComments = $scope.visiblePages[index].comments.map((value) ->
             angular.copy(value)
           )
           shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(data.comments)
         if shouldUpdate
-          $scope.note.uploaded_html_files[index].comments = data.comments
+          $scope.visiblePages[index].comments = data.comments
           angular.element(document).ready( () ->
-            $scope.getGroupedComments($scope.note.uploaded_html_files[index])
+            $scope.getGroupedComments($scope.visiblePages[index])
           )
       ).error( (data, status, headers, config) ->
-        $scope.setAlert("Error loading comments from server", false)
+        console.log "Error loading comments from server", false
     )
 
   $scope.showNewComment = (show) ->
@@ -130,8 +135,8 @@
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
-          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
-          $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
+          $scope.visiblePages[fileIndex].comments = data.comments
+          $scope.visiblePages[fileIndex].groupedComments = $scope.groupComments(data.comments)
           $scope.submitting = false
           if parentId
             $scope.repliesShowing[parentId] = false
@@ -178,3 +183,20 @@
       else
         i++
     groupedComments
+
+  $scope.incrementPage = () ->
+    if $scope.currentPage < $scope.note.uploaded_html_files.length
+      $scope.currentPage++
+
+  $scope.decrementPage = () ->
+    if $scope.currentPage > 1
+      $scope.currentPage--
+
+  $scope.loadMoreVisiblePages = () =>
+    if !$scope.note
+      return false
+    if $scope.note && $scope.note.uploaded_html_files.length == $scope.visiblePages.length
+      return false
+    rangeEnd = Math.min($scope.visiblePages.length + @prefetchSize, $scope.note.uploaded_html_files.length)
+    $scope.visiblePages = $scope.note.uploaded_html_files.slice(0, rangeEnd)
+    return false

@@ -48,6 +48,7 @@
       $scope.setAlert("Error loading uploader", false)
     UploadFormHtml.get(success, error)
 
+
   $scope.submitClicked = () ->
     $scope.validateUploadForm()
     if $scope.validated
@@ -56,6 +57,8 @@
       $scope.modalShowing = false
       $('.new-note-form-container').modal('hide')
       $('.direct-upload-submit').trigger('click')
+    return false
+
 
   $scope.s3UploadComplete = (s3KeyVal) ->
     $http({method: 'POST', url: '/api/notes', params: {
@@ -105,7 +108,7 @@
     $scope.modified = true
     $scope.fileError = !$scope.newNote.fileData || !$scope.newNote.fileData.files[0].name.length
     $scope.titleError = $.trim( $scope.newNote.title ) == ''
-    $scope.typeError = $scope.isPdf($scope.newNote.fileData)
+    $scope.typeError = $scope.isPdf($scope.newNote.fileData) if !$scope.fileError
     $scope.validated = !$scope.fileError && !$scope.titleError
 
   $scope.updateFileName = () =>

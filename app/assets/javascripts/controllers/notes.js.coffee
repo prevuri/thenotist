@@ -40,11 +40,12 @@
 
   # Deletes a user note
   $scope.deleteNote = (note, index) ->
-    success = (data) ->
-      $scope.notes.splice(index, 1)
-    error = (data) ->
-      $scope.setAlert("Error deleting note", false)
-    NotesApi.delete({id: note.id}, success, error)
+    if confirm("Are you sure you want to delete " + note.title)
+      success = (data) ->
+        $scope.notes.splice(index, 1)
+      error = (data) ->
+        $scope.setAlert("Error deleting note", false)
+      NotesApi.delete({id: note.id}, success, error)
 
   # Checks if the noteId is in notes
   $scope.noteInNotes = (noteId) ->
@@ -68,7 +69,7 @@
         clearInterval($scope.promises[noteId])
         delete $scope.promises[noteId]
     error = (data) ->
-      $scope.setAlert("Error getting note", false)
+      clearInterval($scope.promises[noteId])
     NotesApi.get({id: noteId}, success, error)
 
   # Initiates polling for the processing note

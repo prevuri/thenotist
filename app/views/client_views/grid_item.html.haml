@@ -1,22 +1,32 @@
 .note-item{:'ng-init' => 'itemIndex = $index'}
   %a.big-link{:'ng-show' => 'note.processed',:'ng-href' => '/notes/{{note.id}}'}
   .img-preview{:'ng-show' => 'note.processed', :style => 'background: url({{note.uploaded_thumb_files[0].public_path}}) no-repeat 50% 10%'}
-  .process-spinner{:'ng-show' => '!note.processed'}
+
+  .process-spinner{:'ng-show' => '!note.processed && !note.aborted'}
     %i.icon-refresh.icon-white.icon-spin
     %h2
       Processing...
+
+  .aborted-notice{:'ng-show' => 'note.aborted'}
+    %i.icon-exclamation.icon-white
+    %h2
+      Aborted
+    %h4
+      Please try again later...
+
   .info-preview{:'ng-class' => '"color" + itemIndex%7'}
     %h2{:'ng-show' => 'note.processed'}
       %a.text-link{:'ng-href' => '/notes/{{note.id}}'} {{note.title}}
     %h2{:'ng-show' => '!note.processed'}
-      %a.text-link{:'ng-href' => '#'} {{note.title}}
+      .text-link {{note.title}}
     %h4.description{:'ng-show' => 'note.processed'}
       {{note.description}}
-  .btn-group.appear-hover{:'ng-show' => 'note.processed'}
-    %div{:'ng-if' => 'note.shared'}
+
+  .btn-group.appear-hover
+    %div{:'ng-if' => 'note.shared && note.processed'}
       %a.btn.usub{:'ng-href' => '{{note.unsubscribe_url}}'}
         %i.icon-remove
-    %div{:'ng-if' => '!note.shared'}
+    %div{:'ng-if' => '!note.shared || note.aborted'}
       %a{:'ng-click' => 'deleteNote(note, $index)'}
         %i.icon-remove.btn
 
