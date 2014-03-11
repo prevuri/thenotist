@@ -66,10 +66,15 @@
   $scope.getComments = () ->
     $http({method: 'GET', url: '/api/comments', params: {note_id: $scope.note.id}}).
       success( (data, status, headers, config) ->
+        parentComments = []
+        for comment in data.comments
+          # If this is a parent comment (not a reply)
+          if !comment.parent_comment_id
+            parentComments.push(comment)
         commentsByFile = {}
         for file in $scope.note.uploaded_html_files
           commentsByFile[file.id] = []
-        for comment in data.comments
+        for comment in parentComments
           commentsByFile[comment.uploaded_html_file_id].push(comment)
         for file in $scope.note.uploaded_html_files
           shouldUpdate = false
