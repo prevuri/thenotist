@@ -16,7 +16,7 @@ class Api::CommentsController < ApplicationController
         return render :json => {
           :success => false,
           :error => note_not_found_error
-        }
+        }, :status => 404
       end
     end
 
@@ -35,7 +35,7 @@ class Api::CommentsController < ApplicationController
       return render :json => {
         :success => false,
         :error => file_not_found_error
-      }
+      }, :status => 404
     end
 
     # now, construct all the attributes
