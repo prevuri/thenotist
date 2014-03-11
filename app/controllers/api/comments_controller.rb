@@ -21,10 +21,9 @@ class Api::CommentsController < ApplicationController
     end
 
     # only render top-level comments, because their children will be rendered recursively
-    @comments = @note.top_level_comments
     return render :json => {
       :success => true,
-      :comments => @comments.map { |c| c.as_json(:current_user => current_user) }
+      :comments => @note.comments.map { |c| c.as_json(:current_user => current_user) }
     }
   end
 
