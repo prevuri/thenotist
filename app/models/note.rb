@@ -83,8 +83,6 @@ private
   end
 
   def comment_count
-    total = 0
-    uploaded_html_files.each{ |f| total += f.comments.length }
-    total
+    self.comments.length
   end
 end
