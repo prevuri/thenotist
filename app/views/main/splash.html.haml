@@ -1,6 +1,6 @@
 #splash
   .wrapper
-    .theme-background#themeback-one      
+    .theme-background#themeback-one
     .background-overlay
       .notist-logo
       %div.connect-fb-button
@@ -10,5 +10,35 @@
           Discuss. Annotate. Comprehend.
         %h2
           Share and discuss notes with your friends and classmates.
-
-     
+    .footer
+      %ul
+        -# %li
+        -#   &copy
+        -#   2014
+        -#   &nbsp
+        -#   %span.copyright
+        -#     the notist
+        -# %li
+        -#   |
+        %li
+          %a.splash-link{:href => '#'}
+            about
+        %li
+          %a.splash-link{:href => '#'}
+            legal
+        %li
+          %a.splash-link{:href => '#'}
+            faq
+        %li
+          %a.splash-link{:href => '#'}
+            terms
+        %li
+          |
+        %li
+          %a.twitter-link{:href => 'https://twitter.com/intent/follow?screen_name=TheNotist', :target => '_blank'}
+            %i.icon-twitter
+            follow
+        %li
+          %a.twitter-link{:href => '#', :target => '_blank'}
+            %i.icon-facebook
+            facebook

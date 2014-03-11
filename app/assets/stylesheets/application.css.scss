@@ -48,9 +48,9 @@ $sidebar-foreground-hover: white;
 // $sidebar-shadow-color: #888;
 
 /* THEME 4 */
-$sidebar-background: #26272B;
+$sidebar-background: #1C262B;
 $sidebar-background-hover: #40474F;
-$sidebar-foreground: #999;
+$sidebar-foreground: #90A7B6;
 $sidebar-foreground-active: #27F;
 $sidebar-foreground-hover: #FFF;
 $sidebar-shadow-color: #999;
@@ -299,51 +299,34 @@ form.new-user {
   display: none;
 }
 
-footer {
-  .processing-status-container {
+
+.footer {
+
+  ul {
     position: absolute;
-    bottom: 0;
-    right: 10px;
-    border-top: 1px solid #a2a2a2;
-    border-left: 1px solid #a2a2a2;
-    border-right: 1px solid #a2a2a2;
-    border-radius: 4px 4px 0 0;
-    background: #f0f0f0;
-    color: #717171;
-    box-shadow: 0px 0px 8px 2px #999999;
+    bottom: 3%;
+    right: 0;
+    margin-right: 25px;
+    z-index: 1;
 
-    .status-glyph-container {
-      float: left;
-      .spinner-container {
-        margin-top: 21px;
-        margin-right: 13px;
-        margin-left: 18px;
-      }
-      .success-glyph {
-        margin-top: 5px;
-        margin-left: 10px;
-        color: #33E805;
-        font-size: 38px;
-      }
+    li span.copyright {
+      font-family: Sacramento;
+      font-size: 1.6em;
     }
-    .status-box {
-      margin-left: 10px;
-      margin-right: 10px;
-      margin-top: 6px;
-      margin-bottom: 6px;
-      float: left;
-      max-width: 250px;
 
-      .note-name {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-size: 13px;
-        font-weight: bold;
+    li {
+      display: inline-block;
+      margin-right: 20px;
+      height: 20px;
+      vertical-align: bottom;
+      font-size: 1.4em;
+      color: #fff;
+      a {
+        color: #fff;
+        text-decoration: none;
       }
 
-      .note-status {
-        font-size: 12px;
-      }
     }
   }
+
 }
