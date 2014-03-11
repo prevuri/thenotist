@@ -15,10 +15,6 @@ class Note < ActiveRecord::Base
 
   # want to assume that we are processing a file right away
   before_create :start_processing!
-
-  def top_level_comments
-    comments.select { |c| c.parent_comment.nil? }
-  end
   
   def finish_processing!
     self.update_attribute :processed, true
