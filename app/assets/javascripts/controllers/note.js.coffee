@@ -29,6 +29,7 @@
       $scope.loadMoreVisiblePages()
       $scope.$root.title = $scope.note.title
       $scope.trustURLs()
+      $scope.getComments()
       $scope.pollComments()
     error = (data) ->
       console.log "Error loading note data"
@@ -58,27 +59,32 @@
     else
 
   $scope.pollComments = () ->
-      $scope.pollPromise = $interval( () =>
-        for file, i in $scope.visiblePages
-          $scope.getComments(file.id, i)
-      , 30000)
+    $scope.pollPromise = $interval( () =>
+      $scope.getComments()
+    , 30000)
 
-  $scope.getComments = (id, index) ->
-    $http({method: 'GET', url: '/api/comments', params: {file_id: id}}).
+  $scope.getComments = () ->
+    $http({method: 'GET', url: '/api/comments', params: {note_id: $scope.note.id}}).
       success( (data, status, headers, config) ->
-        shouldUpdate = false
-        if !$scope.visiblePages[index].comments
-          shouldUpdate = true
-        else
-          oldComments = $scope.visiblePages[index].comments.map((value) ->
-            angular.copy(value)
-          )
-          shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(data.comments)
-        if shouldUpdate
-          $scope.visiblePages[index].comments = data.comments
-          angular.element(document).ready( () ->
-            $scope.getGroupedComments($scope.visiblePages[index])
-          )
+        commentsByFile = {}
+        for file in $scope.note.uploaded_html_files
+          commentsByFile[file.id] = []
+        for comment in data.comments
+          commentsByFile[comment.uploaded_html_file_id].push(comment)
+        for file in $scope.note.uploaded_html_files
+          shouldUpdate = false
+          if !file.comments
+            shouldUpdate = true
+          else
+            oldComments = file.comments.map((value) ->
+              angular.copy(value)
+            )
+            shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(commentsByFile[file.id])
+          if shouldUpdate
+            file.comments = commentsByFile[file.id]
+            angular.element(document).ready( () ->
+              $scope.getGroupedComments(file)
+            )
       ).error( (data, status, headers, config) ->
         console.log "Error loading comments from server", false
     )
