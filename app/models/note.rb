@@ -15,7 +15,7 @@ class Note < ActiveRecord::Base
 
   # want to assume that we are processing a file right away
   before_create :start_processing!
-
+  
   def finish_processing!
     self.update_attribute :processed, true
   end
@@ -83,8 +83,6 @@ private
   end
 
   def comment_count
-    total = 0
-    uploaded_html_files.each{ |f| total += f.comments.length }
-    total
+    self.comments.length
   end
 end

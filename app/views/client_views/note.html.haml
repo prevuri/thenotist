@@ -28,7 +28,7 @@
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
     .note-pages{:'infinite-scroll' => 'loadMoreVisiblePages()', :'infinite-scroll-immediate-check' => false, :'infinite-scroll-distance' => 0}
       .page{:'ng-repeat' => 'file in visiblePages', :'page-buttons-scroll' => true}
-        .file-container{:'ng-init' => "getComments(file.id, $index)"}
+        .file-container
           .page-container
             %a{ :name => "Page-{{file.page_number}}"}
             .note-page{:'file-id' => '{{file.id}}'}
