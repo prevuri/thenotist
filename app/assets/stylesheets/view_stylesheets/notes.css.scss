@@ -571,8 +571,8 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
     .notes-list-item {
       display: inline-block;
       // margin-left: -0.28em;
-      height: 280px;
-      width: 448px;
+      height: 240px;
+      width: 384px;
       vertical-align: top;
 
       &:hover {
@@ -985,7 +985,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   background-color: #0FB598 !important;
   position: relative;
   margin-right: -0.3em;
-  min-width: 448px;
+  // min-width: 448px;
 
   &:hover {
     background-color: lighten(#0FB598, 7) !important;
