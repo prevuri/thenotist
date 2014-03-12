@@ -17,6 +17,7 @@
   $scope.showDeleteConfirm = {global: null}
   $scope.currentPage = 1
   $scope.visiblePages = []
+  $scope.pageEl = {}
 
   $scope.init = () ->
     $scope.$root.section = 'notes'
@@ -199,10 +200,12 @@
   $scope.incrementPage = () ->
     if $scope.currentPage < $scope.note.uploaded_html_files.length
       $scope.currentPage++
+    $scope.pageEl[$scope.currentPage].scrollToPage()
 
   $scope.decrementPage = () ->
     if $scope.currentPage > 1
       $scope.currentPage--
+    $scope.pageEl[$scope.currentPage].scrollToPage()
 
   $scope.loadMoreVisiblePages = () =>
     if !$scope.note
