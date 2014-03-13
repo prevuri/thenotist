@@ -86,14 +86,17 @@ notistApp.directive('ngSpinner', () ->
 
 .directive('pageButtonsScroll', () ->
   link: (scope, el, attrs) ->
-    scope.$parent.pageEl[scope.$index+1] = el
+    ctrlScope = scope.$parent.$parent
+    ctrlScope.pageEl[scope.pageNo] = el
     el.scrollToPage = () =>
-      if scope.$parent.currentPage == scope.$index+1
+      if ctrlScope.currentPage == scope.pageNo
         $(document).scrollTop(el[0].offsetTop-$('#note-header').height())
     changeCurrentPage = () =>
-      if $(document).scrollTop() - el[0].offsetTop < 200 && $(document).scrollTop() - el[0].offsetTop > -200
-        scope.$parent.currentPage = scope.$index+1
-        scope.$apply()
+      if $(el).first().height() > 0
+        if $(document).scrollTop() - el[0].offsetTop < $(el).height()/ 2 &&
+        $(document).scrollTop() - el[0].offsetTop > $(el).height()/-2
+          ctrlScope.currentPage = scope.pageNo
+          scope.$apply()
     $(document).ready( () =>
       $(document).scroll(changeCurrentPage)
     )
