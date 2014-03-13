@@ -26,7 +26,7 @@
           %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
 
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
-    .note-pages
+    .note-pages{:'scroll-change-page' => true}
       .page-chunk{:'ng-repeat' => 'chunk in pageChunks'}
         .page-chunk-contents
           .page{:'ng-repeat' => 'file in chunk.pages', :'ng-init' => 'pageNo = $index + 1 + pageChunkSize*$parent.$index', :'page-buttons-scroll' => true}

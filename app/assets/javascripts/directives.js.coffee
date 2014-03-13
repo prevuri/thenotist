@@ -91,14 +91,45 @@ notistApp.directive('ngSpinner', () ->
     el.scrollToPage = () =>
       if ctrlScope.currentPage == scope.pageNo
         $(document).scrollTop(el[0].offsetTop-$('#note-header').height())
-    changeCurrentPage = () =>
-      if $(el).first().height() > 0
-        if $(document).scrollTop() - el[0].offsetTop < $(el).height()/ 2 &&
-        $(document).scrollTop() - el[0].offsetTop > $(el).height()/-2
-          ctrlScope.currentPage = scope.pageNo
+)
+
+.directive('scrollChangePage', ($timeout) ->
+  link: (scope, el, attrs) ->
+    checkPage = (el, i, docScroll) =>
+      if docScroll - el[0].offsetTop < scope.elHeight/ 2 &&
+      docScroll - el[0].offsetTop > scope.elHeight/-2
+        if (i != scope.currentPage)
+          scope.currentPage = i
           scope.$apply()
+        return true
+      return false
+
+    changeCurrentPage = () =>
+      if scope.previousScroll == undefined
+        scope.previousScroll = 0
+      if !scope.elHeight
+        scope.elHeight = $(scope.pageEl[1]).height()
+      previous = scope.previousScroll
+      docScroll = $(document).scrollTop()
+      scope.previousScroll = docScroll
+      if docScroll > previous
+        for i in [scope.currentPage..scope.note.uploaded_html_files.length]
+          if checkPage(scope.pageEl[i], i, docScroll)
+            return
+      else if docScroll < previous
+        for i in [scope.currentPage..1]
+          if checkPage(scope.pageEl[i], i, docScroll)
+            return
     $(document).ready( () =>
-      $(document).scroll(changeCurrentPage)
+      $(document).scroll(() =>
+        if !scope.isScrolling
+          changeCurrentPage()
+          scope.isScrolling = true
+          $timeout(() ->
+            scope.isScrolling = false
+            changeCurrentPage()
+          , 1)
+      )
     )
 )
 
