@@ -344,6 +344,7 @@ $shift-max-width: 1400px;
         -moz-transition: all 0.2s linear;
         transition: all 0.2s linear;
         box-shadow: none;
+        cursor: pointer;
 
         .overlay {
           -webkit-transition: background-color 0.1s linear;
