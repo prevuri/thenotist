@@ -26,16 +26,20 @@
           %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
 
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
-    .note-pages{:'infinite-scroll' => 'loadMoreVisiblePages()', :'infinite-scroll-immediate-check' => false, :'infinite-scroll-distance' => 0}
-      .page{:'ng-repeat' => 'file in visiblePages', :'page-buttons-scroll' => true}
-        .file-container
-          .page-container
-            %a{ :name => "Page-{{file.page_number}}"}
-            .note-page{:'file-id' => '{{file.id}}'}
-              %div{:'ng-include' => 'file.trusted_path'}
-        .comments-container{:'ng-class' => 'expandedCommentLine == null ? "comments-hidden" : ""'}
-          .comments
-            %ng-include{:src => '"/client_views/comments.html"'}
+    .note-pages{:'scroll-change-page' => true}
+      .page-chunk{:'ng-repeat' => 'chunk in pageChunks'}
+        .page-chunk-contents
+          .page{:'ng-repeat' => 'file in chunk.pages', :'ng-init' => 'pageNo = $index + 1 + pageChunkSize*$parent.$index', :'page-buttons-scroll' => true}
+            .page-placeholder{:'ng-hide' => 'chunk.visible', :style => "width: 100px", :'placeholder-height' => true}
+            .page-contents{:'ng-show' => 'chunk.visible'}
+              .file-container
+                .page-container
+                  %a{ :name => "Page-{{file.page_number}}"}
+                  .note-page{:'file-id' => '{{file.id}}'}
+                    %div{:'ng-include' => 'file.trusted_path'}
+              .comments-container{:'ng-class' => 'expandedCommentLine == null ? "comments-hidden" : ""'}
+                .comments
+                  %ng-include{:src => '"/client_views/comments.html"'}
     #new-comment-panel.comment{:'ng-show' => 'showingNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
       .profile-container.circular
         .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
@@ -47,10 +51,10 @@
           .comment-text
             %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => 'newCommentText', :'textarea-autofocus' => 'showingNewComment'}
         .bottom
-          %a.new-comment-submit.primary.text-link{:'ng-click' => 'submitParentComment($index)'}
+          %a.new-comment-submit.primary.text-link{:'ng-click' => 'submitParentComment()'}
             Add Comment
           %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'showNewComment(false)'}
             Cancel
         .clear
 
-    #note-shift-overlay{:'ng-show' => 'expandedCommentLine != null', :'ng-click' => 'expandCommentLine(null)'}
+    #note-shift-overlay{:'ng-show' => 'expandedCommentLine != null || showingNewComment', :'ng-click' => 'expandCommentLine(null); showingNewComment = false'}

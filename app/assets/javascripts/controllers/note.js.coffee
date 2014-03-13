@@ -2,9 +2,6 @@
   # Group comment lines up to this nubmer of pixels apart
   @groupThreshold = 60
 
-  # number of pages to loaded in the browser at any given time
-  @prefetchSize = 10
-
   $route.current.templateUrl = '/ng/notes/' + $routeParams.noteId
 
   $scope.$on('$destroy', () ->
@@ -12,21 +9,31 @@
     $scope.$root.pageShifted = false
   )
 
+  # number of pages to loaded in the browser at any given time
+  $scope.pageChunkSize = 10
   $scope.repliesShowing = {}
   $scope.replyText = {}
   $scope.showDeleteConfirm = {global: null}
   $scope.currentPage = 1
-  $scope.visiblePages = []
+  $scope.pageEl = {}
+  $scope.placeholderHeight = 0
+  $scope.commentsLoaded = false
+
+  $scope.$watch('currentPage', () =>
+    $scope.loadVisiblePages()
+  )
 
   $scope.init = () ->
     $scope.$root.section = 'notes'
+    $scope.commentsLoaded = false
     success = (data) ->
       $scope.note = data.note
       if $scope.note.user.id == $scope.currentUser.id
         $scope.note.shared = false
       else
         $scope.note.shared = true
-      $scope.loadMoreVisiblePages()
+      $scope.setupPageChunks()
+      $scope.loadVisiblePages()
       $scope.$root.title = $scope.note.title
       $scope.trustURLs()
       $scope.getComments()
@@ -34,6 +41,16 @@
     error = (data) ->
       console.log "Error loading note data"
     NotesApi.get({id: $routeParams.noteId}, success, error)
+
+  $scope.setupPageChunks = () =>
+    $scope.pageChunks = []
+    currrentGroup = []
+    i = 0
+    while i < $scope.note.uploaded_html_files.length
+      pageChunk = $scope.note.uploaded_html_files.slice(i, i+$scope.pageChunkSize)
+      obj = {visible: false, commentsLoaded: false, pages: pageChunk}
+      $scope.pageChunks.push(obj)
+      i += $scope.pageChunkSize
 
   # Sets the current note being shared for the sharing modal
   $scope.setSharedNote = () ->
@@ -45,18 +62,22 @@
       file.trusted_path = $sce.trustAsResourceUrl(file.public_path)
 
   $scope.getGroupedComments = (file) ->
-    file.groupedComments = $scope.groupComments(file.comments)
+    if !file.pageEl
+      file.pageEl = $('.page-contents').get(file.page_number)
+    if file.pageEl && $(file.pageEl).is(':visible')
+      file.groupedComments = $scope.groupComments(file.comments)
+    else
+      file.groupedComments = null
     if file.groupedComments == null
       $timeout(() =>
         file.groupErrorCount = if file.groupErrorCount then file.groupErrorCount+1 else 1
-        if file.groupErrorCount < 10
+        if file.groupErrorCount < 20
           angular.element(document).ready( () ->
             $scope.getGroupedComments(file)
           )
         else
           console.log "Error processing note comment data"
-      , 500)
-    else
+      , 500 + Math.floor(file.groupErrorCount/10)*1000)
 
   $scope.pollComments = () ->
     $scope.pollPromise = $interval( () =>
@@ -87,9 +108,9 @@
             shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(commentsByFile[file.id])
           if shouldUpdate
             file.comments = commentsByFile[file.id]
-            angular.element(document).ready( () ->
-              $scope.getGroupedComments(file)
-            )
+        for chunk in $scope.pageChunks
+          chunk.commentsLoaded = false
+        $scope.commentsLoaded = true
       ).error( (data, status, headers, config) ->
         console.log "Error loading comments from server", false
     )
@@ -105,13 +126,12 @@
     lineEl = $('[data-guid='+lineId+']')
     $scope.newCommentY = $(lineEl).offset().top
     $scope.newCommentFileId = this.$parent.file.id
-    $scope.newCommentFileIndex = this.$parent.$index
+    $scope.newCommentFileIndex = this.pageNo-1
     $scope.expandedCommentLine = null
 
   $scope.commentY = (lineId) =>
     el = $('[data-guid='+lineId+']')
     if el.length == 0
-      @stillLoading = true
       null
     else
       $(el).offset().top - $(el).parents('.note-page').offset().top
@@ -147,8 +167,8 @@
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
-          $scope.visiblePages[fileIndex].comments = data.comments
-          $scope.visiblePages[fileIndex].groupedComments = $scope.groupComments(data.comments)
+          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
+          $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
           $scope.submitting = false
           if parentId
             $scope.repliesShowing[parentId] = false
@@ -174,6 +194,8 @@
 
   $scope.groupComments = (comments) =>
     groupedComments = []
+    if !comments
+      return null
     for comment in comments
       if $scope.commentY(comment.line_id) == null
         return null
@@ -199,16 +221,50 @@
   $scope.incrementPage = () ->
     if $scope.currentPage < $scope.note.uploaded_html_files.length
       $scope.currentPage++
+    $scope.pageEl[$scope.currentPage].scrollToPage()
 
   $scope.decrementPage = () ->
     if $scope.currentPage > 1
       $scope.currentPage--
+    $scope.pageEl[$scope.currentPage].scrollToPage()
 
-  $scope.loadMoreVisiblePages = () =>
+  $scope.changeVisibleChunk = (old, current) ->
+    $scope.pageChunks[current].visible = true
+    if current > 0
+      $scope.pageChunks[current-1].visible = true
+    if current < $scope.pageChunks.length-1
+      $scope.pageChunks[current+1].visible = true
+    if old == undefined
+      return
+    if old != current-1 && old != current+1
+      $scope.pageChunks[old].visible = false
+    if old != current+1
+      if old > 0
+        $scope.pageChunks[old-1].visible = false
+    if old != current-1
+      if old < $scope.pageChunks.length-1
+        $scope.pageChunks[old+1].visible = false
+
+  $scope.getPlaceholderHeight = () =>
+    if $('.page-contents .pf').length > 0 && $('.page-contents .pf').first().is(':visible')
+      $scope.placeholderHeight = $('.page-contents').eq($scope.currentPage-1).height()
+    else
+      $timeout(() =>
+        $scope.getPlaceholderHeight()
+      , 200)
+
+
+  $scope.loadVisiblePages = () =>
     if !$scope.note
-      return false
-    if $scope.note && $scope.note.uploaded_html_files.length == $scope.visiblePages.length
-      return false
-    rangeEnd = Math.min($scope.visiblePages.length + @prefetchSize, $scope.note.uploaded_html_files.length)
-    $scope.visiblePages = $scope.note.uploaded_html_files.slice(0, rangeEnd)
-    return false
+      return
+    newChunk = Math.floor(($scope.currentPage-1) / $scope.pageChunkSize)# Index of current chunk
+    if newChunk == $scope.currentPageChunk
+      return
+    $scope.changeVisibleChunk($scope.currentPageChunk, newChunk)
+    $scope.currentPageChunk = newChunk
+    if !$scope.pageChunks[$scope.currentPageChunk].commentsLoaded
+      for page in $scope.pageChunks[newChunk].pages
+        $scope.getGroupedComments(page)
+      $scope.pageChunks[$scope.currentPageChunk].commentsLoaded = true
+    if $scope.placeholderHeight == 0
+      $scope.getPlaceholderHeight()
