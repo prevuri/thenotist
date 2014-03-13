@@ -30,7 +30,7 @@
       .page-chunk{:'ng-repeat' => 'chunk in pageChunks'}
         .page-chunk-contents
           .page{:'ng-repeat' => 'file in chunk.pages', :'ng-init' => 'pageNo = $index + 1 + pageChunkSize*$parent.$index', :'page-buttons-scroll' => true}
-            .page-placeholder{:'ng-hide' => 'chunk.visible', :'ng-style' => "{width: '100px', height: placeholderHeight+'px'}"}
+            .page-placeholder{:'ng-hide' => 'chunk.visible', :style => "width: 100px", :'placeholder-height' => true}
             .page-contents{:'ng-show' => 'chunk.visible'}
               .file-container
                 .page-container

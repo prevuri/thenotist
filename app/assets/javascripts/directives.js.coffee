@@ -133,6 +133,13 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('placeholderHeight', () ->
+  link: (scope, el, attrs) ->
+    scope.$watch('placeholderHeight', () =>
+      $(el).height(scope.placeholderHeight)
+    )
+)
+
 .directive('ngEnter', () ->
   (scope,element,attrs) ->
     element.bind('keydown keypress', (event) ->
