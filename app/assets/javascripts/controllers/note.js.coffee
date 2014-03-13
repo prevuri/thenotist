@@ -266,5 +266,5 @@
       for page in $scope.pageChunks[newChunk].pages
         $scope.getGroupedComments(page)
       $scope.pageChunks[$scope.currentPageChunk].commentsLoaded = true
-    if $scope.placeholderHeight == 0
+    if $scope.placeholderHeight < 50
       $scope.getPlaceholderHeight()

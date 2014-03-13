@@ -128,7 +128,7 @@ notistApp.directive('ngSpinner', () ->
           $timeout(() ->
             scope.isScrolling = false
             changeCurrentPage()
-          , 1)
+          , 200)
       )
     )
 )
