@@ -53,7 +53,7 @@
         .bottom
           %a.new-comment-submit.primary.text-link{:'ng-click' => 'submitParentComment()'}
             Add Comment
-          %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'showNewComment(false)'}
+          %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'showNewComment(false); newCommentText = null'}
             Cancel
         .clear
 
