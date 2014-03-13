@@ -297,6 +297,8 @@ $shift-max-width: 1400px;
     .comment-group-container {
       position: absolute;
       -webkit-transition: background 0.2s ease;
+      -moz-transition: background 0.2s ease;
+      transition: background 0.2s ease;
 
       &.active {
         background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.7) 20%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0));
@@ -323,6 +325,8 @@ $shift-max-width: 1400px;
       &.inactive {
         top: 0;
         -webkit-transition: margin 0.2s ease;
+        -moz-transition: margin 0.2s ease;
+        transition: margin 0.2s ease;
       }
 
       &.active {
@@ -539,9 +543,9 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 .circular {
   width: 300px;
   height: 300px;
-  border-radius: 150px;
   -webkit-border-radius: 150px;
   -moz-border-radius: 150px;
+  border-radius: 150px;
 }
 
 .profile_info {
@@ -715,8 +719,9 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         .btn-group {
           margin-right: 0px;
           margin-top: 10px;
-          border-radius: 0px !important;
           -webkit-border-radius: 0px !important;
+          -moz-border-radius: 0px !important;
+          border-radius: 0px !important;
           position: absolute;
           top: 0px;
           right: 10px;
@@ -1072,6 +1077,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       }
       &.btn {
         -webkit-transition: color 0.2s;
+        -moz-transition: color 0.2s;
         transition: color 0.2s;
         color: rgb(117, 118, 119);
         background: white;
@@ -1080,19 +1086,13 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         -moz-border-radius: 15px;
         border-radius: 15px;
         &:hover {
-          -webkit-transition: color 0.2s;
-          transition: color 0.2s;
           color: #1abc9c;
         }
         &.success {
-          -webkit-transition: color 0.2s;
-          transition: color 0.2s;
           color: #2ecc71;
           border-color: #2ecc71;
         }
         &.error {
-          -webkit-transition: color 0.2s;
-          transition: color 0.2s;
           color: #e74c3c;
           border-color: #e74c3c;
         }
