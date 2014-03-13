@@ -43,7 +43,7 @@
     #new-comment-panel.comment{:'ng-show' => 'showingNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
       .profile-container.circular
         .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
-      .comment-inner
+      .comment-inner{:'ng-style' => "{opacity: submitting ? '0.5' : '1'}"}
         .comment-body
           .user
             .name
