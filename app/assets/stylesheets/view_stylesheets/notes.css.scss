@@ -306,10 +306,13 @@ $shift-max-width: 1400px;
       &.inactive {
         &:hover {
           .comment-button {
-            font-size: 12.2em;
+            font-size: 13em;
             border-color: #888;
             .overlay {
               background-color: transparent;
+              &.blank {
+                background-color: #c5c8d0;
+              }
             }
           }
         }
@@ -348,6 +351,17 @@ $shift-max-width: 1400px;
           -moz-transition: background-color 0.1s linear;
           transition: background-color 0.1s linear;
           background-color: rgba(255,255,255,0.3);
+          &.blank {
+            background-color: #c5c8d0;
+            padding: 1px;
+            margin: -1px 0 0 -1px;
+          }
+          .ellipsis {
+            color: #f5f5f5;
+            font-size: 25px;
+            line-height: 0.35;
+            text-align: center;
+          }
         }
         &:active {
           border-color: #888;
@@ -367,6 +381,9 @@ $shift-max-width: 1400px;
           border: 1px solid #ccc;
           .overlay {
             background-color: transparent;
+            .ellipsis {
+              display: none;
+            }
           }
         }
 
