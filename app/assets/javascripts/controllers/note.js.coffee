@@ -16,6 +16,7 @@
   $scope.showDeleteConfirm = {global: null}
   $scope.currentPage = 1
   $scope.pageEl = {}
+  $scope.lineYCache = {}
   $scope.placeholderHeight = 0
 
   $scope.$watch('currentPage', () =>
@@ -86,6 +87,9 @@
     $http({method: 'GET', url: '/api/comments', params: {note_id: $scope.note.id}}).
       success( (data, status, headers, config) ->
         parentComments = []
+        updateChunk = false
+        chunkFirstPageNo = $scope.pageChunks[$scope.currentPageChunk].pages[0].page_number
+        chunkLastPageNo = chunkFirstPageNo + $scope.pageChunkSize-1
         for comment in data.comments
           # If this is a parent comment (not a reply)
           if !comment.parent_comment_id
@@ -106,8 +110,14 @@
             shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(commentsByFile[file.id])
           if shouldUpdate
             file.comments = commentsByFile[file.id]
+            if file.page_number >= chunkFirstPageNo && file.page_number <= chunkLastPageNo
+              updateChunk = true
         for chunk in $scope.pageChunks
           chunk.commentsLoaded = false
+        # Don't group visible chunk comments on initial comment request; loadVisiblePages already does this
+        if updateChunk && $scope.initialCommentRequestDone
+          $scope.groupCommentsCurrentChunk()
+        $scope.initialCommentRequestDone = true
       ).error( (data, status, headers, config) ->
         console.log "Error loading comments from server", false
     )
@@ -127,11 +137,13 @@
     $scope.expandedCommentLine = null
 
   $scope.commentY = (lineId) =>
-    el = $('[data-guid='+lineId+']')
-    if el.length == 0
-      null
-    else
-      $(el).offset().top - $(el).parents('.note-page').offset().top
+    if !(lineId of $scope.lineYCache)
+      el = $('[data-guid='+lineId+']')
+      if el.length == 0
+        return null
+      else
+        $scope.lineYCache[lineId] = $(el).offset().top - $(el).parents('.note-page').offset().top
+    $scope.lineYCache[lineId]
 
   $scope.canReply = (comment) ->
     comment.parent_comment_id == null
