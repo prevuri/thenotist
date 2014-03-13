@@ -17,7 +17,6 @@
   $scope.currentPage = 1
   $scope.pageEl = {}
   $scope.placeholderHeight = 0
-  $scope.commentsLoaded = false
 
   $scope.$watch('currentPage', () =>
     $scope.loadVisiblePages()
@@ -25,7 +24,6 @@
 
   $scope.init = () ->
     $scope.$root.section = 'notes'
-    $scope.commentsLoaded = false
     success = (data) ->
       $scope.note = data.note
       if $scope.note.user.id == $scope.currentUser.id
@@ -110,7 +108,6 @@
             file.comments = commentsByFile[file.id]
         for chunk in $scope.pageChunks
           chunk.commentsLoaded = false
-        $scope.commentsLoaded = true
       ).error( (data, status, headers, config) ->
         console.log "Error loading comments from server", false
     )
@@ -174,7 +171,7 @@
             $scope.repliesShowing[parentId] = false
             $scope.replyText[parentId] = null
           else
-            $scope.showNewComment(false)
+            $scope.expandCommentLine($scope.newCommentLineId)
             $scope.newCommentText = null
         ).error( (data, status, headers, config) ->
           # TODO: error message of some sort
@@ -254,6 +251,12 @@
       , 200)
 
 
+  $scope.groupCommentsCurrentChunk = () ->
+    for page in $scope.pageChunks[$scope.currentPageChunk].pages
+      $scope.getGroupedComments(page)
+    $scope.pageChunks[$scope.currentPageChunk].commentsLoaded = true
+
+
   $scope.loadVisiblePages = () =>
     if !$scope.note
       return
@@ -263,8 +266,6 @@
     $scope.changeVisibleChunk($scope.currentPageChunk, newChunk)
     $scope.currentPageChunk = newChunk
     if !$scope.pageChunks[$scope.currentPageChunk].commentsLoaded
-      for page in $scope.pageChunks[newChunk].pages
-        $scope.getGroupedComments(page)
-      $scope.pageChunks[$scope.currentPageChunk].commentsLoaded = true
+      $scope.groupCommentsCurrentChunk()
     if $scope.placeholderHeight < 50
       $scope.getPlaceholderHeight()
