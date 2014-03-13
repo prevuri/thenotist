@@ -57,4 +57,4 @@
             Cancel
         .clear
 
-    #note-shift-overlay{:'ng-show' => 'expandedCommentLine != null', :'ng-click' => 'expandCommentLine(null)'}
+    #note-shift-overlay{:'ng-show' => 'expandedCommentLine != null || showingNewComment', :'ng-click' => 'expandCommentLine(null); showingNewComment = false'}
