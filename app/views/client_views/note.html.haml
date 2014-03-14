@@ -6,10 +6,9 @@
 
   #note-header
     %h1.note-title  {{note.title}}
-    .note-description {{note.description}}
+    .pages
+      Page {{currentPage}} of {{note.uploaded_html_files.length}}
     .page-number
-      .pages
-        Page {{currentPage}} of {{note.uploaded_html_files.length}}
       .profile-container.circular.flag
         %i.icon-exclamation
       .profile-container.circular.prev-page{:'ng-click' => 'decrementPage()'}
