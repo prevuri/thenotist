@@ -140,6 +140,13 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('animateTimeout', ($timeout) ->
+  link: (scope, el, attrs) ->
+    $timeout(()->
+      scope.animate = true
+    , 100)
+)
+
 .directive('ngEnter', () ->
   (scope,element,attrs) ->
     element.bind('keydown keypress', (event) ->

@@ -340,11 +340,14 @@ $shift-max-width: 1400px;
         height: 25px;
         padding: 0px;
         border: 1px solid #ccc;
-        -webkit-transition: all 0.2s linear;
-        -moz-transition: all 0.2s linear;
-        transition: all 0.2s linear;
         box-shadow: none;
         cursor: pointer;
+
+        &.animate {
+          -webkit-transition: all 0.2s linear;
+          -moz-transition: all 0.2s linear;
+          transition: all 0.2s linear;
+        }
 
         .overlay {
           -webkit-transition: background-color 0.1s linear;
