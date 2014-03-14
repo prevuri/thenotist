@@ -233,12 +233,12 @@
   $scope.incrementPage = () ->
     if $scope.currentPage < $scope.note.uploaded_html_files.length
       $scope.currentPage++
-    $scope.pageEl[$scope.currentPage].scrollToPage()
+    $scope.pageEl[$scope.currentPage].scrollToPage = true
 
   $scope.decrementPage = () ->
     if $scope.currentPage > 1
       $scope.currentPage--
-    $scope.pageEl[$scope.currentPage].scrollToPage()
+    $scope.pageEl[$scope.currentPage].scrollToPage = true
 
   $scope.changeVisibleChunk = (old, current) ->
     $scope.pageChunks[current].visible = true
