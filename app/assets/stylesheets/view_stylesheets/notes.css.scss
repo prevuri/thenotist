@@ -582,6 +582,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       .note-item {
         position: relative;
         height: 100%;
+        overflow: hidden;
 
         .delete-confirmation {
           position: absolute;
