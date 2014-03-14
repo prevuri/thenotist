@@ -40,7 +40,7 @@
               .comments-container{:'ng-class' => 'expandedCommentLine == null ? "comments-hidden" : ""'}
                 .comments
                   %ng-include{:src => '"/client_views/comments.html"'}
-    #new-comment-panel.comment{:'ng-show' => 'showingNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
+    #new-comment-panel.comment{:'ng-show' => 'showingNewComment', :'ng-style' => "{'top': newCommentY+'px' }", :'ng-class' => "submitting ? 'no-animate' : ''"}
       .profile-container.circular
         .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
       .comment-inner{:'ng-style' => "{opacity: submitting ? '0.5' : '1'}"}

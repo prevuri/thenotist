@@ -398,7 +398,7 @@ $shift-max-width: 1400px;
   left: 956px;
   padding-left: 38px;
   background: linear-gradient(to bottom, rgba(255,255,255,0), white 40%,white 60%, rgba(255,255,255,0));
-  margin-top: -100px;
+  margin-top: -80px;
   padding-top: 70px;
   padding-bottom: 25px;
   z-index: 101;
@@ -412,6 +412,12 @@ $shift-max-width: 1400px;
   -moz-transition: all 0.2s ease;
   transition: all 0.2s ease;
   opacity: 1;
+
+  &.no-animate {
+    -webkit-transition: none;
+    -moz-transition: none;
+    transition: none;
+  }
 
   &.ng-hide-add, &.ng-hide-remove {
     display: block !important;
