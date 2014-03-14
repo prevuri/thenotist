@@ -4,12 +4,12 @@
       .name {{comment.user.name}}
     %textarea.comment-text{:'textarea-autoheight-readonly' => true, :readonly => true} {{comment.text}}
   .bottom
-    %a.reply-button.primary.text-link{:'ng-if' => "canReply(comment)", :'ng-click' => "repliesShowing[comment.id] = true"}
+    %a.reply-button.primary.text-link{:'ng-if' => "canReply(comment)", :'ng-click' => "repliesShowing[comment.id] = true; showDeleteConfirm.global = null"}
       Reply
-    %a.delete-button.secondary.text-link{:'ng-if' => "comment.owned_by_user", :'ng-click' => "showDeleteConfirm.global = comment.id"}
+    %a.delete-button.secondary.text-link{:'ng-if' => "comment.owned_by_user", :'ng-click' => "showDeleteConfirm.global = comment.id", :'ng-class' => "showDeleteConfirm.global == comment.id ? 'confirm-showing' : ''"}
       Delete
     .comment-date {{comment.time_string}}
   .clear
   .delete-confirm-panel{:'ng-show' => "showDeleteConfirm.global == comment.id"}
     .delete-cancel.btn{:'ng-click' => "showDeleteConfirm.global = null"} Cancel
-    .delete-confirm.btn.btn-danger{:'ng-click' => "deleteComment(comment)"} Delete
+    .delete-confirm.btn.btn-danger{:'ng-click' => "deleteComment(comment, pageNo-1)"} Delete
