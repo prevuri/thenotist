@@ -2,6 +2,7 @@ notistApp = angular.module('notistApp', [
   'ngRoute',
   'ngAnimate',
   'apiService',
+  's3UploadService',
   'infinite-scroll'
   ])
 
