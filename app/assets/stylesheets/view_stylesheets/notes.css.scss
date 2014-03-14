@@ -252,7 +252,7 @@ $shift-max-width: 1400px;
   }
 
   .note-pages {
-    .page {
+    .page-contents {
       white-space: nowrap;
       & > * {
         display: inline-block;
@@ -296,7 +296,6 @@ $shift-max-width: 1400px;
 
     .comment-group-container {
       position: absolute;
-      -webkit-transition: background 0.2s ease;
 
       &.active {
         background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.7) 20%, rgba(255,255,255,0.7) 80%, rgba(255,255,255,0));
@@ -307,10 +306,13 @@ $shift-max-width: 1400px;
       &.inactive {
         &:hover {
           .comment-button {
-            font-size: 12.2em;
+            font-size: 13em;
             border-color: #888;
             .overlay {
               background-color: transparent;
+              &.blank {
+                background-color: #c5c8d0;
+              }
             }
           }
         }
@@ -323,6 +325,8 @@ $shift-max-width: 1400px;
       &.inactive {
         top: 0;
         -webkit-transition: margin 0.2s ease;
+        -moz-transition: margin 0.2s ease;
+        transition: margin 0.2s ease;
       }
 
       &.active {
@@ -336,16 +340,31 @@ $shift-max-width: 1400px;
         height: 25px;
         padding: 0px;
         border: 1px solid #ccc;
-        -webkit-transition: all 0.2s linear;
-        -moz-transition: all 0.2s linear;
-        transition: all 0.2s linear;
         box-shadow: none;
+        cursor: pointer;
+
+        &.animate {
+          -webkit-transition: all 0.2s linear;
+          -moz-transition: all 0.2s linear;
+          transition: all 0.2s linear;
+        }
 
         .overlay {
           -webkit-transition: background-color 0.1s linear;
           -moz-transition: background-color 0.1s linear;
           transition: background-color 0.1s linear;
           background-color: rgba(255,255,255,0.3);
+          &.blank {
+            background-color: #c5c8d0;
+            padding: 1px;
+            margin: -1px 0 0 -1px;
+          }
+          .ellipsis {
+            color: #f5f5f5;
+            font-size: 25px;
+            line-height: 0.37;
+            text-align: center;
+          }
         }
         &:active {
           border-color: #888;
@@ -365,6 +384,9 @@ $shift-max-width: 1400px;
           border: 1px solid #ccc;
           .overlay {
             background-color: transparent;
+            .ellipsis {
+              display: none;
+            }
           }
         }
 
@@ -379,7 +401,7 @@ $shift-max-width: 1400px;
   left: 956px;
   padding-left: 38px;
   background: linear-gradient(to bottom, rgba(255,255,255,0), white 40%,white 60%, rgba(255,255,255,0));
-  margin-top: -100px;
+  margin-top: -80px;
   padding-top: 70px;
   padding-bottom: 25px;
   z-index: 101;
@@ -393,6 +415,12 @@ $shift-max-width: 1400px;
   -moz-transition: all 0.2s ease;
   transition: all 0.2s ease;
   opacity: 1;
+
+  &.no-animate {
+    -webkit-transition: none;
+    -moz-transition: none;
+    transition: none;
+  }
 
   &.ng-hide-add, &.ng-hide-remove {
     display: block !important;
@@ -463,6 +491,12 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       }
       .comment-inner {
         margin-left: 49px;
+
+        .delete-confirm-panel {
+          .btn {
+            width: 75px;
+          }
+        }
       }
       .profile-container {
         margin-top: 0px;
@@ -517,6 +551,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           &:hover {
             color: #666;
           }
+          &.delete-button.confirm-showing {
+            color: #ddd;
+            cursor: default;
+          }
         }
       }
     }
@@ -525,13 +563,22 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       float: right;
     }
     .delete-confirm-panel {
-      background-color: #bbb;
-      border-top: 1px solid #999;
-      margin: 10px -8px -5px;
-      border-radius: 0 0 5px 5px;
+      -webkit-transition: height 0.2s ease;
+      -moz-transition: height 0.2s ease;
+      transition: height 0.2s ease;
+      overflow: hidden;
+      height: 45px;
+
+      &.ng-hide-add, &.ng-hide-remove {
+        display: block !important;
+      }
+      &.ng-hide {
+        height: 0;
+      }
 
       .btn {
-        margin: 5px 0 5px 10px;
+        width: 100px;
+        margin: 10px 10px 0 0;
       }
     }
   }
@@ -539,9 +586,9 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 .circular {
   width: 300px;
   height: 300px;
-  border-radius: 150px;
   -webkit-border-radius: 150px;
   -moz-border-radius: 150px;
+  border-radius: 150px;
 }
 
 .profile_info {
@@ -742,8 +789,9 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         .btn-group {
           margin-right: 0px;
           margin-top: 10px;
-          border-radius: 0px !important;
           -webkit-border-radius: 0px !important;
+          -moz-border-radius: 0px !important;
+          border-radius: 0px !important;
           position: absolute;
           top: 0px;
           right: 10px;
@@ -1099,6 +1147,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       }
       &.btn {
         -webkit-transition: color 0.2s;
+        -moz-transition: color 0.2s;
         transition: color 0.2s;
         color: rgb(117, 118, 119);
         background: white;
@@ -1107,19 +1156,13 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         -moz-border-radius: 15px;
         border-radius: 15px;
         &:hover {
-          -webkit-transition: color 0.2s;
-          transition: color 0.2s;
           color: #1abc9c;
         }
         &.success {
-          -webkit-transition: color 0.2s;
-          transition: color 0.2s;
           color: #2ecc71;
           border-color: #2ecc71;
         }
         &.error {
-          -webkit-transition: color 0.2s;
-          transition: color 0.2s;
           color: #e74c3c;
           border-color: #e74c3c;
         }
