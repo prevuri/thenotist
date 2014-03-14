@@ -201,14 +201,6 @@ $sidebar-trans-time: 0.5s;
     background-repeat:no-repeat;
     background-position:center center;  padding-left:80px;
     background-size: 45px 45px;
-
-    &:hover {
-      background-image:url('/assets/logo/logo-hover.png');
-    }
-
-    &.active {
-      background-image:url('/assets/logo/logo-active.png');
-    }
   }
 
   li {
