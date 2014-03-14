@@ -542,6 +542,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           &:hover {
             color: #666;
           }
+          &.delete-button.confirm-showing {
+            color: #ddd;
+            cursor: default;
+          }
         }
       }
     }
@@ -550,13 +554,21 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       float: right;
     }
     .delete-confirm-panel {
-      background-color: #bbb;
-      border-top: 1px solid #999;
-      margin: 10px -8px -5px;
-      border-radius: 0 0 5px 5px;
+      -webkit-transition: height 0.2s ease;
+      -moz-transition: height 0.2s ease;
+      transition: height 0.2s ease;
+      height: 45px;
+
+      &.ng-hide-add, &.ng-hide-remove {
+        display: block !important;
+      }
+      &.ng-hide {
+        height: 0;
+      }
 
       .btn {
-        margin: 5px 0 5px 10px;
+        width: 100px;
+        margin: 10px 10px 0 0;
       }
     }
   }

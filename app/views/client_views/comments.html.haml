@@ -1,6 +1,6 @@
 .comment-group-container{:'ng-repeat' => 'commentGroup in file.groupedComments', :'ng-style' => "{top: commentGroup.yCoord+'px'}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
   .comment-thread-container{:'ng-repeat' => "parentComment in commentGroup.comments", :'ng-hide' => "parentComment.deleted"}
-    .comment-button{:'ng-click' => 'expandCommentLine(commentGroup.lineId)', :'ng-style' => "{'margin-left': $index*0.15 + 'em', 'z-index': '99'-$index}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"', :'ng-hide' => 'expandedCommentLine != commentGroup.lineId && $index > 4'}
+    .comment-button{:'ng-click' => 'expandCommentLine(commentGroup.lineId); showDeleteConfirm.global = null', :'ng-style' => "{'margin-left': $index*0.15 + 'em', 'z-index': '99'-$index}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"', :'ng-hide' => 'expandedCommentLine != commentGroup.lineId && $index > 4'}
       .profile-container.circular
         .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
           .profile-image.circular.overlay{:'ng-class' => '$index == 4 ? "blank" : ""'}

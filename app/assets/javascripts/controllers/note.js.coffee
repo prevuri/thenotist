@@ -190,12 +190,13 @@
           $scope.submitting = false
       )
 
-  $scope.deleteComment = (comment) ->
+  $scope.deleteComment = (comment, fileIndex) ->
     $scope.showDeleteConfirm.global = null
     comment.deleteFade = true
     $http({method: 'DELETE', url: '/api/comments/' + comment.id}).
         success( (data, status, headers, config) ->
           comment.deleted = true
+          $scope.getGroupedComments($scope.note.uploaded_html_files[fileIndex])
         ).error( (data, status, headers, config) ->
           $scope.setAlert("Error deleting comment", false)
           comment.deleteFade = false
@@ -208,11 +209,12 @@
     for comment in comments
       if $scope.commentY(comment.line_id) == null
         return null
-      groupedComments.push {
-        lineId: comment.line_id,
-        yCoord: $scope.commentY(comment.line_id),
-        comments: [comment]
-      }
+      if !comment.deleted
+        groupedComments.push {
+          lineId: comment.line_id,
+          yCoord: $scope.commentY(comment.line_id),
+          comments: [comment]
+        }
     groupedComments.sort((a, b) ->
       a.yCoord > b.yCoord
     )
