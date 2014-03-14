@@ -488,6 +488,12 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       }
       .comment-inner {
         margin-left: 49px;
+
+        .delete-confirm-panel {
+          .btn {
+            width: 75px;
+          }
+        }
       }
       .profile-container {
         margin-top: 0px;
@@ -557,6 +563,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       -webkit-transition: height 0.2s ease;
       -moz-transition: height 0.2s ease;
       transition: height 0.2s ease;
+      overflow: hidden;
       height: 45px;
 
       &.ng-hide-add, &.ng-hide-remove {
