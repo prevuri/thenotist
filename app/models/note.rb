@@ -8,14 +8,16 @@ class Note < ActiveRecord::Base
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
   has_many :contributing_users, through: :contributors, source: :user
   #What was this made for? contibutors should cover this #What was this made for?
-  has_many :uploaded_html_files, dependent: :destroy
-  has_many :uploaded_css_files, dependent: :destroy
-  has_many :uploaded_thumb_files, dependent: :destroy
+
+  has_many :uploaded_html_files, dependent: :destroy, :order => 'page_number ASC'
+  has_many :uploaded_css_files, dependent: :destroy, :order => 'id ASC'
+  has_many :uploaded_thumb_files, dependent: :destroy, :order => 'page_number ASC'
+
   has_many :comments, :through => :uploaded_html_files
 
   # want to assume that we are processing a file right away
   before_create :start_processing!
-  
+
   def finish_processing!
     self.update_attribute :processed, true
   end
@@ -38,6 +40,10 @@ class Note < ActiveRecord::Base
 
   def revoke_share! user
     contributors.find_by_user_id(user.id).destroy
+  end
+
+  def parent_comments
+    return self.comments.where(:parent_comment_id => nil)
   end
 
   def noncontributors user
