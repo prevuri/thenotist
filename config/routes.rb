@@ -25,7 +25,6 @@ TheNotist::Application.routes.draw do
   resources :profile
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]
-  match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
 
   namespace :api do
     match 'notes/upload_form_html' => 'notes#upload_form_html', :as => :upload_form_html
@@ -40,6 +39,7 @@ TheNotist::Application.routes.draw do
     resources :notes, :only => [ :index, :show, :update, :destroy, :create ]
     match 'notes/share/' => 'notes#share', :as => :share_note
     match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
+    match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
     match 'notes/paginate/:id' => 'notes#paginate', :as => :note_paginate, :via => :get
     match 'search/notes' => 'search#search_notes', :as => :search_notes, :via => :get

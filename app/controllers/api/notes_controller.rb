@@ -3,7 +3,7 @@ class Api::NotesController < ApplicationController
   include NotesHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs, :destroy, :paginate ]
+  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :unsubscribe, :contribs, :destroy, :paginate ]
   before_filter :get_note_title, :only => :update
   before_filter :get_note_description, :only => :update
   before_filter :get_page_range, :only => [ :paginate ]
@@ -125,6 +125,22 @@ class Api::NotesController < ApplicationController
     return render :json => {
       :success => true,
       :note => @note.as_json
+    }
+  end
+
+
+  def unsubscribe
+    begin
+      @note.revoke_share!(current_user)
+    rescue
+      return render :json => {
+        :success => false,
+        :Error => cannot_revoke_error + " " + @user.name
+      }
+    end
+
+    return render :json => {
+      :success => true
     }
   end
 
