@@ -9,9 +9,9 @@ class Note < ActiveRecord::Base
   has_many :contributing_users, through: :contributors, source: :user
   #What was this made for? contibutors should cover this #What was this made for?
 
-  has_many :uploaded_html_files, dependent: :destroy
-  has_many :uploaded_css_files, dependent: :destroy
-  has_many :uploaded_thumb_files, dependent: :destroy
+  has_many :uploaded_html_files, dependent: :destroy, :order => 'page_number ASC'
+  has_many :uploaded_css_files, dependent: :destroy, :order => 'id ASC'
+  has_many :uploaded_thumb_files, dependent: :destroy, :order => 'page_number ASC'
 
   has_many :comments, :through => :uploaded_html_files
 
@@ -71,8 +71,8 @@ class Note < ActiveRecord::Base
       :title => title,
       :description => description,
       :contributing_users => contributing_users.map { |u| u.as_json },
-      :uploaded_html_files => uploaded_html_files.map { |f| f.as_json },
-      :uploaded_css_files => uploaded_css_files.map { |f| f.as_json },
+      :uploaded_html_files => uploaded_html_files.sort.map { |f| f.as_json },
+      :uploaded_css_files => uploaded_css_files.sort.map { |f| f.as_json },
       :uploaded_thumb_files => uploaded_thumb_files.map { |f| f.as_json },
       :user => user.as_json,
       :processed => processed,
