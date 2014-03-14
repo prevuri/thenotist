@@ -583,6 +583,23 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         position: relative;
         height: 100%;
 
+        .delete-confirmation {
+          position: absolute;
+          color: #fff;
+          z-index: 103;
+          top: calc(50% - 37px);
+          left: calc(50% - 82px);
+          text-align: center;
+
+          .btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            font-size: 20px;
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.4);
+            }
+          }
+        }
         .appear-hover {
           opacity: 0;
           -webkit-transition: opacity 0.2s ease;
@@ -687,7 +704,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         .text-link {
           float: left;
           color: #fff;
-          font-size: 1.2em;
+          font-size: 1em;
           font-weight: normal;
           font-family: Century Gothic, sans-serif;//"Lucida Sans Unicode";
           margin-top: 17px;
@@ -777,7 +794,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           width: 100%;
           height: 100%;
           text-align: center;
-          margin-top: 65px;
+          margin-top: 25px;
           font-size: 7em;
           color: #fff;
         }
