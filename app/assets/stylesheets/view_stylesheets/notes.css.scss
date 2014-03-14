@@ -9,7 +9,7 @@ $thumbnail-height: 330px;
 $shift-max-width: 1400px;
 
 .notes-header {
-  height: 120px;
+  height: 100px;
   border-bottom: #ECF0F1 solid 2px;
   position: relative;
   h1 {
@@ -23,8 +23,15 @@ $shift-max-width: 1400px;
     input {
       width: 280px;
       border-radius: 2px;
+      transition: width 0.5s ease; 
+
       &:active {
         border-color: #22B498 !important;
+      }
+
+      &:focus {
+        width: 330px;
+
       }
     }
 
@@ -117,7 +124,7 @@ $shift-max-width: 1400px;
 }
 
 #note-header {
-  height: 120px;
+  height: 90px;
   position: fixed;
   top: 0;
   left: 0;
@@ -133,7 +140,7 @@ $shift-max-width: 1400px;
   }
   .contributors {
     margin-left: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     display: inline-block;
     position: absolute;
     right: 40px;
@@ -154,9 +161,9 @@ $shift-max-width: 1400px;
 
     .pages {
       float: left;
-      margin-right: 20px;
-      line-height: 50px;
-      font-size: 1.5em;
+      margin-right: 15px;
+      line-height: 40px;
+      font-size: 1.3em;
       color: #999999;
       span {
         color: #34495e;
@@ -170,38 +177,35 @@ $shift-max-width: 1400px;
     border: solid #ECF0F1 1px;
     margin-right: 10px;
     position: relative;
-    height: 45px;
-    width: 45px;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
 
     &.share-note {
-      height: 45px;
-      width: 45px;
       float: right;
     }
 
     &.prev-page, &.next-page{
-      height: 45px;
-      width: 45px;
+
     }
-    &.flag {
-      height: 45px;
-      width: 45px;
-      margin-left: 15px;
-    }
+
+    // &.flag {
+    //   margin-left: 0px;
+    // }
 
     i {
       color: #999999;
-      font-size: 1.8em;
+      font-size: 1.4em;
       position: absolute;
 
       &.icon-share {
-        font-size: 1.8em;
+        font-size: 1.3em;
         top: 27%;
         left: 27%;
       }
 
       &.icon-angle-right, &.icon-angle-left, &.icon-exclamation {
-        top: 25%;
+        top: 20%;
         left: 37%;
       }
     }
@@ -219,7 +223,7 @@ $shift-max-width: 1400px;
 }
 
 #note-main {
-  padding-top: 125px;
+  padding-top: 95px;
   position: relative;
   height: 100%;
 
@@ -632,7 +636,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         }
 
         #list-footer {
-          height: 55px;
+          height: 45px;
           position: absolute;
           bottom: 0px;
           width: 100%;
@@ -648,13 +652,13 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
               display: inline-block;
               width: 100%;
               .profile-container {
-                height: 45px;
-                width: 45px;
+                height: 32px;
+                width: 32px;
                 padding: 0;
                 box-shadow: none;
                 border: solid #ECF0F1 1px;
                 float: left;
-                margin-right: 10px;
+                margin-right: 5px;
                 position: relative;
                 z-index: 103;
 
@@ -662,17 +666,17 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
                   color: #fff;
                   font-size: 1.4em;
                   position: absolute;
-                  top: 32%;
-                  left: 32%;
+                  top: 23%;
+                  left: 23%;
                 }
 
                 &.share-note {
                   background-color: rgba(255, 255, 255, 0.2);
                   span {
                     color: #fff;
-                    font-size: 1.2em;
-                    top: 28%;
-                    left: 16%;
+                    font-size: 1em;
+                    top: 21%;
+                    left: 4%;
                     position: absolute;
                     text-align: center;
                     width: 30px;
@@ -715,10 +719,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           float: left;
           color: #fff;
           font-size: 1em;
-          font-weight: normal;
-          font-family: Century Gothic, sans-serif;//"Lucida Sans Unicode";
-          margin-top: 17px;
-          margin-left: 20px;
+          font-weight: 200;
+          // font-family: Century Gothic, sans-serif;//"Lucida Sans Unicode";
+          margin-top: 5px;
+          margin-left: 10px;
           margin-bottom: 17px;
 
           width: 300px;

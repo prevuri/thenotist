@@ -40,20 +40,22 @@ $sidebar-foreground-hover: white;
 
 
 /* THEME 3 */
-// $sidebar-background: #ECF0F1;
-// $sidebar-background-hover: #BDC3C7;
-// $sidebar-foreground: #999;
-// $sidebar-foreground-active: #2ECC71;
-// $sidebar-foreground-hover: white;
+$sidebar-background: #1B2224;
+$sidebar-background-hover: #20282A;
+$sidebar-background-active: #FFFFFF;
+$sidebar-foreground: #616D72;
+$sidebar-foreground-active: #323B3D;
+$sidebar-foreground-hover: #EEEEEE;
 // $sidebar-shadow-color: #888;
 
 /* THEME 4 */
-$sidebar-background: #1C262B;
-$sidebar-background-hover: #40474F;
-$sidebar-foreground: #90A7B6;
-$sidebar-foreground-active: #27F;
-$sidebar-foreground-hover: #FFF;
-$sidebar-shadow-color: #999;
+// $sidebar-background: #40474F;
+// $sidebar-background-hover: #40474F;
+// $sidebar-background-active: #FFF;
+// $sidebar-foreground: #989898;
+// $sidebar-foreground-active: #40474F;
+// $sidebar-foreground-hover: #FFF;
+// $sidebar-shadow-color: #999;
 // $background-color: #E8E3DD;
 $background-color: #FFF;
 $btn-primary: #F55451;
@@ -88,7 +90,7 @@ body, h1, h2, h3, h4, p {
   background-color: $btn-primary !important;
 
   &:hover, &:focus {
-    background-color: #FF322E !important;
+    background-color: #FFF !important;
   }
 }
 
@@ -165,7 +167,7 @@ a.no-link {
 $sidebar-trans-time: 0.5s;
 
 #sidebar, #sidebar-placeholder {
-  width: 100px;
+  width: 80px;
   float: left !important;
 }
 
@@ -196,7 +198,7 @@ $sidebar-trans-time: 0.5s;
     height: 84px;
     background-image:url('/assets/logo/logo-inactive.png');
     background-repeat:no-repeat;
-    background-position:center center;  padding-left:100px;
+    background-position:center center;  padding-left:80px;
     background-size: 45px 45px;
 
     &:hover {
@@ -229,6 +231,7 @@ $sidebar-trans-time: 0.5s;
 
       &.active {
         color: $sidebar-foreground-active;
+        background-color: $sidebar-background-active;
       }
     }
 
@@ -245,7 +248,7 @@ $sidebar-trans-time: 0.5s;
     position: absolute;
 
     a {
-      width:100px;
+      width:80px;
       padding: 5px 5px 0 0;
       border: none;
 
@@ -255,13 +258,17 @@ $sidebar-trans-time: 0.5s;
       }
     }
 
+    li {
+      line-height: 2.2;
+      position: relative;
+    }
+
     i {
-      font-size: 1em;
-      margin-right: 5px;
+      font-size: 2em;
     }
 
     .text {
-      display: inline;
+      display: block;
     }
   }
 
