@@ -148,10 +148,28 @@ notistApp.directive('ngSpinner', () ->
 )
 
 .directive('ngEnter', () ->
-  (scope,element,attrs) ->
-    element.bind('keydown keypress', (event) ->
-      if event.which == 13
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 13
         scope.$eval(attrs.ngEnter)
-        event.preventDefault()
+        e.preventDefault()
+    )
+)
+
+.directive('leftArrow', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 37
+        scope.$eval(attrs.leftArrow)
+        e.preventDefault()
+    )
+)
+
+.directive('rightArrow', () ->
+  link: (scope,element,attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 39
+        scope.$eval(attrs.rightArrow)
+        e.preventDefault()
     )
 )

@@ -1,4 +1,4 @@
-%div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init()"}
+%div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init()", :'left-arrow' => 'decrementPage()', :'right-arrow' => 'incrementPage()'}
 
   %link{:'ng-repeat' => 'css_file in note.uploaded_css_files', :type => "text/css", :rel => "stylesheet", :'ng-href' => "{{css_file.public_path}}"}
 
