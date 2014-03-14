@@ -16,8 +16,8 @@
   $scope.showDeleteConfirm = {global: null}
   $scope.currentPage = 1
   $scope.pageEl = {}
+  $scope.lineYCache = {}
   $scope.placeholderHeight = 0
-  $scope.commentsLoaded = false
 
   $scope.$watch('currentPage', () =>
     $scope.loadVisiblePages()
@@ -25,7 +25,6 @@
 
   $scope.init = () ->
     $scope.$root.section = 'notes'
-    $scope.commentsLoaded = false
     success = (data) ->
       $scope.note = data.note
       if $scope.note.user.id == $scope.currentUser.id
@@ -88,6 +87,9 @@
     $http({method: 'GET', url: '/api/comments', params: {note_id: $scope.note.id}}).
       success( (data, status, headers, config) ->
         parentComments = []
+        updateChunk = false
+        chunkFirstPageNo = $scope.pageChunks[$scope.currentPageChunk].pages[0].page_number
+        chunkLastPageNo = chunkFirstPageNo + $scope.pageChunkSize-1
         for comment in data.comments
           # If this is a parent comment (not a reply)
           if !comment.parent_comment_id
@@ -108,9 +110,14 @@
             shouldUpdate = JSON.stringify(oldComments) != JSON.stringify(commentsByFile[file.id])
           if shouldUpdate
             file.comments = commentsByFile[file.id]
+            if file.page_number >= chunkFirstPageNo && file.page_number <= chunkLastPageNo
+              updateChunk = true
         for chunk in $scope.pageChunks
           chunk.commentsLoaded = false
-        $scope.commentsLoaded = true
+        # Don't group visible chunk comments on initial comment request; loadVisiblePages already does this
+        if updateChunk && $scope.initialCommentRequestDone
+          $scope.groupCommentsCurrentChunk()
+        $scope.initialCommentRequestDone = true
       ).error( (data, status, headers, config) ->
         console.log "Error loading comments from server", false
     )
@@ -130,11 +137,13 @@
     $scope.expandedCommentLine = null
 
   $scope.commentY = (lineId) =>
-    el = $('[data-guid='+lineId+']')
-    if el.length == 0
-      null
-    else
-      $(el).offset().top - $(el).parents('.note-page').offset().top
+    if !(lineId of $scope.lineYCache)
+      el = $('[data-guid='+lineId+']')
+      if el.length == 0
+        return null
+      else
+        $scope.lineYCache[lineId] = $(el).offset().top - $(el).parents('.note-page').offset().top
+    $scope.lineYCache[lineId]
 
   $scope.canReply = (comment) ->
     comment.parent_comment_id == null
@@ -167,26 +176,28 @@
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
-          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
-          $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
           $scope.submitting = false
           if parentId
             $scope.repliesShowing[parentId] = false
             $scope.replyText[parentId] = null
           else
-            $scope.showNewComment(false)
+            $scope.expandCommentLine($scope.newCommentLineId)
             $scope.newCommentText = null
+          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
+          $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
         ).error( (data, status, headers, config) ->
           # TODO: error message of some sort
           $scope.submitting = false
       )
 
-  $scope.deleteComment = (comment) ->
+  $scope.deleteComment = (comment, fileIndex) ->
     $scope.showDeleteConfirm.global = null
     comment.deleteFade = true
     $http({method: 'DELETE', url: '/api/comments/' + comment.id}).
         success( (data, status, headers, config) ->
           comment.deleted = true
+          if comment.parent_comment_id == null
+            $scope.getGroupedComments($scope.note.uploaded_html_files[fileIndex])
         ).error( (data, status, headers, config) ->
           $scope.setAlert("Error deleting comment", false)
           comment.deleteFade = false
@@ -199,11 +210,12 @@
     for comment in comments
       if $scope.commentY(comment.line_id) == null
         return null
-      groupedComments.push {
-        lineId: comment.line_id,
-        yCoord: $scope.commentY(comment.line_id),
-        comments: [comment]
-      }
+      if !comment.deleted
+        groupedComments.push {
+          lineId: comment.line_id,
+          yCoord: $scope.commentY(comment.line_id),
+          comments: [comment]
+        }
     groupedComments.sort((a, b) ->
       a.yCoord > b.yCoord
     )
@@ -221,12 +233,12 @@
   $scope.incrementPage = () ->
     if $scope.currentPage < $scope.note.uploaded_html_files.length
       $scope.currentPage++
-    $scope.pageEl[$scope.currentPage].scrollToPage()
+    $scope.pageEl[$scope.currentPage].scrollToPage = true
 
   $scope.decrementPage = () ->
     if $scope.currentPage > 1
       $scope.currentPage--
-    $scope.pageEl[$scope.currentPage].scrollToPage()
+    $scope.pageEl[$scope.currentPage].scrollToPage = true
 
   $scope.changeVisibleChunk = (old, current) ->
     $scope.pageChunks[current].visible = true
@@ -254,6 +266,12 @@
       , 200)
 
 
+  $scope.groupCommentsCurrentChunk = () ->
+    for page in $scope.pageChunks[$scope.currentPageChunk].pages
+      $scope.getGroupedComments(page)
+    $scope.pageChunks[$scope.currentPageChunk].commentsLoaded = true
+
+
   $scope.loadVisiblePages = () =>
     if !$scope.note
       return
@@ -263,8 +281,6 @@
     $scope.changeVisibleChunk($scope.currentPageChunk, newChunk)
     $scope.currentPageChunk = newChunk
     if !$scope.pageChunks[$scope.currentPageChunk].commentsLoaded
-      for page in $scope.pageChunks[newChunk].pages
-        $scope.getGroupedComments(page)
-      $scope.pageChunks[$scope.currentPageChunk].commentsLoaded = true
-    if $scope.placeholderHeight == 0
+      $scope.groupCommentsCurrentChunk()
+    if $scope.placeholderHeight < 50
       $scope.getPlaceholderHeight()

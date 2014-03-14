@@ -1,4 +1,4 @@
-%div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init()"}
+%div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init()", :'left-arrow' => 'decrementPage()', :'right-arrow' => 'incrementPage()'}
 
   %link{:'ng-repeat' => 'css_file in note.uploaded_css_files', :type => "text/css", :rel => "stylesheet", :'ng-href' => "{{css_file.public_path}}"}
 
@@ -10,20 +10,25 @@
     .page-number
       .pages
         Page {{currentPage}} of {{note.uploaded_html_files.length}}
+      .profile-container.circular.flag
+        %i.icon-exclamation
       .profile-container.circular.prev-page{:'ng-click' => 'decrementPage()'}
         %i.icon-angle-left
       .profile-container.circular.next-page{:'ng-click' => 'incrementPage()'}
         %i.icon-angle-right
-      .profile-container.circular.flag
-        %i.icon-exclamation
+
+      
     .contributors
-      .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote()', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
-        %i.icon-share
       .profile-container.circular{:'ng-if' => 'note.shared'}
         %img.profile-image.circular{:'ng-src' => '{{note.user.user_fb_data.profile_image}}'}
-      %div{:'ng-repeat' => 'contrib in note.contributing_users'}
+      %div{:'ng-repeat' => 'contrib in note.contributing_users | orderBy:name | limitTo:3'}
         .profile-container.circular{:'ng-if' => 'contrib.id != currentUser.id'}
           %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
+      .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote()', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
+        %i.icon-share
+      .profile-container.circular.share-note{:'ng-if' => 'note.contributing_users.length > 3'}
+        %span
+          {{note.contributing_users.length}}
 
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
     .note-pages{:'scroll-change-page' => true}
@@ -40,10 +45,10 @@
               .comments-container{:'ng-class' => 'expandedCommentLine == null ? "comments-hidden" : ""'}
                 .comments
                   %ng-include{:src => '"/client_views/comments.html"'}
-    #new-comment-panel.comment{:'ng-show' => 'showingNewComment', :'ng-style' => "{'top': newCommentY+'px' }"}
+    #new-comment-panel.comment{:'ng-show' => 'showingNewComment', :'ng-style' => "{'top': newCommentY+'px' }", :'ng-class' => "submitting ? 'no-animate' : ''"}
       .profile-container.circular
         .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
-      .comment-inner
+      .comment-inner{:'ng-style' => "{opacity: submitting ? '0.5' : '1'}"}
         .comment-body
           .user
             .name
@@ -53,7 +58,7 @@
         .bottom
           %a.new-comment-submit.primary.text-link{:'ng-click' => 'submitParentComment()'}
             Add Comment
-          %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'showNewComment(false)'}
+          %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'showNewComment(false); newCommentText = null'}
             Cancel
         .clear
 

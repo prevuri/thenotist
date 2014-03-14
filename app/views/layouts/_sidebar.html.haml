@@ -14,14 +14,10 @@
           .text Notes
     .nav.nav-list-bottom
       %li
-        %a.btn.btn-large.btn-block{:href => '/settings'}
-          %i.icon-cog
-          .text Settings
-      %li
         - if current_user
           = link_to destroy_user_session_path, :method=>'delete', :class => 'btn btn-large btn-block' do
-            %i.icon-signout
-            %span.text Logout
+            %i.icon-signout.icon-2x
+            .text Logout
         - else
           = link_to new_user_session_path, :class => 'btn btn-large btn-block' do
             %i.icon-signin

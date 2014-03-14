@@ -88,9 +88,12 @@ notistApp.directive('ngSpinner', () ->
   link: (scope, el, attrs) ->
     ctrlScope = scope.$parent.$parent
     ctrlScope.pageEl[scope.pageNo] = el
-    el.scrollToPage = () =>
-      if ctrlScope.currentPage == scope.pageNo
+    scope.pageEl = el
+    scrollToPage = () =>
+      if scope.pageEl.scrollToPage
         $(document).scrollTop(el[0].offsetTop-$('#note-header').height())
+        scope.pageEl.scrollToPage = false
+    scope.$watch('pageEl.scrollToPage', scrollToPage)
 )
 
 .directive('scrollChangePage', ($timeout) ->
@@ -128,7 +131,7 @@ notistApp.directive('ngSpinner', () ->
           $timeout(() ->
             scope.isScrolling = false
             changeCurrentPage()
-          , 1)
+          , 200)
       )
     )
 )
@@ -140,11 +143,54 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('animateTimeout', ($timeout) ->
+  link: (scope, el, attrs) ->
+    $timeout(()->
+      scope.animate = true
+    , 100)
+)
+
 .directive('ngEnter', () ->
-  (scope,element,attrs) ->
-    element.bind('keydown keypress', (event) ->
-      if event.which == 13
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 13
         scope.$eval(attrs.ngEnter)
-        event.preventDefault()
+        e.preventDefault()
+    )
+)
+
+.directive('leftArrow', ($timeout) ->
+  link: (scope, el, attrs) ->
+    canPress = true
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 37 && canPress
+        scope.$eval(attrs.leftArrow)
+        e.preventDefault()
+        canPress = false
+        $timeout( () ->
+          canPress = true
+        , 50)
+    )
+    $('body').bind('keyup', (e) ->
+      if e.which == 37 && !canPress
+        canPress = true
+    )
+)
+
+.directive('rightArrow', ($timeout) ->
+  link: (scope,element,attrs) ->
+    canPress = true
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 39 && canPress
+        scope.$eval(attrs.rightArrow)
+        e.preventDefault()
+        canPress = false
+        $timeout( () ->
+          canPress = true
+        , 50)
+    )
+    $('body').bind('keyup', (e) ->
+      if e.which == 39 && !canPress
+        canPress = true
     )
 )

@@ -1,9 +1,10 @@
 .comment-group-container{:'ng-repeat' => 'commentGroup in file.groupedComments', :'ng-style' => "{top: commentGroup.yCoord+'px'}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
   .comment-thread-container{:'ng-repeat' => "parentComment in commentGroup.comments", :'ng-hide' => "parentComment.deleted"}
-    .comment-button{:'ng-click' => 'expandCommentLine(commentGroup.lineId)', :'ng-style' => "{'margin-left': $index*0.16 + 'em', 'z-index': '99'-$index}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
-      .profile-container.circular
+    .comment-button{:'ng-click' => 'expandCommentLine(commentGroup.lineId); showDeleteConfirm.global = null', :'ng-style' => "{'margin-left': $index*0.15 + 'em', 'z-index': '99'-$index}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"', :'ng-hide' => 'expandedCommentLine != commentGroup.lineId && $index > 4'}
+      .profile-container.circular{:'animate-timeout' => true, :'ng-class' => 'animate ? "animate" : ""'}
         .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
-          .profile-image.circular.overlay
+          .profile-image.circular.overlay{:'ng-class' => '$index == 4 ? "blank" : ""'}
+            .ellipsis{:'ng-if' => '$index == 4'} ...
     .comment.parent{:'ng-show' => 'expandedCommentLine == commentGroup.lineId'}
       %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
       .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments', :'ng-hide' => "comment.deleted"}
@@ -13,7 +14,7 @@
       .new-reply-panel.comment.reply{:'ng-show' => 'repliesShowing[parentComment.id] == true'}
         .profile-container.circular
           .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
-        .comment-inner
+        .comment-inner{:'ng-style' => "{opacity: submitting ? '0.5' : '1'}"}
           .comment-body
             .user
               .name {{currentUser.name}}
@@ -22,6 +23,6 @@
           .bottom
             %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, pageNo-1)"}
               Add Comment
-            %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'repliesShowing[parentComment.id] = false'}
+            %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'repliesShowing[parentComment.id] = false; replyText[parentComment.id] = null'}
               Cancel
           .clear

@@ -13,12 +13,13 @@
       Delete
         
 
-  .process-spinner{:'ng-if' => '!note.processed && !note.aborted'}
+  .process-spinner{:'ng-if' => '!note.processed && !note.aborted && noteDeleteClicked != note.id'}
     %i.icon-refresh.icon-white.icon-spin
     %h2
-      Processing {{note.title}}...
+      .text-link
+        Processing {{note.title}}...
 
-  .aborted-notice{:'ng-if' => 'note.aborted'}
+  .aborted-notice{:'ng-if' => 'note.aborted && noteDeleteClicked != note.id'}
     %i.icon-exclamation.icon-white
     %h2
       Aborted
