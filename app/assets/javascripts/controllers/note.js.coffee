@@ -176,8 +176,6 @@
       $scope.submitting = true
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
-          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
-          $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
           $scope.submitting = false
           if parentId
             $scope.repliesShowing[parentId] = false
@@ -185,6 +183,8 @@
           else
             $scope.expandCommentLine($scope.newCommentLineId)
             $scope.newCommentText = null
+          $scope.note.uploaded_html_files[fileIndex].comments = data.comments
+          $scope.note.uploaded_html_files[fileIndex].groupedComments = $scope.groupComments(data.comments)
         ).error( (data, status, headers, config) ->
           # TODO: error message of some sort
           $scope.submitting = false
