@@ -196,7 +196,8 @@
     $http({method: 'DELETE', url: '/api/comments/' + comment.id}).
         success( (data, status, headers, config) ->
           comment.deleted = true
-          $scope.getGroupedComments($scope.note.uploaded_html_files[fileIndex])
+          if comment.parent_comment_id == null
+            $scope.getGroupedComments($scope.note.uploaded_html_files[fileIndex])
         ).error( (data, status, headers, config) ->
           $scope.setAlert("Error deleting comment", false)
           comment.deleteFade = false
