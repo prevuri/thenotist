@@ -596,7 +596,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             font-size: 20px;
 
             &:hover {
-              background-color: rgba(255, 255, 255, 0.4);
+              background-color: rgba(255, 255, 255, 0.3);
             }
           }
         }
@@ -610,7 +610,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             border-radius: 0 !important;
             background-color: transparent;
             &:hover {
-              background-color: #999999;
+              background-color: rgba(255, 255, 255, 0.3);
             }
           }
         }
