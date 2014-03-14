@@ -5,12 +5,13 @@
   .delete-confirmation{:'ng-if' => 'noteDeleteClicked == note.id'}
     %h3
       Delete this note?
-    %a.btn{:'ng-if' => 'note.shared', :'ng-click' => 'unsubscribeNote()'}
+    %a.btn.cancel{:'ng-click' => 'cancelDelete()'}
+      Cancel  
+    %a.btn.delete{:'ng-if' => 'note.shared', :'ng-click' => 'unsubscribeNote()'}
       Delete
-    %a.btn{:'ng-if' => '!note.shared', :'ng-click' => 'deleteNote()'}
+    %a.btn.delete{:'ng-if' => '!note.shared', :'ng-click' => 'deleteNote()'}
       Delete
-    %a.btn.usub{:'ng-click' => 'cancelDelete()'}
-      Cancel      
+        
 
   .process-spinner{:'ng-if' => '!note.processed && !note.aborted'}
     %i.icon-refresh.icon-white.icon-spin
