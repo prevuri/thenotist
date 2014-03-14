@@ -44,3 +44,27 @@ DEPLOYMENTS
 For NGINX/Passenger:
 * bundle --without development test --deployment
 * nginx -t
+
+
+-----------------------------------------------
+MONITORING
+-----------------------------------------------
+For realtime performance monitoring:
+* If this is your first-time setup:
+  gem install scout_realtime
+
+* Now, do the following:
+  > scout_realtime start
+        Daemon has started successfully
+        To view in your browser, do ONE of the following:
+
+        A) create an SSH tunnel: ssh -NL 5555:localhost:5555 user@ip_or_hostname (run that command on your own computer, not the server)
+           then point your browser to: http://localhost:5555
+           --- OR ---
+        B) open a port in your firewall: sudo iptables -A INPUT -p tcp --dport 5555 -j ACCEPT (run that command on your server)
+           then point your browser to: http://your-ip-or-hostname:5555
+
+        * FYI, the log file is: /root/.scout/scout_realtime.log
+        * "scout_realtime stop" to stop the daemon
+
+* Find the gem here: https://github.com/scoutapp/scout_realtime

@@ -23,7 +23,7 @@ class Api::CommentsController < ApplicationController
     # only render top-level comments, because their children will be rendered recursively
     return render :json => {
       :success => true,
-      :comments => @note.comments.map { |c| c.as_json(:current_user => current_user) }
+      :comments => @note.parent_comments.map { |c| c.as_json(:current_user => current_user) }
     }
   end
 
@@ -44,7 +44,8 @@ class Api::CommentsController < ApplicationController
         :uploaded_html_file => @file,
         :text => params[:comment][:text],
         :line_id => params[:comment][:line_id],
-        :parent_comment => parent_comment
+        :parent_comment => parent_comment,
+        :note => @file.note
       })
 
       # track the comment activity
@@ -59,7 +60,6 @@ class Api::CommentsController < ApplicationController
     # mirror the comments so that the UI can re-render the comments without having to make a separate
     # call to retrieve them
     @comments = @file.top_level_comments
-
     return render :json => {
       :success => true,
       :comments => @comments.map { |c| c.as_json(:current_user => current_user) }
@@ -92,28 +92,6 @@ class Api::CommentsController < ApplicationController
     return render :json => {
       :success => true
       # :comments => @comments.map { |c| c.as_json }
-    }
-  end
-
-  def filecomments
-    begin
-      @file = current_user.uploaded_html_files.find(@uploaded_html_file_id) # throws an exception if nothing found
-    rescue
-      begin
-        @file = current_user.shared_uploaded_html_files.find(@uploaded_html_file_id) # throws an exception if nothing found
-      rescue
-        return render :json => {
-          :success => false,
-          :error => file_not_found_error
-        }
-      end
-    end
-
-    # only render top-level comments, because their children will be rendered recursively
-    @comments = @file.top_level_comments
-    return render :json => {
-      :success => true,
-      :comments => @comments.map { |c| c.as_json(:current_user => current_user) }
     }
   end
 
