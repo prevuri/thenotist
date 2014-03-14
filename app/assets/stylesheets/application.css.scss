@@ -185,7 +185,8 @@ $sidebar-trans-time: 0.5s;
   }
 
   .sidebar-inner {
-    height: 100%;
+    padding-top: 10px;
+    height: calc(100% - 10px);
     min-height: 400px;
     position: relative;
   }
@@ -196,7 +197,7 @@ $sidebar-trans-time: 0.5s;
 
   .notist-logo {
     height: 84px;
-    background-image:url('/assets/logo/logo-inactive.png');
+    background-image:url('/assets/logo/logo-active.png');
     background-repeat:no-repeat;
     background-position:center center;  padding-left:80px;
     background-size: 45px 45px;

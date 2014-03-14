@@ -9,19 +9,21 @@ $thumbnail-height: 330px;
 $shift-max-width: 1400px;
 
 .notes-header {
-  height: 100px;
+  height: 65px;
   border-bottom: #ECF0F1 solid 2px;
   position: relative;
+  // min-width: 768px;
   h1 {
     float: left;
   }
 
   .search-box {
     position: absolute;
-    right: 20px;
+    left: 102px;
     top: 10px;
+    height: 40px;
     input {
-      width: 280px;
+      width: 263px;
       border-radius: 2px;
       transition: width 0.5s ease; 
 
@@ -30,7 +32,7 @@ $shift-max-width: 1400px;
       }
 
       &:focus {
-        width: 330px;
+        width: 300px;
 
       }
     }
@@ -124,7 +126,7 @@ $shift-max-width: 1400px;
 }
 
 #note-header {
-  height: 90px;
+  height: 65px;
   position: fixed;
   top: 0;
   left: 0;
@@ -140,11 +142,11 @@ $shift-max-width: 1400px;
   }
   .contributors {
     margin-left: 10px;
-    margin-bottom: 5px;
+    // margin-bottom: 15px;
     display: inline-block;
     position: absolute;
-    right: 40px;
-    bottom: 0px;
+    right: 280px;
+    bottom: 15px;
     div {
       float: left;
     }
@@ -154,20 +156,24 @@ $shift-max-width: 1400px;
     display: inline-block;
     position: absolute;
     right: 40px;
-    top: 10px;
+    bottom: 10px;
     div {
       float: left;
     }
 
     .pages {
-      float: left;
-      margin-right: 15px;
+      float: right;
+      // margin-right: 15px;
       line-height: 40px;
       font-size: 1.3em;
       color: #999999;
       span {
         color: #34495e;
       }
+    }
+
+    .flag {
+      margin-right: 20px;
     }
   }
 
@@ -183,6 +189,15 @@ $shift-max-width: 1400px;
 
     &.share-note {
       float: right;
+      span {
+        color: #34495e;
+        font-size: 1em;
+        top: 21%;
+        left: 4%;
+        position: absolute;
+        text-align: center;
+        width: 30px;
+      }
     }
 
     &.prev-page, &.next-page{
@@ -223,7 +238,7 @@ $shift-max-width: 1400px;
 }
 
 #note-main {
-  padding-top: 95px;
+  padding-top: 70px;
   position: relative;
   height: 100%;
 
@@ -574,9 +589,8 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 
     .notes-list-item {
       display: inline-block;
-      // margin-left: -0.28em;
-      height: 240px;
-      width: 384px;
+      height: 218px;
+      width: 352px;
       vertical-align: top;
 
       &:hover {
@@ -808,9 +822,20 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           width: 100%;
           height: 100%;
           text-align: center;
-          margin-top: 25px;
+          // margin-top: 25px;
           font-size: 7em;
           color: #fff;
+          i {
+            margin-top: 25px;
+          }
+
+          .text-link {
+            // margin-top: 0;
+            margin-top: 5px;
+            margin-left: 0;
+            padding: 0 5px;
+            width: 95%;
+          }
         }
         .aborted-notice {
           position: absolute;
@@ -1024,8 +1049,8 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 }
 
 .create-new-note-container {
-  width: 448px;
-  height: 280px;
+  // width: 448px;
+  // height: 280px;
   color: #FFF;
 
   .big-button-container {
