@@ -7,7 +7,7 @@ class Api::TagsController < ApplicationController
   def show
     return render :json => {
       :success => true,
-      :tags => @note.tags.map &:as_json
+      :tags => @note.tags.map(&:as_json)
     }
   end
 
@@ -16,7 +16,7 @@ class Api::TagsController < ApplicationController
       tags_h = params[:tags]
       tags = []
       tags_h.each do |t|
-        tags << @note.tags.new :name => t[:name]
+        tags << @note.tags.new(:name => t[:name])
       end
       @note.tags.delete_all # only delete all old tags after we made sure we can create all new ones
       tags.each { |t| t.save }
