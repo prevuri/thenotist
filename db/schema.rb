@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20140307181722) do
+=======
+ActiveRecord::Schema.define(:version => 20140314000709) do
+>>>>>>> 486dcbba0b0c150000de3a844c1c89eebe2d8cc7
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -50,6 +54,11 @@ ActiveRecord::Schema.define(:version => 20140307181722) do
     t.integer  "parent_comment_id"
     t.string   "line_id"
   end
+
+  add_index "comments", ["parent_comment_id"], :name => "index_comments_on_parent_comment_id"
+  add_index "comments", ["uploaded_html_file_id", "parent_comment_id"], :name => "index_comments_on_uploaded_html_file_id_and_parent_comment_id"
+  add_index "comments", ["uploaded_html_file_id"], :name => "index_comments_on_uploaded_html_file_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "contributors", :force => true do |t|
     t.integer  "user_id"
@@ -96,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20140307181722) do
   end
 
   add_index "notes", ["processed"], :name => "index_notes_on_processed"
+  add_index "notes", ["user_id"], :name => "index_notes_on_user_id"
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -116,6 +126,8 @@ ActiveRecord::Schema.define(:version => 20140307181722) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "uploaded_css_files", ["note_id"], :name => "index_uploaded_css_files_on_note_id"
+
   create_table "uploaded_html_files", :force => true do |t|
     t.integer  "note_id"
     t.integer  "page_number"
@@ -125,6 +137,8 @@ ActiveRecord::Schema.define(:version => 20140307181722) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "uploaded_html_files", ["note_id"], :name => "index_uploaded_html_files_on_note_id"
+
   create_table "uploaded_thumb_files", :force => true do |t|
     t.string   "public_path"
     t.integer  "note_id"
@@ -132,6 +146,8 @@ ActiveRecord::Schema.define(:version => 20140307181722) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "uploaded_thumb_files", ["note_id"], :name => "index_uploaded_thumb_files_on_note_id"
 
   create_table "user_fb_data", :force => true do |t|
     t.integer  "user_id"
@@ -141,6 +157,8 @@ ActiveRecord::Schema.define(:version => 20140307181722) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "user_fb_data", ["user_id"], :name => "index_user_fb_data_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

@@ -1,10 +1,13 @@
-@NotesCtrl = ($scope, $http, $sce, $interval, $filter, NotesApi) ->
+@NotesCtrl = ($scope, $http, $sce, $interval, $filter, NotesApi, NotesUnsubscribeApi) ->
 
   # Variable to check for polling and notes that are processing.
   $scope.notesProcessing = Array()
   $scope.isNoteProcessed = {}
   $scope.promises = {}
   $scope.notes = Array()
+
+  $scope.noteDeleteClicked = -1
+  $scope.noteDeleteIndex = -1
 
   # Init
   $scope.init = () ->
@@ -48,13 +51,36 @@
     $scope.$broadcast('shareInit')
 
   # Deletes a user note
-  $scope.deleteNote = (note, index) ->
-    if confirm("Are you sure you want to delete " + note.title)
-      success = (data) ->
-        $scope.notes.splice(index, 1)
-      error = (data) ->
-        $scope.setAlert("Error deleting note", false)
-      NotesApi.delete({id: note.id}, success, error)
+  $scope.deleteNote = () ->
+    # if confirm("Are you sure you want to delete " + note.title)
+    success = (data) ->
+      $scope.notes.splice($scope.noteDeleteIndex, 1)
+      $scope.noteDeleteIndex = -1
+      $scope.noteDeleteClicked = -1
+    error = (data) ->
+      $scope.setAlert("Error deleting note", false)
+      $scope.noteDeleteIndex = -1
+      $scope.noteDeleteClicked = -1
+    NotesApi.delete({id: $scope.noteDeleteClicked}, success, error)
+
+  $scope.unsubscribeNote = () ->
+    success = (data) ->
+      $scope.notes.splice($scope.noteDeleteIndex, 1)
+      $scope.noteDeleteIndex = -1
+      $scope.noteDeleteClicked = -1
+    error = (data) ->
+      $scope.setAlert("Error deleting note", false)
+      $scope.noteDeleteIndex = -1
+      $scope.noteDeleteClicked = -1
+    NotesUnsubscribeApi.remove({id: $scope.noteDeleteClicked}, success, error)
+
+  $scope.deleteClickedNote = (note, index) ->
+    $scope.noteDeleteClicked = note.id
+    $scope.noteDeleteIndex = index
+
+  $scope.cancelDelete = () ->
+    $scope.noteDeleteIndex = -1
+    $scope.noteDeleteClicked = -1
 
   # Checks if the noteId is in notes
   $scope.noteInNotes = (noteId) ->

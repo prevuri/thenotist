@@ -86,24 +86,111 @@ notistApp.directive('ngSpinner', () ->
 
 .directive('pageButtonsScroll', () ->
   link: (scope, el, attrs) ->
-    scrollToElement = () =>
-      if scope.$parent.currentPage == scope.$index+1
-        document.body.scrollTop = el[0].offsetTop-$('#note-header').height()
+    ctrlScope = scope.$parent.$parent
+    ctrlScope.pageEl[scope.pageNo] = el
+    scope.pageEl = el
+    scrollToPage = () =>
+      if scope.pageEl.scrollToPage
+        $(document).scrollTop(el[0].offsetTop-$('#note-header').height())
+        scope.pageEl.scrollToPage = false
+    scope.$watch('pageEl.scrollToPage', scrollToPage)
+)
+
+.directive('scrollChangePage', ($timeout) ->
+  link: (scope, el, attrs) ->
+    checkPage = (el, i, docScroll) =>
+      if docScroll - el[0].offsetTop < scope.elHeight/ 2 &&
+      docScroll - el[0].offsetTop > scope.elHeight/-2
+        if (i != scope.currentPage)
+          scope.currentPage = i
+          scope.$apply()
+        return true
+      return false
+
     changeCurrentPage = () =>
-      if document.body.scrollTop - el[0].offsetTop < 200 && document.body.scrollTop - el[0].offsetTop > -200
-        scope.$parent.currentPage = scope.$index+1
-        scope.$apply()
-    scope.$parent.$watch('currentPage', scrollToElement, false)
+      if scope.previousScroll == undefined
+        scope.previousScroll = 0
+      if !scope.elHeight
+        scope.elHeight = $(scope.pageEl[1]).height()
+      previous = scope.previousScroll
+      docScroll = $(document).scrollTop()
+      scope.previousScroll = docScroll
+      if docScroll > previous
+        for i in [scope.currentPage..scope.note.uploaded_html_files.length]
+          if checkPage(scope.pageEl[i], i, docScroll)
+            return
+      else if docScroll < previous
+        for i in [scope.currentPage..1]
+          if checkPage(scope.pageEl[i], i, docScroll)
+            return
     $(document).ready( () =>
-      $(window).scroll(changeCurrentPage)
+      $(document).scroll(() =>
+        if !scope.isScrolling
+          changeCurrentPage()
+          scope.isScrolling = true
+          $timeout(() ->
+            scope.isScrolling = false
+            changeCurrentPage()
+          , 200)
+      )
     )
 )
 
+.directive('placeholderHeight', () ->
+  link: (scope, el, attrs) ->
+    scope.$watch('placeholderHeight', () =>
+      $(el).height(scope.placeholderHeight)
+    )
+)
+
+.directive('animateTimeout', ($timeout) ->
+  link: (scope, el, attrs) ->
+    $timeout(()->
+      scope.animate = true
+    , 100)
+)
+
 .directive('ngEnter', () ->
-  (scope,element,attrs) ->
-    element.bind('keydown keypress', (event) ->
-      if event.which == 13
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 13
         scope.$eval(attrs.ngEnter)
-        event.preventDefault()
+        e.preventDefault()
+    )
+)
+
+.directive('leftArrow', ($timeout) ->
+  link: (scope, el, attrs) ->
+    canPress = true
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 37 && canPress
+        scope.$eval(attrs.leftArrow)
+        e.preventDefault()
+        canPress = false
+        $timeout( () ->
+          canPress = true
+        , 50)
+    )
+    $('body').bind('keyup', (e) ->
+      if e.which == 37 && !canPress
+        canPress = true
+    )
+)
+
+.directive('rightArrow', ($timeout) ->
+  link: (scope,element,attrs) ->
+    canPress = true
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 39 && canPress
+        scope.$eval(attrs.rightArrow)
+        e.preventDefault()
+        canPress = false
+        $timeout( () ->
+          canPress = true
+        , 50)
+    )
+    $('body').bind('keyup', (e) ->
+      if e.which == 39 && !canPress
+        canPress = true
     )
 )

@@ -1,4 +1,4 @@
-@UploadCtrl = ($scope, $http, $sce, UploadFormHtml) ->
+@UploadCtrl = ($scope, $http, $sce, UploadFormHtml, s3Upload) ->
 
   @statusTextDefault = "Choose file"
   @statusText2Default = ".pdf"
@@ -29,17 +29,9 @@
     return false
 
   $scope.s3uploadFormInit = () ->
-    $('#upload_form_tag').S3Uploader
-      remove_completed_progress_bar: false
-      allow_multiple_files: false
-      click_submit_target: $('.direct-upload-submit')
-
-    $('#upload_form_tag').bind "s3_upload_complete", (e, content) ->
-      s3_key_val = $('#s3_key_tag').val()
-      $scope.s3UploadComplete(s3_key_val)
-
-    $('#upload_form_tag').bind "s3_upload_failed", (e, content) ->
-      $scope.handleError()
+    s3Upload.init()
+    s3Upload.uploadComplete($scope.s3UploadComplete)
+    s3Upload.uploadFailed($scope.handleError)
 
   $scope.getUploadFormHtml = () ->
     success = (data) ->
