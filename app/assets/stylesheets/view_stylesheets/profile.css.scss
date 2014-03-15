@@ -36,11 +36,13 @@ a.profile-link > .profile-container:active {
   .profile-section {
     vertical-align: top;
 
-    h2 {
+    h3 {
       margin-top: 0;
-
+      
       .text-link {
         font-weight: normal;
+        text-decoration: none;
+
       }
     }
   }
@@ -94,7 +96,54 @@ a.profile-link > .profile-container:active {
   }
 
   .buddies-section {
+    margin-top: 20px;
 
+    ul {
+      list-style: none;
+      margin: 0;
+      li {
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+    }
+    .buddies-list-item {
+      height: 80px;
+      width: 360px;
+      background-color: #ECF0F1;
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: darken(#ECF0F1, 5%);
+      }
+
+      .profile-image-section {
+        // width: 25%;
+        float: left;
+        .profile-container {
+          height: 60px;
+          width: 60px;
+        }
+      }
+
+      .profile-section {
+        float: left;
+        width: 75%;
+        margin-left: 10px;
+
+        .info 
+        {
+          h3 {
+            font-size: 1.5em;
+          }
+
+          .small-info {
+            margin-top: -10px;
+          }
+        }
+      }
+
+    }
   }
 }
 

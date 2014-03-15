@@ -27,6 +27,27 @@
 
   .buddies-section{:'ng-if'=>"button == 'buddies'"}
     .buddies-list-container
+      %ul.buddies-list
+        %li.buddies-list-item{ :'ng-repeat' => 'friend in friends'}
+          .profile-image-section
+            %a{:'ng-href' => '/profile/{{friend.id}}'}
+              .profile-container.circular
+                .profile-image.circular{:'ng-style' => "{background: 'url(' + friend.user_fb_data.profile_image + ') no-repeat'}"}
+
+          .profile-section
+            .info
+              %h3.ellipsis
+                %a.text-link{:'ng-href' => '/profile/{{friend.id}}'}
+                  {{friend.name}}
+              .small-info
+                .notes-count
+                  {{friend.notes.length}} notes
+                .buddies-count
+                  {{friend.buddies.length}} buddies
+
+
+
+
   
   .settings-section{:'ng-if'=>"button == 'settings'"}
 

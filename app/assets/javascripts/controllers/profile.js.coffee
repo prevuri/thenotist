@@ -1,4 +1,4 @@
-@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, $filter, UserActivityHtml, NotesApi, UserApi) ->
+@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, $filter, UserActivityHtml, UserFriendsApi, NotesApi, UserApi) ->
 
   $scope.init = () ->
     $scope.$root.section = 'profile'
@@ -7,10 +7,12 @@
       $scope.userid = $routeParams.profileId
       @idParam = {id: $scope.userid}
     else
-      $scope.linkToProfile = false
+      $scope.userid = $scope.currentUser.id
+      @idParam = {id: $scope.userid}
     $scope.getUserData($scope.userid)
     $scope.getActivityHtml()
     $scope.updateNotes()
+    $scope.getBuddies()
 
 
   $scope.getActivityHtml = () ->
@@ -20,6 +22,13 @@
       $scope.setAlert("Error retrieving user activity", false) 
     UserActivityHtml.get(@idParam, success, error)
 
+
+  $scope.getBuddies = () ->
+    success = (data) ->
+      $scope.friends = $filter('orderBy')(data.friends, 'name') 
+    error = (data) ->
+      $scope.setAlert("Error loading friends list", false)
+    UserFriendsApi.get(@idParam, success, error)
 
   # Updates all the notes on the page
   $scope.updateNotes = () ->

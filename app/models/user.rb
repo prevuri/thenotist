@@ -80,14 +80,13 @@ class User < ActiveRecord::Base
 
       # current_friends = FbFriend.find_all_by_user_id(user.id, :select => :uid).map &:uid
       # current_users = User.find_by_uid()
-      friends.each do |friend|
-        notist_friend = User.find_by_uid(friend["id"])
-        if notist_friend != nil and !(user.buddies.include? notist_friend)
-          user.follow!(notist_friend)
-          notist_friend.follow!(user)
-        end
+      uids = friends.map { |f| f["id"] }
+      notist_friends = User.where(:uid => uids)
+      notist_friends.each do |friend|
+        user.follow!(friend) unless (user.buddies.include? friend) 
+        friend.follow!(user) unless (friend.buddies.include? user)
       end
-      user
+      return user
     end
 	end
 
