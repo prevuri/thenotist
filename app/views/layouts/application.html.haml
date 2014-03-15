@@ -4,6 +4,7 @@
     %title{:'ng-bind' => 'title == null ? "TheNotist" : "TheNotist — " + title'} TheNotist
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
+    = javascript_include_tag "googleanalytics"
     = csrf_meta_tags
     = yield(:head)
 

@@ -11,7 +11,6 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
 ActiveRecord::Schema.define(:version => 20140307181722) do
 
   create_table "activities", :force => true do |t|
@@ -25,6 +24,13 @@ ActiveRecord::Schema.define(:version => 20140307181722) do
 
   add_index "activities", ["trackable_id"], :name => "index_activities_on_trackable_id"
   add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
+
+  create_table "admin_users", :force => true do |t|
+    t.string   "name"
+    t.string   "uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -66,6 +72,16 @@ ActiveRecord::Schema.define(:version => 20140307181722) do
   end
 
   add_index "fb_friends", ["user_id"], :name => "index_fb_friends_on_user_id"
+
+  create_table "flag_reports", :force => true do |t|
+    t.integer  "note_id"
+    t.boolean  "report_resolved"
+    t.boolean  "doc_removed"
+    t.string   "description"
+    t.string   "report_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
   create_table "notes", :force => true do |t|
     t.integer  "user_id"
