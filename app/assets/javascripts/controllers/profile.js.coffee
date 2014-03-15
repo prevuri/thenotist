@@ -1,4 +1,4 @@
-@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, $filter, UserActivityHtml, UserFriendsApi, NotesApi, UserApi) ->
+@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, $filter, UserActivityHtml, UserFriendsApi, NotesApi, NotesUserApi, UserApi) ->
 
   $scope.init = () ->
     $scope.$root.section = 'profile'
@@ -6,12 +6,13 @@
     if $routeParams.profileId
       $scope.userid = $routeParams.profileId
       @idParam = {id: $scope.userid}
+      $scope.userNotes()
     else
       $scope.userid = $scope.currentUser.id
       @idParam = {id: $scope.userid}
+      $scope.updateNotes()
     $scope.getUserData($scope.userid)
     $scope.getActivityHtml()
-    $scope.updateNotes()
     $scope.getBuddies()
 
 
@@ -41,10 +42,16 @@
           note.shared = true
         if !note.processed
           $scope.notesProcessing.push note.id
-          $scope.initPolling(note.id)
     error = (data) ->
       $scope.setAlert("Error loading notes list", false)
     NotesApi.get(success, error)
+
+  $scope.userNotes = () ->
+    success = (data) ->
+      $scope.notes = $filter('orderBy')(data.notes, 'created_at', true)
+    error = (data) ->
+      $scope.setAlert("Error loading notes list", false)
+    NotesUserApi.get(@idParam, success, error)
 
   $scope.getUserData = (id) ->
     success = (data) ->
