@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
     relationships.create!(buddy_id: other_user.id)
   end
 
+  def follow_all!(other_users)
+    relationships.create!(other_users.map { |u| { :buddy_id => u.id } })
+  end
+
   def unfollow!(other_user)
     relationships.find_by_buddy_id(other_user.id).destroy
   end
@@ -74,19 +78,29 @@ class User < ActiveRecord::Base
       profile = @graph.get_object(user.uid)
       profile_image = @graph.get_picture(user.uid, {:width => 300, :height => 300})
       friends = @graph.get_connections('me','friends',:fields=>"id")
-      user.user_fb_data = UserFbData.create(uid:user.uid,
-                                profile_image:profile_image,
-                                link:profile["link"])
 
-      # current_friends = FbFriend.find_all_by_user_id(user.id, :select => :uid).map &:uid
-      # current_users = User.find_by_uid()
-      uids = friends.map { |f| f["id"] }
-      notist_friends = User.where(:uid => uids)
-      notist_friends.each do |friend|
-        user.follow!(friend) unless (user.buddies.include? friend) 
-        friend.follow!(user) unless (friend.buddies.include? user)
+      if user.user_fb_data.blank?
+        user.user_fb_data = UserFbData.create(:user_id => user.id, :uid => user.uid)
       end
+      user.user_fb_data.update_attributes(profile_image: profile_image, link: profile["link"])
+      notist_friends = User.where(:uid => friends.map { |f| f["id"] })
+
+      # user follows all friends
+      new_friends_to_follow = notist_friends.select { |f| !user.buddies.include?(f) }
+      user.follow_all!(new_friends_to_follow)
+
+      # all friends follow user
+      reverse_follows = []
+      notist_friends.each do |f|
+        unless f.buddies.include?(user)
+          reverse_follows << {:follower_id => f.id, :buddy_id => user.id}
+        end
+      end
+      Relationship.create(reverse_follows)
+
       return user
+    else
+      return nil
     end
 	end
 
