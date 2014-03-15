@@ -9,7 +9,7 @@ notistApp.filter('searchWithTags', ['$filter', (filter) ->
       filtered = []
       for note in notes
         for tag in note.tags
-          if tag.indexOf(searchString.substring(1)) != -1
+          if tag.name.indexOf(searchString.substring(1)) != -1
             filtered.push(note)
             break
       return filtered

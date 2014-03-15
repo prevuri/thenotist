@@ -35,7 +35,7 @@
     .tag{:'ng-repeat' => 'tag in note.tags', :'ng-click' => 'tagClicked(tag)'}
       .delete-tag-btn 
         %i.icon-remove
-      .tag-text {{tag}}
+      .tag-text {{tag.name}}
     .tag
       .add-tag-btn
         %i.icon-plus
