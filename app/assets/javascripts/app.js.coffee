@@ -3,7 +3,9 @@ notistApp = angular.module('notistApp', [
   'ngAnimate',
   'apiService',
   's3UploadService',
-  'infinite-scroll'
+  'infinite-scroll',
+  'angulartics',
+  'angulartics.google.analytics'
   ])
 
 notistApp.config(['$httpProvider', ($httpProvider) ->
