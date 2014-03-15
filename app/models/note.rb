@@ -78,9 +78,7 @@ class Note < ActiveRecord::Base
       :user => user.as_json,
       :processed => processed,
       :aborted => aborted,
-      :processing_started_at => processing_started_at,
       :created_at => created_at,
-      :comment_count => comment_count(),
       :tags => tags.map(&:as_json)
     }
   end
