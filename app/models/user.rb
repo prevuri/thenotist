@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :contributed_to, class_name: "Contributor", dependent: :destroy
   has_many :shared_notes, through: :contributed_to
   has_many :shared_uploaded_html_files, through: :shared_notes, source: :uploaded_html_files
-
+  has_many :tags
 
   def has_note_processing?
     self.notes.select { |n| !n.processed && !n.aborted }.count > 0

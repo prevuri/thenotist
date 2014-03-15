@@ -23,7 +23,7 @@ $shift-max-width: 1400px;
     top: 10px;
     height: 40px;
     input {
-      width: 263px;
+      width: 240px;
       border-radius: 2px;
       transition: width 0.5s ease;
 
@@ -1090,6 +1090,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   background-color: #0FB598 !important;
   position: relative;
   margin-right: -0.3em;
+  cursor: pointer;
   // min-width: 448px;
 
   &:hover {
@@ -1130,6 +1131,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   }
 
   .new-note-form-container {
+    cursor: default;
     label {
       cursor: default;
     }
@@ -1243,7 +1245,5 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         }
       }
     }
-
-
   }
 }
