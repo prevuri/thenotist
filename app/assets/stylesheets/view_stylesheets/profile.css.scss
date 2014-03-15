@@ -2,32 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$profile-image-size: 180px;
-
-.profile {
-  float:left;
-}
-
-.profile-image-section {
-  margin-top: 5px;
-}
-
-.profile-section {
-  vertical-align: top;
-
-  h2 {
-    margin-top: 0;
-
-    .text-link {
-      font-weight: normal;
-    }
-  }
-}
-
-.profile-buttons {
-  margin-top: 30px; 
-  margin-left: 30px;
-}
+$profile-image-size: 100px;
 
 .profile-container {
   width: $profile-image-size;
@@ -43,12 +18,86 @@ $profile-image-size: 180px;
     background-size: cover !important;
   } 
 
-}
+} 
 
 a.profile-link > .profile-container:active {
-  box-shadow: #444 0px 0px 4px;
-  margin-top: 1px;
-  margin-bottom: 0;
+    box-shadow: #444 0px 0px 4px;
+    margin-top: 1px;
+    margin-bottom: 0;
 }
+
+.profile {
+  float:left;
+  width: 100%;
+  .profile-image-section {
+    margin-top: 5px;
+  }
+
+  .profile-section {
+    vertical-align: top;
+
+    h2 {
+      margin-top: 0;
+
+      .text-link {
+        font-weight: normal;
+      }
+    }
+  }
+
+  .profile-buttons {
+    margin-top: 30px; 
+    margin-left: 30px;
+  }
+  
+
+  .sorting-options {
+      list-style-type: none;
+      margin-top: 20px;
+      padding-bottom: 10px;
+      width: 100%;
+      border-bottom: #ECF0F1 solid 2px;
+      // position: absolute;
+      // right: 10px;
+      // bottom: 0px;
+      ul {
+        margin: 0;
+      }
+      .btn {
+        background-color: transparent;
+        color: inherit;
+        border-radius: 2px;
+
+        &:hover {
+          background-color: #ECF0F1;
+        }
+
+        &.active {
+          background-color: #22B498;
+        }
+      }
+    }
+
+  .activities-section {
+
+  }
+
+  .notes-section {
+    margin-top: 20px;
+
+    .notes-list-item:first-child {
+      margin-right: 2px;
+    }
+    .notes-list-item:nth-child(2) {
+      margin-left: 2px;
+    }
+  }
+
+  .buddies-section {
+
+  }
+}
+
+
 
 

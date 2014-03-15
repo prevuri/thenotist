@@ -9,8 +9,7 @@
       %h2
         %a{:'ng-href' => '{{linkToProfile ? profilePath(user.id) : null}}', :'ng-class' => 'linkToProfile ? "text-link" : "no-link"'}
           {{user.name}}
-      .profile-info {{user.notes.length}} notes
-      .profile-info {{user.buddies.length}} buddies
-      .profile-info {{user.followers.length}} followers
-      .profile-buttons{:'ng-if' => 'showButtons'}
+      / .profile-info {{user.notes.length}} notes
+      / .profile-info {{user.buddies.length}} buddies
+      / .profile-buttons{:'ng-if' => 'showButtons'}
         

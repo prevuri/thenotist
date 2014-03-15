@@ -79,6 +79,12 @@ body, h1, h2, h3, h4, p {
   background: none !important;
 }
 
+.noTransition {
+    -moz-transition: none;
+    -webkit-transition: none;
+    -o-transition: color 0 ease-in;
+    transition: none;
+}
 //Button color overrides
 //
 
@@ -90,7 +96,7 @@ body, h1, h2, h3, h4, p {
   background-color: $btn-primary !important;
 
   &:hover, &:focus {
-    background-color: #FFF !important;
+    background-color: #FF322E !important;
   }
 }
 

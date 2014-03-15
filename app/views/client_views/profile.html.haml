@@ -1,5 +1,32 @@
 .profile{:'ng-controller' => 'ProfileCtrl', :'ng-init' => 'init()'}
-  %ng-include{:src => "'/client_views/user_info.html'"}
+  .profile-mast
+    %ng-include{:src => "'/client_views/user_info.html'"}
+  .profile-header
+    .sorting-options
+      %ul
+        %li.btn{:'ng-click'=> "button='activity';", :'ng-class'=>"{ 'active' : button == 'activity' }"}
+          Activity
+        %li.btn{:'ng-click'=> "button='notes';", :'ng-class'=>"{ 'active' : button == 'notes' }"}
+          Notes
+        %li.btn{:'ng-click'=> "button='buddies';", :'ng-class'=>"{ 'active' : button == 'buddies' }"}
+          Buddies
+        %li.btn{:'ng-click'=> "button='settings';", :'ng-class'=>"{ 'active' : button == 'settings' }"}
+          Settings
 
-  .activity-list-container
-    %div{:'ng-bind-html' => "activityHtml"}
+
+  .activities-section{:'ng-if'=>"button == 'activity'"}
+    .activity-list-container
+      %div{:'ng-bind-html' => "activityHtml"}
+
+  .notes-section{:'ng-if'=>"button == 'notes'"}
+    .notes-list-container
+      .notes-list
+        .notes-list-item{ :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
+          %ng-include{:src => "'/client_views/grid_item.html'"}
+
+
+  .buddies-section{:'ng-if'=>"button == 'buddies'"}
+    .buddies-list-container
+  
+  .settings-section{:'ng-if'=>"button == 'settings'"}
+
