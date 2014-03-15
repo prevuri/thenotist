@@ -80,7 +80,7 @@ notistApp.directive('ngSpinner', () ->
       if value
         $timeout( () ->
           $(el).focus()
-        , 10)
+        , 50)
     scope.$watch(attrs.textareaAutofocus, setFocus, true)
 )
 
@@ -156,6 +156,25 @@ notistApp.directive('ngSpinner', () ->
       if e.which == 13
         scope.$eval(attrs.ngEnter)
         e.preventDefault()
+    )
+)
+
+.directive('escape', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 27
+        scope.$eval(attrs.escape)
+        e.preventDefault()
+    )
+)
+
+.directive('backspace', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 8
+        scope.$eval(attrs.backspace)
+        # Propagate key press so it still deletes a character
+        return true
     )
 )
 

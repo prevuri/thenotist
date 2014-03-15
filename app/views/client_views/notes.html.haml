@@ -2,7 +2,7 @@
   .notes-header
     %h1 Notes
     .search-box.form-group
-      %input.form-control{:type => 'text', :'ng-model' => 'searchText', :'ng-change' => 'checkTags()', :'ng-class' => 'searchText[0] == "#" ? "tag" : ""', :'textarea-autofocus' => 'searchText'}
+      %input.form-control{:type => 'text', :'ng-model' => 'searchText', :'ng-change' => 'checkTags()', :'ng-class' => 'searchText[0] == "#" ? "tag" : ""', :'textarea-autofocus' => 'searchText', :'backspace' => 'searchClickedTag && (searchText = null)'}
       %span.input-icon.icon-search
     .sorting-options
       %ul

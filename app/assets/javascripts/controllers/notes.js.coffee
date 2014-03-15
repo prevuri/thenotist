@@ -119,3 +119,28 @@
     if $scope.searchText && $scope.searchText.indexOf('#') != -1
       $scope.searchText = '#' + $scope.searchText.replace(/#/g,'')
     $scope.searchClickedTag = false
+
+  $scope.addButtonClicked = (event) ->
+    if this.addingTag
+      this.addNewTag(this.note, this.addTagText)
+      event.stopPropagation()
+
+  $scope.deselectedAddField = () ->
+    if !this.mouseOnAdd
+      this.addingTag = false
+      this.addTagText = null
+
+  $scope.addNewTag = (note, tagText) ->
+    if this.addingTag
+      newTag = {name: tagText}
+      note.tags.push newTag
+      $scope.saveTags(note)
+      this.addingTag = false
+      this.addTagText = null
+
+  $scope.deleteTag = (note, deletedTag) ->
+    note.tags = (tag for tag in note.tags when tag.name != deletedTag.name)
+    $scope.saveTags(note)
+
+  $scope.saveTags = (note) ->
+    TagsApi.save({id: note.id}, {tags: note.tags})
