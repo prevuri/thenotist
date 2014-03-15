@@ -28,7 +28,15 @@
           note.shared = false
         else
           note.shared = true
-
+        note.tags = []
+        if Math.random() > 0.7
+          note.tags.push 'cs458'
+        if Math.random() > 0.8
+          note.tags.push 'assignments'
+        if Math.random() > 0.7
+          note.tags.push 'midterms'
+        if Math.random() > 0.8
+          note.tags.push 'econ'
         if !note.processed
           $scope.notesProcessing.push note.id
           $scope.initPolling(note.id)
@@ -110,3 +118,12 @@
   # Initiates polling for the processing note
   $scope.initPolling = (noteId) ->
     $scope.promises[noteId] = window.setInterval(@checkNoteStatus, 5000, noteId)
+
+  $scope.tagClicked = (tag) ->
+    $scope.searchText = "#" + tag
+    $scope.searchClickedTag = true
+
+  $scope.checkTags = () ->
+    if $scope.searchText && $scope.searchText.indexOf('#') != -1
+      $scope.searchText = '#' + $scope.searchText.replace(/#/g,'')
+    $scope.searchClickedTag = false

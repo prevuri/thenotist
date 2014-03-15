@@ -30,8 +30,16 @@
     %h3{:'ng-if' => 'note.processed'}
       .text-link
         {{note.title}}
-    %h4.description{:'ng-if' => 'note.processed'}
-      {{note.description}}
+
+  .tags{:'ng-if' => 'note.processed'}
+    .tag{:'ng-repeat' => 'tag in note.tags', :'ng-click' => 'tagClicked(tag)'}
+      .delete-tag-btn 
+        %i.icon-remove
+      .tag-text {{tag}}
+    .tag
+      .add-tag-btn
+        %i.icon-plus
+      .add-text{:'ng-if' => 'note.tags.length == 0'} add tag
 
   .btn-group.appear-hover{:'ng-if' => 'noteDeleteClicked != note.id'}
     %div

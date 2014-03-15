@@ -2,7 +2,7 @@
   .notes-header
     %h1 Notes
     .search-box.form-group
-      %input.form-control{:type => 'text', :'ng-model' => 'searchText'}
+      %input.form-control{:type => 'text', :'ng-model' => 'searchText', :'ng-change' => 'checkTags()', :'ng-class' => 'searchText[0] == "#" ? "tag" : ""', :'textarea-autofocus' => 'searchText'}
       %span.input-icon.icon-search
     .sorting-options
       %ul
@@ -20,7 +20,7 @@
       .notes-list
         .notes-list-item.upload-form
           %ng-include{:src => "'/client_views/upload_form.html'"}
-        .notes-list-item{ :'ng-repeat' => 'note in notes | filter:searchText | filter:setFilter | orderBy:predicate:reverse', :'ng-mouseover' => 'note.tooltipHidden = true' }
+        .notes-list-item{ :'ng-repeat' => 'note in notes | searchWithTags:searchText | filter:setFilter | orderBy:predicate:reverse', :'ng-mouseover' => 'note.tooltipHidden = true' }
           %ng-include{:src => "'/client_views/grid_item.html'"}
         .notes-list-item{ :'ng-repeat' => 'note in sharedNotes' }
           %ng-include{:src => "'/client_views/grid_item.html'"}
