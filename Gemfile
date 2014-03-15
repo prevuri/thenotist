@@ -12,6 +12,7 @@ gem 'haml-rails'
 gem 'pg'
 gem 's3_direct_upload'
 gem 'fast-stemmer'
+gem 'meta-tags', :require => 'meta_tags'
 
 # Gems used only for assets and not required
 # in production environments by default.
