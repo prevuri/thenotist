@@ -14,6 +14,7 @@ class Note < ActiveRecord::Base
   has_many :uploaded_thumb_files, dependent: :destroy, :order => 'page_number ASC'
 
   has_many :comments, :through => :uploaded_html_files
+  has_many :tags
 
   # want to assume that we are processing a file right away
   before_create :start_processing!
@@ -70,16 +71,17 @@ class Note < ActiveRecord::Base
       :id => id,
       :title => title,
       :description => description,
-      :contributing_users => contributing_users.map { |u| u.as_json },
-      :uploaded_html_files => uploaded_html_files.map { |f| f.as_json },
-      :uploaded_css_files => uploaded_css_files.map { |f| f.as_json },
-      :uploaded_thumb_files => uploaded_thumb_files.map { |f| f.as_json },
+      :contributing_users => contributing_users.map(&:as_json),
+      :uploaded_html_files => uploaded_html_files.map(&:as_json),
+      :uploaded_css_files => uploaded_css_files.map(&:as_json),
+      :uploaded_thumb_files => uploaded_thumb_files.map(&:as_json),
       :user => user.as_json,
       :processed => processed,
       :aborted => aborted,
       :processing_started_at => processing_started_at,
       :created_at => created_at,
-      :comment_count => comment_count()
+      :comment_count => comment_count(),
+      :tags => tags.map(&:as_json)
     }
   end
 

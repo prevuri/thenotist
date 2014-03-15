@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :contributed_to, class_name: "Contributor", dependent: :destroy
   has_many :shared_notes, through: :contributed_to
   has_many :shared_uploaded_html_files, through: :shared_notes, source: :uploaded_html_files
-
+  has_many :tags
 
   def has_note_processing?
     self.notes.select { |n| !n.processed && !n.aborted }.count > 0
@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
       @graph = Koala::Facebook::API.new(user.fb_access_token)
       profile = @graph.get_object(user.uid)
       profile_image = @graph.get_picture(user.uid, {:width => 300, :height => 300})
-      friends = @graph.get_connections('me','friends',:fields=>"id, name, picture.width(100).height(100)")
+      friends = @graph.get_connections('me','friends',:fields=>"id")
       user.user_fb_data = UserFbData.create(uid:user.uid,
                                 profile_image:profile_image,
                                 link:profile["link"])
