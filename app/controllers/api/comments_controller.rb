@@ -28,7 +28,6 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
-    debugger
     @file = current_user.uploaded_html_files.find_by_id(@uploaded_html_file_id) # does not throw an exception if nothing found
     @file = current_user.shared_uploaded_html_files.find_by_id(@uploaded_html_file_id) unless @file
     if @file.blank?
