@@ -1183,6 +1183,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   background-color: #0FB598 !important;
   position: relative;
   margin-right: -0.3em;
+  cursor: pointer;
   // min-width: 448px;
 
   &:hover {
@@ -1223,6 +1224,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   }
 
   .new-note-form-container {
+    cursor: default;
     label {
       cursor: default;
     }
@@ -1336,7 +1338,5 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         }
       }
     }
-
-
   }
 }

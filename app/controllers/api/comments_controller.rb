@@ -28,6 +28,7 @@ class Api::CommentsController < ApplicationController
   end
 
   def create
+    debugger
     @file = current_user.uploaded_html_files.find_by_id(@uploaded_html_file_id) # does not throw an exception if nothing found
     @file = current_user.shared_uploaded_html_files.find_by_id(@uploaded_html_file_id) unless @file
     if @file.blank?
@@ -44,13 +45,12 @@ class Api::CommentsController < ApplicationController
         :uploaded_html_file => @file,
         :text => params[:comment][:text],
         :line_id => params[:comment][:line_id],
-        :parent_comment => parent_comment,
-        :note => @file.note
+        :parent_comment => parent_comment
       })
 
       # track the comment activity
       track_activity @comment
-    rescue
+    rescue => ex
       return render :json => {
         :success => false,
         :error => comment_create_error
