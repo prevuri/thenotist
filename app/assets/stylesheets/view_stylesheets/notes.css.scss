@@ -855,11 +855,8 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         }
 
         .img-preview {
-          vertical-align: top;
-          height: 100%;//275px;
+          height: 100%;
           width: 100%;
-          background-position: 30% 30%;
-          // background-position:top;
           background-repeat: no-repeat;
           background-size: cover;
           overflow: hidden;

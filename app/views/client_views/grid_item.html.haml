@@ -1,17 +1,17 @@
 .note-item{:'ng-init' => 'itemIndex = $index'}
   %a.big-link{:'ng-if' => 'note.processed && noteDeleteClicked != note.id',:'ng-href' => '/notes/{{note.id}}'}
-  .img-preview{:'ng-if' => 'note.processed', :style => 'background: url({{note.uploaded_thumb_files[0].public_path}}) no-repeat 50% 10%'}
+  .img-preview{:'ng-if' => 'note.processed', :style => 'background-image: url({{note.uploaded_thumb_files[0].public_path}})'}
 
   .delete-confirmation{:'ng-if' => 'noteDeleteClicked == note.id'}
     %h3
       Delete this note?
     %a.btn.cancel{:'ng-click' => 'cancelDelete()'}
-      Cancel  
+      Cancel
     %a.btn.delete{:'ng-if' => 'note.shared', :'ng-click' => 'unsubscribeNote()'}
       Delete
     %a.btn.delete{:'ng-if' => '!note.shared', :'ng-click' => 'deleteNote()'}
       Delete
-        
+
 
   .process-spinner{:'ng-if' => '!note.processed && !note.aborted && noteDeleteClicked != note.id'}
     %i.icon-refresh.icon-white.icon-spin
