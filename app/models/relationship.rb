@@ -1,5 +1,5 @@
 class Relationship < ActiveRecord::Base
-  attr_accessible :blocked, :buddy_id
+  attr_accessible :blocked, :buddy_id, :follower_id
   belongs_to :follower, :class_name => "User"
   belongs_to :buddy, :class_name => "User"
 
