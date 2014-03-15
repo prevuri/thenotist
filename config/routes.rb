@@ -43,6 +43,10 @@ TheNotist::Application.routes.draw do
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
     match 'notes/paginate/:id' => 'notes#paginate', :as => :note_paginate, :via => :get
     match 'search/notes' => 'search#search_notes', :as => :search_notes, :via => :get
+
+    match 'tags/:note_id' => 'tags#show', :as => :tags_show, :via => :get
+    match 'tags/:note_id' => 'tags#update', :as => :tags_update, :via => :post
+
   end
 
   match "/*path" => redirect("/?goto=%{path}")
