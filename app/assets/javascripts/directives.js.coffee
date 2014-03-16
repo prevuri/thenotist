@@ -158,7 +158,7 @@ notistApp.directive('ngSpinner', () ->
 .directive('ngEnter', () ->
   link: (scope, el, attrs) ->
     $('body').bind('keydown keypress', (e) ->
-      if e.which == 13
+      if e.which == 13 && !e.shiftKey
         scope.$eval(attrs.ngEnter)
         e.preventDefault()
     )
@@ -187,7 +187,7 @@ notistApp.directive('ngSpinner', () ->
   link: (scope, el, attrs) ->
     canPress = true
     $('body').bind('keydown keypress', (e) ->
-      if e.which == 37 && canPress
+      if e.which == 37 && canPress && document.activeElement.tagName != 'TEXTAREA'
         scope.$eval(attrs.leftArrow)
         e.preventDefault()
         canPress = false
@@ -205,7 +205,7 @@ notistApp.directive('ngSpinner', () ->
   link: (scope,element,attrs) ->
     canPress = true
     $('body').bind('keydown keypress', (e) ->
-      if e.which == 39 && canPress
+      if e.which == 39 && canPress && document.activeElement.tagName != 'TEXTAREA'
         scope.$eval(attrs.rightArrow)
         e.preventDefault()
         canPress = false

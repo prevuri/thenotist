@@ -163,6 +163,8 @@
     $scope.submitComment($scope.replyText[parentComment.id], fileId, parentComment.id, fileIndex)
 
   $scope.submitComment = (text, fileId, parentId, fileIndex) ->
+    if text.replace(/[ ]/).length == 0
+      return
     if !$scope.submitting
       data = {
         comment: {
