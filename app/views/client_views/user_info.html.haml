@@ -1,8 +1,7 @@
 %ul.inline
   %li.profile-image-section
-    %a{:'ng-href' => '{{linkToProfile ? profilePath(user.id) : null}}', :'ng-class' => 'linkToProfile ? "profile-link" : "no-link"'}
-      .profile-container.circular
-        .profile-image.circular{:'ng-style' => "{background: 'url(' + user.user_fb_data.profile_image + ') no-repeat'}"}
+    .profile-container.circular
+      .profile-image.circular{:'ng-style' => "{background: 'url(' + user.user_fb_data.profile_image + ') no-repeat'}"}
 
   %li.profile-section
     .info

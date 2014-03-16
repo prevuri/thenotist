@@ -90,6 +90,7 @@ class Note < ActiveRecord::Base
       :contributing_users => contributing_users.map { |u| u.as_json },
       :user => user.as_json,
       :created_at => created_at,
+      :processed => processed,
       :comment_count => comment_count()
     }
   end
@@ -101,6 +102,6 @@ private
   end
 
   def comment_count
-    self.comments.length
+    self.comments.count
   end
 end

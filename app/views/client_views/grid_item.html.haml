@@ -30,8 +30,6 @@
     %h3{:'ng-if' => 'note.processed'}
       .text-link
         {{note.title}}
-    %h4.description{:'ng-if' => 'note.processed'}
-      {{note.description}}
 
   .btn-group.appear-hover{:'ng-if' => 'noteDeleteClicked != note.id'}
     %div
@@ -52,10 +50,10 @@
         .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
           %i.icon-share
           
-  %div{:'ng-if' => '!note.shared'}
-    .tooltip.fade.bottom.in.hidden{:'ng-if' => '!note.tooltipHidden'}
-      .tooltip-arrow
-      .ui-widget.tooltip-inner
-        %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+  / %div{:'ng-if' => '!note.shared'}
+  /   .tooltip.fade.bottom.in.hidden{:'ng-if' => '!note.tooltipHidden'}
+  /     .tooltip-arrow
+  /     .ui-widget.tooltip-inner
+  /       %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
 
 / %img{:src => "#{note.uploaded_files.first.public_path}"}

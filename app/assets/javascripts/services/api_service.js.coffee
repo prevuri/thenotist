@@ -12,7 +12,7 @@ service.factory("NotesApi", ($resource) ->
   )
 ).factory("NotesUserApi", ($resource) ->
   $resource(
-    "/api/usernotes/:id", {},
+    "/api/notes/usernotes/:id", {},
   )
 ).factory("NotesShareApi", ($resource) ->
     $resource(
