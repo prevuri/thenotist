@@ -4,4 +4,9 @@
 # User-Agent: *
 # Disallow: /
 
+User-agent: *
+Disallow: /notes/
+Disallow: /note/
+Disallow: /profile/
+
 Sitemap: http://www.notist.co/sitemap.xml.gz
