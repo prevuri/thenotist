@@ -1,6 +1,6 @@
 #notes-main{ :'ng-controller' => 'NotesCtrl', :'ng-init' => 'init()' }
   .notes-header
-    %h1 Notes
+    %h1 My Library
     .search-box.form-group
       %input.form-control{:type => 'text', :'ng-model' => 'searchText', :'ng-change' => 'checkTags()', :'ng-class' => 'searchText[0] == "#" ? "tag" : ""', :'textarea-autofocus' => 'searchText', :'backspace' => 'searchBackspacePressed()', "analytics-on" => "click", "analytics-event" => "Search Notes"}
       %span.input-icon.icon-search

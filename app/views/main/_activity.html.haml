@@ -8,19 +8,20 @@
     - present = true
 
   - if present
-    .activity-item
-      = link_to profile_path(activity.user) do
-        .profile-container.circular
-          %img.profile-image.circular#activity-image{:style => "background:url(#{activity.user.user_fb_data.profile_image}) no-repeat"}
-      .act.tooltip.fade.right.in
-        .tooltip-arrow
-        .tooltip-inner
-          .activity-type
-            %div{:class => "#{activity.trackable.class.name.downcase}-type" }
-              - if activity.trackable_type == "Relationship"
-                USER
-              - elsif activity.trackable_type == "Contributor"
-                NOTE
-              - else
-                = activity.trackable.class.name.upcase
-          = ActivityPresenter.new(activity, self).render_activity
+    .activity-item-border
+      .activity-item
+        = link_to profile_path(activity.user) do
+          .profile-halo-container
+            .profile-container.circular
+              %img.profile-image.circular#activity-image{:style => "background:url(#{activity.user.user_fb_data.profile_image}) no-repeat"}
+        .act.tooltip.fade.right.in
+          .tooltip-inner
+            .activity-type
+              %div{:class => "#{activity.trackable.class.name.downcase}-type" }
+                - if activity.trackable_type == "Relationship"
+                  USER
+                - elsif activity.trackable_type == "Contributor"
+                  NOTE
+                - else
+                  = activity.trackable.class.name.upcase
+            = ActivityPresenter.new(activity, self).render_activity
