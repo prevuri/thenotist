@@ -59,13 +59,11 @@
             {{note.contributing_users.length}}
         .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
           %i.icon-share
-    .tiny-info
-      %i.icon-comments {{note.comment_count}}
-
-  %div{:'ng-if' => '!note.shared'}
-    .tooltip.fade.bottom.in.hidden{:'ng-if' => '!note.tooltipHidden'}
-      .tooltip-arrow
-      .ui-widget.tooltip-inner
-        %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+          
+  / %div{:'ng-if' => '!note.shared'}
+  /   .tooltip.fade.bottom.in.hidden{:'ng-if' => '!note.tooltipHidden'}
+  /     .tooltip-arrow
+  /     .ui-widget.tooltip-inner
+  /       %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
 
 / %img{:src => "#{note.uploaded_files.first.public_path}"}

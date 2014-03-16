@@ -10,6 +10,10 @@ service.factory("NotesApi", ($resource) ->
       method: 'PUT'
     }
   )
+).factory("NotesUserApi", ($resource) ->
+  $resource(
+    "/api/notes/usernotes/:id", {},
+  )
 ).factory("NotesShareApi", ($resource) ->
     $resource(
       "/api/notes/share", {},

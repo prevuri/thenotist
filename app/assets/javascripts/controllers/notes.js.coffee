@@ -1,10 +1,11 @@
-@NotesCtrl = ($scope, $http, $sce, $interval, $filter, NotesApi, TagsApi, NotesUnsubscribeApi) ->
+@NotesCtrl = ($scope, $http, $sce, $interval, $filter, NotesApi, TagsApi, NotesUserApi, NotesUnsubscribeApi) ->
 
   # Variable to check for polling and notes that are processing.
   $scope.notesProcessing = Array()
   $scope.isNoteProcessed = {}
   $scope.promises = {}
   $scope.notes = Array()
+  $scope.callingController = "Notes"
 
   $scope.noteDeleteClicked = -1
   $scope.noteDeleteIndex = -1
@@ -12,15 +13,24 @@
   $scope.tagMaxCharacters = 15
 
   # Init
-  $scope.init = () ->
+  $scope.init = (ctrl, profile, params) ->
     console.log '[Angular] NotesCtrl being initialized'
-    $scope.$root.title = 'Notes'
-    $scope.$root.section = 'notes'
-    $scope.button = 'date'
-    $scope.reverse = true
-    $scope.updateNotes()
+    if ctrl == "Profile"
+      $scope.callingController = "Profile"
+      # $scope.currentUserProfile = profile
+      # $scope.idParam = param
+    else
+      $scope.currentUserProfile = true
+      $scope.$root.title = 'Notes'
+      $scope.$root.section = 'notes'
+      $scope.button = 'date'
+      $scope.reverse = true
+    if $scope.currentUserProfile
+      $scope.updateNotes()
+    else
+      $scope.userNotes()
     # $scope.colorize()
-
+    
   # Updates all the notes on the page
   $scope.updateNotes = () ->
     success = (data) ->
@@ -38,6 +48,27 @@
       $scope.setAlert("Error loading notes list", false)
     NotesApi.get(success, error)
 
+
+  $scope.userNotes = () ->
+    success = (data) ->
+      $scope.notes = $filter('orderBy')(data.notes, 'created_at', true)
+
+      for note in $scope.notes
+        contributingIds = []
+        for contrib in note.contributing_users
+          contributingIds.push(contrib.id)
+        if $scope.currentUser.id in contributingIds
+          note.hasAccess = true
+          note.shared = true
+        else if note.user.id == $scope.currentUser.id
+          note.hasAccess = true
+          note.shared = false
+        else
+          note.hasAccess = false
+    error = (data) ->
+      $scope.setAlert("Error loading notes list", false)
+    NotesUserApi.get($scope.idParam, success, error)
+
   # Computes Reversing
   $scope.setReverse = (name) ->
     if $scope.button == name
@@ -49,8 +80,15 @@
 
   # Sets the current note being shared for the sharing modal
   $scope.setSharedNote = (note) ->
-    $scope.sharedNote = note
-    $scope.$broadcast('shareInit')
+    if $scope.callingController == "Profile"
+      $scope.$root.$broadcast('shareInit')
+      $scope.$root.sharedNote = note
+
+    else
+      $scope.$broadcast('shareInit')
+      $scope.sharedNote = note
+
+
 
   # Deletes a user note
   $scope.deleteNote = () ->

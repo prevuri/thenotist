@@ -64,24 +64,9 @@ $shift-max-width: 1400px;
     }
   }
   .sorting-options {
-    list-style-type: none;
     position: absolute;
     right: 10px;
     bottom: 0px;
-
-    .btn {
-      background-color: transparent;
-      color: inherit;
-      border-radius: 2px;
-
-      &:hover {
-        background-color: #ECF0F1;
-      }
-
-      &.active {
-        background-color: #22B498;
-      }
-    }
   }
 }
 
@@ -766,29 +751,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
               }
             }
           }
-
-          .info {
-            font-size: 1em;
-            margin-left: 20px;
-            color: #a0a0a0;
-            clear: both;
-            width: 350px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-family: Gill Sans / Gill Sans MT, sans-serif;
-            font-weight: normal;
-          }
-
-          .tiny-info {
-            float: right;
-            font-size: 1.2em;
-            margin-right: 10px;
-            margin-top: 15px;
-            color: #fff;
-            text-align: right;
-            z-index: 103;
-          }
         }
 
         .text-link {
@@ -1072,7 +1034,8 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           width: 100%;
           height: 100%;
           z-index: 102;
-
+          background-color: #5E5D65;
+          
           &.color0 {
             background-color: rgba(160, 65, 54, 0.7);
           }
