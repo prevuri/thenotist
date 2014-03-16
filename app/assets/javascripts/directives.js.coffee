@@ -213,3 +213,15 @@ notistApp.directive('ngSpinner', () ->
         canPress = true
     )
 )
+
+.directive('addTagError', ($timeout) ->
+  link: (scope, el, attrs) ->
+    setErrorClass = () ->
+      if scope.addTagError
+        $(el).addClass('error')
+        scope.addTagError = false
+        $timeout( ->
+          $(el).removeClass('error')
+        , 100)
+    scope.$watch('addTagError', setErrorClass)
+)

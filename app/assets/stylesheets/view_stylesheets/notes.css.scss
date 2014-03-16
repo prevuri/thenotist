@@ -960,6 +960,11 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 
           &.add-tag {
             margin-right: 0;
+
+            &.error {
+              box-shadow: 0px 0px 5px #f00;
+              -webkit-transition: none;
+            }
           }
 
           &.add-tag.collapsed {

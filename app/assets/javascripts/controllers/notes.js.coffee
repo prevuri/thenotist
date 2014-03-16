@@ -9,6 +9,8 @@
   $scope.noteDeleteClicked = -1
   $scope.noteDeleteIndex = -1
 
+  $scope.tagMaxCharacters = 20
+
   # Init
   $scope.init = () ->
     console.log '[Angular] NotesCtrl being initialized'
@@ -115,6 +117,11 @@
     $scope.searchText = "#" + tag.name
     $scope.searchClickedTag = true
 
+  $scope.searchBackspacePressed = () ->
+    if $scope.searchClickedTag
+      $scope.searchText = null
+      $scope.$apply()
+
   $scope.checkTags = () ->
     if $scope.searchText && $scope.searchText.indexOf('#') != -1
       $scope.searchText = '#' + $scope.searchText.replace(/#/g,'')
@@ -129,6 +136,14 @@
     if !this.mouseOnAdd
       this.addingTag = false
       this.addTagText = null
+
+  $scope.addTagTextChanged = () ->
+    if this.addTagText.search(/\W|_/) != -1
+      this.addTagText = this.addTagText.replace(/\W|_/g,'')
+      this.addTagError = true
+    if this.addTagText.length > $scope.tagMaxCharacters
+      this.addTagText = this.addTagText.substring(0, $scope.tagMaxCharacters)
+      this.addTagError = true
 
   $scope.addNewTag = (note, tagText) ->
     if this.addingTag
