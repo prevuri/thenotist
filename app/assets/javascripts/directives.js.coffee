@@ -168,6 +168,15 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('uploadFormEnter', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 13 && !e.shiftKey && $('.new-note-form-container').attr('aria-hidden') == 'false'
+        scope.$eval(attrs.uploadFormEnter)
+        e.preventDefault()
+    )
+)
+
 .directive('escape', () ->
   link: (scope, el, attrs) ->
     $('body').bind('keydown keypress', (e) ->
