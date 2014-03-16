@@ -6,8 +6,11 @@ TheNotist::Application.routes.draw do
 
   get "main/index"
 
-  root :to => 'main#index'
+  get "/about", to: "about#index"
+  # root to: "about#index"
+  # get "about/index"
 
+  root :to => 'main#index'
 
   devise_for :users, :controllers => {
     :omniauth_callbacks => "users/omniauth_callbacks"
@@ -39,6 +42,7 @@ TheNotist::Application.routes.draw do
     resources :notes, :only => [ :index, :show, :update, :destroy, :create ]
     match 'notes/share/' => 'notes#share', :as => :share_note
     match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
+    match 'notes/usernotes/:id/' => 'notes#usernotes', :as => :note_usernotes
     match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
     match 'notes/paginate/:id' => 'notes#paginate', :as => :note_paginate, :via => :get

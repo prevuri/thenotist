@@ -1,18 +1,18 @@
 #notes-main{ :'ng-controller' => 'NotesCtrl', :'ng-init' => 'init()' }
   .notes-header
-    %h1 Notes
+    %h1 My Library
     .search-box.form-group
-      %input.form-control{:type => 'text', :'ng-model' => 'searchText'}
+      %input.form-control{:type => 'text', :'ng-model' => 'searchText', :'ng-change' => 'checkTags()', :'ng-class' => 'searchText[0] == "#" ? "tag" : ""', :'textarea-autofocus' => 'searchText', :'backspace' => 'searchBackspacePressed()', "analytics-on" => "click", "analytics-event" => "Search Notes"}
       %span.input-icon.icon-search
     .sorting-options
       %ul
-        %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='created_at'; button='date'; reverse=setReverse('date')", :'ng-class'=>"{ 'active' : button == 'date' }"}
+        %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='created_at'; button='date'; reverse=setReverse('date')", :'ng-class'=>"{ 'active' : button == 'date' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Date" }
           Date
-        %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='title'; button='name'; reverse=setReverse('name')", :'ng-class'=>"{ 'active' : button == 'name' }"}
+        %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='title'; button='name'; reverse=setReverse('name')", :'ng-class'=>"{ 'active' : button == 'name' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Name"}
           Name
-        %li.btn{:'ng-click'=> "setFilter = {shared: false}; button='uploaded'", :'ng-class'=>"{ 'active' : button == 'uploaded' }"}
+        %li.btn{:'ng-click'=> "setFilter = {shared: false}; button='uploaded'", :'ng-class'=>"{ 'active' : button == 'uploaded' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Uploaded"}
           Uploaded
-        %li.btn{:'ng-click'=> "setFilter = {shared: true}; button='shared'", :'ng-class'=>"{ 'active' : button == 'shared' }"}
+        %li.btn{:'ng-click'=> "setFilter = {shared: true}; button='shared'", :'ng-class'=>"{ 'active' : button == 'shared' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Shared"}
           Shared
 
   .notes-index-page
@@ -20,7 +20,7 @@
       .notes-list
         .notes-list-item.upload-form
           %ng-include{:src => "'/client_views/upload_form.html'"}
-        .notes-list-item{ :'ng-repeat' => 'note in notes | filter:searchText | filter:setFilter | orderBy:predicate:reverse', :'ng-mouseover' => 'note.tooltipHidden = true' }
+        .notes-list-item{ :'ng-repeat' => 'note in notes | searchWithTags:searchText | filter:setFilter | orderBy:predicate:reverse', :'ng-mouseover' => 'note.tooltipHidden = true' }
           %ng-include{:src => "'/client_views/grid_item.html'"}
         .notes-list-item{ :'ng-repeat' => 'note in sharedNotes' }
           %ng-include{:src => "'/client_views/grid_item.html'"}

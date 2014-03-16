@@ -11,9 +11,9 @@
       %li
         %a.btn.btn-large.btn-block{:href => '/notes', :'ng-class' => "{active: section == 'notes'}"}
           %i.icon-file.icon-2x
-          .text Notes
+          .text Library
     .nav.nav-list-bottom
-      %li
+      %li{"analytics-on" => "click", "analytics-event" => "Logout"}
         - if current_user
           = link_to destroy_user_session_path, :method=>'delete', :class => 'btn btn-large btn-block' do
             %i.icon-signout.icon-2x

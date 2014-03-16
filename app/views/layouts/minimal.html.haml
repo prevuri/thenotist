@@ -2,6 +2,9 @@
 %html
   %head
     %title TheNotist
+    %link{:rel=>"shortcut icon", :href=>"http://localhost:3000/favicon.ico", :type=>"image/x-icon"}/
+    %link{:rel=>"icon", :href=>"http://localhost:3000/favicon.ico", :type=>"image/x-icon"}/
+    = display_meta_tags
     = stylesheet_link_tag "application", :media => "all"
     / = stylesheet_link_tag "overrides/minimal", :media => "all"
     = javascript_include_tag "application"

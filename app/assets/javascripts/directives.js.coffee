@@ -56,6 +56,11 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('loaded', () ->
+  link: (scope, el, attrs) ->
+    scope.$root.loading = false
+)
+
 .directive('textareaAutoheight', () ->
   link: (scope, el, attrs) ->
     setHeight = () ->
@@ -80,7 +85,11 @@ notistApp.directive('ngSpinner', () ->
       if value
         $timeout( () ->
           $(el).focus()
-        , 10)
+        , 50)
+        # Safari hack; won't focus until animation complete
+        $timeout( () ->
+          $(el).focus()
+        , 300)
     scope.$watch(attrs.textareaAutofocus, setFocus, true)
 )
 
@@ -153,9 +162,37 @@ notistApp.directive('ngSpinner', () ->
 .directive('ngEnter', () ->
   link: (scope, el, attrs) ->
     $('body').bind('keydown keypress', (e) ->
-      if e.which == 13
+      if e.which == 13 && !e.shiftKey
         scope.$eval(attrs.ngEnter)
         e.preventDefault()
+    )
+)
+
+.directive('uploadFormEnter', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 13 && !e.shiftKey && $('.new-note-form-container').attr('aria-hidden') == 'false'
+        scope.$eval(attrs.uploadFormEnter)
+        e.preventDefault()
+    )
+)
+
+.directive('escape', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 27
+        scope.$eval(attrs.escape)
+        e.preventDefault()
+    )
+)
+
+.directive('backspace', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 8
+        scope.$eval(attrs.backspace)
+        # Propagate key press so it still deletes a character
+        return true
     )
 )
 
@@ -163,7 +200,7 @@ notistApp.directive('ngSpinner', () ->
   link: (scope, el, attrs) ->
     canPress = true
     $('body').bind('keydown keypress', (e) ->
-      if e.which == 37 && canPress
+      if e.which == 37 && canPress && document.activeElement.tagName != 'TEXTAREA'
         scope.$eval(attrs.leftArrow)
         e.preventDefault()
         canPress = false
@@ -181,7 +218,7 @@ notistApp.directive('ngSpinner', () ->
   link: (scope,element,attrs) ->
     canPress = true
     $('body').bind('keydown keypress', (e) ->
-      if e.which == 39 && canPress
+      if e.which == 39 && canPress && document.activeElement.tagName != 'TEXTAREA'
         scope.$eval(attrs.rightArrow)
         e.preventDefault()
         canPress = false
@@ -193,4 +230,16 @@ notistApp.directive('ngSpinner', () ->
       if e.which == 39 && !canPress
         canPress = true
     )
+)
+
+.directive('addTagError', ($timeout) ->
+  link: (scope, el, attrs) ->
+    setErrorClass = () ->
+      if scope.addTagError
+        $(el).addClass('error')
+        scope.addTagError = false
+        $timeout( ->
+          $(el).removeClass('error')
+        , 100)
+    scope.$watch('addTagError', setErrorClass)
 )

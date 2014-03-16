@@ -4,8 +4,10 @@
     %link{:rel=>"shortcut icon", :href=>"http://localhost:3000/favicon.ico", :type=>"image/x-icon"}/
     %link{:rel=>"icon", :href=>"http://localhost:3000/favicon.ico", :type=>"image/x-icon"}/
     %title{:'ng-bind' => 'title == null ? "TheNotist" : "TheNotist — " + title'} TheNotist
+    = display_meta_tags
     = stylesheet_link_tag "application", :media => "all"
     = javascript_include_tag "application"
+    = javascript_include_tag "googleanalytics"
     = csrf_meta_tags
     = yield(:head)
 
@@ -19,6 +21,9 @@
           .alert{:'ng-show' => 'alert.show', :'ng-class' => "alert.success ? 'alert-success' : 'alert-error'"}
             %a.close{:'ng-click' => 'alert.show = false'} ×
             %div {{alert.text}}
+          .loading-overlay{:'ng-show' => 'loading'}
+            %i.icon-spinner.icon-spin
+            %div Loading...
           %div{:'ng-view' => true}
             = yield
       %footer
