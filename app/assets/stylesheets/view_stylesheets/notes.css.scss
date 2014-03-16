@@ -266,10 +266,6 @@ $shift-max-width: 1400px;
     }
   }
 
-  .note-description {
-    font-size: 2em;
-  }
-
   .note-pages {
     .page-contents {
       white-space: nowrap;
@@ -944,8 +940,8 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             margin-right: 106px;
             width: 14px;
             &.with-text {
-              margin-right: 54px;
-              width: 66px;
+              margin-right: 52px;
+              width: 68px;
             }
             .add-tag-field {
               width: 0;
@@ -970,7 +966,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             float: right;
             margin-top: 0.5px;
             margin-left: 2px;
-            margin-right: 3px;
+            margin-right: 2px;
             font-size: 11px;
             line-height: 1.1;
             color: rgba(255,255,255, 0.6);

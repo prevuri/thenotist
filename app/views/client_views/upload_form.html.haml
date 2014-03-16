@@ -23,9 +23,6 @@
           %input#note-title-field{:name => 'new_note[title]', :type => 'text', :placeholder => "Enter note title", :'ng-model' => 'newNote.title', :'ng-disabled' => '!controlsEnabled', :'ng-keyup' => 'validateUploadForm()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Edit Title" }
           %i.status-icon.success-icon.icon-check-sign{:'ng-hide' => '!validated'}
           %i.status-icon.error-icon.icon-ban-circle.hidden{:'ng-hide' => 'fileError || titleError'}
-        #description-field.text-field
-          %input#note-description-field{:name => 'new_note[description]', :type => 'text',  :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Edit Description" }
-
 
     .upload-interaction.modal-footer
       .processing-label{:'ng-hide' => '!processingShowing'} This can take several minutes. You will be automatically redirected to your note when processing is done.
