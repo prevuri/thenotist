@@ -21,7 +21,7 @@
   $scope.progressText = ""
   $scope.progressPercent = 0
 
-  # Form params - file, title, description
+  # Form params - file, title
   $scope.newNote = {}
 
   $scope.init = ->
@@ -55,8 +55,7 @@
   $scope.s3UploadComplete = (s3KeyVal) ->
     $http({method: 'POST', url: '/api/notes', params: {
       s3_key: s3KeyVal,
-      title: $scope.newNote.title,
-      description: $scope.newNote.description
+      title: $scope.newNote.title
     }}).
     success( (data, status, headers, config) ->
       $scope.resetUI()
