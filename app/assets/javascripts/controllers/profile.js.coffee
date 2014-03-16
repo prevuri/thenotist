@@ -1,4 +1,4 @@
-@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, $filter, UserActivityHtml, UserFriendsApi, NotesApi, NotesUserApi, UserApi) ->
+@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, $filter, UserActivityHtml, UserFriendsApi, UserApi) ->
 
   $scope.currentUserProfile = true
   $scope.idParam = {}
@@ -22,6 +22,9 @@
   $scope.getActivityHtml = () ->
     success = (data) ->
       $scope.activityHtml = $sce.trustAsHtml(data.html)
+      $timeout( () ->
+        $scope.$root.loading = false
+      , 100)
     error = (data) ->
       $scope.setAlert("Error retrieving user activity", false) 
     UserActivityHtml.get($scope.idParam, success, error)

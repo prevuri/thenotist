@@ -77,6 +77,8 @@
         else
           console.log "Error processing note comment data"
       , 500 + Math.floor(file.groupErrorCount/10)*1000)
+    else
+      $scope.$root.loading = false
 
   $scope.pollComments = () ->
     $scope.pollPromise = $interval( () =>
@@ -161,6 +163,8 @@
     $scope.submitComment($scope.replyText[parentComment.id], fileId, parentComment.id, fileIndex)
 
   $scope.submitComment = (text, fileId, parentId, fileIndex) ->
+    if text.replace(/[ ]/).length == 0
+      return
     if !$scope.submitting
       data = {
         comment: {

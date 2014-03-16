@@ -354,6 +354,29 @@ form.new-user {
   }
 }
 
+.loading-overlay {
+  position: absolute;
+  top: 0px;
+  left: 80px;
+  right: 0;
+  bottom: 0;
+  background: white;
+  color: #ddd;
+  font-size: 50px;
+  font-weight: 100;
+  text-align: center;
+  padding-top: 200px;
+  padding-right: 50px;
+  z-index: 5000;
+  opacity: 1;
+  &.ng-hide-add, &.ng-hide-remove {
+    display: block !important;
+  }
+  &.ng-hide {
+    -webkit-transition: opacity 0.2s ease;
+    opacity: 0;
+  }
+}
 
 .footer {
 
