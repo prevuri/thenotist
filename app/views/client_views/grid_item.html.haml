@@ -32,7 +32,7 @@
         {{note.title}}
 
   .tags{:'ng-if' => 'note.processed'}
-    .tag{:'ng-repeat' => 'tag in note.tags', :'ng-click' => 'tagClicked(tag)'}
+    .tag{:'ng-repeat' => 'tag in note.tags', :'ng-if' => '$index < 9', :'ng-click' => 'tagClicked(tag)'}
       .delete-tag-btn{:'ng-click' => 'deleteTag(note, tag); $event.stopPropagation()'}
         %i.icon-remove
       .tag-text {{tag.name}}

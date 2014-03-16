@@ -9,7 +9,7 @@
   $scope.noteDeleteClicked = -1
   $scope.noteDeleteIndex = -1
 
-  $scope.tagMaxCharacters = 20
+  $scope.tagMaxCharacters = 15
 
   # Init
   $scope.init = () ->
@@ -146,7 +146,7 @@
       this.addTagError = true
 
   $scope.addNewTag = (note, tagText) ->
-    if this.addingTag
+    if this.addingTag && tagText.length > 0
       newTag = {name: tagText}
       note.tags.push newTag
       $scope.saveTags(note)
