@@ -1,4 +1,4 @@
-@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, $filter, UserActivityHtml, UserFriendsApi, UserApi) ->
+@ProfileCtrl = ($scope, $resource, $route, $routeParams, $sce, $filter, $timeout, UserActivityHtml, UserFriendsApi, UserApi) ->
 
   $scope.currentUserProfile = true
   $scope.idParam = {}
