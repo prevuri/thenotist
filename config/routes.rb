@@ -6,8 +6,11 @@ TheNotist::Application.routes.draw do
 
   get "main/index"
 
-  root :to => 'main#index'
+  get "/about", to: "about#index"
+  # root to: "about#index"
+  # get "about/index"
 
+  root :to => 'main#index'
 
   devise_for :users, :controllers => {
     :omniauth_callbacks => "users/omniauth_callbacks"
