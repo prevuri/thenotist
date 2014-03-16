@@ -1,6 +1,12 @@
 class MainController < ApplicationController
   def index
     if !current_user
+      set_meta_tags :og => {
+        :title    => 'The Notist',
+        :type     => 'website',
+        :image    => 'http://www.notist.co/assets/notist-logo-med.png',
+        :url      => 'http://www.notist.co'
+      }
       render 'splash', :layout => 'minimal'
     else
       # Default action (render index)
