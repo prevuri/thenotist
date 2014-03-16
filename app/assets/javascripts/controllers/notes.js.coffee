@@ -186,6 +186,11 @@
       this.addTagText = this.addTagText.substring(0, $scope.tagMaxCharacters)
       this.addTagError = true
 
+  $scope.tabPressed = (note, tagText) ->
+    if this.addingTag && tagText.length > 0
+      this.addNewTag(note, tagText)
+      this.addingTag = true
+
   $scope.addNewTag = (note, tagText) ->
     if this.addingTag && tagText.length > 0
       newTag = {name: tagText}

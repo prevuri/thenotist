@@ -186,6 +186,15 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('tab', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 9
+        scope.$eval(attrs.tab)
+        e.preventDefault()
+    )
+)
+
 .directive('backspace', () ->
   link: (scope, el, attrs) ->
     $('body').bind('keydown keypress', (e) ->
