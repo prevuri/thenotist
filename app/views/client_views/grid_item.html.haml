@@ -1,4 +1,4 @@
-.note-item{:'ng-init' => 'itemIndex = $index'}
+.note-item{:'ng-init' => 'itemIndex = $index', :'loaded' => true }
   %a.big-link{:'ng-if' => 'note.processed && noteDeleteClicked != note.id',:'ng-href' => '/notes/{{note.id}}'}
   .img-preview{:'ng-if' => 'note.processed', :style => 'background-image: url({{note.uploaded_thumb_files[0].public_path}})'}
 

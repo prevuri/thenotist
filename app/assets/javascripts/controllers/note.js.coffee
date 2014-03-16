@@ -77,6 +77,8 @@
         else
           console.log "Error processing note comment data"
       , 500 + Math.floor(file.groupErrorCount/10)*1000)
+    else
+      $scope.$root.loading = false
 
   $scope.pollComments = () ->
     $scope.pollPromise = $interval( () =>

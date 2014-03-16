@@ -56,6 +56,11 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('loaded', () ->
+  link: (scope, el, attrs) ->
+    scope.$root.loading = false
+)
+
 .directive('textareaAutoheight', () ->
   link: (scope, el, attrs) ->
     setHeight = () ->

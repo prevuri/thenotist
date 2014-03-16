@@ -8,6 +8,14 @@ $thumbnail-height: 330px;
 
 $shift-max-width: 1400px;
 
+.notes-loading-container {
+  position: absolute;
+  top: 80px;
+  left: 80px;
+  right: 0;
+  bottom: 0;
+}
+
 .notes-header {
   height: 65px;
   border-bottom: #ECF0F1 solid 2px;
