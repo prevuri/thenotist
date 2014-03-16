@@ -24,6 +24,8 @@
   # Updates all the notes on the page
   $scope.updateNotes = () ->
     success = (data) ->
+      if data.notes.length == 0
+        $scope.$root.loading = false
       $scope.notes = $filter('orderBy')(data.notes, 'created_at', true)
       for note in $scope.notes
         if note.user.id == $scope.currentUser.id
