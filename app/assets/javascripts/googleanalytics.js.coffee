@@ -16,5 +16,5 @@
 ) window, document, "script", "//www.google-analytics.com/analytics.js", "ga"
 
 ga "create", "UA-48925702-1", "notist.co"
-# ga "create", "UA-48925702-1", 
+# ga "create", "UA-48925702-1",
 #   'cookieDomain': 'none'

@@ -9,9 +9,8 @@
       Cancel
     %a.btn.delete{:'ng-if' => 'note.shared', :'ng-click' => 'unsubscribeNote()'}
       Delete
-    %a.btn.delete{:'ng-if' => '!note.shared', :'ng-click' => 'deleteNote()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Verify Delete" }}
+    %a.btn.delete{:'ng-if' => '!note.shared', :'ng-click' => 'deleteNote()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Verify Delete" }
       Delete
-
 
   .process-spinner{:'ng-if' => '!note.processed && !note.aborted && noteDeleteClicked != note.id'}
     %i.icon-refresh.icon-white.icon-spin
@@ -44,7 +43,7 @@
 
   .btn-group.appear-hover{:'ng-if' => 'noteDeleteClicked != note.id'}
     %div
-      %a{:'ng-click' => 'deleteClickedNote(note, $index)', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Delete" }}
+      %a{:'ng-click' => 'deleteClickedNote(note, $index)', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Delete" }
         %i.icon-remove.btn
 
   #list-footer{:'ng-if' => 'note.processed && noteDeleteClicked != note.id'}
