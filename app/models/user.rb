@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
       :email => email,
       :member_since => created_at,
       :user_fb_data => user_fb_data.as_json,
-      :notes => {:length => notes.count},
+      :notes => {:length => (notes.count + shared_notes.count)},
       :buddies => {:length => buddies.count}
     }
   end
