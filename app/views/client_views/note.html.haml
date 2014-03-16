@@ -1,4 +1,4 @@
-%div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init()", :'left-arrow' => 'decrementPage()', :'right-arrow' => 'incrementPage()'}
+%div{:'ng-controller' => 'NoteCtrl', :'ng-init' => "init()", :'left-arrow' => 'decrementPage()', :'right-arrow' => 'incrementPage()', :'escape' => 'showNewComment(false); expandCommentLine(null)'}
 
   %link{:'ng-repeat' => 'css_file in note.uploaded_css_files', :type => "text/css", :rel => "stylesheet", :'ng-href' => "{{css_file.public_path}}"}
 
@@ -53,7 +53,7 @@
             .name
               {{currentUser.name}}
           .comment-text
-            %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => 'newCommentText', :'textarea-autofocus' => 'showingNewComment'}
+            %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => 'newCommentText', :'textarea-autofocus' => 'showingNewComment', :'ng-enter' => 'showingNewComment && submitParentComment()'}
         .bottom
           %a.new-comment-submit.primary.text-link{:'ng-click' => 'submitParentComment()'}
             Add Comment

@@ -15,7 +15,7 @@ class Api::NotesController < ApplicationController
     @notes = current_user.notes + current_user.shared_notes
     return render :json => {
       :success => true,
-      :notes => @notes.map { |n| n.as_json }
+      :notes => @notes.map(&:as_json)
     }
   end
 

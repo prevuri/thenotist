@@ -1,4 +1,4 @@
-.create-new-note-container{:'ng-controller' => 'UploadCtrl', :'ng-init' => "init()", :'ng-enter' => "submitClicked()"}
+.create-new-note-container{:'ng-controller' => 'UploadCtrl', :'ng-init' => "init()", :'ng-enter' => "modalShowing && submitClicked()"}
   .big-button-container{:'ng-hide' => 'uploadShowing', "data-toggle" => "modal", "data-target" => ".new-note-form-container", "analytics-on" => "click", "analytics-event" => "Upload Note" }
     .create-new-note-button
       %i.icon-circle-arrow-up.icon-white

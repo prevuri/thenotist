@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140314000709) do
+ActiveRecord::Schema.define(:version => 20140314224049) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(:version => 20140314000709) do
 
   add_index "activities", ["trackable_id"], :name => "index_activities_on_trackable_id"
   add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
+
+  create_table "admin_users", :force => true do |t|
+    t.string   "name"
+    t.string   "uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -71,6 +78,16 @@ ActiveRecord::Schema.define(:version => 20140314000709) do
 
   add_index "fb_friends", ["user_id"], :name => "index_fb_friends_on_user_id"
 
+  create_table "flag_reports", :force => true do |t|
+    t.integer  "note_id"
+    t.boolean  "report_resolved"
+    t.boolean  "doc_removed"
+    t.string   "description"
+    t.string   "report_type"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "notes", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
@@ -97,6 +114,20 @@ ActiveRecord::Schema.define(:version => 20140314000709) do
   add_index "relationships", ["buddy_id"], :name => "index_relationships_on_buddy_id"
   add_index "relationships", ["follower_id", "buddy_id"], :name => "index_relationships_on_user_id_and_buddy_id", :unique => true
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_user_id"
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "note_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "tags", ["name", "user_id", "note_id"], :name => "index_tags_on_name_and_user_id_and_note_id"
+  add_index "tags", ["name"], :name => "index_tags_on_name"
+  add_index "tags", ["note_id"], :name => "index_tags_on_note_id"
+  add_index "tags", ["user_id", "note_id"], :name => "index_tags_on_user_id_and_note_id"
+  add_index "tags", ["user_id"], :name => "index_tags_on_user_id"
 
   create_table "uploaded_css_files", :force => true do |t|
     t.string   "public_path"
@@ -160,5 +191,6 @@ ActiveRecord::Schema.define(:version => 20140314000709) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["uid"], :name => "index_users_on_uid"
 
 end

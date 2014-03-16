@@ -45,11 +45,11 @@ $review-5-left: 1190px;
 
   .theme-background {
     min-height: 100%;
-    
+
     /* Set up proportionate scaling */
     width: 100%;
     height: auto;
-    
+
     /* Set up positioning */
     position: fixed;
     top: 0;
@@ -70,29 +70,29 @@ $review-5-left: 1190px;
 
 
   #themeback-one {
-    background-image: url("/assets/splash/splashmural-second.png");
+    background-image: url("/assets/splash/splashmural-second.jpg");
     background-size: cover;
   }
 
   .background-overlay {
     min-height: 100%;
-    
+
     /* Set up proportionate scaling */
     width: 100%;
     height: auto;
-    
+
     /* Set up positioning */
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1;
-  
+
     background-color: rgba(0, 0, 0, 0.3);
   }
 
   h1, h2 {
     color: white;
-    
+
   }
 
   .connect-fb-button {
@@ -128,7 +128,7 @@ $review-5-left: 1190px;
         // padding-top: 8px;
     }
   }
-  
+
 
   .big-splash {
     z-index: 100;

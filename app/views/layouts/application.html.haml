@@ -21,6 +21,9 @@
           .alert{:'ng-show' => 'alert.show', :'ng-class' => "alert.success ? 'alert-success' : 'alert-error'"}
             %a.close{:'ng-click' => 'alert.show = false'} ×
             %div {{alert.text}}
+          .loading-overlay{:'ng-show' => 'loading'}
+            %i.icon-spinner.icon-spin
+            %div Loading...
           %div{:'ng-view' => true}
             = yield
       %footer

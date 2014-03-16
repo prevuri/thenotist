@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :contributed_to, class_name: "Contributor", dependent: :destroy
   has_many :shared_notes, through: :contributed_to
   has_many :shared_uploaded_html_files, through: :shared_notes, source: :uploaded_html_files
-
+  has_many :tags
 
   def has_note_processing?
     self.notes.select { |n| !n.processed && !n.aborted }.count > 0
@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
 
   def follow!(other_user)
     relationships.create!(buddy_id: other_user.id)
+  end
+
+  def follow_all!(other_users)
+    relationships.create!(other_users.map { |u| { :buddy_id => u.id } })
   end
 
   def unfollow!(other_user)
@@ -74,20 +78,29 @@ class User < ActiveRecord::Base
       profile = @graph.get_object(user.uid)
       profile_image = @graph.get_picture(user.uid, {:width => 300, :height => 300})
       friends = @graph.get_connections('me','friends',:fields=>"id")
-      user.user_fb_data = UserFbData.create(uid:user.uid,
-                                profile_image:profile_image,
-                                link:profile["link"])
 
-      # current_friends = FbFriend.find_all_by_user_id(user.id, :select => :uid).map &:uid
-      # current_users = User.find_by_uid()
-      friends.each do |friend|
-        notist_friend = User.find_by_uid(friend["id"])
-        if notist_friend != nil and !(user.buddies.include? notist_friend)
-          user.follow!(notist_friend)
-          notist_friend.follow!(user)
+      if user.user_fb_data.blank?
+        user.user_fb_data = UserFbData.create(:user_id => user.id, :uid => user.uid)
+      end
+      user.user_fb_data.update_attributes(profile_image: profile_image, link: profile["link"])
+      notist_friends = User.where(:uid => friends.map { |f| f["id"] })
+
+      # user follows all friends
+      new_friends_to_follow = notist_friends.select { |f| !user.buddies.include?(f) }
+      user.follow_all!(new_friends_to_follow)
+
+      # all friends follow user
+      reverse_follows = []
+      notist_friends.each do |f|
+        unless f.buddies.include?(user)
+          reverse_follows << {:follower_id => f.id, :buddy_id => user.id}
         end
       end
-      user
+      Relationship.create(reverse_follows)
+
+      return user
+    else
+      return nil
     end
 	end
 

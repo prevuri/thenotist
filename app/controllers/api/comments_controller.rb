@@ -44,13 +44,12 @@ class Api::CommentsController < ApplicationController
         :uploaded_html_file => @file,
         :text => params[:comment][:text],
         :line_id => params[:comment][:line_id],
-        :parent_comment => parent_comment,
-        :note => @file.note
+        :parent_comment => parent_comment
       })
 
       # track the comment activity
       track_activity @comment
-    rescue
+    rescue => ex
       return render :json => {
         :success => false,
         :error => comment_create_error

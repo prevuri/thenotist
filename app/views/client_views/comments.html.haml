@@ -19,7 +19,7 @@
             .user
               .name {{currentUser.name}}
             .comment-text
-              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'replyText[parentComment.id]', :'textarea-autoheight' => 'replyText[parentComment.id]', :'textarea-autofocus' => 'repliesShowing[parentComment.id]'}
+              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'replyText[parentComment.id]', :'textarea-autoheight' => 'replyText[parentComment.id]', :'textarea-autofocus' => 'repliesShowing[parentComment.id]', :'ng-enter' => 'repliesShowing[parentComment.id] && submitReply(parentComment, file.id, pageNo-1)'}
           .bottom
             %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, pageNo-1)"}
               Add Comment

@@ -6,6 +6,10 @@
 
   $scope.alert = {}
 
+  $scope.$on('$routeChangeStart', () ->
+    $scope.$root.loading = true
+  )
+
   $scope.keypress = () ->
     if window.event.keyCode is 27
       $scope.$parent.$broadcast('escapePressed')
