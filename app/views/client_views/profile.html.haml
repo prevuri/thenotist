@@ -46,7 +46,7 @@
       %ul.buddies-list
         %li.buddies-list-item{ :'ng-repeat' => 'friend in friends'}
           %a{:'ng-href' => '/profile/{{friend.id}}'}
-            %div
+            .overall-section
               .profile-image-section
                 .profile-container.circular
                   .profile-image.circular{:'ng-style' => "{background: 'url(' + friend.user_fb_data.profile_image + ') no-repeat'}"}
