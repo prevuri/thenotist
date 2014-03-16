@@ -135,6 +135,12 @@ a.profile-link > .profile-container:active {
         background-color: darken(#ECF0F1, 5%);
       }
 
+      a {
+        color: inherit;
+        height: 100%;
+        width: 100%;
+      }
+
       .profile-image-section {
         // width: 25%;
         float: left;

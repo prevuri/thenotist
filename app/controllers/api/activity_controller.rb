@@ -17,7 +17,14 @@ class Api::ActivityController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    begin
+      @user = User.find(params[:id])
+    rescue
+      render :json => {
+        :success => true,
+        :error => user_not_found_error
+      }, :status => 404
+    end
     render :json => {
       :success => true,
       :html => activity_html(@user.activities)
