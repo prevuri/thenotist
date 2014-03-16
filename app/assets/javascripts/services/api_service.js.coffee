@@ -31,6 +31,11 @@ service.factory("NotesApi", ($resource) ->
         method: 'GET'
       }
     )
+)
+.factory("TagsApi", ($resource) ->
+  $resource(
+    "/api/tags/:id", {}
+  )
 ).factory("UploadFormHtml", ($resource) ->
   $resource(
     "/api/notes/upload_form_html", {}

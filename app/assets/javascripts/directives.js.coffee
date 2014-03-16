@@ -85,7 +85,7 @@ notistApp.directive('ngSpinner', () ->
       if value
         $timeout( () ->
           $(el).focus()
-        , 10)
+        , 50)
     scope.$watch(attrs.textareaAutofocus, setFocus, true)
 )
 
@@ -164,6 +164,25 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('escape', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 27
+        scope.$eval(attrs.escape)
+        e.preventDefault()
+    )
+)
+
+.directive('backspace', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 8
+        scope.$eval(attrs.backspace)
+        # Propagate key press so it still deletes a character
+        return true
+    )
+)
+
 .directive('leftArrow', ($timeout) ->
   link: (scope, el, attrs) ->
     canPress = true
@@ -198,4 +217,16 @@ notistApp.directive('ngSpinner', () ->
       if e.which == 39 && !canPress
         canPress = true
     )
+)
+
+.directive('addTagError', ($timeout) ->
+  link: (scope, el, attrs) ->
+    setErrorClass = () ->
+      if scope.addTagError
+        $(el).addClass('error')
+        scope.addTagError = false
+        $timeout( ->
+          $(el).removeClass('error')
+        , 100)
+    scope.$watch('addTagError', setErrorClass)
 )

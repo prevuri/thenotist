@@ -15,6 +15,7 @@ class Api::TagsController < ApplicationController
     begin
       tags_h = params[:tags]
       tags = []
+      tags_h = tags_h || []
       tags_h.each do |t|
         tags << @note.tags.new(:name => t[:name])
       end
