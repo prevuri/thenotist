@@ -3,8 +3,8 @@ class MainController < ApplicationController
     if !current_user
       set_meta_tags :og => {
         :title    => 'The Notist',
-        :type     => 'splash page',
-        :image    => '',
+        :type     => 'website',
+        :image    => 'http://www.notist.co/assets/notist-logo-med.png',
         :url      => 'http://www.notist.co'
       }
       render 'splash', :layout => 'minimal'
