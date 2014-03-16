@@ -15,7 +15,7 @@
             -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
             {{contrib.name}}
           .delete-contrib
-            .btn
+            .btn.noTransition
               %span Remove
               %i.icon-remove
 
@@ -30,11 +30,11 @@
             -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
             {{friend.name}}
           .add-contrib
-            .btn
+            .btn.noTransition
               %span Share
               %i.icon-plus
   .share-interaction.modal-footer
     .error-label.hidden
     .btn.btn-primary.share-button{:'ng-click' => 'hideShareModal()'}
       .share-action-text
-        OK
+        Close

@@ -23,24 +23,9 @@ $user-type-color: #A5BA3D;
   }
 
   .sorting-options {
-    list-style-type: none;
     position: absolute;
     right: 10px;
     bottom: 0px;
-
-    .btn {
-      background-color: transparent;
-      color: inherit;
-      border-radius: 2px;
-
-      &:hover {
-        background-color: #ECF0F1;
-      }
-
-      &.active {
-        background-color: #22B498;
-      }
-    }
   }
 }
 

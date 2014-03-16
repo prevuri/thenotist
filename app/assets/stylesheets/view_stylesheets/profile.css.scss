@@ -2,39 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-$profile-image-size: 180px;
-
-.profile {
-  float:left;
-}
-
-.profile-image-section {
-  margin-top: 5px;
-}
-
-.profile-section {
-  vertical-align: top;
-
-  h2 {
-    margin-top: 0;
-
-    .text-link {
-      font-weight: normal;
-    }
-  }
-}
-
-.profile-buttons {
-  margin-top: 30px; 
-  margin-left: 30px;
-}
+$profile-image-size: 80px;
 
 .profile-container {
   width: $profile-image-size;
   height: $profile-image-size;
   padding: 5px;
   background: white;
-  box-shadow: #444 0px 1px 4px;
+  // box-shadow: #444 0px 1px 4px;
   -webkit-user-select: none;
   margin-bottom: 1px;
   .profile-image {
@@ -43,12 +18,157 @@ $profile-image-size: 180px;
     background-size: cover !important;
   } 
 
-}
+} 
 
 a.profile-link > .profile-container:active {
-  box-shadow: #444 0px 0px 4px;
-  margin-top: 1px;
-  margin-bottom: 0;
+    box-shadow: #444 0px 0px 4px;
+    margin-top: 1px;
+    margin-bottom: 0;
 }
+
+.profile {
+  float:left;
+  width: 100%;
+
+  .profile-image-section {
+    margin-top: 5px;
+  }
+
+  .profile-section {
+    vertical-align: bottom;
+
+    h3 {
+      margin-top: 0;
+      
+      .text-link {
+        font-weight: normal;
+        text-decoration: none;
+
+      }
+    }
+  }
+
+  .profile-buttons {
+    margin-top: 30px; 
+    margin-left: 30px;
+  }
+  
+
+  .sorting-options {
+      margin-top: 20px;
+      margin-left: 10px;
+      padding-bottom: 10px;
+      width: 100%;
+      border-bottom: #ECF0F1 solid 2px;
+      // position: absolute;
+      // right: 10px;
+      // bottom: 0px;
+      span {
+        color: #fff;
+        background-color: #D05040;
+        margin-left: 2px;
+        vertical-align: top;
+      }
+
+      .btn
+      {
+        &.active span {
+          color: #D05040;
+          background-color: #FFF;
+        }
+      }
+    }
+
+  .activities-section {
+
+  }
+
+  .notes-section {
+    margin-top: 20px;
+
+    .notes-list-item:first-child {
+      margin-right: 2px;
+    }
+    .notes-list-item:nth-child(2) {
+      margin-left: 2px;
+    }
+    
+    .access-notice {
+      position: absolute;
+      top: calc(50% - 50px);
+      left: calc(50% - 60px);
+      z-index: 103;
+      text-align: center;
+      color: #fff;
+      i {
+        font-size: 7em;
+        // margin-left: 24px;
+      }
+
+      h2 {
+        margin-top: 0;
+      }
+    }
+
+
+  }
+
+  .buddies-section {
+    margin-top: 20px;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      li {
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+    }
+    .buddies-list-item {
+      height: 80px;
+      width: 360px;
+      background-color: #ECF0F1;
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: darken(#ECF0F1, 5%);
+      }
+
+      .profile-image-section {
+        // width: 25%;
+        float: left;
+        .profile-container {
+          height: 60px;
+          width: 60px;
+        }
+      }
+
+      .profile-section {
+        float: left;
+        width: 75%;
+        margin-left: 10px;
+
+        .info 
+        {
+          h3 {
+            font-size: 1.5em;
+            .text-link {
+              font-weight: 200;
+              color: #555;
+            }
+          }
+
+          .small-info {
+            margin-top: -10px;
+          }
+        }
+      }
+
+    }
+  }
+}
+
+
 
 

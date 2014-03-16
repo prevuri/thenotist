@@ -83,12 +83,25 @@ class Note < ActiveRecord::Base
     }
   end
 
+    def as_private_json
+    {
+      :id => id,
+      :title => title,
+      :contributing_users => contributing_users.map { |u| u.as_json },
+      :user => user.as_json,
+      :created_at => created_at,
+      :processed => processed,
+      :comment_count => comment_count()
+    }
+  end
+
+
 private
   def start_processing!
     self.processing_started_at = Time.now
   end
 
   def comment_count
-    self.comments.length
+    self.comments.count
   end
 end

@@ -60,6 +60,7 @@
     }}).
     success( (data, status, headers, config) ->
       $scope.resetUI()
+      $scope.getUploadFormHtml()
       $scope.$parent.updateNotes()
     )
     .error( (data, status, headers, config) ->

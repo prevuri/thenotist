@@ -1,5 +1,5 @@
-.create-new-note-container{:'ng-controller' => 'UploadCtrl', :'ng-init' => "init()", :'ng-enter' => "submitClicked()"}
-  .big-button-container{:'ng-hide' => 'uploadShowing', "data-toggle" => "modal", "data-target" => ".new-note-form-container" }
+.create-new-note-container{:'ng-controller' => 'UploadCtrl', :'ng-init' => "init()", :'ng-enter' => "modalShowing && submitClicked()"}
+  .big-button-container{:'ng-hide' => 'uploadShowing', "data-toggle" => "modal", "data-target" => ".new-note-form-container", "analytics-on" => "click", "analytics-event" => "Upload Note" }
     .create-new-note-button
       %i.icon-circle-arrow-up.icon-white
       %h2
@@ -20,11 +20,11 @@
       .form-container
         %div{:'ng-bind-html' => 'uploadFormHtml', :compile => true}
         #title-field.text-field.control-group{:'ng-class' => "{error: titleError, success: !titleError && modified}" }
-          %input#note-title-field{:name => 'new_note[title]', :type => 'text', :placeholder => "Enter note title", :'ng-model' => 'newNote.title', :'ng-disabled' => '!controlsEnabled', :'ng-keyup' => 'validateUploadForm()'}
+          %input#note-title-field{:name => 'new_note[title]', :type => 'text', :placeholder => "Enter note title", :'ng-model' => 'newNote.title', :'ng-disabled' => '!controlsEnabled', :'ng-keyup' => 'validateUploadForm()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Edit Title" }
           %i.status-icon.success-icon.icon-check-sign{:'ng-hide' => '!validated'}
           %i.status-icon.error-icon.icon-ban-circle.hidden{:'ng-hide' => 'fileError || titleError'}
         #description-field.text-field
-          %input#note-description-field{:name => 'new_note[description]', :type => 'text',  :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description'}
+          %input#note-description-field{:name => 'new_note[description]', :type => 'text',  :placeholder => "Enter note description (optional)", :'ng-disabled' => '!controlsEnabled', :'ng-model' => 'newNote.description', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Edit Description" }
 
 
     .upload-interaction.modal-footer

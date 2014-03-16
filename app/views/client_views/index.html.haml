@@ -1,13 +1,13 @@
 .wrapper{:'ng-controller' => 'ActivityCtrl', :'ng-init' => 'init()'}
   .feed-header
-    %h1 Activities
+    %h1 News Feed
     .sorting-options
       %ul
-        %li.btn.active
+        %li.btn.active{"analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Activities", "analytics-label" => "Date" }
           Date
-        %li.btn
+        %li.btn{"analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Activities", "analytics-label" => "Comments" }
           Comments
-        %li.btn
+        %li.btn{"analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Activities", "analytics-label" => "Uploads" }
           Uploads
 
 

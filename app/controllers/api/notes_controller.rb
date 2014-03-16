@@ -76,6 +76,15 @@ class Api::NotesController < ApplicationController
     }
   end
 
+  def usernotes
+    @user = User.find_by_id(params[:id])
+    @notes = @user.notes + @user.shared_notes
+    return render :json => {
+      :success => true,
+      :notes => @notes.map{ |note| (note.shared_with? current_user or note.user == current_user) ? note.as_json : note.as_private_json}
+    }
+  end
+
   def share
     begin
       @user = current_user.buddies.find(params[:userid])
