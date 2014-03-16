@@ -1,4 +1,4 @@
-@NotesCtrl = ($scope, $http, $sce, $interval, $filter, NotesApi, NotesUnsubscribeApi) ->
+@NotesCtrl = ($scope, $http, $sce, $interval, $filter, NotesApi, TagsApi, NotesUnsubscribeApi) ->
 
   # Variable to check for polling and notes that are processing.
   $scope.notesProcessing = Array()
@@ -8,6 +8,8 @@
 
   $scope.noteDeleteClicked = -1
   $scope.noteDeleteIndex = -1
+
+  $scope.tagMaxCharacters = 15
 
   # Init
   $scope.init = () ->
@@ -110,3 +112,51 @@
   # Initiates polling for the processing note
   $scope.initPolling = (noteId) ->
     $scope.promises[noteId] = window.setInterval(@checkNoteStatus, 5000, noteId)
+
+  $scope.tagClicked = (tag) ->
+    $scope.searchText = "#" + tag.name
+    $scope.searchClickedTag = true
+
+  $scope.searchBackspacePressed = () ->
+    if $scope.searchClickedTag
+      $scope.searchText = null
+      $scope.$apply()
+
+  $scope.checkTags = () ->
+    if $scope.searchText && $scope.searchText.indexOf('#') != -1
+      $scope.searchText = '#' + $scope.searchText.replace(/#/g,'')
+    $scope.searchClickedTag = false
+
+  $scope.addButtonClicked = (event) ->
+    if this.addingTag
+      this.addNewTag(this.note, this.addTagText)
+      event.stopPropagation()
+
+  $scope.deselectedAddField = () ->
+    if !this.mouseOnAdd
+      this.addingTag = false
+      this.addTagText = null
+
+  $scope.addTagTextChanged = () ->
+    this.addTagText = this.addTagText.toLowerCase()
+    if this.addTagText.search(/\W|_/) != -1
+      this.addTagText = this.addTagText.replace(/\W|_/g,'')
+      this.addTagError = true
+    if this.addTagText.length > $scope.tagMaxCharacters
+      this.addTagText = this.addTagText.substring(0, $scope.tagMaxCharacters)
+      this.addTagError = true
+
+  $scope.addNewTag = (note, tagText) ->
+    if this.addingTag && tagText.length > 0
+      newTag = {name: tagText}
+      note.tags.push newTag
+      $scope.saveTags(note)
+      this.addingTag = false
+      this.addTagText = null
+
+  $scope.deleteTag = (note, deletedTag) ->
+    note.tags = (tag for tag in note.tags when tag.name != deletedTag.name)
+    $scope.saveTags(note)
+
+  $scope.saveTags = (note) ->
+    TagsApi.save({id: note.id}, {tags: note.tags})

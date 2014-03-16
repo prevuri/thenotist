@@ -30,8 +30,17 @@
     %h3{:'ng-if' => 'note.processed'}
       .text-link
         {{note.title}}
-    %h4.description{:'ng-if' => 'note.processed'}
-      {{note.description}}
+
+  .tags{:'ng-if' => 'note.processed'}
+    .tag{:'ng-repeat' => 'tag in note.tags', :'ng-if' => '$index < 9', :'ng-click' => 'tagClicked(tag)'}
+      .delete-tag-btn{:'ng-click' => 'deleteTag(note, tag); $event.stopPropagation()'}
+        %i.icon-remove
+      .tag-text {{tag.name}}
+    .tag.add-tag{:'ng-click' => 'addingTag = true', :'ng-class' => 'addingTag ? "expanded" : (note.tags.length == 0 ? "collapsed with-text" : "collapsed")', :'ng-mouseenter' => 'mouseOnAdd = true', :'ng-mouseleave' => 'mouseOnAdd = false', :'add-tag-error' => true}
+      %input.add-tag-field{:type => 'text', :'ng-model' => 'addTagText', :'ng-change' => 'addTagTextChanged()', :'ng-show' => 'addingTag', :'textarea-autofocus' => 'addingTag', :'ng-blur' => 'deselectedAddField()', :'ng-enter' => 'addNewTag(note, addTagText)', :'escape' => 'addingTag = false; addTagText = null', :'backspace' => 'addingTag = !addTagText ? false : true', :'ng-trim' => 'false'}
+      .add-text{:'ng-if' => 'note.tags.length == 0', :'ng-hide' => 'addingTag'} add tag
+      .add-tag-btn{:'ng-click' => 'addButtonClicked($event)'}
+        %i.icon-plus
 
   .btn-group.appear-hover{:'ng-if' => 'noteDeleteClicked != note.id'}
     %div
