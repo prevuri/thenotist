@@ -1064,8 +1064,12 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 }
 
 // NOTE SHARING SECTION
-.share-note-form-container {
+.share-note-form-container.modal.fade.in {
   background-color: #F5F5F5;
+  top: 5%;
+  max-height: 90%;
+  overflow: auto;
+  border-radius: 6px;
 
   h4 {
     margin-top: 0px;
@@ -1114,7 +1118,8 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
     }
 
     .contributor-list {
-      height: 220px;
+      min-height: 120px;
+      max-height: 220px;
       overflow-y: scroll;
       background-color: #fff;
 
