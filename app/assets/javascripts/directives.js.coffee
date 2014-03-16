@@ -86,6 +86,10 @@ notistApp.directive('ngSpinner', () ->
         $timeout( () ->
           $(el).focus()
         , 50)
+        # Safari hack; won't focus until animation complete
+        $timeout( () ->
+          $(el).focus()
+        , 300)
     scope.$watch(attrs.textareaAutofocus, setFocus, true)
 )
 
