@@ -927,8 +927,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           -moz-user-select: none;
 
           .tag-text {
-            line-height: 0.8;
+            line-height: 1.2;
             position: relative;
+            margin-top: -2px;
+            margin-bottom: -2px;
             left: 6px;
             overflow: hidden;
             text-overflow: ellipsis;

@@ -138,6 +138,7 @@
       this.addTagText = null
 
   $scope.addTagTextChanged = () ->
+    this.addTagText = this.addTagText.toLowerCase()
     if this.addTagText.search(/\W|_/) != -1
       this.addTagText = this.addTagText.replace(/\W|_/g,'')
       this.addTagError = true
