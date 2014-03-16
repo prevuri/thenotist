@@ -82,6 +82,10 @@ body, h1, h2, h3, h4, p {
 //Button color overrides
 //
 
+.content {
+  min-width: 788px;
+}
+
 .btn {
 
 }
@@ -126,10 +130,10 @@ a.no-link {
   }
 }
 
-.hidden {
-  visibility: visible !important;
-  display: none;
-}
+// .hidden {
+//   visibility: visible !important;
+//   display: none;
+// }
 
 
 #top-nav {
@@ -299,6 +303,11 @@ form.new-user {
   display: none;
 }
 
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 .footer {
 
