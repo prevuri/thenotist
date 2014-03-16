@@ -31,6 +31,7 @@ private
     activities.order("created_at desc").each do |activity|
       html += render_to_string(:partial => 'main/activity', :object => activity)
     end
+    html += render_to_string(:partial => 'main/footer') unless activities.blank?
     html
   end
 
