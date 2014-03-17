@@ -30,7 +30,7 @@
           {{note.contributing_users.length}}
 
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
-    .note-pages{:'scroll-change-page' => true}
+    .note-pages{:'scroll-change-page' => true, :'detect-hash-links' => true}
       .page-chunk{:'ng-repeat' => 'chunk in pageChunks'}
         .page-chunk-contents
           .page{:'ng-repeat' => 'file in chunk.pages', :'ng-init' => 'pageNo = $index + 1 + pageChunkSize*$parent.$index', :'page-buttons-scroll' => true}

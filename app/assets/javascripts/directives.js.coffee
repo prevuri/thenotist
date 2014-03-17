@@ -252,3 +252,18 @@ notistApp.directive('ngSpinner', () ->
         , 100)
     scope.$watch('addTagError', setErrorClass)
 )
+
+.directive('detectHashLinks', () ->
+  link: (scope, el, attrs) ->
+    $(el).click (e) ->
+      linkEl = $(e.target).parents('a[href*="#"]').first()
+      if linkEl.length > 0
+        e.preventDefault()
+        linkedPage = $(linkEl.attr('href')).parents('.page')
+        pageIndex = $('.page').index(linkedPage)
+        if pageIndex > -1
+          scope.currentPage = pageIndex + 1
+          $(document).scrollTop(linkedPage[0].offsetTop - $('#note-header').height())
+          scope.$apply()
+          return
+)
