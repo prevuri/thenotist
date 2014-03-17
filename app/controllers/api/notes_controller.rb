@@ -4,8 +4,7 @@ class Api::NotesController < ApplicationController
 
   before_filter :check_authenticated_user!
   before_filter :get_note, :only => [ :show, :update, :share, :unshare, :unsubscribe, :contribs, :destroy, :paginate ]
-  before_filter :get_note_title, :only => :update
-  before_filter :get_note_description, :only => :update
+  before_filter :get_note_title, :only => [:create, :update]
   before_filter :get_page_range, :only => [ :paginate ]
   before_filter :abort_timed_out_notes, :only => [ :index ]
 
@@ -15,14 +14,14 @@ class Api::NotesController < ApplicationController
     @notes = current_user.notes + current_user.shared_notes
     return render :json => {
       :success => true,
-      :notes => @notes.map(&:as_json)
+      :notes => @notes.map { |n| n.as_json(current_user) }
     }
   end
 
   def create
     begin
-      @note = current_user.notes.create(:title => params[:title], :description => params[:description])
-      track_activity @note
+      @note = current_user.notes.create(:title => @title)
+      track_activity(@note)
 
       s3_key = params[:s3_key]
       queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
@@ -33,7 +32,7 @@ class Api::NotesController < ApplicationController
       }
     rescue => ex
       @fail_reason = "unknown"
-      @note.delete
+      @note.destroy
       return render :json => {
         :success => false,
         :error_message => ex.message
@@ -44,20 +43,20 @@ class Api::NotesController < ApplicationController
   def show
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json(current_user)
     }
   end
 
   def update
-    @note.update_attributes(@title) unless @title.nil?
-    @note.update_attributes(@description) unless @description.nil?
+    @note.update_attributes(:title => @title) unless @title.nil?
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json(current_user)
     }
   end
 
   def destroy
+    destroy_activities_for_note(@note)
     @note.destroy
     return render :json => {
       :success => true
@@ -81,7 +80,7 @@ class Api::NotesController < ApplicationController
     @notes = @user.notes + @user.shared_notes
     return render :json => {
       :success => true,
-      :notes => @notes.map{ |note| (note.shared_with? current_user or note.user == current_user) ? note.as_json : note.as_private_json}
+      :notes => @notes.map{ |note| (note.shared_with? current_user or note.user == current_user) ? note.as_json(current_user) : note.as_private_json}
     }
   end
 
@@ -108,7 +107,7 @@ class Api::NotesController < ApplicationController
 
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json(current_user)
     }
   end
 
@@ -133,7 +132,7 @@ class Api::NotesController < ApplicationController
 
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json(current_user)
     }
   end
 
@@ -187,10 +186,6 @@ private
 
   def get_note_title
     @title = params[:title]
-  end
-
-  def get_note_description
-    @description = params[:description]
   end
 
   def get_page_range

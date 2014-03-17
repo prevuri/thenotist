@@ -1,5 +1,5 @@
 development:
-  sqs_pdf_conversion_queue_name: document_conversion_queue_piyush
+  sqs_pdf_conversion_queue_name: document_conversion_queue_vlad
   ddb_one_word_reverse_index_table_name: one_word_reverse_index
   stop_word_file: config/stop_words.txt
   s3_bucket_name: thenotist

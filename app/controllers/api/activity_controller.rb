@@ -32,15 +32,12 @@ class Api::ActivityController < ApplicationController
   end
 
 private
-
   def activity_html (activities)
     html = ""
-    activities.order("created_at desc").each do |activity|
+    activities.order("created_at desc").each_with_index do |activity, i|
       html += render_to_string(:partial => 'main/activity', :object => activity)
+      html += render_to_string(:partial => 'main/footer') if activities.count-1 == i
     end
-    html += render_to_string(:partial => 'main/footer') unless activities.blank?
     html
   end
-
-
 end
