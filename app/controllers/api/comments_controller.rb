@@ -50,7 +50,7 @@ class Api::CommentsController < ApplicationController
 
       # track the comment activity
       track_activity @comment
-    rescue => ex
+    rescue
       return render :json => {
         :success => false,
         :error => comment_create_error

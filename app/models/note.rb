@@ -1,6 +1,4 @@
 class Note < ActiveRecord::Base
-  include ApplicationHelper
-
   attr_accessible :title, :processed, :aborted
 
   belongs_to :user
@@ -62,7 +60,7 @@ class Note < ActiveRecord::Base
     return false
   end
 
-  def as_json user
+  def as_json current_user
     {
       :id => id,
       :title => title,
@@ -74,7 +72,7 @@ class Note < ActiveRecord::Base
       :processed => processed,
       :aborted => aborted,
       :created_at => created_at,
-      :tags => tags_for_user(user).map(&:as_json)
+      :tags => tags_for_user(current_user).map(&:as_json)
     }
   end
 
@@ -90,8 +88,8 @@ class Note < ActiveRecord::Base
     }
   end
 
-  def tags_for_user user
-    self.tags.where(:user_id => user.id)
+  def tags_for_user current_user
+    self.tags.where(:user_id => current_user.id)
   end
 
 private
