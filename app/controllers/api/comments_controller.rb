@@ -79,7 +79,6 @@ class Api::CommentsController < ApplicationController
     # now, try to delete the comment
     begin
       destroy_activities_for_comment @comment
-
       @comment.child_comments.destroy_all
       @comment.destroy
     rescue => ex

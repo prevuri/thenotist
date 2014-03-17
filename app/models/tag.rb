@@ -1,5 +1,5 @@
 class Tag < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :user
   belongs_to :note
   belongs_to :user
 
