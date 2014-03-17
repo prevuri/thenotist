@@ -14,86 +14,72 @@ $review-4-left: 920px;
 $review-5-top: -30px;
 $review-5-left: 1190px;
 
-
 /*splash page css*/
 #splash {
+  min-height: 100%;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  // position: fixed;
+  // top: 0;
+  // left: 0;
 
   .proper-content {
     padding-top: 40px; /* >= navbar height */
   }
 
+
+  h1, h2 {
+    color: white;
+
+  }
+
   .wrapper {
-    min-height: 100%;
-    min-width: 940px;
-    height: auto !important;
-    height: 100%;
+    
+    
+    // height: auto !important;
+    // background-color: white;
+    // z-index: 2;
+    // position: relative;
   }
 
   .push {
     height: 50px; /* same as the footer */
   }
 
-  .notist-logo {
-    height: 60px;
+
+  .inner-wrapper {
+    // min-width: 960px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
     z-index: 2;
-    width: 50%;
-    float: left;
-    background: url('/assets/logo/notist-logo-optimized.png') no-repeat scroll 0% 0% / 218px 57px transparent;
-    margin-top: 20px;
-    margin-left: 25px;
+    position: relative;
   }
 
-  .theme-background {
-    min-height: 100%;
-
-    /* Set up proportionate scaling */
-    width: 100%;
-    height: auto;
-
-    /* Set up positioning */
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 0;
-
-
-
-    // filter: blur(4px);
-    // // Browser Specific
-    // -webkit-filter: blur(4px);
-    // -moz-filter: blur(4px);
-    // -o-filter: blur(4px);
-    // -ms-filter: blur(4px);
-
+  .inner-tour-wrapper {
+    // min-width: 960px;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 5% 20px;
+    z-index: 2;
+    position: relative; 
   }
 
+  .clear-format {
+    &:before, &:after {
+      display: table;
+      content: "";
+    }
 
-
-  #themeback-one {
-    background-image: url("/assets/splash/splashmural-second.jpg");
-    background-size: cover;
+    &:after {
+      clear: both;
+    }
   }
 
-  .background-overlay {
-    min-height: 100%;
-
-    /* Set up proportionate scaling */
-    width: 100%;
-    height: auto;
-
-    /* Set up positioning */
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-
-  h1, h2 {
-    color: white;
-
-  }
 
   .connect-fb-button {
 
@@ -129,26 +115,322 @@ $review-5-left: 1190px;
     }
   }
 
+  .big-splash-section {
+    // min-height: 680px;
+    // border-top: 12px solid #fff;
+    position: relative;
+    background: url("/assets/splash/splashmural-second.jpg") center center fixed no-repeat;
+    background-size: cover;
+    
 
-  .big-splash {
-    z-index: 100;
-    position: fixed;
-    top: 35%;
-    width: 100%;
-    text-align: center;
-    // background-color: rgba(0, 0, 0, 0.3);
-    padding: 30px 0;
-    h1 {
-      font-size: 5vw;
-      line-height: 5vw;
-      font-weight: 100 !important;
+    .background-overlay {
+      min-height: 100%;
+      /* Set up proportionate scaling */
+      width: 100%;
+      height: auto;
+      /* Set up positioning */
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.3);
     }
 
-    h2 {
-      font-size: 3vw;
-      line-height: 3vw;
-      font-weight: 100 !important;
+    .notist-logo {
+      height: 60px;
+      z-index: 2;
+      width: 50%;
+      float: left;
+      background: url('/assets/logo/notist-logo-optimized.png') no-repeat scroll 0% 0% / 218px 57px transparent;
+      margin-top: 20px;
+      margin-left: 25px;
+    }
+
+
+    .big-splash {
+      z-index: 100;
+      text-align: center;
+      clear: both;
+      width: 100%;
+
+      h1 {
+        // font-size: 5.1em;
+        line-height: 1em;
+        font-weight: 100 !important;
+        margin: 0 auto 0.2em auto;
+        // width: 80%;
+        padding-top: 150px;
+      }
+
+      h2 {
+        // font-size: 2.8em;
+        line-height: 1em;
+        font-weight: 100 !important;
+        margin: 0 auto 0 auto;
+        width: 85%;
+      }
+    }
+
+    .guide {
+      display: block;
+      height: 45px;
+      width: 45px;
+      position: absolute;
+      bottom: 0%;
+      left: 50%;
+      z-index: 1;
+
+      a{
+        text-decoration: none;
+        color: #fff;
+      }
+
+      i {
+        font-size: 1.4em;
+        background: rgba(255,255,255, 0.4) center center no-repeat;
+        border-radius: 150px;
+        padding: 10px;
+        cursor: pointer;
+      }
     }
   }
 
+  @media screen and (min-width: 0px) {
+    .guide {
+      display: none;
+    }
+    .big-splash-section {
+      min-height: 480px;
+
+      .big-splash h1 {
+        font-size: 3.6em;
+        padding-top: 105px;
+      }
+
+      .big-splash h2 {
+          font-size: 1.9em
+      }
+    }
+
+    
+    .text {
+      h1 {
+        padding-top: 15%;
+        font-weight: 100;
+        color: #373737;
+        width: 100%;
+        font-size: 1.6em;
+        line-height: 1.4em;
+        margin-bottom: 0.6em;
+      }
+
+      p {
+        font-size: 1.2em;
+        line-height: 1.8em;
+      }
+    }
+
+  }
+
+  @media screen and (min-width: 768px) {
+    .text {
+      h1 {
+        padding-top: 15%;
+        font-weight: 100;
+        color: #373737;
+        width: 100%;
+        font-size: 2em;
+        line-height: 1.4em;
+        margin-bottom: 0.6em;
+      }
+
+      p {
+        font-size: 1.2em;
+        line-height: 1.8em;
+      }
+    }
+
+  }
+
+  @media screen and (min-width: 992px) {
+    .big-splash-section {
+      min-height: 580px;
+
+      .big-splash h1 {
+        font-size: 4.4em;
+        padding-top: 128px;
+      }
+
+      .big-splash h2 {
+          font-size: 2.4em
+      }
+    }
+
+    .text {
+      h1 {
+        padding-top: 20%;
+        font-weight: 100;
+        color: #373737;
+        width: 100%;
+        font-size: 2.4em;
+        line-height: 1.4em;
+        margin-bottom: 0.6em;
+      }
+
+      p {
+        font-size: 1.2em;
+        line-height: 1.8em;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .big-splash-section {
+      min-height: 780px;
+
+      .big-splash h1 {
+        font-size: 5.1em;
+        padding-top: 182px;
+      }
+
+      .big-splash h2 {
+          font-size: 2.8em
+      }
+    }
+
+    .text {
+      h1 {
+        padding-top: 20%;
+        font-weight: 100;
+        color: #373737;
+        width: 100%;
+        line-height: 1.4em;
+        margin-bottom: 0.8em;
+      }
+
+      p {
+        font-size: 1.2em;
+        line-height: 1.8em;
+      }
+    }
+  }
+
+  .tour-one-section {
+    background-color: #fafafa;
+    color: #373737;
+    border-bottom: solid 1px #eee;
+
+    .text {
+      width: 40%;
+      float: left;    
+    } 
+
+    .image {
+      max-width: 50%;
+      float: right; 
+      margin-top: 25px;
+    }
+  }
+
+  .tour-two-section {
+    background-color: #fff;
+    color: #373737;
+    border-bottom: solid 1px #eee;
+
+    .text {
+      width: 40%;
+      float: right;    
+    } 
+
+    .image {
+      max-width: 50%;
+      float: left; 
+      margin-top: 25px;
+    }
+  }
+
+  .tour-three-section {
+    background-color: #fafafa;
+    color: #373737;
+    border-bottom: solid 1px #eee;
+
+    .text {
+      width: 40%;
+      float: left;    
+    } 
+
+    .image {
+      max-width: 50%;
+      float: right; 
+      margin-top: 25px;
+    }
+  }
+
+  .sign-up-section {
+    background: url("/assets/splash/splashmural-second.jpg") center center fixed no-repeat;
+    
+
+    .background-overlay {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+    
+    .inner-tour-wrapper {
+      padding: 5% 25%;
+    }
+    h1 {
+      font-size: 4em;
+      float: left;
+      font-weight: 100 !important;
+      margin-bottom: 20px;
+    }
+
+
+    .connect-fb-button {
+      float:right;
+      vertical-align: middle;
+      a {
+        margin: 0;
+        margin-right: 25%;
+        margin-left: 25px;
+      }
+    }
+  }
+
+  .footer {
+    position: relative;
+    height: 50px;
+    ul {
+      position: absolute;
+      bottom: 3%;
+      right: 0;
+      margin-right: 25px;
+      z-index: 1;
+
+      li span.copyright {
+        font-family: Sacramento;
+        font-size: 1.6em;
+      }
+
+      li {
+        display: inline-block;
+        margin-right: 20px;
+        height: 20px;
+        vertical-align: bottom;
+        font-size: 1.4em;
+        color: #6d7174;
+        
+        a {
+          color: #6d7174;
+          text-decoration: none;
+        }
+      }
+
+    }
+  }
 }

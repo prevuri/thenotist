@@ -63,6 +63,7 @@ body {
   margin: 0;
   padding: 0 !important;
   background-color: $background-color !important;
+  line-height: normal;
 }
 
 body, h1, h2, h3, h4, p {
@@ -86,7 +87,7 @@ body, h1, h2, h3, h4, p {
 //
 
 .content {
-  min-width: 788px;
+  min-width: 768px;
 }
 
 .btn {
@@ -378,35 +379,4 @@ form.new-user {
     -webkit-transition: opacity 0.2s ease;
     opacity: 0;
   }
-}
-
-.footer {
-
-  ul {
-    position: absolute;
-    bottom: 3%;
-    right: 0;
-    margin-right: 25px;
-    z-index: 1;
-
-    li span.copyright {
-      font-family: Sacramento;
-      font-size: 1.6em;
-    }
-
-    li {
-      display: inline-block;
-      margin-right: 20px;
-      height: 20px;
-      vertical-align: bottom;
-      font-size: 1.4em;
-      color: #fff;
-      a {
-        color: #fff;
-        text-decoration: none;
-      }
-
-    }
-  }
-
 }

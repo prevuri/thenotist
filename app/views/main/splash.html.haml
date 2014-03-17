@@ -2,17 +2,55 @@
 
 #splash
   .wrapper
-    .theme-background#themeback-one
-    .background-overlay
-      .notist-logo
-      %div.connect-fb-button
-        = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
-      .big-splash
+    %section.big-splash-section
+      / .background-overlay 
+      .inner-wrapper
+        .notist-logo
+        %div.connect-fb-button
+          = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
+        .big-splash
+          %h1
+            Organize. Share. Discuss.
+          %h2
+            A platform to share and discuss your notes and documents with friends and classmates.  
+      .guide
+        %a{:href => '#start-tour'}
+          %i.icon-chevron-down   
+    %section.tour-one-section#start-tour
+      .inner-tour-wrapper.clear-format
+        .text
+          %h1
+            Organize your notes, your collaborators and your mind.
+          %p
+            Spend less time worrying about finding &amp organizing your notes and more time collaborating, discussing &amp learning from your notes. Organize your notes using tags, share them with friends and discuss the relevant information.
+        .image
+          %img{:src => '/assets/notes.png'}
+
+    %section.tour-two-section
+      .inner-tour-wrapper.clear-format
+        .text
+          %h1
+            Organize your notes, your collaborators and your mind.
+          %p
+            Spend less time worrying about finding &amp organizing your notes and more time collaborating, discussing &amp learning from your notes. Organize your notes using tags, share them with friends and discuss the relevant information.
+        .image
+          %img{:src => '/assets/notes.png'}
+    %section.tour-three-section
+      .inner-tour-wrapper.clear-format
+        .text
+          %h1
+            Organize your notes, your collaborators and your mind.
+          %p
+            Spend less time worrying about finding &amp organizing your notes and more time collaborating, discussing &amp learning from your notes. Organize your notes using tags, share them with friends and discuss the relevant information.
+        .image
+          %img{:src => '/assets/notes.png'}
+    %section.sign-up-section
+      .inner-tour-wrapper.clear-format
         %h1
-          Discuss. Annotate. Comprehend.
-        %h2
-          Share and discuss notes with your friends and classmates.
-    .footer
+          Start being a notist:
+        %div.connect-fb-button
+          = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
+    %section.footer
       %ul
         %li
           &copy
