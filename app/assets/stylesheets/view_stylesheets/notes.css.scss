@@ -481,6 +481,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
   margin-left: 45px;
 }
 
+.comment-thread-container {
+  margin-bottom: 10px;
+}
+
 .comment {
     margin-left: 10px;
     width: 280px;
@@ -544,38 +548,62 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
     }
     .bottom {
       margin-top: 4px;
-      .text-link {
-        float: left;
-        color: #34495E;
-        font-weight: normal;
-        margin-right: 20px;
-        line-height: 22px;
+    }
+    .text-link {
+      float: left;
+      color: #34495E;
+      font-weight: normal;
+      margin-right: 15px;
+      line-height: 22px;
+      &:hover {
+        text-decoration: none;
+      }
+      &.primary {
+        color: #268;
+        font-weight: bold;
         &:hover {
-          text-decoration: none;
+          color: #024;
         }
-        &.primary {
-          color: #268;
-          font-weight: bold;
-          &:hover {
-            color: #024;
-          }
+      }
+      &.reply-button {
+        color: #468;
+        &:hover {
+          color: #024;
         }
-        &.secondary {
+      }
+      &.secondary {
+        color: #aaa;
+        float: left;
+        &:hover {
+          color: #666;
+        }
+        &.bullet {
           color: #aaa;
-          float: left;
-          &:hover {
-            color: #666;
-          }
-          &.delete-button.confirm-showing {
-            color: #ddd;
-            cursor: default;
-          }
+          font-size: 0.2em;
+        }
+      }
+      &.delete-button {
+        float: right;
+        margin-right: 0;
+        margin-left: 10px;
+        color: #ccc;
+        opacity: 0;
+        -webkit-transition: opacity 0.2s ease, color 0.2 ease;
+        &.confirm-showing i {
+          color: #ddd;
+          cursor: default;
         }
       }
     }
+    .comment-inner:hover {
+      .delete-button.text-link {
+        opacity: 1;
+      }
+    }
     .comment-date {
-      color: #aaa;
-      float: right;
+      float: left;
+      color: #bbb;
+      font-size: 0.9em;
     }
     .delete-confirm-panel {
       -webkit-transition: height 0.2s ease;

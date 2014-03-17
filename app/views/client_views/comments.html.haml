@@ -11,18 +11,22 @@
         .profile-container.circular
           .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
         %ng-include{:src => '"/client_views/comment.html"'}
-      .new-reply-panel.comment.reply{:'ng-show' => 'repliesShowing[parentComment.id] == true'}
+      .new-reply-panel.comment.reply
         .profile-container.circular
           .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
         .comment-inner{:'ng-style' => "{opacity: submitting ? '0.5' : '1'}"}
           .comment-body
             .user
               .name {{currentUser.name}}
-            .comment-text
-              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'replyText[parentComment.id]', :'textarea-autoheight' => 'replyText[parentComment.id]', :'textarea-autofocus' => 'repliesShowing[parentComment.id]', :'ng-enter' => 'repliesShowing[parentComment.id] && submitReply(parentComment, file.id, pageNo-1)'}
-          .bottom
+            %a.reply-button.text-link{:'ng-hide' => 'repliesShowing[parentComment.id]', :'ng-click' => 'repliesShowing[parentComment.id] = true'}
+              Add a reply
+            .comment-text{:'ng-show' => 'repliesShowing[parentComment.id]'}
+              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your reply here', :'ng-model' => 'replyText[parentComment.id]', :'textarea-autoheight' => 'replyText[parentComment.id]', :'textarea-autofocus' => 'repliesShowing[parentComment.id]', :'ng-enter' => 'repliesShowing[parentComment.id] && submitReply(parentComment, file.id, pageNo-1)', :'ng-focus' => 'repliesShowing[comment.id] = true' }
+          .bottom{:'ng-show' => 'repliesShowing[parentComment.id] == true'}
             %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, pageNo-1)"}
-              Add Comment
+              Add
+            .text-link.secondary.bullet
+              %i.icon-circle
             %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'repliesShowing[parentComment.id] = false; replyText[parentComment.id] = null'}
-              Cancel
+              %i.icon-trash
           .clear

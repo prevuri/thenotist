@@ -56,9 +56,11 @@
             %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => 'newCommentText', :'textarea-autofocus' => 'showingNewComment', :'ng-enter' => 'showingNewComment && submitParentComment()'}
         .bottom
           %a.new-comment-submit.primary.text-link{:'ng-click' => 'submitParentComment()'}
-            Add Comment
+            Add
+          .text-link.secondary.bullet
+            %i.icon-circle
           %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'showNewComment(false); newCommentText = null'}
-            Cancel
+            %i.icon-trash
         .clear
 
     #note-shift-overlay{:'ng-show' => 'expandedCommentLine != null || showingNewComment', :'ng-click' => 'expandCommentLine(null); showingNewComment = false'}
