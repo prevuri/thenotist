@@ -138,6 +138,14 @@ $shift-max-width: 1400px;
     float: left;
     margin-left: 130px;
   }
+
+  .note-owner {
+    float: left;
+    margin-left: 12px;
+    margin-top: 28px;
+    color: #aaa;
+  }
+
   .contributors {
     margin-left: 10px;
     // margin-bottom: 15px;
@@ -757,7 +765,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           // font-family: Century Gothic, sans-serif;//"Lucida Sans Unicode";
           margin-top: 5px;
           margin-left: 10px;
-          margin-bottom: 17px;
 
           width: 300px;
           white-space: nowrap;
@@ -867,10 +874,18 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           }
         }
 
+        .owner-footer {
+          float: left;
+          margin: 0px 0px 0px 11px;
+          line-height: 13px;
+          font-size: 14px;
+          color: #FFFFFF;
+        }
+
         .tags {
           position: absolute;
           z-index: 150;
-          top: 45px;
+          top: 71px;
           left: 10px;
           right: 10px;
         }
@@ -990,7 +1005,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             -moz-transition-delay: 0.2s;
             transition: width 0s ease;
             transition-delay: 0.2s;
-            width: 106px;  
+            width: 106px;
             height: 17px;
             padding: 0;
             margin: 0;
@@ -1008,7 +1023,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 
           &:hover {
             background-color: rgba(0, 0, 0, 0.4);
-            
+
             .tag-text {
               left: 0;
             }
@@ -1031,7 +1046,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           height: 100%;
           z-index: 102;
           background-color: #5E5D65;
-          
+
           &.color0 {
             background-color: rgba(160, 65, 54, 0.7);
           }
