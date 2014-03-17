@@ -20,4 +20,20 @@ module NotesHelper
       :output_thumb_prefix => ApplicationSettings.config[:output_thumb_prefix]
     }.to_yaml
   end
+
+  def destroy_activities_for_note note
+    search_query = "(trackable_id=#{note.id} AND trackable_type='Note')"
+    note.comments.each do |c|
+      search_query += " OR "
+      search_query += "(trackable_id=#{c.id} AND trackable_type='Comment')"
+    end
+    note.contributors.each do |c|
+      search_query += " OR "
+      search_query += "(trackable_id=#{c.id} AND trackable_type='Contributor')"
+    end
+
+    activities = Activity.where(search_query)
+    activities.destroy_all unless activities.blank?
+  end
+
 end
