@@ -18,38 +18,22 @@ $review-5-left: 1190px;
 #splash {
   min-height: 100%;
 
-  /* Set up proportionate scaling */
+  /* Set up proportionate scalin g */
   width: 100%;
   height: auto;
-
-  /* Set up positioning */
-  // position: fixed;
-  // top: 0;
-  // left: 0;
 
   .proper-content {
     padding-top: 40px; /* >= navbar height */
   }
-
 
   h1, h2 {
     color: white;
 
   }
 
-  .wrapper {
-    
-    
-    // height: auto !important;
-    // background-color: white;
-    // z-index: 2;
-    // position: relative;
-  }
-
   .push {
     height: 50px; /* same as the footer */
   }
-
 
   .inner-wrapper {
     // min-width: 960px;
@@ -79,7 +63,6 @@ $review-5-left: 1190px;
       clear: both;
     }
   }
-
 
   .connect-fb-button {
 
@@ -146,7 +129,6 @@ $review-5-left: 1190px;
       margin-left: 25px;
     }
 
-
     .big-splash {
       z-index: 100;
       text-align: center;
@@ -181,6 +163,7 @@ $review-5-left: 1190px;
       z-index: 1;
 
       a{
+        outline: 0;
         text-decoration: none;
         color: #fff;
       }
@@ -191,6 +174,10 @@ $review-5-left: 1190px;
         border-radius: 150px;
         padding: 10px;
         cursor: pointer;
+
+        &:hover {
+          background: rgba(255,255,255, 0.6) center center no-repeat;
+        }
       }
     }
   }
@@ -385,10 +372,10 @@ $review-5-left: 1190px;
     }
     h1 {
       font-size: 4em;
-      float: left;
+      float: right;
       font-weight: 100 !important;
       margin-bottom: 20px;
-      margin-left: 10%
+      // margin-left: 10%
     }
 
 
@@ -397,8 +384,8 @@ $review-5-left: 1190px;
       vertical-align: middle;
       a {
         margin: 0;
-        margin-right: 30%;
-        margin-left: 150px;
+        margin-right: 10%;
+        margin-left: 50px;
       }
     }
   }

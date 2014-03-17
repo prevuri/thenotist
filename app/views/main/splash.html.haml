@@ -1,9 +1,22 @@
 %link{:href=>'http://fonts.googleapis.com/css?family=Sacramento', :rel=>'stylesheet', :type=>'text/css'}
-
+:javascript
+  $(function() {
+    $('a[href*=#]:not([href=#])').click(function() {
+      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        if (target.length) {
+          $('html,body').animate({
+            scrollTop: target.offset().top
+          }, 1000);
+          return false;
+        }
+      }
+    });
+  });
 #splash
   .wrapper
     %section.big-splash-section
-      / .background-overlay 
       .inner-wrapper
         .notist-logo
         %div.connect-fb-button
@@ -16,13 +29,13 @@
       .guide
         %a{:href => '#start-tour'}
           %i.icon-chevron-down   
-    %section.tour-one-section#start-tour
+    %section.tour-one-section{:name => 'start-tour'}
       .inner-tour-wrapper.clear-format
         .text
           %h1
             Organize your notes, your collaborators and your mind.
           %p
-            Spend less time worrying about finding &amp organizing your notes and more time collaborating, discussing &amp learning from your notes. Organize your notes using tags, share them with friends and discuss the relevant information.
+            Spend less time worrying about finding &amp organizing notes and more time collaborating, discussing &amp learning from them. Organize your notes using tags, share them with friends &amp discuss relevant information.
         .image
           %img{:src => '/assets/notes.png'}
 
@@ -30,26 +43,26 @@
       .inner-tour-wrapper.clear-format
         .text
           %h1
-            Organize your notes, your collaborators and your mind.
+            Annotate and collaborate.
           %p
-            Spend less time worrying about finding &amp organizing your notes and more time collaborating, discussing &amp learning from your notes. Organize your notes using tags, share them with friends and discuss the relevant information.
+            Annotate and debate notes with friends &amp classmates without leaving the comfort of the chair. Collaborate &amp discuss your notes together with friends to solve problems, explain questions &amp prepare for evaluations.
         .image
-          %img{:src => '/assets/notes.png'}
+          %img{:src => '/assets/comments.png'}
     %section.tour-three-section
       .inner-tour-wrapper.clear-format
         .text
           %h1
-            Organize your notes, your collaborators and your mind.
+            Keep track of notes.
           %p
-            Spend less time worrying about finding &amp organizing your notes and more time collaborating, discussing &amp learning from your notes. Organize your notes using tags, share them with friends and discuss the relevant information.
+            Always know when friends add comments, upload notes &amp share notes with you. Get updates and notifications to your notes and friends' notes all in one place.
         .image
-          %img{:src => '/assets/notes.png'}
+          %img{:src => '/assets/activity.png'}
     %section.sign-up-section
       .inner-tour-wrapper.clear-format
-        %h1
-          Start being a notist:
         %div.connect-fb-button
           = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
+        %h1
+          Get started:
     %section.footer
       %ul
         %li
