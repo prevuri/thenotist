@@ -163,7 +163,7 @@
     $scope.submitComment($scope.replyText[parentComment.id], fileId, parentComment.id, fileIndex)
 
   $scope.submitComment = (text, fileId, parentId, fileIndex) ->
-    if text.replace(/[ ]/).length == 0
+    if !text || text.replace(/[ ]/).length == 0
       return
     if !$scope.submitting
       data = {
@@ -202,6 +202,12 @@
           comment.deleted = true
           if comment.parent_comment_id == null
             $scope.getGroupedComments($scope.note.uploaded_html_files[fileIndex])
+            keepLineExpanded = false
+            for commentGroup in $scope.note.uploaded_html_files[fileIndex].groupedComments
+              if commentGroup.lineId == $scope.expandedCommentLine
+                keepLineExpanded = true
+            if !keepLineExpanded
+              $scope.expandCommentLine(null)
         ).error( (data, status, headers, config) ->
           $scope.setAlert("Error deleting comment", false)
           comment.deleteFade = false
