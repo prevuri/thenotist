@@ -119,7 +119,7 @@ notistApp.directive('ngSpinner', () ->
     changeCurrentPage = () =>
       if scope.previousScroll == undefined
         scope.previousScroll = 0
-      if !scope.elHeight
+      if !scope.elHeight || scope.elHeight < 50
         scope.elHeight = $(scope.pageEl[1]).height()
       previous = scope.previousScroll
       docScroll = $(document).scrollTop()
