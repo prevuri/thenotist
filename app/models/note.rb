@@ -1,8 +1,7 @@
-# require 'RMagick'
-# include Magick
-
 class Note < ActiveRecord::Base
-  attr_accessible :description, :title, :processed, :aborted, :processing_started_at
+  include ApplicationHelper
+
+  attr_accessible :title, :processed, :aborted
 
   belongs_to :user
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
@@ -15,9 +14,6 @@ class Note < ActiveRecord::Base
 
   has_many :comments, :through => :uploaded_html_files
   has_many :tags
-
-  # want to assume that we are processing a file right away
-  before_create :start_processing!
 
   def finish_processing!
     self.update_attribute :processed, true
@@ -66,11 +62,10 @@ class Note < ActiveRecord::Base
     return false
   end
 
-  def as_json
+  def as_json user
     {
       :id => id,
       :title => title,
-      :description => description,
       :contributing_users => contributing_users.map(&:as_json),
       :uploaded_html_files => uploaded_html_files.map(&:as_json),
       :uploaded_css_files => uploaded_css_files.map(&:as_json),
@@ -79,7 +74,7 @@ class Note < ActiveRecord::Base
       :processed => processed,
       :aborted => aborted,
       :created_at => created_at,
-      :tags => tags.map(&:as_json)
+      :tags => tags_for_user(user).map(&:as_json)
     }
   end
 
@@ -95,13 +90,14 @@ class Note < ActiveRecord::Base
     }
   end
 
+  def tags_for_user user
+    self.tags.where(:user_id => user.id)
+  end
 
 private
-  def start_processing!
-    self.processing_started_at = Time.now
-  end
 
   def comment_count
     self.comments.count
   end
+
 end
