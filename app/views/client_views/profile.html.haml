@@ -4,16 +4,16 @@
   .profile-header
     .sorting-options
       %ul
+        %li.btn{:'ng-click'=> "button='buddies';", :'ng-class'=>"{ 'active' : button == 'buddies' }"}
+          Buddies 
+          %span.notist-badge
+            {{user.buddies.length}}
         %li.btn{:'ng-click'=> "button='activity';", :'ng-class'=>"{ 'active' : button == 'activity' }"}
           Activity
         %li.btn{:'ng-click'=> "button='notes';", :'ng-class'=>"{ 'active' : button == 'notes' }"}
           Notes 
           %span.notist-badge
             {{user.notes.length}}
-        %li.btn{:'ng-click'=> "button='buddies';", :'ng-class'=>"{ 'active' : button == 'buddies' }"}
-          Buddies 
-          %span.notist-badge
-            {{user.buddies.length}}
         / %li.btn{:'ng-click'=> "button='settings';", :'ng-class'=>"{ 'active' : button == 'settings' }"}
         /   Settings
 
