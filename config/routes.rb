@@ -6,8 +6,11 @@ TheNotist::Application.routes.draw do
 
   get "main/index"
 
-  root :to => 'main#index'
+  get "/about", to: "about#index"
+  # root to: "about#index"
+  # get "about/index"
 
+  root :to => 'main#index'
 
   devise_for :users, :controllers => {
     :omniauth_callbacks => "users/omniauth_callbacks"
@@ -31,7 +34,6 @@ TheNotist::Application.routes.draw do
   resources :flag_reports, :only => [:index]
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]
-  match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
 
   namespace :api do
     match 'notes/upload_form_html' => 'notes#upload_form_html', :as => :upload_form_html
@@ -39,7 +41,7 @@ TheNotist::Application.routes.draw do
     match 'activity/user' => 'activity#user', :as => :user_activity
     resources :activity
     resources :users, :only => [ :index, :show ]
-    match 'users/:id/buddies' => 'users#buddies', :as => :user_buddies, :via => :get
+    match 'users/:id/friends' => 'users#friends', :as => :user_friends, :via => :get
 
     resources :flag_reports, :only => [ :index, :create, :update ]
     resources :comments, :only => [ :index, :create, :destroy ]
@@ -47,8 +49,15 @@ TheNotist::Application.routes.draw do
     resources :notes, :only => [ :index, :show, :update, :destroy, :create ]
     match 'notes/share/' => 'notes#share', :as => :share_note
     match 'notes/unshare/' => 'notes#unshare', :as => :remove_contrib
+    match 'notes/usernotes/:id/' => 'notes#usernotes', :as => :note_usernotes
+    match 'notes/unsubscribe/:id' => 'notes#unsubscribe', :as => :unsubscribe_note
     match 'notes/contribs/:id' => 'notes#contribs', :as => :note_contribs
     match 'notes/paginate/:id' => 'notes#paginate', :as => :note_paginate, :via => :get
+    match 'search/notes' => 'search#search_notes', :as => :search_notes, :via => :get
+
+    match 'tags/:note_id' => 'tags#show', :as => :tags_show, :via => :get
+    match 'tags/:note_id' => 'tags#update', :as => :tags_update, :via => :post
+
   end
 
   match "/*path" => redirect("/?goto=%{path}")
@@ -113,5 +122,3 @@ TheNotist::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 end
-
-

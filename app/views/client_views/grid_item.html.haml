@@ -1,65 +1,71 @@
-.note-item
-  %a.big-link{:'ng-show' => 'note.processed',:'ng-href' => '/notes/{{note.id}}'}
-  .img-preview{:'ng-show' => 'note.processed', :style => 'background: url({{note.uploaded_thumb_files[0].public_path}}) no-repeat 50% 10%'}
-  .process-spinner{:'ng-show' => '!note.processed'}
+.note-item{:'ng-init' => 'itemIndex = $index', :'loaded' => true }
+  %a.big-link{:'ng-if' => 'note.processed && noteDeleteClicked != note.id',:'ng-href' => '/notes/{{note.id}}'}
+  .img-preview{:'ng-if' => 'note.processed', :'ng-style' => '{"background-image": "url(" + note.uploaded_thumb_files[0].public_path + ")"}'}
+
+  .delete-confirmation{:'ng-if' => 'noteDeleteClicked == note.id'}
+    %h3
+      Delete this note?
+    %a.btn.cancel{:'ng-click' => 'cancelDelete()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Cancel Delete"}
+      Cancel
+    %a.btn.delete{:'ng-if' => 'note.shared', :'ng-click' => 'unsubscribeNote()'}
+      Delete
+    %a.btn.delete{:'ng-if' => '!note.shared', :'ng-click' => 'deleteNote()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Verify Delete" }
+      Delete
+
+  .process-spinner{:'ng-if' => '!note.processed && !note.aborted && noteDeleteClicked != note.id'}
     %i.icon-refresh.icon-white.icon-spin
     %h2
-      Processing...
-  .info-preview
-    %h2{:'ng-show' => 'note.processed'}
-      %a.text-link{:'ng-href' => '/notes/{{note.id}}'} {{note.title}}
-    %h2{:'ng-show' => '!note.processed'}
-      %a.text-link{:'ng-href' => '#'} {{note.title}}
-    %h4.description{:'ng-show' => 'note.processed'}
-      {{note.description}}
-  .btn-group.appear-hover{:'ng-show' => 'note.processed'}
-    %div{:'ng-if' => 'note.isShared'}
-      %a.btn.usub{:'ng-href' => '{{note.unsubscribe_url}}'}
+      .text-link
+        Processing {{note.title}}...
+
+  .aborted-notice{:'ng-if' => 'note.aborted && noteDeleteClicked != note.id'}
+    %i.icon-exclamation.icon-white
+    %h2
+      Aborted
+    %h4
+      Please try again later...
+
+  .info-preview{:'ng-class' => '"color" + itemIndex%7'}
+    %h3{:'ng-if' => 'note.processed'}
+      .text-link
+        {{note.title}}
+      .owner-footer
+        by {{note.user.name}}
+
+  .tags{:'ng-if' => 'note.processed'}
+    .tag{:'ng-repeat' => 'tag in note.tags', :'ng-if' => '$index < 9', :'ng-click' => 'tagClicked(tag)'}
+      .delete-tag-btn{:'ng-click' => 'deleteTag(note, tag); $event.stopPropagation()'}
         %i.icon-remove
-    %div{:'ng-if' => '!note.isShared'}
-      %a{:'ng-click' => 'deleteNote(note, $index)'}
+      .tag-text {{tag.name}}
+    .tag.add-tag{:'ng-click' => 'addingTag = true', :'ng-class' => 'addingTag ? "expanded" : (note.tags.length == 0 ? "collapsed with-text" : "collapsed")', :'ng-mouseenter' => 'mouseOnAdd = true', :'ng-mouseleave' => 'mouseOnAdd = false', :'add-tag-error' => true}
+      %input.add-tag-field{:type => 'text', :'ng-model' => 'addTagText', :'ng-change' => 'addTagTextChanged()', :'ng-show' => 'addingTag', :'textarea-autofocus' => 'addingTag', :'ng-blur' => 'deselectedAddField()', :'ng-enter' => 'addNewTag(note, addTagText)', :'escape' => 'addingTag = false; addTagText = null', :'backspace' => 'addingTag = !addTagText ? false : true', :'tab' => 'tabPressed(note, addTagText)', :'ng-trim' => 'false'}
+      .add-text{:'ng-if' => 'note.tags.length == 0', :'ng-hide' => 'addingTag'} add tag
+      .add-tag-btn{:'ng-click' => 'addButtonClicked($event)'}
+        %i.icon-plus
+
+  .btn-group.appear-hover{:'ng-if' => 'noteDeleteClicked != note.id'}
+    %div
+      %a{:'ng-click' => 'deleteClickedNote(note, $index)', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Delete" }
         %i.icon-remove.btn
-  
-  / %div{:'ng-if' => 'note.isShared'}
-  /   .share-note-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
-  /     .share-note-container.modal-body
-  /       .form-container
-  /         .form
-  /       %h4 Note Shared With:
-  /       .contributor-list
-  /         .contrib-list-item{:'ng-repeat' => 'contrib in note.contributors'}
-  /           .contrib-info
-  /             .profile-container.circular
-  /               %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
-  /             .profile-link-container
-  /               %a{:'ng-href' => '{{profilePath(contrib.user)}}'} {{contrib.user.name}}
-  /             .delete-contrib
-  /               %i.icon-remove.btn
-  /             / TODO: create a delete friend link and connect it to the delete friend for the API
-      
-  /     .share-interaction.modal-footer
-  /       .error-label.hidden
-  /       .btn.btn-primary.share-button
-  /         %i.icon-share-alt.share-note-icon
-  /           .share-action-text
-  /             Share
 
-
-  #list-footer{:'ng-show' => 'note.processed'}
+  #list-footer{:'ng-if' => 'note.processed && noteDeleteClicked != note.id'}
     .big-info
       .contributors
-        %div{:'ng-repeat' => 'contrib in note.contributors'}
-          .profile-container.circular
-            %img.profile-image.circular{:'ng-src' => 'contrib.user.user_fb_data.profile_image'}
-        .profile-container.circular.share-note
-          %i.icon-plus{:'ng-click' => 'showContributorsModal()'}
-    .tiny-info
-      %i.icon-comments {{note.comment_count}}
+        .profile-container.circular{:'ng-if' => 'note.shared'}
+          %img.profile-image.circular{:'ng-src' => '{{note.user.user_fb_data.profile_image}}'}
+        %div{:'ng-repeat' => 'contrib in note.contributing_users | orderBy:name | limitTo:3'}
+          .profile-container.circular{:'ng-if' => 'contrib.id != currentUser.id'}
+            %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
+        .profile-container.circular.share-note{:'ng-if' => 'note.contributing_users.length > 3'}
+          %span
+            {{note.contributing_users.length}}
+        .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
+          %i.icon-share
 
-  %div{:'ng-if' => '!note.isShared'}
-    .tooltip.fade.bottom.in.hidden{:'ng-hide' => 'note.tooltipHidden'}
-      .tooltip-arrow
-      .ui-widget.tooltip-inner
-        %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
+  / %div{:'ng-if' => '!note.shared'}
+  /   .tooltip.fade.bottom.in.hidden{:'ng-if' => '!note.tooltipHidden'}
+  /     .tooltip-arrow
+  /     .ui-widget.tooltip-inner
+  /       %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
 
 / %img{:src => "#{note.uploaded_files.first.public_path}"}

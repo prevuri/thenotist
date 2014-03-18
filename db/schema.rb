@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140222221601) do
+ActiveRecord::Schema.define(:version => 20140318181858) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -51,6 +51,11 @@ ActiveRecord::Schema.define(:version => 20140222221601) do
     t.string   "line_id"
   end
 
+  add_index "comments", ["parent_comment_id"], :name => "index_comments_on_parent_comment_id"
+  add_index "comments", ["uploaded_html_file_id", "parent_comment_id"], :name => "index_comments_on_uploaded_html_file_id_and_parent_comment_id"
+  add_index "comments", ["uploaded_html_file_id"], :name => "index_comments_on_uploaded_html_file_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
   create_table "contributors", :force => true do |t|
     t.integer  "user_id"
     t.integer  "shared_note_id"
@@ -62,6 +67,17 @@ ActiveRecord::Schema.define(:version => 20140222221601) do
   add_index "contributors", ["shared_note_id"], :name => "index_contributors_on_shared_note_id"
   add_index "contributors", ["user_id"], :name => "index_contributors_on_user_id"
 
+  create_table "fb_friends", :force => true do |t|
+    t.string   "uid"
+    t.string   "name"
+    t.string   "profile_image"
+    t.integer  "user_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "fb_friends", ["user_id"], :name => "index_fb_friends_on_user_id"
+
   create_table "flag_reports", :force => true do |t|
     t.integer  "note_id"
     t.boolean  "report_resolved"
@@ -70,21 +86,20 @@ ActiveRecord::Schema.define(:version => 20140222221601) do
     t.string   "report_type"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.integer  "user_id"
   end
 
   create_table "notes", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.string   "description"
-    t.integer  "course_id"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.boolean  "processed",             :default => false
-    t.datetime "processing_started_at"
-    t.boolean  "aborted",               :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "processed",  :default => false
+    t.boolean  "aborted",    :default => false
   end
 
   add_index "notes", ["processed"], :name => "index_notes_on_processed"
+  add_index "notes", ["user_id"], :name => "index_notes_on_user_id"
 
   create_table "relationships", :force => true do |t|
     t.integer  "follower_id"
@@ -98,12 +113,28 @@ ActiveRecord::Schema.define(:version => 20140222221601) do
   add_index "relationships", ["follower_id", "buddy_id"], :name => "index_relationships_on_user_id_and_buddy_id", :unique => true
   add_index "relationships", ["follower_id"], :name => "index_relationships_on_user_id"
 
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "note_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "tags", ["name", "user_id", "note_id"], :name => "index_tags_on_name_and_user_id_and_note_id"
+  add_index "tags", ["name"], :name => "index_tags_on_name"
+  add_index "tags", ["note_id"], :name => "index_tags_on_note_id"
+  add_index "tags", ["user_id", "note_id"], :name => "index_tags_on_user_id_and_note_id"
+  add_index "tags", ["user_id"], :name => "index_tags_on_user_id"
+
   create_table "uploaded_css_files", :force => true do |t|
     t.string   "public_path"
     t.integer  "note_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "uploaded_css_files", ["note_id"], :name => "index_uploaded_css_files_on_note_id"
 
   create_table "uploaded_html_files", :force => true do |t|
     t.integer  "note_id"
@@ -114,6 +145,8 @@ ActiveRecord::Schema.define(:version => 20140222221601) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "uploaded_html_files", ["note_id"], :name => "index_uploaded_html_files_on_note_id"
+
   create_table "uploaded_thumb_files", :force => true do |t|
     t.string   "public_path"
     t.integer  "note_id"
@@ -121,6 +154,8 @@ ActiveRecord::Schema.define(:version => 20140222221601) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  add_index "uploaded_thumb_files", ["note_id"], :name => "index_uploaded_thumb_files_on_note_id"
 
   create_table "user_fb_data", :force => true do |t|
     t.integer  "user_id"
@@ -130,6 +165,8 @@ ActiveRecord::Schema.define(:version => 20140222221601) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "user_fb_data", ["user_id"], :name => "index_user_fb_data_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -152,5 +189,6 @@ ActiveRecord::Schema.define(:version => 20140222221601) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["uid"], :name => "index_users_on_uid"
 
 end

@@ -21,14 +21,12 @@
 //
 //= require jquery-fileupload/basic
 //= require jquery-fileupload/vendor/tmpl
-//= require jquery.spin
-//= require jquery.ui.autocomplete
 //= require underscore
-//= require magicsuggest-1.3.1
 //= require s3_direct_upload
+//= require googleanalytics
+//= require d3
 //
 // Removing these requirements for gem
 // require bootstrap
 //= require_directory ../../../vendor/assets/javascripts/flat-ui/
-//= require d3
 

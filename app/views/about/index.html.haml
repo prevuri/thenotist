@@ -1,0 +1,110 @@
+:javascript
+  $(function() {
+    $('a[href*=#]:not([href=#])').click(function() {
+      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        if (target.length) {
+          $('html,body').animate({
+            scrollTop: target.offset().top
+          }, 1000);
+          return false;
+        }
+      }
+    });
+  });
+
+#details
+  .wrapper
+  %section.small-header
+    .inner-wrapper
+      %a{:href => '/'}
+        .notist-logo
+      %div.connect-fb-button
+        = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
+  %section.about#about
+    .inner-tour-wrapper.clear-format
+      %h1
+        About
+      %h3
+        What is the notist?
+      %p.break-after
+        School is tough. Everyone takes notes to help them through school. But what if you take terrible notes? What if your notes are unclear or incomplete? What if you take forever trying to figure out which notes to study? What if you don't have any notes or you lost them? 
+        %b
+          the notist 
+        is the answer.
+      %h3 
+        What does it do?
+      %p
+        %b 
+          the notist
+        is a platform for you to organize and improve your notes. We provides a minimalist interface that organizes your notes for you so you can get to them fast. The notes are stored in the cloud, so you can access them anywhere, anytime. Our collaboration system allows you and others to collaborate on your notes, clarifying uncertainties that you might have had before. If you don’t have any notes, you can view notes shared by other people. TheNotist is a platform solution designed to simplify the note taking and sharing process.
+  %section.team#team
+    .inner-tour-wrapper.clear-format
+      %h1 Team
+      .founder-info
+        .image
+          %img{:src => '/assets/founder-matt.jpg'}
+        %h2.name
+          Matthew Lam
+      .founder-info
+        .image
+          %img{:src => '/assets/founder-vlad.jpg'}
+        %h2.name
+          Vladimir Li
+      .founder-info
+        .image
+          %img{:src => '/assets/founder-piyush.jpg'}
+        %h2.name
+          Piyush Revuri
+      .founder-info
+        .image
+          %img{:src => '/assets/founder-josh.jpg'}
+        %h2.name
+          Josh Zivot
+  %section.legal#legal
+    .inner-tour-wrapper.clear-format
+      %h1 Legal
+      %h3 Third-party Data
+      %p
+        Addition and removal of third party data is done
+        at the user’s discretion, though the notist provides tools to report data that infringes on intellectual property. These reports will initiate the removal of the infringing data pending investigation by the website’s moderators.
+        legal/ethical/environmental/social report 2
+        The data that is uploaded by the third party will only be available to a set of users approved by the uploader. However, there may be cases where, for example, a student shares a professor’s notes with a wider audience than they would like. To protect ourselves from liability for any breach in intellectual property from our users, we will provided an end user license agreement (see Appendix A) which users must accept before they will be able to share notes.
+      %h3 End User License Agreement
+      %p
+        By using this website ("www.notist.co"), you agree to be bound by the terms outlined below. You may use this website only in compliance with these terms.
+        You agree that the website can be stopped, suspended, or modified in any possible way without any prior notice to you or anyone else. When using this website, you provide us with some personal in-
+        formation, and we reserve the right to retain that information on our servers. You remain the owner of this information and may request to have it removed at any time.
+        This website allows you to upload files. The website does not retain original copies of the files, and reserves the right to remove them at any time without any notice to you. You remain the owner of these files and can request their removal at any time. The website takes no responsibility for the accuracy, legality, completeness, or appropriateness of any files or other information that you choose to provide.
+        The files you upload may be protected by copyright laws in dif- ferent countries, and it is entirely and solely your responsbility to protect the rights to that intellectual property. Any file or information that is received by the website can be flagged for removal at any time. If any information is flagged for removal, it will remain inaccessible to you or any other user until our staff reviews the issue.
+        This website gives you an ability to share files with other users of the website. We take no responsibility for what and with whom you choose to share files, and the implications of such actions.
+        Limitation of Liability TO THE FULLEST EXTENT PERMITTED BY LAW, IN NO EVENT WILL NOTIST, OR ITS EMPLOYEES, BE LIABLE FOR (A) ANY INDIRECT, SPECIAL, INCIDENTAL, PUNITIVE, EXEMPLARY OR CONSEQUENTIAL (INCLUDING LOSS OF USE, DATA, BUSINESS, OR PROFITS) DAMAGES, WHETHER OR NOT NOTIST HAS BEEN WARNED OF THE POSSIBILITY OF SUCH DAMAGES.
+      %h3 Intellectual Property
+      %p
+        TheNotist is proprietary and closed-source to protect the team's intellectual contributions to the web application, and to allow the team to release the software commercially without exposing functionality to competitors.
+
+  %section.footer
+    %ul
+      %li
+        &copy
+        2014
+        &nbsp
+        %span.copyright
+          the notist
+      %li
+        |
+      %li
+        %a.splash-link{:href => '/'}
+          home
+      %li
+        |
+      %li
+        %a.twitter-link{:href => 'https://twitter.com/thenotist', :target => '_blank'}
+          %i.icon-twitter
+          follow
+      %li
+        %a.twitter-link{:href => '#', :target => '_blank'}
+          %i.icon-facebook
+          facebook
+

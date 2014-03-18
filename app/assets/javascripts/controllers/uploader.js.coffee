@@ -1,4 +1,4 @@
-@UploadCtrl = ($scope, $http, $sce, UploadFormHtml) ->
+@UploadCtrl = ($scope, $http, $sce, UploadFormHtml, s3Upload) ->
 
   @statusTextDefault = "Choose file"
   @statusText2Default = ".pdf"
@@ -21,7 +21,7 @@
   $scope.progressText = ""
   $scope.progressPercent = 0
 
-  # Form params - file, title, description
+  # Form params - file, title
   $scope.newNote = {}
 
   $scope.init = ->
@@ -29,17 +29,9 @@
     return false
 
   $scope.s3uploadFormInit = () ->
-    $('#upload_form_tag').S3Uploader
-      remove_completed_progress_bar: false
-      allow_multiple_files: false
-      click_submit_target: $('.direct-upload-submit')
-
-    $('#upload_form_tag').bind "s3_upload_complete", (e, content) ->
-      s3_key_val = $('#s3_key_tag').val()
-      $scope.s3UploadComplete(s3_key_val)
-
-    $('#upload_form_tag').bind "s3_upload_failed", (e, content) ->
-      $scope.handleError()
+    s3Upload.init()
+    s3Upload.uploadComplete($scope.s3UploadComplete)
+    s3Upload.uploadFailed($scope.handleError)
 
   $scope.getUploadFormHtml = () ->
     success = (data) ->
@@ -48,23 +40,26 @@
       $scope.setAlert("Error loading uploader", false)
     UploadFormHtml.get(success, error)
 
+
   $scope.submitClicked = () ->
     $scope.validateUploadForm()
     if $scope.validated
       $scope.uploadShowing = true
       $scope.controlsEnabled = false
       $scope.modalShowing = false
-      $('.new-note-form-container').modal('hide');
+      $('.new-note-form-container').modal('hide')
       $('.direct-upload-submit').trigger('click')
+    return false
+
 
   $scope.s3UploadComplete = (s3KeyVal) ->
     $http({method: 'POST', url: '/api/notes', params: {
       s3_key: s3KeyVal,
-      title: $scope.newNote.title,
-      description: $scope.newNote.description
+      title: $scope.newNote.title
     }}).
     success( (data, status, headers, config) ->
       $scope.resetUI()
+      $scope.getUploadFormHtml()
       $scope.$parent.updateNotes()
     )
     .error( (data, status, headers, config) ->
@@ -75,7 +70,7 @@
     file = data.files[0]
     if $scope.isPdf(data)
       if !$scope.newNote.title
-        $scope.newNote.title = file.name
+        $scope.newNote.title = $scope.parseFileName(file.name)
       $scope.newNote.fileData = data
       $scope.validateUploadForm()
       $scope.updateFileName()
@@ -105,7 +100,7 @@
     $scope.modified = true
     $scope.fileError = !$scope.newNote.fileData || !$scope.newNote.fileData.files[0].name.length
     $scope.titleError = $.trim( $scope.newNote.title ) == ''
-    $scope.typeError = $scope.isPdf($scope.newNote.fileData)
+    $scope.typeError = $scope.isPdf($scope.newNote.fileData) if !$scope.fileError
     $scope.validated = !$scope.fileError && !$scope.titleError
 
   $scope.updateFileName = () =>
@@ -134,4 +129,8 @@
     type = /(\.|\/)(pdf)$/i
     file = fileData.files[0]
     return type.test(file.type) || type.test(file.name)
+
+  $scope.parseFileName = (fileName) ->
+    camelCased = fileName.charAt(0).toUpperCase() + fileName.slice(1)
+    return camelCased.replace(/\.[^/.]+$/, "")
 

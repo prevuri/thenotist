@@ -1,22 +1,32 @@
-.comment-thread-container{:'ng-repeat' => "parentComment in file.comments", :'ng-style' => "{top: commentY(parentComment.line_id)+'px'}"}
-  .comment.parent{:'ng-show' => 'expandedCommentLine == parentComment.line_id'}
-    %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
-    .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments' }
-      .profile-container.circular
+.comment-group-container{:'ng-repeat' => 'commentGroup in file.groupedComments', :'ng-style' => "{top: commentGroup.yCoord+'px'}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"'}
+  .comment-thread-container{:'ng-repeat' => "parentComment in commentGroup.comments", :'ng-hide' => "parentComment.deleted"}
+    .comment-button{:'ng-click' => 'expandCommentLine(commentGroup.lineId); showDeleteConfirm.global = null', :'ng-style' => "{'margin-left': $index*0.15 + 'em', 'z-index': '99'-$index}", :'ng-class' => 'expandedCommentLine == commentGroup.lineId ? "active" : "inactive"', :'ng-hide' => 'expandedCommentLine != commentGroup.lineId && $index > 4'}
+      .profile-container.circular{:'animate-timeout' => true, :'ng-class' => 'animate ? "animate" : ""'}
         .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
-      %ng-include{:src => '"/client_views/comment.html"'}
-    .new-reply-panel.comment.reply{:'ng-show' => 'parentComment.showNewReply'}
-      .profile-container.circular
-        .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
-      .comment-inner
-        .comment-body
-          .user
-            .name {{currentUser.name}}
-          .comment-text
-            %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'parentComment.newReplyText', :'textarea-autoheight' => true, :autofocus => 'parentComment.showNewReply'}
-        .bottom
-          %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, $parent.$index)"}
-            Add Comment
-          %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'parentComment.showNewReply = false'}
-            Cancel
-        .clear
+          .profile-image.circular.overlay{:'ng-class' => '$index == 4 ? "blank" : ""'}
+            .ellipsis{:'ng-if' => '$index == 4'} ...
+    .comment.parent{:'ng-show' => 'expandedCommentLine == commentGroup.lineId'}
+      %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
+      .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments', :'ng-hide' => "comment.deleted"}
+        .profile-container.circular
+          .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
+        %ng-include{:src => '"/client_views/comment.html"'}
+      .new-reply-panel.comment.reply
+        .profile-container.circular
+          .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
+        .comment-inner{:'ng-style' => "{opacity: submitting ? '0.5' : '1'}"}
+          .comment-body
+            .user
+              .name {{currentUser.name}}
+            %a.reply-button.text-link{:'ng-hide' => 'replyShowing.global == parentComment.id', :'ng-click' => 'replyShowing.global = parentComment.id'}
+              Add a reply
+            .comment-text{:'ng-show' => 'replyShowing.global == parentComment.id'}
+              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your reply here', :'ng-model' => 'replyText[parentComment.id]', :'textarea-autoheight' => 'replyText[parentComment.id]', :'textarea-autofocus' => 'replyShowing.global == parentComment.id', :'textarea-cursor' => 'savedCursor', :'ng-enter' => '(replyShowing.global == parentComment.id) && submitReply(parentComment, file.id, pageNo-1)', :'ng-focus' => 'replyShowing.global = parentComment.id'}
+          .bottom{:'ng-show' => 'replyShowing.global == parentComment.id'}
+            %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, pageNo-1)"}
+              Add
+            .text-link.secondary.bullet
+              %i.icon-circle
+            %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'replyShowing.global = null; replyText[parentComment.id] = null'}
+              %i.icon-trash
+          .clear

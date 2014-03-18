@@ -14,6 +14,36 @@ service.factory("NotesApi", ($resource) ->
   $resource(
     "/api/flag_reports", {}
   )
+).factory("NotesUserApi", ($resource) ->
+  $resource(
+    "/api/notes/usernotes/:id", {},
+  )
+).factory("NotesShareApi", ($resource) ->
+    $resource(
+      "/api/notes/share", {},
+      share: {
+        method: 'POST'
+      }
+    )
+).factory("NotesUnshareApi", ($resource) ->
+    $resource(
+      "/api/notes/unshare", {},
+      remove: {
+        method: 'POST'
+      }
+    )
+).factory("NotesUnsubscribeApi", ($resource) ->
+    $resource(
+      "/api/notes/unsubscribe/:id", {},
+      remove: {
+        method: 'GET'
+      }
+    )
+)
+.factory("TagsApi", ($resource) ->
+  $resource(
+    "/api/tags/:id", {}
+  )
 ).factory("UploadFormHtml", ($resource) ->
   $resource(
     "/api/notes/upload_form_html", {}
@@ -30,8 +60,8 @@ service.factory("NotesApi", ($resource) ->
   $resource(
     "/api/users/:id", {}
   )
-).factory("UserBuddiesApi", ($resource) ->
+).factory("UserFriendsApi", ($resource) ->
   $resource(
-    "/api/users/:id/buddies", {}
+    "/api/users/:id/friends", {}
   )
 )

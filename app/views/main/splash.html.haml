@@ -1,14 +1,94 @@
+%link{:href=>'http://fonts.googleapis.com/css?family=Sacramento', :rel=>'stylesheet', :type=>'text/css'}
+:javascript
+  $(function() {
+    $('a[href*=#]:not([href=#])').click(function() {
+      if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+        if (target.length) {
+          $('html,body').animate({
+            scrollTop: target.offset().top
+          }, 1000);
+          return false;
+        }
+      }
+    });
+  });
 #splash
   .wrapper
-    .theme-background#themeback-one      
-    .background-overlay
-      .notist-logo
-      %div.connect-fb-button
-        = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
-      .big-splash
-        %h1
-          Discuss. Annotate. Comprehend.
-        %h2
-          Share and discuss notes with your friends and classmates.
+    %section.big-splash-section
+      .inner-wrapper
+        .notist-logo
+        %div.connect-fb-button
+          = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
+        .big-splash
+          %h1
+            Organize. Share. Discuss.
+          %h2
+            A platform to share &amp discuss your notes &amp documents with friends and classmates.  
+      .guide
+        %a{:href => '#start-tour'}
+          %i.icon-chevron-down   
+    %section.tour-one-section{:name => 'start-tour'}
+      .inner-tour-wrapper.clear-format
+        .text
+          %h1
+            Organize your notes, your collaborators and your mind.
+          %p
+            Spend less time worrying about finding &amp organizing notes and more time collaborating, discussing &amp learning from them. Organize your notes using tags, share them with friends &amp discuss relevant information.
+        .image
+          %img{:src => '/assets/notes.png'}
 
-     
+    %section.tour-two-section
+      .inner-tour-wrapper.clear-format
+        .text
+          %h1
+            Annotate and collaborate.
+          %p
+            Annotate and debate notes with friends &amp classmates without leaving the comfort of the chair. Collaborate &amp discuss your notes together with friends to solve problems, explain questions &amp prepare for evaluations.
+        .image
+          %img{:src => '/assets/comments.png'}
+    %section.tour-three-section
+      .inner-tour-wrapper.clear-format
+        .text
+          %h1
+            Keep track of notes.
+          %p
+            Always know when friends add comments, upload notes &amp share notes with you. Get updates and notifications related to your's and friends' notes all in one place.
+        .image
+          %img{:src => '/assets/activity.png'}
+    %section.sign-up-section
+      .inner-tour-wrapper.clear-format
+        %div.connect-fb-button
+          = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
+        %h1
+          Get started:
+    %section.footer
+      %ul
+        %li
+          &copy
+          2014
+          &nbsp
+          %span.copyright
+            the notist
+        %li
+          |
+        %li
+          %a.splash-link{:href => '/about#about'}
+            about
+        %li
+          %a.splash-link{:href => '/about#team'}
+            team
+        %li
+          %a.splash-link{:href => '/about#legal'}
+            legal
+        %li
+          |
+        %li
+          %a.twitter-link{:href => 'https://twitter.com/thenotist', :target => '_blank'}
+            %i.icon-twitter
+            follow
+        %li
+          %a.twitter-link{:href => '#', :target => '_blank'}
+            %i.icon-facebook
+            facebook

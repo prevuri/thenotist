@@ -1,5 +1,66 @@
 .profile{:'ng-controller' => 'ProfileCtrl', :'ng-init' => 'init()'}
-  %ng-include{:src => "'/client_views/user_info.html'"}
+  .profile-mast
+    %ng-include{:src => "'/client_views/user_info.html'"}
+  .profile-header
+    .sorting-options
+      %ul
+        %li.btn{:'ng-click'=> "button='buddies';", :'ng-class'=>"{ 'active' : button == 'buddies' }"}
+          Buddies 
+          %span.notist-badge
+            {{user.buddies.length}}
+        %li.btn{:'ng-click'=> "button='activity';", :'ng-class'=>"{ 'active' : button == 'activity' }"}
+          Activity
+        %li.btn{:'ng-click'=> "button='notes';", :'ng-class'=>"{ 'active' : button == 'notes' }"}
+          Notes 
+          %span.notist-badge
+            {{user.notes.length}}
+        / %li.btn{:'ng-click'=> "button='settings';", :'ng-class'=>"{ 'active' : button == 'settings' }"}
+        /   Settings
 
-  .activity-list-container
-    %div{:'ng-bind-html' => "activityHtml"}
+  %ng-include{:src => "'/client_views/share_form.html'"}
+  
+  .activities-section{:'ng-if'=>"button == 'activity'"}
+    .activity-list-container
+      %div{:'ng-bind-html' => "activityHtml"}
+
+  .notes-section{:'ng-controller' => 'NotesCtrl', :'ng-init' => "init('Profile', currentUserProfile, idParam)", :'ng-if'=>"button == 'notes'"}
+    .notes-list-container
+      .notes-list
+        .notes-list-item{ :'ng-if' => 'currentUserProfile', :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
+          %ng-include{:src => "'/client_views/grid_item.html'"}
+        .notes-list-item{ :'ng-if' => '!currentUserProfile', :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
+          .note-item{:'ng-if' => '!note.hasAccess', :'ng-init' => 'itemIndex = $index'}
+            .access-notice
+              %i.icon-lock.icon-white
+              %h2
+                No Access
+            .info-preview
+              %h3{:'ng-if' => 'note.processed'}
+                .text-link.base-link
+                  {{note.title}}
+          %ng-include{:'ng-if' => 'note.hasAccess', :src => "'/client_views/grid_item.html'"}
+
+
+  .buddies-section{:'ng-if'=>"button == 'buddies'"}
+    .buddies-list-container
+      %ul.buddies-list
+        %li.buddies-list-item{ :'ng-repeat' => 'friend in friends'}
+          %a{:'ng-href' => '/profile/{{friend.id}}'}
+            .overall-section
+              .profile-image-section
+                .profile-container.circular
+                  .profile-image.circular{:'ng-style' => "{background: 'url(' + friend.user_fb_data.profile_image + ') no-repeat'}"}
+
+              .profile-section
+                .info
+                  %h3.ellipsis
+                    {{friend.name}}
+                  .small-info
+                    .notes-count
+                      {{friend.notes.length}} notes
+                    .buddies-count
+                      {{friend.buddies.length}} buddies
+
+
+  .settings-section{:'ng-if'=>"button == 'settings'"}
+

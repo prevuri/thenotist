@@ -1,7 +1,7 @@
 class Api::UsersController < ApplicationController
   include ApiHelper
 
-  before_filter :get_user, :only => [ :show, :buddies ]
+  before_filter :get_user, :only => [ :show, :friends ]
 
   def index
     return render :json => {
@@ -17,10 +17,10 @@ class Api::UsersController < ApplicationController
     }
   end
 
-  def buddies
+  def friends
     return render :json => {
-      :success => true,
-      :buddies => @user.buddies.map(&:as_json)
+      :success  => true,
+      :friends => @user.buddies.map(&:as_json)
     }
   end
 

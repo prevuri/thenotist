@@ -1,6 +1,6 @@
 .subsection
 	%ul.note-list
-		- activity.trackable.shared_note.uploaded_html_files[0...4].each do |file|
+		- activity.trackable.shared_note.uploaded_thumb_files[0...3].each do |file|
 			%li.note-div
 				%a{:'href' => "/notes/#{activity.trackable.shared_note.id}"}
-					.note-image{:style => "background: url(#{file.thumb_url})"}
+					.note-image{:style => "background: url(#{file.public_path})"}

@@ -1,0 +1,40 @@
+.share-note-form-container.modal.hide.fade{ :'ng-controller' => 'ShareCtrl', :'ng-init' => "init()", :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true}
+  .share-note-container.modal-body
+    .form-container
+      .search-friend-box.form-group
+        %input.form-control{:type => 'text', :'ng-model' => 'searchFriends'}
+        %span.input-icon.icon-search
+    %div
+      %h4 {{sharedNote.title}} shared with:
+    .contributor-list
+      .contrib-list-item{:'ng-repeat' => 'contrib in sharedNote.contributing_users | filter:searchFriends', :'ng-click' => 'unshareNote(contrib)'}
+        .contrib-info
+          .profile-container.circular
+            %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
+          .profile-link-container
+            -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
+            {{contrib.name}}
+          .delete-contrib
+            .btn.noTransition
+              %span Remove
+              %i.icon-remove
+
+    %div
+      %h4.friend Friends:
+    .contributor-list
+      .contrib-list-item{:'ng-repeat' => 'friend in friends | filter: searchFriends', :'ng-click' => 'shareNote(friend)'}
+        .contrib-info
+          .profile-container.circular
+            %img.profile-image.circular{:'ng-src' => '{{friend.user_fb_data.profile_image}}'}
+          .profile-link-container
+            -# %a{:'ng-href' => '{{profilePath(contrib)}}'} {{contrib.name}}
+            {{friend.name}}
+          .add-contrib
+            .btn.noTransition
+              %span Share
+              %i.icon-plus
+  .share-interaction.modal-footer
+    .error-label.hidden
+    .btn.btn-primary.share-button{:'ng-click' => 'hideShareModal()'}
+      .share-action-text
+        Close

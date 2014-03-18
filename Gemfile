@@ -11,6 +11,9 @@ gem 'omniauth-facebook'
 gem 'haml-rails'
 gem 'pg'
 gem 's3_direct_upload'
+gem 'fast-stemmer'
+gem 'meta-tags', :require => 'meta_tags'
+gem 'sitemap_generator'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -53,9 +56,3 @@ group :development, :test do
   gem 'teaspoon'
   gem 'phantomjs'
 end
-
-gem 'rubber'
-gem 'open4'
-gem 'gelf'
-gem 'graylog2_exceptions', :git => 'git://github.com/wr0ngway/graylog2_exceptions.git'
-gem 'graylog2-resque'

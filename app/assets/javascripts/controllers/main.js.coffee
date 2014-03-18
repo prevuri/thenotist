@@ -6,9 +6,9 @@
 
   $scope.alert = {}
 
-  $scope.keypress = () ->
-    if window.event.keyCode is 27
-      $scope.$parent.$broadcast('escapePressed')
+  $scope.$on('$routeChangeStart', () ->
+    $scope.$root.loading = true
+  )
 
   $scope.setAlert = (text, isSuccess) ->
     $scope.alert.success = isSuccess

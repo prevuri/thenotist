@@ -9,164 +9,188 @@ $note-type-color: #BD476C;
 $user-type-color: #A5BA3D;
 
 .feed-wrapper {
-	margin: 0 auto;
-	margin-top: 20px;
+  margin: 0 auto;
+  margin-top: 35px;
 }
 
 .feed-header {
-  height: 120px;
+  height: 65px;
   border-bottom: #ECF0F1 solid 2px;
   position: relative;
   h1 {
     float: left;
     clear: both;
   }
-  
+
   .sorting-options {
-    list-style-type: none;
     position: absolute;
     right: 10px;
     bottom: 0px;
+  }
+}
 
-    .btn {
-      background-color: transparent;
-      color: inherit;
-      border-radius: 2px;
+.activity-item-border {
+  float: left;
+  border-left: 3px solid #ededed;
+  margin-left: 19px;
+  margin-bottom: 10px;
+  clear: both;
+}
 
-      &:hover {
-        background-color: #ECF0F1;
-      }
+.activity-item {
+  width: 788px;
+  position: relative;
+  clear: both;
+  margin-left: -25px;
+  margin-bottom: -10px;
+  margin-top: -15px;
 
-      &.active {
-        background-color: #22B498;
-      }
+  .profile-halo-container  {
+    float: left;
+    border-bottom: 3px solid #ffffff;
+    background-color: #ffffff;
+    border-radius: 150px;
+
+    .profile-container {
+      width: 39px;
+      height: 39px;
+      float: left;
+      padding: 2px;
+      margin-top: 4px;
+      border: 2px solid #cacaca;
+      box-shadow: none;
+    }
+  }
+
+  #activity-image {
+    float: left;
+  }
+  .tooltip {
+    min-height: 60px;
+    width: 90%;
+    position: relative;
+    float: left;
+    .tooltip-arrow {
+      position: absolute;
+      top: 20px;
+      border-right-color: $activity-item-background-color;
+    }
+    .tooltip-inner {
+      padding-left: 10px;
+      padding-top: 14px;
+      width: 100%;
+      max-width: 100%;
+      text-align: left;
+      background-color: $activity-item-background-color;
+      margin-bottom: 10px;
     }
   }
 }
 
-.activity-item {
-	width: 100%;
-	position: relative;
-	min-width: 800px;
-	margin-bottom: 20px;
-	clear: both;
-	.profile-container {
-		width: 50px;
-		height: 50px;
-		float: left;
-		padding: 2px;
-	}
-	#activity-image {
-		float: left;
-	}
-	.tooltip {
-		margin-top: 4px;
-		margin-left: 15px;
-		min-height: 60px;			
-		width: 90%;
-		position: relative;
-		float: left;
-		.tooltip-arrow {
-			position: absolute;
-			top: 20px;
-			border-right-color: $activity-item-background-color;
-		}
-		.tooltip-inner {
-			padding: 10px;
-			width: 100%;
-			max-width: 100%;
-			text-align: left;
-			background-color: $activity-item-background-color;
-			margin-bottom: 10px;
-		}
-	}
-}
-
 .activity-type {
-	float:left;
-	border-radius: 3px;
-	overflow: hidden;
-	margin-right: 10px;
-	.comment-type {
-		padding: 3px;
-		background-color: $comment-type-color;
-	}	
+  float:left;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-right: 10px;
+  font-size: 11px;
+  .comment-type {
+    padding: 3px;
+    background-color: $comment-type-color;
+  }
 
-	.note-type, .contributor-type{
-		padding: 3px;
-		background-color: $note-type-color;
-	}
+  .note-type, .contributor-type{
+    padding: 3px;
+    background-color: $note-type-color;
+  }
 
-	.relationship-type {
-		padding: 3px;
-		background-color: $user-type-color;
-	}
+  .relationship-type {
+    padding: 3px;
+    background-color: $user-type-color;
+  }
 }
 .activity-time {
-	float: right;
+  float: right;
+  font-size: 13px;
+  font-size: 13px;
+  background-color: #eeeeee;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-radius: 3px;
+  color: #999999;
 }
 
 .activity {
-	padding-top: 4px;
-	font-size: 1.3em;
-	color: #292929;
-	.user-name {
-		text-decoration: none;
-		color: #515775;
-		font-weight: bold;
-	}
+  padding-top: 2px;
+  font-size: 15px;
+  color: #8F8F8F;
+  .user-name {
+    text-decoration: none;
+    color: #515775;
+    font-weight: bold;
+    font-size: 15px;
+  }
 
-	.subsection {
-		background-color: $sub-section-background-color;
-		min-height: 50px;
-		max-height: 230px;
-		line-height: 50px;
-		margin-top: 15px;
-		padding-top: 10px;
-		padding-bottom: 10px;
-		padding-left: 30px;
-		border-top: 1px #ddd;
-		overflow: hidden;
-		ul.note-list {
-			list-style: none;
-			display: inline;
-			margin: 0;
-			li.note-div {
-				display: inline-block;
-				width: 200px;
-				margin-left: 5px;
-	      background-color: #BEB5AA;
-  		  padding: 1px;
-	      margin-top: 10px;
-    		border: 1px solid #ddd; 
-				.note-image {
+  .activity-header-content-container {
+    display: inline;
+  }
+  .subsection {
+    margin-top: 15px;
+    overflow: hidden;
+    color: #1D1D1D;
+    ul.note-list {
+      list-style: none;
+      display: inline;
+      margin: 0;
+      li.note-div {
+        display: inline-block;
+        width: 200px;
+        margin-left: 5px;
+        background-color: #BEB5AA;
+        padding: 1px;
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        .note-image {
           height: 200px;
           width: 100%;
           background-repeat: no-repeat;
           background-size: cover !important;
           overflow: hidden;
-				} 
-			}
-		}
+        }
+      }
+    }
 
-		.profile-container {
-			width: 100px;
-			height: 100px;
-			float: left;
-			padding: 4px;
-		}	
+    .profile-container {
+      width: 100px;
+      height: 100px;
+      float: left;
+      padding: 4px;
+    }
 
-		.user-info {
-			h2 {
-				font-size: 1.4em;
-				margin-bottom: 0;
-			}
+    .user-info {
+      h2 {
+        font-size: 1.4em;
+        margin-bottom: 0;
+      }
 
-			.profile-info {
-				font-size: 1.2em;
-				margin-bottom: 5px;
-			}
-		}
+      .profile-info {
+        font-size: 1.2em;
+        margin-bottom: 5px;
+      }
+    }
 
-	}
-}	
+  }
+}
+
+.feed-footer {
+  float: left;
+  clear: both;
+  margin-left: 4px;
+  margin-top: -7px;
+  background-color: #797979;
+  border-radius: 3px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-bottom: 2px;
+  padding-top: 1px;
+  color: #FFF;
+}

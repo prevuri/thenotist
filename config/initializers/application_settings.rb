@@ -11,3 +11,8 @@ end
 
 # load environment-specific settings
 ApplicationSettings.config = YAML.load_file("config/application_settings.yml")[Rails.env]
+ApplicationSettings.config[:stop_words] = Set.new
+File.open(ApplicationSettings.config[:stop_word_file], "r").each_line do |line|
+  words = line.split(',')
+  words.each { |w| ApplicationSettings.config[:stop_words].add(w) }
+end

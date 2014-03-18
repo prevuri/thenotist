@@ -2,6 +2,7 @@
 
 RAILS_ENV=production bundle --without development test --deployment
 RAILS_ENV=production bundle exec rake db:migrate
+rm -rf public/assets
 RAILS_ENV=production bundle exec rake assets:precompile
 rm tmp/restart.txt
 touch tmp/restart.txt

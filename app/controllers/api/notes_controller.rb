@@ -3,70 +3,60 @@ class Api::NotesController < ApplicationController
   include NotesHelper
 
   before_filter :check_authenticated_user!
-  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :contribs, :destroy, :paginate ]
-  before_filter :get_note_title, :only => :update
-  before_filter :get_note_description, :only => :update
+  before_filter :get_note, :only => [ :show, :update, :share, :unshare, :unsubscribe, :contribs, :destroy, :paginate ]
+  before_filter :get_note_title, :only => [:create, :update]
   before_filter :get_page_range, :only => [ :paginate ]
-  before_filter :abort_timed_out_notes
+  before_filter :abort_timed_out_notes, :only => [ :index ]
 
   UserInfo = Struct.new(:id, :name, :image)
 
   def index
+    @notes = current_user.notes + current_user.shared_notes
     return render :json => {
       :success => true,
-      :notes => current_user.notes.map { |n| n.as_json }
+      :notes => @notes.map { |n| n.as_json(current_user) }
     }
   end
 
   def create
-    # don't allow a user to process more than one note at a time
-    if current_user.has_note_processing?
-      @fail_reason = "Can't upload more than one file at a time"
-    else
-      begin
-        @note = current_user.notes.create(:title => params[:title], :description => params[:description])
-        track_activity @note
+    begin
+      @note = current_user.notes.create(:title => @title)
+      track_activity(@note)
 
-        s3_key = params[:s3_key]
-        queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
-        queue.send_message(sqs_message(@note.id, s3_key))
-        return render :json => {
-          :success => true,
-          :noteId => @note.id
-        }
-      rescue => ex
-        @fail_reason = "unknown"
-        @note.delete
-        return render :json => {
-          :success => false,
-          :error_message => ex.message
-        }
-      end
+      s3_key = params[:s3_key]
+      queue = AWS::SQS.new.queues.named(ApplicationSettings.config[:sqs_pdf_conversion_queue_name])
+      queue.send_message(sqs_message(@note.id, s3_key))
+      return render :json => {
+        :success => true,
+        :noteId => @note.id
+      }
+    rescue => ex
+      @fail_reason = "unknown"
+      @note.destroy
+      return render :json => {
+        :success => false,
+        :error_message => ex.message
+      }, :status => 500
     end
-
-    return render :json => {
-      :success => false,
-      :error_message => @fail_reason,
-    }, :status => 409
   end
 
   def show
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json(current_user)
     }
   end
 
   def update
-    @note.update_attributes(@title) unless @title.nil?
-    @note.update_attributes(@description) unless @description.nil?
+    @note.update_attributes(:title => @title) unless @title.nil?
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json(current_user)
     }
   end
 
   def destroy
+    destroy_activities_for_note(@note)
     @note.destroy
     return render :json => {
       :success => true
@@ -85,15 +75,18 @@ class Api::NotesController < ApplicationController
     }
   end
 
+  def usernotes
+    @user = User.find_by_id(params[:id])
+    @notes = @user.notes + @user.shared_notes
+    return render :json => {
+      :success => true,
+      :notes => @notes.map{ |note| (note.shared_with? current_user or note.user == current_user) ? note.as_json(current_user) : note.as_private_json}
+    }
+  end
+
   def share
     begin
-      @userstring = params[:userids]
-      @useridstring = @userstring[1..@userstring.length - 2]
-      @user_ids = @useridstring.split(",").map { |id| id.chomp('"').reverse.chomp('"').reverse}
-      @users = []
-      @user_ids.each do |user_id|
-        @users << User.find_by_id(user_id)
-      end
+      @user = current_user.buddies.find(params[:userid])
 
     rescue
       return render :json => {
@@ -101,13 +94,10 @@ class Api::NotesController < ApplicationController
         :error => user_not_found_error + " " + @userstring
       }
     end
-    #TODO: Set up multiple user activity
 
     begin
-      @users.each do |user|
-        @contrib = @note.share!(user)
-        track_activity @contrib
-      end
+      @contrib = @note.share!(@user)
+      track_activity @contrib
     rescue
       return render :json => {
         :success => false,
@@ -117,13 +107,13 @@ class Api::NotesController < ApplicationController
 
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json(current_user)
     }
   end
 
   def unshare
     begin
-      @user = User.find_by_id(params[:userid])
+      @user = current_user.buddies.find_by_id(params[:userid])
     rescue
       return render :json => {
         :success => false,
@@ -142,7 +132,23 @@ class Api::NotesController < ApplicationController
 
     return render :json => {
       :success => true,
-      :note => @note.as_json
+      :note => @note.as_json(current_user)
+    }
+  end
+
+
+  def unsubscribe
+    begin
+      @note.revoke_share!(current_user)
+    rescue
+      return render :json => {
+        :success => false,
+        :Error => cannot_revoke_error + " " + @user.name
+      }
+    end
+
+    return render :json => {
+      :success => true
     }
   end
 
@@ -166,20 +172,20 @@ private
     begin
       @note = current_user.notes.find(params[:id]) # throws an exception if nothing is found
     rescue
-      return render :json => {
-        :success => false,
-        :error => note_not_found_error,
-      },
-      :status => 404
+      begin
+        @note = current_user.shared_notes.find(params[:id]) # throws an exception if nothing is found
+      rescue
+        return render :json => {
+          :success => false,
+          :error => note_not_found_error,
+        },
+        :status => 404
+      end
     end
   end
 
   def get_note_title
     @title = params[:title]
-  end
-
-  def get_note_description
-    @description = params[:description]
   end
 
   def get_page_range
@@ -222,6 +228,6 @@ private
   end
 
   def abort_timed_out_notes
-    current_user.abort_timed_out_notes!
+    current_user.notes.each &:abort_if_timed_out!
   end
 end

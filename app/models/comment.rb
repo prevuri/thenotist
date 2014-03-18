@@ -7,7 +7,7 @@ class Comment < ActiveRecord::Base
   belongs_to :user
 
   belongs_to :parent_comment, :class_name => Comment
-  has_many :child_comments, :class_name => Comment, :foreign_key => :parent_comment_id, :dependent => :destroy
+  has_many :child_comments, :class_name => Comment, :foreign_key => :parent_comment_id, :dependent => :destroy, :order => 'created_at ASC'
 
   after_create :track_activity
   before_destroy :destroy_activity
