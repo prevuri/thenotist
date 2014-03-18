@@ -18,7 +18,8 @@
   .wrapper
   %section.small-header
     .inner-wrapper
-      .notist-logo
+      %a{:href => '/'}
+        .notist-logo
       %div.connect-fb-button
         = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
   %section.about#about
