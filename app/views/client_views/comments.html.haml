@@ -4,7 +4,7 @@
       .profile-container.circular{:'animate-timeout' => true, :'ng-class' => 'animate ? "animate" : ""'}
         .profile-image.circular{:'ng-style' => "{background: 'url('+ comment.user.user_fb_data.profile_image + ') no-repeat'}"}
           .profile-image.circular.overlay{:'ng-class' => '$index == 4 ? "blank" : ""'}
-            .ellipsis{:'ng-if' => '$index == 4'} ...
+            .profile-ellipsis{:'ng-if' => '$index == 4'} ...
     .comment.parent{:'ng-show' => 'expandedCommentLine == commentGroup.lineId'}
       %ng-include{:src => '"/client_views/comment.html"', :'ng-init' => 'comment = parentComment'}
       .comment.reply{:'ng-repeat' => 'comment in parentComment.child_comments', :'ng-hide' => "comment.deleted"}
