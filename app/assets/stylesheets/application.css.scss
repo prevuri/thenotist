@@ -223,7 +223,7 @@ $sidebar-trans-time: 0.5s;
       color: $sidebar-foreground;
       text-align: center;
       font-size: 1.0em;
-      padding: 15px 0;
+      padding: 20px 0 15px 0;
       margin: 0;
       border-radius: 0;
       text-shadow: none;
@@ -251,6 +251,7 @@ $sidebar-trans-time: 0.5s;
   .nav-list-bottom {
     bottom: 0;
     position: absolute;
+    margin-bottom: 0;
 
     a {
       width:80px;
@@ -274,6 +275,24 @@ $sidebar-trans-time: 0.5s;
 
     .text {
       display: block;
+    }
+
+    .feedback-btn {
+      margin-bottom: 5px;
+      padding: 0;
+      .icon-bullhorn {
+        font-size: 13px;
+        display: inline;
+      }
+      .text {
+        font-size: 12px;
+        display: inline;
+      }
+    }
+
+    .logout-btn {
+      padding-bottom: 20px;
+      padding-top: 20px;
     }
   }
 
