@@ -251,6 +251,7 @@ $sidebar-trans-time: 0.5s;
   .nav-list-bottom {
     bottom: 0;
     position: absolute;
+    margin-bottom: 0;
 
     a {
       width:80px;
@@ -274,6 +275,24 @@ $sidebar-trans-time: 0.5s;
 
     .text {
       display: block;
+    }
+
+    .feedback-btn {
+      margin-bottom: 5px;
+      padding: 0;
+      .icon-bullhorn {
+        font-size: 13px;
+        display: inline;
+      }
+      .text {
+        font-size: 12px;
+        display: inline;
+      }
+    }
+
+    .logout-btn {
+      padding-bottom: 20px;
+      padding-top: 20px;
     }
   }
 
