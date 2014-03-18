@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   def sidebar_logo_link
     path = '/main/index'
     default_class = 'btn btn-large btn-block notist-logo'

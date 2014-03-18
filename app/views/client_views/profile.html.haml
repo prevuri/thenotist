@@ -4,16 +4,16 @@
   .profile-header
     .sorting-options
       %ul
+        %li.btn{:'ng-click'=> "button='buddies';", :'ng-class'=>"{ 'active' : button == 'buddies' }"}
+          Buddies 
+          %span.notist-badge
+            {{user.buddies.length}}
         %li.btn{:'ng-click'=> "button='activity';", :'ng-class'=>"{ 'active' : button == 'activity' }"}
           Activity
         %li.btn{:'ng-click'=> "button='notes';", :'ng-class'=>"{ 'active' : button == 'notes' }"}
           Notes 
           %span.notist-badge
             {{user.notes.length}}
-        %li.btn{:'ng-click'=> "button='buddies';", :'ng-class'=>"{ 'active' : button == 'buddies' }"}
-          Buddies 
-          %span.notist-badge
-            {{user.buddies.length}}
         / %li.btn{:'ng-click'=> "button='settings';", :'ng-class'=>"{ 'active' : button == 'settings' }"}
         /   Settings
 
@@ -31,7 +31,7 @@
         .notes-list-item{ :'ng-if' => '!currentUserProfile', :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
           .note-item{:'ng-if' => '!note.hasAccess', :'ng-init' => 'itemIndex = $index'}
             .access-notice
-              %i.icon-exclamation.icon-white
+              %i.icon-lock.icon-white
               %h2
                 No Access
             .info-preview
@@ -45,21 +45,21 @@
     .buddies-list-container
       %ul.buddies-list
         %li.buddies-list-item{ :'ng-repeat' => 'friend in friends'}
-          .profile-image-section
-            %a{:'ng-href' => '/profile/{{friend.id}}'}
-              .profile-container.circular
-                .profile-image.circular{:'ng-style' => "{background: 'url(' + friend.user_fb_data.profile_image + ') no-repeat'}"}
+          %a{:'ng-href' => '/profile/{{friend.id}}'}
+            .overall-section
+              .profile-image-section
+                .profile-container.circular
+                  .profile-image.circular{:'ng-style' => "{background: 'url(' + friend.user_fb_data.profile_image + ') no-repeat'}"}
 
-          .profile-section
-            .info
-              %h3.ellipsis
-                %a.text-link{:'ng-href' => '/profile/{{friend.id}}'}
-                  {{friend.name}}
-              .small-info
-                .notes-count
-                  {{friend.notes.length}} notes
-                .buddies-count
-                  {{friend.buddies.length}} buddies
+              .profile-section
+                .info
+                  %h3.ellipsis
+                    {{friend.name}}
+                  .small-info
+                    .notes-count
+                      {{friend.notes.length}} notes
+                    .buddies-count
+                      {{friend.buddies.length}} buddies
 
 
   .settings-section{:'ng-if'=>"button == 'settings'"}

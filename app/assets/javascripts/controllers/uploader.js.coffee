@@ -70,7 +70,7 @@
     file = data.files[0]
     if $scope.isPdf(data)
       if !$scope.newNote.title
-        $scope.newNote.title = file.name
+        $scope.newNote.title = $scope.parseFileName(file.name)
       $scope.newNote.fileData = data
       $scope.validateUploadForm()
       $scope.updateFileName()
@@ -129,4 +129,8 @@
     type = /(\.|\/)(pdf)$/i
     file = fileData.files[0]
     return type.test(file.type) || type.test(file.name)
+
+  $scope.parseFileName = (fileName) ->
+    camelCased = fileName.charAt(0).toUpperCase() + fileName.slice(1)
+    return camelCased.replace(/\.[^/.]+$/, "")
 

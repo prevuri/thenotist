@@ -93,6 +93,26 @@ notistApp.directive('ngSpinner', () ->
     scope.$watch(attrs.textareaAutofocus, setFocus, true)
 )
 
+.directive('textareaCursor', ($timeout) ->
+  link: (scope, el, attrs) ->
+    loadPosition = () ->
+      position = scope.$eval(attrs.textareaCursor)
+      if scope.replyShowing.global == scope.parentComment.id && position
+        $timeout(() ->
+          position = scope.replyText[scope.parentComment.id].length - position
+          if el[0].setSelectionRange
+            el[0].setSelectionRange(position, position)
+          else if el.createTextRange
+            range = el[0].createTextRange()
+            range.collapse(true)
+            range.moveEnd('character', position)
+            range.moveStart('character', position)
+            range.select()
+        , 50)
+    $(el).focus(loadPosition)
+    loadPosition()
+)
+
 .directive('pageButtonsScroll', () ->
   link: (scope, el, attrs) ->
     ctrlScope = scope.$parent.$parent
@@ -119,7 +139,7 @@ notistApp.directive('ngSpinner', () ->
     changeCurrentPage = () =>
       if scope.previousScroll == undefined
         scope.previousScroll = 0
-      if !scope.elHeight
+      if !scope.elHeight || scope.elHeight < 50
         scope.elHeight = $(scope.pageEl[1]).height()
       previous = scope.previousScroll
       docScroll = $(document).scrollTop()
@@ -186,6 +206,15 @@ notistApp.directive('ngSpinner', () ->
     )
 )
 
+.directive('tab', () ->
+  link: (scope, el, attrs) ->
+    $('body').bind('keydown keypress', (e) ->
+      if e.which == 9
+        scope.$eval(attrs.tab)
+        e.preventDefault()
+    )
+)
+
 .directive('backspace', () ->
   link: (scope, el, attrs) ->
     $('body').bind('keydown keypress', (e) ->
@@ -242,4 +271,19 @@ notistApp.directive('ngSpinner', () ->
           $(el).removeClass('error')
         , 100)
     scope.$watch('addTagError', setErrorClass)
+)
+
+.directive('detectHashLinks', () ->
+  link: (scope, el, attrs) ->
+    $(el).click (e) ->
+      linkEl = $(e.target).parents('a[href*="#"]').first()
+      if linkEl.length > 0
+        e.preventDefault()
+        linkedPage = $(linkEl.attr('href')).parents('.page')
+        pageIndex = $('.page').index(linkedPage)
+        if pageIndex > -1
+          scope.currentPage = pageIndex + 1
+          $(document).scrollTop(linkedPage[0].offsetTop - $('#note-header').height())
+          scope.$apply()
+          return
 )

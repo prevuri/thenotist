@@ -17,7 +17,14 @@ class Api::ActivityController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    begin
+      @user = User.find(params[:id])
+    rescue
+      render :json => {
+        :success => true,
+        :error => user_not_found_error
+      }, :status => 404
+    end
     render :json => {
       :success => true,
       :html => activity_html(@user.activities)
@@ -25,15 +32,12 @@ class Api::ActivityController < ApplicationController
   end
 
 private
-
   def activity_html (activities)
     html = ""
-    activities.order("created_at desc").each do |activity|
+    activities.order("created_at desc").each_with_index do |activity, i|
       html += render_to_string(:partial => 'main/activity', :object => activity)
+      html += render_to_string(:partial => 'main/footer') if activities.count-1 == i
     end
-    html += render_to_string(:partial => 'main/footer') unless activities.blank?
     html
   end
-
-
 end

@@ -2,7 +2,7 @@
   shared a note with you:
 - else
   = "shared a note with "
-  %a{:'href' => "/profile/#{activity.trackable.user.id}"}
+  %a{:class =>'user-name', :'href' => "/profile/#{activity.trackable.user.id}"}
     #{activity.trackable.user.name.split[0]}
   = ": "
 %a{:'href' => "/notes/#{activity.trackable.shared_note.id}"}

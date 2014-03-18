@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140314224049) do
+ActiveRecord::Schema.define(:version => 20140317015617) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -74,13 +74,10 @@ ActiveRecord::Schema.define(:version => 20140314224049) do
   create_table "notes", :force => true do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.string   "description"
-    t.integer  "course_id"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.boolean  "processed",             :default => false
-    t.datetime "processing_started_at"
-    t.boolean  "aborted",               :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "processed",  :default => false
+    t.boolean  "aborted",    :default => false
   end
 
   add_index "notes", ["processed"], :name => "index_notes_on_processed"

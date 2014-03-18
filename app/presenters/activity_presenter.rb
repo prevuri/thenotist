@@ -11,7 +11,7 @@ class ActivityPresenter < SimpleDelegator
 			if activity.user == current_user
 				raw("<div class='activity-header-content-container'>") + raw("You ") + render_partial + render_time_partial + raw("</div>") + render_subsection_partial
 			else
-				raw("<div class='activity-header-content-container'>") + link_to(activity.user.name.split[0], profile_path(activity.user), class: 'user-name') + " " + render_partial + render_time_partial + raw("</div>") + render_subsection_partial
+				raw("<div class='activity-header-content-container'>") + raw("<a href='/profile/#{activity.user.id}' class='user-name'>") + activity.user.name.split[0] + raw("</a>") + " " + render_partial + render_time_partial + raw("</div>") + render_subsection_partial
 			end
 		end
 	end

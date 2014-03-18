@@ -11,8 +11,8 @@
 
   # number of pages to loaded in the browser at any given time
   $scope.pageChunkSize = 10
-  $scope.repliesShowing = {}
   $scope.replyText = {}
+  $scope.replyShowing = {global: null}
   $scope.showDeleteConfirm = {global: null}
   $scope.currentPage = 1
   $scope.pageEl = {}
@@ -116,6 +116,7 @@
               updateChunk = true
         for chunk in $scope.pageChunks
           chunk.commentsLoaded = false
+        $scope.saveCursorPosition()
         # Don't group visible chunk comments on initial comment request; loadVisiblePages already does this
         if updateChunk && $scope.initialCommentRequestDone
           $scope.groupCommentsCurrentChunk()
@@ -123,6 +124,12 @@
       ).error( (data, status, headers, config) ->
         console.log "Error loading comments from server", false
     )
+
+  $scope.saveCursorPosition = () ->
+    if document.activeElement.tagName == 'TEXTAREA'
+      $scope.savedCursor = document.activeElement.value.length - document.activeElement.selectionStart
+    else
+      $scope.savedCursor = null
 
   $scope.showNewComment = (show) ->
     $scope.showingNewComment = show
@@ -163,7 +170,7 @@
     $scope.submitComment($scope.replyText[parentComment.id], fileId, parentComment.id, fileIndex)
 
   $scope.submitComment = (text, fileId, parentId, fileIndex) ->
-    if text.replace(/[ ]/).length == 0
+    if !text || text.replace(/[ ]/).length == 0
       return
     if !$scope.submitting
       data = {
@@ -182,7 +189,7 @@
         success( (data, status, headers, config) ->
           $scope.submitting = false
           if parentId
-            $scope.repliesShowing[parentId] = false
+            $scope.replyShowing.global = null
             $scope.replyText[parentId] = null
           else
             $scope.expandCommentLine($scope.newCommentLineId)
@@ -202,6 +209,12 @@
           comment.deleted = true
           if comment.parent_comment_id == null
             $scope.getGroupedComments($scope.note.uploaded_html_files[fileIndex])
+            keepLineExpanded = false
+            for commentGroup in $scope.note.uploaded_html_files[fileIndex].groupedComments
+              if commentGroup.lineId == $scope.expandedCommentLine
+                keepLineExpanded = true
+            if !keepLineExpanded
+              $scope.expandCommentLine(null)
         ).error( (data, status, headers, config) ->
           $scope.setAlert("Error deleting comment", false)
           comment.deleteFade = false
@@ -221,7 +234,7 @@
           comments: [comment]
         }
     groupedComments.sort((a, b) ->
-      a.yCoord > b.yCoord
+      a.yCoord - b.yCoord
     )
     i = 1
     while i < groupedComments.length

@@ -5,7 +5,7 @@
 
   $scope.init = () ->
     $scope.$root.section = 'profile'
-    $scope.button = 'activity'
+    $scope.button = 'buddies'
     if $routeParams.profileId && $routeParams.profileId != $scope.currentUser.id.toString()
       $scope.userid = $routeParams.profileId
       $scope.idParam = {id: $scope.userid}

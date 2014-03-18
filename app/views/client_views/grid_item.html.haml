@@ -29,6 +29,8 @@
     %h3{:'ng-if' => 'note.processed'}
       .text-link
         {{note.title}}
+      .owner-footer
+        by {{note.user.name}}
 
   .tags{:'ng-if' => 'note.processed'}
     .tag{:'ng-repeat' => 'tag in note.tags', :'ng-if' => '$index < 9', :'ng-click' => 'tagClicked(tag)'}
@@ -36,7 +38,7 @@
         %i.icon-remove
       .tag-text {{tag.name}}
     .tag.add-tag{:'ng-click' => 'addingTag = true', :'ng-class' => 'addingTag ? "expanded" : (note.tags.length == 0 ? "collapsed with-text" : "collapsed")', :'ng-mouseenter' => 'mouseOnAdd = true', :'ng-mouseleave' => 'mouseOnAdd = false', :'add-tag-error' => true}
-      %input.add-tag-field{:type => 'text', :'ng-model' => 'addTagText', :'ng-change' => 'addTagTextChanged()', :'ng-show' => 'addingTag', :'textarea-autofocus' => 'addingTag', :'ng-blur' => 'deselectedAddField()', :'ng-enter' => 'addNewTag(note, addTagText)', :'escape' => 'addingTag = false; addTagText = null', :'backspace' => 'addingTag = !addTagText ? false : true', :'ng-trim' => 'false'}
+      %input.add-tag-field{:type => 'text', :'ng-model' => 'addTagText', :'ng-change' => 'addTagTextChanged()', :'ng-show' => 'addingTag', :'textarea-autofocus' => 'addingTag', :'ng-blur' => 'deselectedAddField()', :'ng-enter' => 'addNewTag(note, addTagText)', :'escape' => 'addingTag = false; addTagText = null', :'backspace' => 'addingTag = !addTagText ? false : true', :'tab' => 'tabPressed(note, addTagText)', :'ng-trim' => 'false'}
       .add-text{:'ng-if' => 'note.tags.length == 0', :'ng-hide' => 'addingTag'} add tag
       .add-tag-btn{:'ng-click' => 'addButtonClicked($event)'}
         %i.icon-plus
@@ -59,7 +61,7 @@
             {{note.contributing_users.length}}
         .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
           %i.icon-share
-          
+
   / %div{:'ng-if' => '!note.shared'}
   /   .tooltip.fade.bottom.in.hidden{:'ng-if' => '!note.tooltipHidden'}
   /     .tooltip-arrow

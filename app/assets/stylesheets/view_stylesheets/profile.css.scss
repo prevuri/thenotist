@@ -129,10 +129,23 @@ a.profile-link > .profile-container:active {
       height: 80px;
       width: 360px;
       background-color: #ECF0F1;
-      padding: 5px 10px;
+      position: relative;
 
       &:hover {
         background-color: darken(#ECF0F1, 5%);
+      }
+
+      a {
+        color: inherit;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        .overall-section {
+          padding: 0px 10px;
+        }
       }
 
       .profile-image-section {

@@ -23,6 +23,7 @@
 //= require jquery-fileupload/vendor/tmpl
 //= require underscore
 //= require s3_direct_upload
+//= require googleanalytics
 //
 // Removing these requirements for gem
 // require bootstrap

@@ -1,5 +1,6 @@
 class Api::CommentsController < ApplicationController
   include ApiHelper
+  include CommentsHelper
 
   before_filter :check_authenticated_user!
   before_filter :get_uploaded_html_file_id, :only => [ :create ]
@@ -49,11 +50,11 @@ class Api::CommentsController < ApplicationController
 
       # track the comment activity
       track_activity @comment
-    rescue => ex
+    rescue
       return render :json => {
         :success => false,
         :error => comment_create_error
-      }
+      }, :status => 500
     end
 
     # mirror the comments so that the UI can re-render the comments without having to make a separate
@@ -72,25 +73,23 @@ class Api::CommentsController < ApplicationController
       return render :json => {
         :success => false,
         :error => file_not_found_error
-      }
+      }, :status => 404
     end
 
     # now, try to delete the comment
     begin
+      destroy_activities_for_comment @comment
+      @comment.child_comments.destroy_all
       @comment.destroy
-    rescue
+    rescue => ex
       return render :json => {
         :success => false,
         :error => comment_create_error
-      }
+      }, :status => 500
     end
 
-    # mirror the comments so that the UI can re-render the comments without having to make a separate
-    # call to retrieve them
-    # @comments = @file.top_level_comments
     return render :json => {
       :success => true
-      # :comments => @comments.map { |c| c.as_json }
     }
   end
 
