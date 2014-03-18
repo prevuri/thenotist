@@ -515,6 +515,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       // border: 1px solid #ddd;
       border-bottom: 1px solid #f2f2f0;
       overflow: visible;
+      position: relative;
     }
 
     &.reply {
@@ -531,12 +532,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       }
       .comment-inner {
         margin-left: 49px;
-
-        .delete-confirm-panel {
-          .btn {
-            width: 75px;
-          }
-        }
       }
       .profile-container {
         margin-top: 0px;
@@ -669,22 +664,50 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       }
     }
     .delete-confirm-panel {
-      -webkit-transition: height 0.2s ease;
-      -moz-transition: height 0.2s ease;
-      transition: height 0.2s ease;
+      -webkit-transition: opacity 0.2s ease;
+      -moz-transition: opacity 0.2s ease;
+      transition: opacity 0.2s ease;
       overflow: hidden;
-      height: 45px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.8);
+      text-align: center;
 
       &.ng-hide-add, &.ng-hide-remove {
         display: block !important;
       }
       &.ng-hide {
-        height: 0;
+        opacity: 0;
       }
 
       .btn {
-        width: 100px;
-        margin: 10px 10px 0 0;
+        position: absolute;
+        bottom: 30%;
+        left: 5%;
+        width: 32%;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+        &:active {
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+      }
+
+      .btn.delete-confirm {
+        background-color: rgba(210, 60, 60, 0.7);
+        left: 53%;
+        &:hover {
+          background-color: rgba(210, 60, 60, 0.8);
+        }
+        &:active {
+          background-color: rgba(210, 60, 60, 0.9);
+        }
       }
     }
   }
