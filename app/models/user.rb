@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
       #create a user_fb_data object knowing the access token is valid.
       @graph = Koala::Facebook::API.new(user.fb_access_token)
       profile = @graph.get_object(user.uid)
-      profile_image = @graph.get_picture(user.uid, {:width => 80, :height => 80})
+      profile_image = @graph.get_picture(user.uid, {:width => 160, :height => 160})
       friends = @graph.get_connections('me','friends',:fields=>"id")
 
       if user.user_fb_data.blank?

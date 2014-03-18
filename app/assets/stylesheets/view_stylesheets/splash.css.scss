@@ -97,26 +97,24 @@ $review-5-left: 1190px;
         // padding-top: 8px;
     }
   }
+  
+  // @media screen and (-webkit-min-device-pixel-ratio:0) {
+  //   .big-splash-section{ 
+  //       background-attachment: fixed;
+  //   }
+  // }
 
   .big-splash-section {
     // min-height: 680px;
     // border-top: 12px solid #fff;
-    position: relative;
-    background: url("/assets/splash/splashmural-second.jpg") center center fixed no-repeat;
+    position: static;
+    background: url("/assets/splash/splashmural-second.jpg") center center no-repeat;
+    background-attachment: fixed;
     background-size: cover;
-    
 
-    .background-overlay {
-      min-height: 100%;
-      /* Set up proportionate scaling */
+    .section-wrapper {
+      position: relative;
       width: 100%;
-      height: auto;
-      /* Set up positioning */
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      background-color: rgba(0, 0, 0, 0.3);
     }
 
     .notist-logo {
@@ -188,6 +186,10 @@ $review-5-left: 1190px;
     }
     .big-splash-section {
       min-height: 480px;
+      
+      .section-wrapper {
+        min-height: 480px;
+      }
 
       .big-splash h1 {
         font-size: 3.6em;
@@ -242,6 +244,10 @@ $review-5-left: 1190px;
   @media screen and (min-width: 992px) {
     .big-splash-section {
       min-height: 580px;
+      
+      .section-wrapper {
+        min-height: 580px;
+      }
 
       .big-splash h1 {
         font-size: 4.4em;
@@ -274,6 +280,10 @@ $review-5-left: 1190px;
   @media screen and (min-width: 1200px) {
     .big-splash-section {
       min-height: 780px;
+      
+      .section-wrapper {
+        min-height: 780px;
+      }
 
       .big-splash h1 {
         font-size: 5.1em;
