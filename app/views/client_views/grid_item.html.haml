@@ -29,6 +29,8 @@
     %h3{:'ng-if' => 'note.processed'}
       .text-link
         {{note.title}}
+      .owner-footer
+        by {{note.user.name}}
 
   .tags{:'ng-if' => 'note.processed'}
     .tag{:'ng-repeat' => 'tag in note.tags', :'ng-if' => '$index < 9', :'ng-click' => 'tagClicked(tag)'}
@@ -59,7 +61,7 @@
             {{note.contributing_users.length}}
         .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
           %i.icon-share
-          
+
   / %div{:'ng-if' => '!note.shared'}
   /   .tooltip.fade.bottom.in.hidden{:'ng-if' => '!note.tooltipHidden'}
   /     .tooltip-arrow

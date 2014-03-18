@@ -66,7 +66,7 @@ $shift-max-width: 1400px;
   .sorting-options {
     position: absolute;
     right: 10px;
-    bottom: 0px;
+    bottom: 5px;
   }
 }
 
@@ -124,71 +124,76 @@ $shift-max-width: 1400px;
 }
 
 #note-header {
-  height: 65px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 300;
   border-bottom: #ECF0F1 solid 2px;
-  background-color: rgba(255, 255, 255, 0.95);
   border-color: rgba(245, 245, 245, 0.85);
+  background-color: rgba(255, 255, 255, 0.95);
+  min-width: 768px;
 
-  h1 {
+  .note-title {
     float: left;
     margin-left: 130px;
-  }
-  .contributors {
-    margin-left: 10px;
-    // margin-bottom: 15px;
-    display: inline-block;
-    position: absolute;
-    right: 280px;
-    bottom: 15px;
-    div {
-      float: left;
-    }
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 480px;
   }
 
-.pages {
-    // float: right;
-    position: absolute;
-    line-height: 40px;
+  .note-owner {
+    float: left;
+    margin-left: 12px;
+    margin-top: 28px;
+    color: #aaa;
+  }
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
+  .buttons-container {
+    // min-width: 200px;
+  }
+
+  .page-counter-text {
+    color: #34495e;
     font-size: 1.3em;
     color: #999999;
-    right: 10px;
-    bottom: 10px;
-    span {
-      color: #34495e;
-    }
+    text-align: right;
+    width: auto;
+    padding-right: 20px;
+    margin-top: 22px;
   }
 
-  .page-number {
-    display: inline-block;
-    position: absolute;
-    right: 135px;
-    bottom: 15px;
-    div {
-      float: left;
-    }
-
-    .flag {
-      margin-right: 20px;
-    }
+  .flag {
+    margin-right: 3px;
   }
 
   .profile-container {
+    margin-right: 3px;
+    margin-bottom: 0px;
+  }
+
+  .share-note {
+    margin-right: 3px;
+  }
+  .outer-circle {
     padding: 0;
     box-shadow: none;
     border: solid #ECF0F1 1px;
-    margin-right: 10px;
     position: relative;
     height: 32px;
     width: 32px;
     cursor: pointer;
+    float: left;
+    border-radius: 150px;
+    margin-top: 15px;
 
     &.share-note {
-      float: right;
       span {
         color: #34495e;
         font-size: 1em;
@@ -200,8 +205,11 @@ $shift-max-width: 1400px;
       }
     }
 
-    &.prev-page, &.next-page{
-
+    &.prev-page {
+      margin-right: 3px;
+    }
+    &.next-page{
+      margin-right: 10px;
     }
 
     // &.flag {
@@ -215,13 +223,21 @@ $shift-max-width: 1400px;
 
       &.icon-share {
         font-size: 1.3em;
-        top: 27%;
-        left: 27%;
+        top: 8px;
+        left: 9px;
       }
-
-      &.icon-angle-right, &.icon-angle-left, &.icon-exclamation {
-        top: 20%;
-        left: 37%;
+      &.icon-flag {
+        top: 7px;
+        left: 7px;
+        font-size: 1.3em;
+      }
+      &.icon-angle-left {
+        top: 6px;
+        left: 11px;
+      }
+      &.icon-angle-right{
+        top: 6px;
+        left: 13px;
       }
     }
 
@@ -785,7 +801,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           // font-family: Century Gothic, sans-serif;//"Lucida Sans Unicode";
           margin-top: 5px;
           margin-left: 10px;
-          margin-bottom: 17px;
 
           width: 300px;
           white-space: nowrap;
@@ -895,10 +910,18 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           }
         }
 
+        .owner-footer {
+          float: left;
+          margin: 0px 0px 0px 11px;
+          line-height: 13px;
+          font-size: 14px;
+          color: #FFFFFF;
+        }
+
         .tags {
           position: absolute;
           z-index: 150;
-          top: 45px;
+          top: 71px;
           left: 10px;
           right: 10px;
         }
@@ -1018,7 +1041,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             -moz-transition-delay: 0.2s;
             transition: width 0s ease;
             transition-delay: 0.2s;
-            width: 106px;  
+            width: 106px;
             height: 17px;
             padding: 0;
             margin: 0;
@@ -1036,7 +1059,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 
           &:hover {
             background-color: rgba(0, 0, 0, 0.4);
-            
+
             .tag-text {
               left: 0;
             }
@@ -1059,7 +1082,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           height: 100%;
           z-index: 102;
           background-color: #5E5D65;
-          
+
           &.color0 {
             background-color: rgba(160, 65, 54, 0.7);
           }

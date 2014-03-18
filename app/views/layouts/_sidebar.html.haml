@@ -12,13 +12,13 @@
         %a.btn.btn-large.btn-block{:href => '/notes', :'ng-class' => "{active: section == 'notes'}"}
           %i.icon-file.icon-2x
           .text Library
+
     .nav.nav-list-bottom
       %li{"analytics-on" => "click", "analytics-event" => "Logout"}
-        - if current_user
-          = link_to destroy_user_session_path, :method=>'delete', :class => 'btn btn-large btn-block' do
-            %i.icon-signout.icon-2x
-            .text Logout
-        - else
-          = link_to new_user_session_path, :class => 'btn btn-large btn-block' do
-            %i.icon-signin
-            %span.text Login
+        = link_to destroy_user_session_path, :method=>'delete', :class => 'btn btn-large btn-block logout-btn' do
+          %i.icon-signout.icon-2x
+          .text Logout
+      %li{"analytics-on" => "click", "analytics-event" => "Feedback"}
+        %a.feedback-btn{:href => "mailto:feedback@notist.co", :class => 'btn btn-large btn-block'}
+          %i.icon-bullhorn.icon-2x
+          .text Feedback

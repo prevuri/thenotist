@@ -63,6 +63,7 @@ body {
   margin: 0;
   padding: 0 !important;
   background-color: $background-color !important;
+  line-height: normal;
 }
 
 body, h1, h2, h3, h4, p {
@@ -86,7 +87,7 @@ body, h1, h2, h3, h4, p {
 //
 
 .content {
-  min-width: 788px;
+  min-width: 768px;
 }
 
 .btn {
@@ -222,7 +223,7 @@ $sidebar-trans-time: 0.5s;
       color: $sidebar-foreground;
       text-align: center;
       font-size: 1.0em;
-      padding: 15px 0;
+      padding: 20px 0 15px 0;
       margin: 0;
       border-radius: 0;
       text-shadow: none;
@@ -250,6 +251,7 @@ $sidebar-trans-time: 0.5s;
   .nav-list-bottom {
     bottom: 0;
     position: absolute;
+    margin-bottom: 0;
 
     a {
       width:80px;
@@ -273,6 +275,24 @@ $sidebar-trans-time: 0.5s;
 
     .text {
       display: block;
+    }
+
+    .feedback-btn {
+      margin-bottom: 5px;
+      padding: 0;
+      .icon-bullhorn {
+        font-size: 13px;
+        display: inline;
+      }
+      .text {
+        font-size: 12px;
+        display: inline;
+      }
+    }
+
+    .logout-btn {
+      padding-bottom: 20px;
+      padding-top: 20px;
     }
   }
 
@@ -378,35 +398,4 @@ form.new-user {
     -webkit-transition: opacity 0.2s ease;
     opacity: 0;
   }
-}
-
-.footer {
-
-  ul {
-    position: absolute;
-    bottom: 3%;
-    right: 0;
-    margin-right: 25px;
-    z-index: 1;
-
-    li span.copyright {
-      font-family: Sacramento;
-      font-size: 1.6em;
-    }
-
-    li {
-      display: inline-block;
-      margin-right: 20px;
-      height: 20px;
-      vertical-align: bottom;
-      font-size: 1.4em;
-      color: #fff;
-      a {
-        color: #fff;
-        text-decoration: none;
-      }
-
-    }
-  }
-
 }
