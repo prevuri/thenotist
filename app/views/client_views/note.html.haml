@@ -56,9 +56,10 @@
         .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
       .comment-inner{:'ng-style' => "{opacity: submitting ? '0.5' : '1'}"}
         .comment-body
-          .user
-            .name
-              {{currentUser.name}}
+          .top
+            .user
+              .name
+                {{currentUser.name}}
           .comment-text
             %textarea#newcomment.new_comment_text_field{:placeholder => 'Enter your comment here', :'ng-model' => 'newCommentText', :'textarea-autoheight' => 'newCommentText', :'textarea-autofocus' => 'showingNewComment', :'ng-enter' => 'showingNewComment && submitParentComment()'}
         .bottom

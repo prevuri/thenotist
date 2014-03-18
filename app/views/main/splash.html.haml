@@ -17,25 +17,26 @@
 #splash
   .wrapper
     %section.big-splash-section
-      .inner-wrapper
-        .notist-logo
-        %div.connect-fb-button
-          = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
-        .big-splash
-          %h1
-            Organize. Share. Discuss.
-          %h2
-            A platform to share &amp discuss your notes &amp documents with friends and classmates.  
-      .guide
-        %a{:href => '#start-tour'}
-          %i.icon-chevron-down   
+      .section-wrapper
+        .inner-wrapper
+          .notist-logo
+          %div.connect-fb-button
+            = link_to content_tag(:span, 'Connect with Facebook'), omniauth_authorize_path(:user, :facebook), :class => "btn btn-large btn-block", :id => "splash-login-button"
+          .big-splash
+            %h1
+              Organize. Share. Discuss.
+            %h2
+              A platform to share &amp; discuss your notes &amp; documents with friends and classmates.
+        .guide
+          %a{:href => '#start-tour'}
+            %i.icon-chevron-down
     %section.tour-one-section{:name => 'start-tour'}
       .inner-tour-wrapper.clear-format
         .text
           %h1
             Organize your notes, your collaborators and your mind.
           %p
-            Spend less time worrying about finding &amp organizing notes and more time collaborating, discussing &amp learning from them. Organize your notes using tags, share them with friends &amp discuss relevant information.
+            Spend less time worrying about finding &amp; organizing notes and more time collaborating, discussing &amp; learning from them. Organize your notes using tags, share them with friends &amp; discuss relevant information.
         .image
           %img{:src => '/assets/notes.png'}
 
@@ -45,7 +46,7 @@
           %h1
             Annotate and collaborate.
           %p
-            Annotate and debate notes with friends &amp classmates without leaving the comfort of the chair. Collaborate &amp discuss your notes together with friends to solve problems, explain questions &amp prepare for evaluations.
+            Annotate and debate notes with friends &amp; classmates without leaving the comfort of the chair. Collaborate &amp; discuss your notes together with friends to solve problems, explain questions &amp; prepare for evaluations.
         .image
           %img{:src => '/assets/comments.png'}
     %section.tour-three-section
@@ -54,7 +55,7 @@
           %h1
             Keep track of notes.
           %p
-            Always know when friends add comments, upload notes &amp share notes with you. Get updates and notifications related to your's and friends' notes all in one place.
+            Always know when friends add comments, upload notes &amp; share notes with you. Get updates and notifications related to your's and friends' notes all in one place.
         .image
           %img{:src => '/assets/activity.png'}
     %section.sign-up-section
@@ -66,9 +67,9 @@
     %section.footer
       %ul
         %li
-          &copy
+          &copy;
           2014
-          &nbsp
+          &nbsp;
           %span.copyright
             the notist
         %li
@@ -89,6 +90,6 @@
             %i.icon-twitter
             follow
         %li
-          %a.twitter-link{:href => '#', :target => '_blank'}
+          %a.twitter-link{:href => 'https://www.facebook.com/thenotist', :target => '_blank'}
             %i.icon-facebook
             facebook

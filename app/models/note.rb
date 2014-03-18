@@ -1,15 +1,12 @@
 class Note < ActiveRecord::Base
   attr_accessible :title, :processed, :aborted, :flagged
-
   belongs_to :user
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
   has_many :contributing_users, through: :contributors, source: :user
   has_many :uploaded_html_files, dependent: :destroy, :order => 'page_number ASC'
   has_many :uploaded_css_files, dependent: :destroy, :order => 'id ASC'
   has_many :uploaded_thumb_files, dependent: :destroy, :order => 'page_number ASC'
-
   has_many :flag_reports
-
   has_many :comments, :through => :uploaded_html_files
   has_many :tags
 

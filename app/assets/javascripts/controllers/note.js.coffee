@@ -6,7 +6,6 @@
 
   $scope.$on('$destroy', () ->
     $interval.cancel($scope.pollPromise)
-    $scope.$root.pageShifted = false
   )
 
   # number of pages to loaded in the browser at any given time
