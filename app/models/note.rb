@@ -61,31 +61,32 @@ class Note < ActiveRecord::Base
   end
 
   def as_json current_user
-    {
-      :id => id,
-      :title => title,
-      :contributing_users => contributing_users.map(&:as_json),
-      :uploaded_html_files => uploaded_html_files.map(&:as_json),
-      :uploaded_css_files => uploaded_css_files.map(&:as_json),
-      :uploaded_thumb_files => uploaded_thumb_files.map(&:as_json),
-      :user => user.as_json,
-      :processed => processed,
-      :aborted => aborted,
-      :created_at => created_at,
-      :tags => tags_for_user(current_user).map(&:as_json)
-    }
-  end
-
-    def as_private_json
-    {
-      :id => id,
-      :title => title,
-      :contributing_users => contributing_users.map { |u| u.as_json },
-      :user => user.as_json,
-      :created_at => created_at,
-      :processed => processed,
-      :comment_count => comment_count()
-    }
+    if (self.user == current_user || self.shared_with?(current_user))
+      return {
+        :id => id,
+        :title => title,
+        :contributing_users => contributing_users.map(&:as_json),
+        :uploaded_html_files => uploaded_html_files.map(&:as_json),
+        :uploaded_css_files => uploaded_css_files.map(&:as_json),
+        :uploaded_thumb_files => uploaded_thumb_files.map(&:as_json),
+        :user => user.as_json,
+        :processed => processed,
+        :aborted => aborted,
+        :created_at => created_at,
+        :tags => tags_for_user(current_user).map(&:as_json),
+        :flagged => flagged,
+        :private => false
+      }
+    else
+      return {
+        :id => id,
+        :title => title,
+        :private => true,
+        :user => user.as_json,
+        :created_at => created_at,
+        :flagged => flagged
+      }
+    end
   end
 
   def tags_for_user current_user

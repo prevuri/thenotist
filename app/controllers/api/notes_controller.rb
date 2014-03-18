@@ -80,7 +80,7 @@ class Api::NotesController < ApplicationController
     @notes = @user.notes + @user.shared_notes
     return render :json => {
       :success => true,
-      :notes => @notes.map{ |note| (note.shared_with? current_user or note.user == current_user) ? note.as_json(current_user) : note.as_private_json}
+      :notes => @notes.map(&:as_json)
     }
   end
 

@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20140318181858) do
     t.datetime "updated_at",                    :null => false
     t.boolean  "processed",  :default => false
     t.boolean  "aborted",    :default => false
+    t.boolean  "flagged"
   end
 
   add_index "notes", ["processed"], :name => "index_notes_on_processed"
