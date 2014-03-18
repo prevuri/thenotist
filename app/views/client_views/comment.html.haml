@@ -1,12 +1,17 @@
 .comment-inner{:'ng-style' => "{opacity: comment.deleteFade ? '0.5' : '1'}"}
   .comment-body
-    %a.delete-button.secondary.text-link{:'ng-if' => "comment.owned_by_user", :'ng-click' => "showDeleteConfirm.global = comment.id", :'ng-class' => "showDeleteConfirm.global == comment.id ? 'confirm-showing' : ''"}
-      %i.icon-remove
-    .user
-      .name {{comment.user.name}}
+    .top
+      .comment-date
+        %i.icon-time
+        .date-tooltip
+          {{comment.time_string}}
+          .date-tooltip-arrow
+      .user
+        .name {{comment.user.name}}
     %textarea.comment-text{:'textarea-autoheight-readonly' => true, :readonly => true} {{comment.text}}
   .bottom
-    .comment-date {{comment.time_string}}
+    %a.delete-button.secondary.text-link{:'ng-if' => "comment.owned_by_user", :'ng-click' => "showDeleteConfirm.global = comment.id", :'ng-class' => "showDeleteConfirm.global == comment.id ? 'confirm-showing' : ''"}
+      %i.icon-trash
   .clear
   .delete-confirm-panel{:'ng-show' => "showDeleteConfirm.global == comment.id"}
     .delete-cancel.btn{:'ng-click' => "showDeleteConfirm.global = null"} Cancel

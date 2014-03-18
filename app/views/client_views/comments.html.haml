@@ -16,8 +16,9 @@
           .profile-image.circular{:'ng-style' => "{background: 'url(' + currentUser.user_fb_data.profile_image + ') no-repeat'}"}
         .comment-inner{:'ng-style' => "{opacity: submitting ? '0.5' : '1'}"}
           .comment-body
-            .user
-              .name {{currentUser.name}}
+            .top
+              .user
+                .name {{currentUser.name}}
             %a.reply-button.text-link{:'ng-hide' => 'replyShowing.global == parentComment.id', :'ng-click' => 'replyShowing.global = parentComment.id'}
               Add a reply
             .comment-text{:'ng-show' => 'replyShowing.global == parentComment.id'}
