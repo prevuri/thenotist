@@ -390,7 +390,7 @@ $shift-max-width: 1400px;
             padding: 1px;
             margin: -1px 0 0 -1px;
           }
-          .ellipsis {
+          .profile-ellipsis {
             color: #f5f5f5;
             font-size: 25px;
             line-height: 0.37;
@@ -502,7 +502,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
 }
 
 .comment-thread-container {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .comment {
@@ -510,16 +510,18 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
     width: 280px;
 
     .comment-inner {
-      padding: 10px 8px;
+      padding: 0px 8px 2px;
       // background-color: white;
       // border: 1px solid #ddd;
       border-bottom: 1px solid #f2f2f0;
       overflow: visible;
+      position: relative;
     }
 
     &.reply {
+      width: 300px;
       margin-left: -20px;
-      margin-top: 5px;
+      margin-top: 10px;
       .profile-container {
         width: 35px;
         height: 35px;
@@ -530,12 +532,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       }
       .comment-inner {
         margin-left: 49px;
-
-        .delete-confirm-panel {
-          .btn {
-            width: 75px;
-          }
-        }
       }
       .profile-container {
         margin-top: 0px;
@@ -546,9 +542,29 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       // background-color: $highlight-color;
     }
 
+    .top {
+      margin-bottom: 5px;
+    }
     .user {
       font-weight: bold;
-      margin-bottom: 5px;
+      .name {
+        color: #373737;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        text-decoration: none;
+        -webkit-transition: color 0.2s ease;
+        -moz-transition: color 0.2s ease;
+        transition: color 0.2s ease;
+      }
+      a.name {
+        &:hover {
+          color: #456;
+        }
+        &:active {
+          color: #678;
+        }
+      }
     }
     .profile-container {
       width: 40px;
@@ -557,16 +573,10 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       float: left;
       margin-left: -34px;
     }
-    .comment-body {
-      overflow: auto;
-    }
     .comment-text {
       background-color: inherit;
       color: #222;
       white-space: normal;
-    }
-    .bottom {
-      margin-top: 4px;
     }
     .text-link {
       float: left;
@@ -605,9 +615,12 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         float: right;
         margin-right: 0;
         margin-left: 10px;
-        color: #ccc;
+        line-height: 1.0;
+        color: #bbb;
         opacity: 0;
         -webkit-transition: opacity 0.2s ease, color 0.2 ease;
+        -moz-transition: opacity 0.2s ease, color 0.2 ease;
+        transition: opacity 0.2s ease, color 0.2 ease;
         &.confirm-showing i {
           color: #ddd;
           cursor: default;
@@ -618,29 +631,96 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       .delete-button.text-link {
         opacity: 1;
       }
+      .comment-date {
+        .date-tooltip {
+          display: block;
+        }
+      }
     }
     .comment-date {
-      float: left;
-      color: #bbb;
+      float: right;
+      margin-left: 5px;
+      color: #ccc;
       font-size: 0.9em;
+      position: relative;
+      .date-tooltip {
+        display: none;
+        position: absolute;
+        top: -25px;
+        right: -10px;
+        padding: 2px 10px 4px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border-radius: 4px;
+        opacity: 0;
+        -webkit-transition: opacity 0.2s ease;
+        -moz-transition: opacity 0.2s ease;
+        transition: opacity 0.2s ease;
+        .date-tooltip-arrow {
+          position: absolute;
+          right: 9px;
+          bottom: -6px;
+          width: 0; 
+          height: 0;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-top: 6px solid rgba(0, 0, 0, 0.7);
+        }
+      }
+      &:hover {
+        .date-tooltip {
+          opacity: 1;
+          &:hover {
+            opacity: 0;
+          }
+        }
+      }
     }
     .delete-confirm-panel {
-      -webkit-transition: height 0.2s ease;
-      -moz-transition: height 0.2s ease;
-      transition: height 0.2s ease;
+      -webkit-transition: opacity 0.2s ease;
+      -moz-transition: opacity 0.2s ease;
+      transition: opacity 0.2s ease;
       overflow: hidden;
-      height: 45px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.8);
+      text-align: center;
 
       &.ng-hide-add, &.ng-hide-remove {
         display: block !important;
       }
       &.ng-hide {
-        height: 0;
+        opacity: 0;
       }
 
       .btn {
-        width: 100px;
-        margin: 10px 10px 0 0;
+        position: absolute;
+        bottom: 30%;
+        left: 5%;
+        width: 32%;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.4);
+        }
+        &:active {
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+      }
+
+      .btn.delete-confirm {
+        background-color: rgba(210, 60, 60, 0.7);
+        left: 53%;
+        &:hover {
+          background-color: rgba(210, 60, 60, 0.8);
+        }
+        &:active {
+          background-color: rgba(210, 60, 60, 0.9);
+        }
       }
     }
   }
@@ -844,23 +924,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           }
           a:last-child .btn {
             border-radius: 0 4px 4px 0;
-          }
-        }
-
-        .tooltip {
-          right: -10px;
-          top: 35px;
-          .tooltip-arrow {
-            border-bottom-color:rgba(0,0,0,0.5);
-          }
-          .tooltip-inner {
-            width: 210px;
-            background-color:rgba(0,0,0,0.5);
-            #buddies {
-              margin-bottom: 10px;
-              height: 20px;
-              font-size: 10px;
-            }
           }
         }
 

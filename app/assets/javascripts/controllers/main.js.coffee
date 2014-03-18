@@ -8,6 +8,7 @@
 
   $scope.$on('$routeChangeStart', () ->
     $scope.$root.loading = true
+    $scope.$root.pageShifted = false
   )
 
   $scope.setAlert = (text, isSuccess) ->
