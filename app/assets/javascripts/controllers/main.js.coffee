@@ -10,10 +10,6 @@
     $scope.$root.loading = true
   )
 
-  $scope.keypress = () ->
-    if window.event.keyCode is 27
-      $scope.$parent.$broadcast('escapePressed')
-
   $scope.setAlert = (text, isSuccess) ->
     $scope.alert.success = isSuccess
     $scope.alert.text = text
