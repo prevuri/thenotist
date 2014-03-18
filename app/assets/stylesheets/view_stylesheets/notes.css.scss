@@ -548,9 +548,22 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
     .user {
       font-weight: bold;
       .name {
+        color: #373737;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        text-decoration: none;
+        -webkit-transition: color 0.2s ease;
+        -moz-transition: color 0.2s ease;
+        transition: color 0.2s ease;
+      }
+      a.name {
+        &:hover {
+          color: #456;
+        }
+        &:active {
+          color: #678;
+        }
       }
     }
     .profile-container {

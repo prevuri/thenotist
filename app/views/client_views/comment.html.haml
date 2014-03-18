@@ -7,7 +7,7 @@
           {{comment.time_string}}
           .date-tooltip-arrow
       .user
-        .name {{comment.user.name}}
+        %a.name{:'ng-href' => '/profile/{{comment.user.id}}'} {{comment.user.name}}
     %textarea.comment-text{:'textarea-autoheight-readonly' => true, :readonly => true} {{comment.text}}
   .bottom
     %a.delete-button.secondary.text-link{:'ng-if' => "comment.owned_by_user", :'ng-click' => "showDeleteConfirm.global = comment.id", :'ng-class' => "showDeleteConfirm.global == comment.id ? 'confirm-showing' : ''"}
