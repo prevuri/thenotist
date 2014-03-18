@@ -227,7 +227,7 @@
           comments: [comment]
         }
     groupedComments.sort((a, b) ->
-      a.yCoord > b.yCoord
+      a.yCoord - b.yCoord
     )
     i = 1
     while i < groupedComments.length
