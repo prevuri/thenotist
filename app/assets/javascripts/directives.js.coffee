@@ -93,6 +93,26 @@ notistApp.directive('ngSpinner', () ->
     scope.$watch(attrs.textareaAutofocus, setFocus, true)
 )
 
+.directive('textareaCursor', ($timeout) ->
+  link: (scope, el, attrs) ->
+    loadPosition = () ->
+      position = scope.$eval(attrs.textareaCursor)
+      if scope.replyShowing.global == scope.parentComment.id && position
+        $timeout(() ->
+          position = scope.replyText[scope.parentComment.id].length - position
+          if el[0].setSelectionRange
+            el[0].setSelectionRange(position, position)
+          else if el.createTextRange
+            range = el[0].createTextRange()
+            range.collapse(true)
+            range.moveEnd('character', position)
+            range.moveStart('character', position)
+            range.select()
+        , 50)
+    $(el).focus(loadPosition)
+    loadPosition()
+)
+
 .directive('pageButtonsScroll', () ->
   link: (scope, el, attrs) ->
     ctrlScope = scope.$parent.$parent

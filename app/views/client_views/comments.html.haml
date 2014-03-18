@@ -18,15 +18,15 @@
           .comment-body
             .user
               .name {{currentUser.name}}
-            %a.reply-button.text-link{:'ng-hide' => 'repliesShowing[parentComment.id]', :'ng-click' => 'repliesShowing[parentComment.id] = true'}
+            %a.reply-button.text-link{:'ng-hide' => 'replyShowing.global == parentComment.id', :'ng-click' => 'replyShowing.global = parentComment.id'}
               Add a reply
-            .comment-text{:'ng-show' => 'repliesShowing[parentComment.id]'}
-              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your reply here', :'ng-model' => 'replyText[parentComment.id]', :'textarea-autoheight' => 'replyText[parentComment.id]', :'textarea-autofocus' => 'repliesShowing[parentComment.id]', :'ng-enter' => 'repliesShowing[parentComment.id] && submitReply(parentComment, file.id, pageNo-1)', :'ng-focus' => 'repliesShowing[comment.id] = true' }
-          .bottom{:'ng-show' => 'repliesShowing[parentComment.id] == true'}
+            .comment-text{:'ng-show' => 'replyShowing.global == parentComment.id'}
+              %textarea.newreply.new_comment_text_field{:placeholder => 'Enter your reply here', :'ng-model' => 'replyText[parentComment.id]', :'textarea-autoheight' => 'replyText[parentComment.id]', :'textarea-autofocus' => 'replyShowing.global == parentComment.id', :'textarea-cursor' => 'savedCursor', :'ng-enter' => '(replyShowing.global == parentComment.id) && submitReply(parentComment, file.id, pageNo-1)', :'ng-focus' => 'replyShowing.global = parentComment.id'}
+          .bottom{:'ng-show' => 'replyShowing.global == parentComment.id'}
             %a.new-comment-submit.primary.text-link{:'ng-click' => "submitReply(parentComment, file.id, pageNo-1)"}
               Add
             .text-link.secondary.bullet
               %i.icon-circle
-            %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'repliesShowing[parentComment.id] = false; replyText[parentComment.id] = null'}
+            %a.new-comment-cancel.secondary.text-link{:'ng-click' => 'replyShowing.global = null; replyText[parentComment.id] = null'}
               %i.icon-trash
           .clear

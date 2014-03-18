@@ -11,8 +11,8 @@
 
   # number of pages to loaded in the browser at any given time
   $scope.pageChunkSize = 10
-  $scope.repliesShowing = {}
   $scope.replyText = {}
+  $scope.replyShowing = {global: null}
   $scope.showDeleteConfirm = {global: null}
   $scope.currentPage = 1
   $scope.pageEl = {}
@@ -116,6 +116,7 @@
               updateChunk = true
         for chunk in $scope.pageChunks
           chunk.commentsLoaded = false
+        $scope.saveCursorPosition()
         # Don't group visible chunk comments on initial comment request; loadVisiblePages already does this
         if updateChunk && $scope.initialCommentRequestDone
           $scope.groupCommentsCurrentChunk()
@@ -123,6 +124,12 @@
       ).error( (data, status, headers, config) ->
         console.log "Error loading comments from server", false
     )
+
+  $scope.saveCursorPosition = () ->
+    if document.activeElement.tagName == 'TEXTAREA'
+      $scope.savedCursor = document.activeElement.value.length - document.activeElement.selectionStart
+    else
+      $scope.savedCursor = null
 
   $scope.showNewComment = (show) ->
     $scope.showingNewComment = show
@@ -182,7 +189,7 @@
         success( (data, status, headers, config) ->
           $scope.submitting = false
           if parentId
-            $scope.repliesShowing[parentId] = false
+            $scope.replyShowing.global = null
             $scope.replyText[parentId] = null
           else
             $scope.expandCommentLine($scope.newCommentLineId)
