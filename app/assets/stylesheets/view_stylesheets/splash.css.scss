@@ -14,8 +14,8 @@ $review-4-left: 920px;
 $review-5-top: -30px;
 $review-5-left: 1190px;
 
-/*splash page css*/
-#splash {
+/*splash and details page css*/
+#splash, #details {
   min-height: 100%;
 
   /* Set up proportionate scalin g */
@@ -390,6 +390,28 @@ $review-5-left: 1190px;
     }
   }
 
+  // About Details Page CSS //
+  .about, .legal{
+    background-color: #fafafa;
+    color: #373737;
+    border-bottom: solid 1px #eee;
+
+    h1, h2 {
+      color: #373737;
+    }
+
+  }
+
+  .team {
+    background-color: #fff;
+    color: #373737;
+    border-bottom: solid 1px #eee;
+
+    h1, h2 {
+      color: #373737;
+    }
+  }
+
   .footer {
     position: relative;
     height: 50px;
@@ -421,4 +443,103 @@ $review-5-left: 1190px;
 
     }
   }
+}
+
+
+#details {
+  .inner-tour-wrapper {
+    // min-width: 1000px;
+    max-width: 960px;
+    padding: 3% 20px;
+  }
+
+  .inner-wrapper {
+    max-width: 960px;
+
+    .connect-fb-button {
+      margin-right: 0;
+    }
+  }
+  
+  .notist-logo {
+    height: 60px;
+    z-index: 2;
+    width: 50%;
+    float: left;
+    background: url('/assets/logo/notist-logo-optimized.png') no-repeat scroll 0% 0% / 218px 57px transparent;
+    margin-top: 20px;
+  }
+  
+  // h1:after {
+  //   content: " ";
+  //   width: 100px;
+  //   height: 2px;
+  //   display: block;
+  //   margin-bottom: 1em;
+  //   margin-top: 10px;
+  //   background: rgba(0,0,0,0.2)
+  // }
+
+  p {
+    font-weight: 100;
+    font-size: 1.4em;
+    line-height: 1.5em;
+
+    &.break-after:after {
+      content: " ";
+      width: 300px;
+      height: 1px;
+      display: block;
+      margin-top: 20px;
+    }
+  }
+
+  h4 {
+    font-size: 1.5em;
+  }
+
+  ul {
+    font-size: 1.1em;
+  }
+
+  .small-header {
+    height: 100px;
+    background-color: #373737;
+  }
+
+  .founder-info {
+    float: left;
+    text-align: center;
+    color: #373737;
+    margin: 5% 20px;
+
+    .image {
+      height: 200px;
+      width: 200px;
+      border-radius: 150px;
+      overflow: hidden;
+    }
+  }
+
+  @media screen and (min-width: 0px) {
+    .founder-info {
+      margin: 2% 40%;
+    } 
+  }
+
+  @media screen and (min-width: 920px) {
+    .founder-info {
+      margin: 3% 120px;
+    } 
+  }
+
+  @media screen and (min-width: 1000px) {
+    .founder-info {
+      margin: 5% 20px;
+    } 
+  }
+
+
+
+  
 }
