@@ -91,6 +91,7 @@
         updateChunk = false
         chunkFirstPageNo = $scope.pageChunks[$scope.currentPageChunk].pages[0].page_number
         chunkLastPageNo = chunkFirstPageNo + $scope.pageChunkSize-1
+        $scope.noComments = data.comments.length == 0
         for comment in data.comments
           # If this is a parent comment (not a reply)
           if !comment.parent_comment_id
@@ -187,6 +188,7 @@
       $http({method: 'POST', url: '/api/comments', data: data}).
         success( (data, status, headers, config) ->
           $scope.submitting = false
+          $scope.noComments = false
           if parentId
             $scope.replyShowing.global = null
             $scope.replyText[parentId] = null

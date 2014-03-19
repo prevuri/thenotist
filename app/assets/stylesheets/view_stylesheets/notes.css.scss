@@ -253,6 +253,42 @@ $shift-max-width: 1400px;
   }
 }
 
+@-webkit-keyframes bounce {
+  0% {
+    left: 1035px;
+  }
+  50% {
+    left: 1040px;
+  }
+  100% {
+    left: 1035px;
+  }
+}
+#no-comments-prompt {
+  @media (max-width: 1145px) {
+    display: none;
+  }
+  position: fixed;
+  top: 100px;
+  left: 1035px;
+  width: 110px;
+  color: #59b;
+  -webkit-animation: bounce 0.3s ease;
+  -webkit-animation-delay: 2s;
+  -webkit-animation-iteration-count: 2;
+
+  i {
+    float: left;
+    margin-right: 5px;
+    margin-top: 2px;
+  }
+
+  .no-comments-text {
+    overflow: auto;
+    font-size: 1.1em;
+  }
+}
+
 #note-main {
   padding-top: 70px;
   position: relative;

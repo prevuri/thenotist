@@ -35,7 +35,10 @@
       .right
         .left.profile-container.outer-circle{:'ng-if' => 'contrib.id != currentUser.id'}
           %img.profile-image.circular{:'ng-src' => '{{contrib.user_fb_data.profile_image}}'}
-
+    #no-comments-prompt{:'ng-if' => 'noComments', :'ng-hide' => 'pageShifted'}
+      %i.icon-arrow-left
+      .no-comments-text
+        Click any text to comment
 
   #note-main{:'ng-class' => 'pageShifted ? "shifted" : ""'}
     .note-pages{:'scroll-change-page' => true, :'detect-hash-links' => true}
