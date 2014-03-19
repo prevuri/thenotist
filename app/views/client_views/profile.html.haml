@@ -26,11 +26,11 @@
       .notes-list
         .notes-list-item{ :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
           %ng-include{:'ng-if' => 'note.accessible', :src => "'/client_views/grid_item.html'"}
-        .notes-list-item.unaccessible-notes-container{:'ng-if' => 'all_notes_count && (all_notes_count - notes.length > 0)'}
+        .notes-list-item.inaccessible-notes-container{:'ng-if' => 'all_notes_count && (all_notes_count - notes.length > 0)'}
           .notes-diff-count{:'ng-if' => 'notes.length > 0'} +{{all_notes_count - notes.length}}
-          .notes-diff-count{:'ng-if' => 'notes.length == 0'} {{all_notes_count - notes.length}}
-          .notes-diff-text{:'ng-if' => 'all_notes_count - notes.length == 1'} Note not shared with you.
-          .notes-diff-text{:'ng-if' => 'all_notes_count - notes.length > 1'} Notes not shared with you.
+          .notes-diff-count.no-plus{:'ng-if' => 'notes.length == 0'} {{all_notes_count - notes.length}}
+          .notes-diff-text{:'ng-if' => 'all_notes_count - notes.length == 1'} Private note.
+          .notes-diff-text{:'ng-if' => 'all_notes_count - notes.length > 1'} Private notes.
 
   .buddies-section{:'ng-if'=>"button == 'buddies'"}
     .buddies-list-container

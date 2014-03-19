@@ -108,6 +108,88 @@ class User < ActiveRecord::Base
     end
 	end
 
+  def allowed_activities current_user
+    activity_type_query = "
+      (
+        SELECT activities.* FROM activities
+        WHERE
+          activities.user_id = #{self.id} AND
+          activities.trackable_id IS NOT NULL AND
+          LOWER(activities.trackable_type)='%s' AND
+          activities.created_at > ('#{self.created_at.to_s(:db)}')
+      )
+      UNION
+      (
+        SELECT activities.* FROM activities
+        INNER JOIN users ON activities.user_id=users.id
+        INNER JOIN relationships ON users.id=relationships.buddy_id
+        WHERE
+          relationships.follower_id=#{self.id} AND
+          activities.trackable_id IS NOT NULL AND
+          LOWER(activities.trackable_type)='%s' AND
+          activities.created_at > ('#{self.created_at.to_s(:db)}')
+      )"
+
+    all_comment_activities = Activity
+      .find_by_sql(activity_type_query % ['comment', 'comment'])
+      .reject { |a| a.trackable.blank? }
+      .select { |a| a.trackable.note_owner.id == current_user.id || a.trackable.note.shared_with?(current_user) }
+
+    all_contrib_activities = self.activities
+      .find_by_sql(activity_type_query % ['contributor', 'contributor'])
+      .reject { |a| a.trackable.blank? }
+      .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_note.user.id == current_user.id }
+
+    all_note_activities = self.activities
+      .find_by_sql(activity_type_query % ['note', 'note'])
+      .reject { |a| a.trackable.blank? }
+      .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_with?(current_user) }
+
+    # all_comment_activities = self.activities
+    #   .where('trackable_id IS NOT NULL')
+    #   .where('LOWER(trackable_type)=(?)', 'comment')
+    #   .where('activities.created_at > (?)', self.created_at)
+    #   .reject { |a| a.trackable.blank? }
+    #   .select { |a| a.trackable.note_owner.id == current_user.id || a.trackable.note.shared_with?(current_user) }
+
+    # all_comment_activities += self.buddy_activities
+    #   .where('trackable_id IS NOT NULL')
+    #   .where('LOWER(trackable_type)=(?)', 'comment')
+    #   .where('activities.created_at > (?)', self.created_at)
+    #   .reject { |a| a.trackable.blank? }
+    #   .select { |a| a.trackable.note_owner.id == current_user.id || a.trackable.note.shared_with?(current_user) }
+
+    # all_contrib_activities = self.activities
+    #   .where('trackable_id IS NOT NULL')
+    #   .where('LOWER(trackable_type)=(?)', 'contributor')
+    #   .where('activities.created_at > (?)', self.created_at)
+    #   .reject { |a| a.trackable.blank? }
+    #   .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_note.user.id == current_user.id }
+
+    # all_contrib_activities += self.buddy_activities
+    #   .where('trackable_id IS NOT NULL')
+    #   .where('LOWER(trackable_type)=(?)', 'contributor')
+    #   .where('activities.created_at > (?)', self.created_at)
+    #   .reject { |a| a.trackable.blank? }
+    #   .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_note.user.id == current_user.id }
+
+    # all_note_activities = self.activities
+    #   .where('trackable_id IS NOT NULL')
+    #   .where('LOWER(trackable_type)=(?)', 'note')
+    #   .where('activities.created_at > (?)', self.created_at)
+    #   .reject { |a| a.trackable.blank? }
+    #   .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_with?(current_user) }
+
+    # all_note_activities += self.buddy_activities
+    #   .where('trackable_id IS NOT NULL')
+    #   .where('LOWER(trackable_type)=(?)', 'note')
+    #   .where('activities.created_at > (?)', self.created_at)
+    #   .reject { |a| a.trackable.blank? }
+    #   .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_with?(current_user) }
+
+    return all_comment_activities + all_contrib_activities + all_note_activities
+  end
+
   def as_json
     {
       :id => id,

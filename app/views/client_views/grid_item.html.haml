@@ -2,19 +2,14 @@
   %a.big-link{:'ng-if' => '!note.flagged && note.processed && noteDeleteClicked != note.id',:'ng-href' => '/notes/{{note.id}}'}
   .img-preview{:'ng-if' => 'note.processed', :'ng-style' => '{"background-image": "url(" + note.uploaded_thumb_files[0].public_path + ")"}'}
 
-  .delete-confirmation{:'ng-if' => 'noteDeleteClicked == note.id && note.is_owner'}
+  .delete-confirmation{:'ng-if' => 'noteDeleteClicked == note.id'}
     %h3 Delete this note?
     %a.btn.cancel{:'ng-click' => 'cancelDelete()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Cancel Delete"}
       Cancel
     %a.btn.delete{:'ng-if' => 'note.is_owner', :'ng-click' => 'deleteNote()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Verify Delete" }
       Delete
-
-  .delete-confirmation.unsubscribe{:'ng-if' => 'noteDeleteClicked == note.id && !note.is_owner'}
-    %h4 Unsubscribe from this note?
-    %a.btn.cancel{:'ng-click' => 'cancelDelete()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Cancel Unsubscribe"}
-      Cancel
-    %a.btn.delete{:'ng-if' => '!note.is_owner', :'ng-click' => 'unsubscribeNote()'}
-      Unsubscribe
+    %a.btn.delete{:'ng-if' => '!note.is_owner', :'ng-click' => 'unsubscribeNote()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Verify Unsubscribe" }
+      Delete
 
   .process-spinner{:'ng-if' => '!note.processed && !note.aborted && noteDeleteClicked != note.id'}
     %i.icon-refresh.icon-white.icon-spin

@@ -1206,7 +1206,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         }
       }
     }
-    .unaccessible-notes-container {
+    .inaccessible-notes-container {
       background-color: #5E5D65;
       .notes-diff-count {
         color: #ffffff;
@@ -1214,6 +1214,9 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         margin-left: -30px;
         text-align: center;
         margin-top: 40px;
+        &.no-plus {
+          margin-left: 0px;
+        }
       }
       .notes-diff-text {
         color: #ffffff;
