@@ -14,11 +14,11 @@
           .text Library
 
     .nav.nav-list-bottom
-      - if true #- if current_user.admin?
-        %li
-          %a.btn.btn-large.btn-block{:href => '/admin', :'ng-class' => "{active: section == 'admin'}"}
-            %i.icon-cogs.icon-2x
-            .text Admin
+      -# if true #- if current_user.admin?
+      -#  %li
+      -#    %a.btn.btn-large.btn-block{:href => '/admin', :'ng-class' => "{active: section == 'admin'}"}
+      -#      %i.icon-cogs.icon-2x
+      -#      .text Admin
       %li{"analytics-on" => "click", "analytics-event" => "Logout"}
         = link_to destroy_user_session_path, :method=>'delete', :class => 'btn btn-large btn-block logout-btn' do
           %i.icon-signout.icon-2x

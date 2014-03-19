@@ -72,16 +72,16 @@ class Note < ActiveRecord::Base
         :created_at => created_at,
         :tags => tags_for_user(current_user).map(&:as_json),
         :flagged => flagged,
-        :private => false
+        :accessible => true,
+        :is_owner => self.user == current_user
       }
     else
       return {
         :id => id,
-        :title => title,
-        :private => true,
+        :accessible => false,
         :user => user.as_json,
         :created_at => created_at,
-        :flagged => flagged
+        :is_owner => self.user == current_user
       }
     end
   end

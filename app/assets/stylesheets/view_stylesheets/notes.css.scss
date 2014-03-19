@@ -805,6 +805,14 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
               background-color: RGBA(255, 0, 5, 0.6)
             }
           }
+          &.unsubscribe {
+            margin-left: -10px;
+            margin-left: -34px;
+            margin-top: 30px;
+            h4 {
+              font-size: 21px;
+            }
+          }
         }
         .appear-hover {
           opacity: 0;
@@ -1178,6 +1186,42 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             background-color: RGBA(80, 160, 200, 0.7);
           }
         }
+
+        .flagged-container {
+          position: absolute;
+          z-index: 103;
+          width: 100%;
+          text-align: center;
+          margin-top: 60px;
+          color: #fff;
+          i {
+            font-size: 5em;
+          }
+          .flagged-title {
+            font-size: 2.3em;
+          }
+          .flagged-description {
+            font-size: 1.5em;
+          }
+        }
+      }
+    }
+    .unaccessible-notes-container {
+      background-color: #5E5D65;
+      .notes-diff-count {
+        color: #ffffff;
+        font-size: 5em;
+        margin-left: -30px;
+        text-align: center;
+        margin-top: 40px;
+      }
+      .notes-diff-text {
+        color: #ffffff;
+        font-size: 2em;
+        text-align: center;
+      }
+      &:hover {
+        background-color: #5E5D65;
       }
     }
   }
