@@ -27,7 +27,7 @@ class Note < ActiveRecord::Base
   end
 
   def shared_with? user
-    contributors.find_by_user_id(user.id)
+    contributors.where(:user_id => user.id).count != 0
   end
 
   def revoke_share! user
@@ -57,8 +57,35 @@ class Note < ActiveRecord::Base
     return false
   end
 
+  def as_json_for_index current_user
+    if (self.user.id == current_user.id || self.shared_with?(current_user))
+      return {
+        :id => id,
+        :title => title,
+        :contributing_users => contributing_users.map(&:as_json),
+        :uploaded_thumb_files => uploaded_thumb_files.map(&:as_json),
+        :user => user.as_json,
+        :processed => processed,
+        :aborted => aborted,
+        :created_at => created_at,
+        :tags => tags_for_user(current_user).map(&:as_json),
+        :flagged => flagged,
+        :accessible => true,
+        :is_owner => self.user == current_user
+      }
+    else
+      return {
+        :id => id,
+        :accessible => false,
+        :user => user.as_json,
+        :created_at => created_at,
+        :is_owner => self.user == current_user
+      }
+    end
+  end
+
   def as_json current_user
-    if (self.user == current_user || self.shared_with?(current_user))
+    if (self.user.id == current_user.id || self.shared_with?(current_user))
       return {
         :id => id,
         :title => title,

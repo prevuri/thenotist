@@ -145,49 +145,8 @@ class User < ActiveRecord::Base
       .reject { |a| a.trackable.blank? }
       .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_with?(current_user) }
 
-    # all_comment_activities = self.activities
-    #   .where('trackable_id IS NOT NULL')
-    #   .where('LOWER(trackable_type)=(?)', 'comment')
-    #   .where('activities.created_at > (?)', self.created_at)
-    #   .reject { |a| a.trackable.blank? }
-    #   .select { |a| a.trackable.note_owner.id == current_user.id || a.trackable.note.shared_with?(current_user) }
-
-    # all_comment_activities += self.buddy_activities
-    #   .where('trackable_id IS NOT NULL')
-    #   .where('LOWER(trackable_type)=(?)', 'comment')
-    #   .where('activities.created_at > (?)', self.created_at)
-    #   .reject { |a| a.trackable.blank? }
-    #   .select { |a| a.trackable.note_owner.id == current_user.id || a.trackable.note.shared_with?(current_user) }
-
-    # all_contrib_activities = self.activities
-    #   .where('trackable_id IS NOT NULL')
-    #   .where('LOWER(trackable_type)=(?)', 'contributor')
-    #   .where('activities.created_at > (?)', self.created_at)
-    #   .reject { |a| a.trackable.blank? }
-    #   .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_note.user.id == current_user.id }
-
-    # all_contrib_activities += self.buddy_activities
-    #   .where('trackable_id IS NOT NULL')
-    #   .where('LOWER(trackable_type)=(?)', 'contributor')
-    #   .where('activities.created_at > (?)', self.created_at)
-    #   .reject { |a| a.trackable.blank? }
-    #   .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_note.user.id == current_user.id }
-
-    # all_note_activities = self.activities
-    #   .where('trackable_id IS NOT NULL')
-    #   .where('LOWER(trackable_type)=(?)', 'note')
-    #   .where('activities.created_at > (?)', self.created_at)
-    #   .reject { |a| a.trackable.blank? }
-    #   .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_with?(current_user) }
-
-    # all_note_activities += self.buddy_activities
-    #   .where('trackable_id IS NOT NULL')
-    #   .where('LOWER(trackable_type)=(?)', 'note')
-    #   .where('activities.created_at > (?)', self.created_at)
-    #   .reject { |a| a.trackable.blank? }
-    #   .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_with?(current_user) }
-
-    return all_comment_activities + all_contrib_activities + all_note_activities
+    all_activities = (all_comment_activities + all_contrib_activities + all_note_activities).sort_by(&:created_at).reverse
+    return all_activities
   end
 
   def as_json

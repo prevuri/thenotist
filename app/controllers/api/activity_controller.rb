@@ -36,7 +36,7 @@ class Api::ActivityController < ApplicationController
 private
   def activity_html (activities)
     html = ""
-    activities.sort_by(&:created_at).each_with_index do |activity, i|
+    activities.each_with_index do |activity, i|
       html += render_to_string(:partial => 'main/activity', :object => activity)
       html += render_to_string(:partial => 'main/footer') if activities.count-1 == i
     end
