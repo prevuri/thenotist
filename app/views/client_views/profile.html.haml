@@ -5,41 +5,32 @@
     .sorting-options
       %ul
         %li.btn{:'ng-click'=> "button='buddies';", :'ng-class'=>"{ 'active' : button == 'buddies' }"}
-          Buddies 
+          Buddies
           %span.notist-badge
             {{user.buddies.length}}
         %li.btn{:'ng-click'=> "button='activity';", :'ng-class'=>"{ 'active' : button == 'activity' }"}
           Activity
         %li.btn{:'ng-click'=> "button='notes';", :'ng-class'=>"{ 'active' : button == 'notes' }"}
-          Notes 
+          Notes
           %span.notist-badge
             {{user.notes.length}}
-        / %li.btn{:'ng-click'=> "button='settings';", :'ng-class'=>"{ 'active' : button == 'settings' }"}
-        /   Settings
 
   %ng-include{:src => "'/client_views/share_form.html'"}
-  
+
   .activities-section{:'ng-if'=>"button == 'activity'"}
     .activity-list-container
       %div{:'ng-bind-html' => "activityHtml"}
 
-  .notes-section{:'ng-controller' => 'NotesCtrl', :'ng-init' => "init('Profile', currentUserProfile, idParam)", :'ng-if'=>"button == 'notes'"}
+  .notes-section{:'ng-controller' => 'NotesCtrl', :'ng-init' => "init('Profile', userId)", :'ng-if'=>"button == 'notes'"}
     .notes-list-container
       .notes-list
-        .notes-list-item{ :'ng-if' => 'currentUserProfile', :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
-          %ng-include{:src => "'/client_views/grid_item.html'"}
-        .notes-list-item{ :'ng-if' => '!currentUserProfile', :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
-          .note-item{:'ng-if' => '!note.hasAccess', :'ng-init' => 'itemIndex = $index'}
-            .access-notice
-              %i.icon-lock.icon-white
-              %h2
-                No Access
-            .info-preview
-              %h3{:'ng-if' => 'note.processed'}
-                .text-link.base-link
-                  {{note.title}}
-          %ng-include{:'ng-if' => 'note.hasAccess', :src => "'/client_views/grid_item.html'"}
-
+        .notes-list-item{ :'ng-repeat' => 'note in notes', :'ng-mouseover' => 'note.tooltipHidden = true' }
+          %ng-include{:'ng-if' => 'note.accessible', :src => "'/client_views/grid_item.html'"}
+        .notes-list-item.inaccessible-notes-container{:'ng-if' => 'all_notes_count && (all_notes_count - notes.length > 0)'}
+          .notes-diff-count{:'ng-if' => 'notes.length > 0'} +{{all_notes_count - notes.length}}
+          .notes-diff-count.no-plus{:'ng-if' => 'notes.length == 0'} {{all_notes_count - notes.length}}
+          .notes-diff-text{:'ng-if' => 'all_notes_count - notes.length == 1'} Private note.
+          .notes-diff-text{:'ng-if' => 'all_notes_count - notes.length > 1'} Private notes.
 
   .buddies-section{:'ng-if'=>"button == 'buddies'"}
     .buddies-list-container

@@ -1,15 +1,12 @@
 class Note < ActiveRecord::Base
-  attr_accessible :title, :processed, :aborted
-
+  attr_accessible :title, :processed, :aborted, :flagged
   belongs_to :user
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
   has_many :contributing_users, through: :contributors, source: :user
-  #What was this made for? contibutors should cover this #What was this made for?
-
   has_many :uploaded_html_files, dependent: :destroy, :order => 'page_number ASC'
   has_many :uploaded_css_files, dependent: :destroy, :order => 'id ASC'
   has_many :uploaded_thumb_files, dependent: :destroy, :order => 'page_number ASC'
-
+  has_many :flag_reports
   has_many :comments, :through => :uploaded_html_files
   has_many :tags
 
@@ -61,31 +58,32 @@ class Note < ActiveRecord::Base
   end
 
   def as_json current_user
-    {
-      :id => id,
-      :title => title,
-      :contributing_users => contributing_users.map(&:as_json),
-      :uploaded_html_files => uploaded_html_files.map(&:as_json),
-      :uploaded_css_files => uploaded_css_files.map(&:as_json),
-      :uploaded_thumb_files => uploaded_thumb_files.map(&:as_json),
-      :user => user.as_json,
-      :processed => processed,
-      :aborted => aborted,
-      :created_at => created_at,
-      :tags => tags_for_user(current_user).map(&:as_json)
-    }
-  end
-
-    def as_private_json
-    {
-      :id => id,
-      :title => title,
-      :contributing_users => contributing_users.map { |u| u.as_json },
-      :user => user.as_json,
-      :created_at => created_at,
-      :processed => processed,
-      :comment_count => comment_count()
-    }
+    if (self.user == current_user || self.shared_with?(current_user))
+      return {
+        :id => id,
+        :title => title,
+        :contributing_users => contributing_users.map(&:as_json),
+        :uploaded_html_files => uploaded_html_files.map(&:as_json),
+        :uploaded_css_files => uploaded_css_files.map(&:as_json),
+        :uploaded_thumb_files => uploaded_thumb_files.map(&:as_json),
+        :user => user.as_json,
+        :processed => processed,
+        :aborted => aborted,
+        :created_at => created_at,
+        :tags => tags_for_user(current_user).map(&:as_json),
+        :flagged => flagged,
+        :accessible => true,
+        :is_owner => self.user == current_user
+      }
+    else
+      return {
+        :id => id,
+        :accessible => false,
+        :user => user.as_json,
+        :created_at => created_at,
+        :is_owner => self.user == current_user
+      }
+    end
   end
 
   def tags_for_user current_user

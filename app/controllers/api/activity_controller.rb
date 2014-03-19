@@ -3,9 +3,8 @@ class Api::ActivityController < ApplicationController
   before_filter :check_authenticated_user!
 
   def index
-
-    @activities = current_user.buddy_activities + current_user.activities
-    # @activities.flatten
+    # @activities = current_user.buddy_activities + current_user.activities
+    @activities = current_user.allowed_activities(current_user)
     render :json => {
       :success => true,
       :html => activity_html(@activities)
@@ -15,7 +14,7 @@ class Api::ActivityController < ApplicationController
   def user
     render :json => {
       :success => true,
-      :html => activity_html(current_user.activities)
+      :html => activity_html(current_user.allowed_activities(current_user))
     }
   end
 
@@ -30,15 +29,14 @@ class Api::ActivityController < ApplicationController
     end
     render :json => {
       :success => true,
-      :html => activity_html(@user.activities)
+      :html => activity_html(@user.allowed_activities(current_user))
     }
   end
 
 private
   def activity_html (activities)
     html = ""
-    activities = activities.sort_by(&:"created_at").reverse
-    activities.each_with_index do |activity, i|
+    activities.sort_by(&:created_at).each_with_index do |activity, i|
       html += render_to_string(:partial => 'main/activity', :object => activity)
       html += render_to_string(:partial => 'main/footer') if activities.count-1 == i
     end

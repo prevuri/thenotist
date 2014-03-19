@@ -1,0 +1,23 @@
+%div{:'ng-controller' => 'FlagReportCtrl', :'ng-init' => "init()"}
+  %div.unresolved-section{:style => "float:right"}
+    %h3 Unresolved Flag Reports ({{unresolvedflagreports.length}}) 
+    %div{:'ng-init' => "init(unresolvedflagreports.first.id)"}
+    .unresolved-list
+      .unresolved-report{:'ng-repeat' => 'report in unresolvedflagreports'}
+        .report-info
+          %a.profile-link-container{:'ng-href' => '/notes/{{report.note.id}}'} {{report.note.title}}
+          .profile-link-container {{report.created_at}} 
+          .profile-link-container {{report.report_type}}
+          .profile-link-container {{report.description}}              
+        .btn.btn-large.btn-primary#flag_report_btn{ :'ng-click' => "updateReport(report.id)" } Resolve
+  %div.resolved-section{:style => "float:left"}
+    %h3 Resolved Flag Reports ({{resolvedflagreports.length}})
+    %div{:'ng-init' => "init(resolvedflagreports.first.id)"}
+    .resolved-list
+      .resolved-report{:'ng-repeat' => 'report in resolvedflagreports'}
+        .report-info
+          .profile-link-container{:'ng-href' => '/notes/{{report.note.id}}'}  {{report.note.title}}
+          .profile-link-container {{report.created_at}}
+          .profile-link-container {{report.report_type}}
+          .profile-link-container {{report.description}}
+        .btn.btn-large.btn-primary#flag_report_btn{ :'ng-click' => "updateReport(report.id)" } Unresolve

@@ -8,7 +8,6 @@
     .left
       %h1.note-title {{note.title}}
       .note-owner by {{note.user.name}}
-
     .right
       .page-counter-text
         Page {{currentPage}} of {{note.uploaded_html_files.length}}
@@ -19,7 +18,7 @@
       .left.outer-circle.prev-page{:'ng-click' => 'decrementPage()'}
         %i.icon-angle-left
     .right
-      .left.outer-circle.flag
+      .left.outer-circle.flag{"data-toggle" => "modal", "data-target" => ".flag-report-form-container", "analytics-on" => "click", "analytics-event" => "Note Flagged" }
         %i.icon-flag
     .right
       .left.outer-circle.share-note{:'ng-if' => 'note.contributing_users.length > 3'}
@@ -73,3 +72,18 @@
         .clear
 
     #note-shift-overlay{:'ng-show' => 'expandedCommentLine != null || showingNewComment', :'ng-click' => 'expandCommentLine(null); showingNewComment = false'}
+
+    .flag-report-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true }
+      .form-container.modal-body
+        .form-container
+          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Legal - Privacy, Copyright, or Other" } Privacy, copyright, or or other legal complaints
+          %br
+          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Content - Intentionally Inaccurate"} Intentionally inaccurate content
+          %br
+          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Content - Hateful or Abusive"} Hateful or abusive content
+          %br
+          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Content - Violent or Repulsive"} Violent or repulsive content
+          %input#flag-report-description{:type => 'text', :placeholder => "Explain why this document needs to be flagged", :'ng-model' => 'flagReport.description', "analytics-on" => "click", "analytics-category" => "Flagging", "analytics-event" => "Flag Report Description" }
+      .form-container.modal-footer
+        .btn.btn-primary.submit-action{ :'ng-click' => "submitReport()" }
+          .submit-action-text Send Report
