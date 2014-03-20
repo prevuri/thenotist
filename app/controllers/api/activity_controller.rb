@@ -61,6 +61,7 @@ private
     end
 
     grouped.concat(remaining_activities.map { |a| build_activity_group([a])})
+    grouped.sort_by! { |g| g[:time] }.reverse!
     return grouped
   end
 
