@@ -4,3 +4,25 @@
 
   .feed-wrapper
     %div{:'ng-bind-html' => "activityHtml"}
+
+  .no-activity-container{:'ng-if' => 'isEmpty'}
+    .get-started-header-container
+      Looks like you're new here. Here's how you can get started:
+    .steps-container
+      .get-started-upload-note.step
+        %span 1.
+        %span.action-header Upload
+        %span a PDF file to your
+        %a{:href => '/notes'} Library
+      .get-started-invite-friends.step
+        %span 2.
+        %span.action-header Invite
+        %span Invite your friends to join TheNotist:
+        %a.social-network-link.facebook{:href => 'https://www.facebook.com/thenotist'} facebook.com/TheNotist
+        %a.social-network-link.twitter{:href => 'https://twitter.com/TheNotist'} twitter.com/TheNotist
+      .get-started-share-and-comment.step
+        %span 3.
+        %span.action-header Share
+        %span notes in your
+        %a{:href => '/notes'} Library
+        with your friends.

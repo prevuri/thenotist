@@ -13,6 +13,46 @@ $user-type-color: #A5BA3D;
   margin-top: 35px;
 }
 
+.no-activity-container {
+  .get-started-header-container {
+    font-size: 2em;
+  }
+  .steps-container {
+    width: 100%;
+    margin-top: 30px;
+    .step {
+      font-size: 21px;
+      margin-bottom: 15px;
+      .action-header {
+        font-weight: 500;
+      }
+    }
+    .get-started-upload-note {
+
+    }
+    .get-started-invite-friends {
+
+    }
+    .get-started-share-and-comment {
+
+    }
+
+    a {
+      color: rgba(204, 117, 110, 1);
+      text-decoration: none;
+      font-weight: 500;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .facebook, .twitter {
+      display: block;
+      margin-left: 23px;
+    }
+  }
+}
+
 .feed-header {
   height: 65px;
   border-bottom: #ECF0F1 solid 2px;
