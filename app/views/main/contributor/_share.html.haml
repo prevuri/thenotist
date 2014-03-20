@@ -8,7 +8,7 @@
     #{activity.trackable.shared_note.title}
   = " with "
   %a{:class =>'user-name', :'href' => "/profile/#{activity.trackable.user.id}"}
-    #{activity.trackable.user.name}
+    #{activity.trackable.user.name.split[0]}
   - num_activities = group[:activities].length
   - if num_activities > 1
     = " and "
@@ -18,7 +18,7 @@
       .name-tooltip
         - remaining_activities = group[:activities].drop(1)
         - remaining_activities.each_with_index do |act, i|
-          = act.trackable.user.name
+          = act.trackable.user.name.split[0]
           = ", " unless i == remaining_activities.length-1
         .name-tooltip-arrow
 
