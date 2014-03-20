@@ -10,9 +10,9 @@
           Date
         %li.btn{:'ng-click'=> "setFilter = {shared: NULL}; predicate='title'; button='name'; reverse=setReverse('name')", :'ng-class'=>"{ 'active' : button == 'name' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Name"}
           Name
-        %li.btn{:'ng-click'=> "setFilter = {shared: false}; button='uploaded'", :'ng-class'=>"{ 'active' : button == 'uploaded' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Uploaded"}
+        %li.btn{:'ng-click'=> "setFilter = {is_owner: true}; button='uploaded'", :'ng-class'=>"{ 'active' : button == 'uploaded' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Uploaded"}
           Uploaded
-        %li.btn{:'ng-click'=> "setFilter = {shared: true}; button='shared'", :'ng-class'=>"{ 'active' : button == 'shared' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Shared"}
+        %li.btn{:'ng-click'=> "setFilter = {is_owner: false}; button='shared'", :'ng-class'=>"{ 'active' : button == 'shared' }", "analytics-on" => "click", "analytics-category" => "Sort", "analytics-event" => "Sort Notes", "analytics-label" => "Shared"}
           Shared
 
   .notes-index-page
