@@ -335,21 +335,20 @@ $shift-max-width: 1400px;
         .t {
           cursor: pointer;
           &:hover {
-            background-color: rgba(40, 120, 200, 0.1);
+            background-color: rgba(40, 135, 200, 0.1);
             &:after {
               content: "+";
               color: white;
               position: absolute;
-              z-index: 99999;
-              line-height: 0.8;
-              right: -50px;
-              bottom: 0;
               z-index: 9999;
-              padding: 4px 5px 8px;
-              border-radius: 20px;
-              font-size: 30px;
+              line-height: 0.9;
+              right: -1.0em;
+              bottom: 0.08em;
+              padding: 0.05em 0.14em 0.14em;
+              border-radius: 2em;
+              font-size: 0.6em;
               font-family: Verdana;
-              background-color: rgba(40, 120, 200, 0.5);
+              background-color: rgba(40, 135, 200, 0.5);
             }
           }
         }
