@@ -132,6 +132,42 @@ $user-type-color: #A5BA3D;
 
   .activity-header-content-container {
     display: inline;
+    position: relative;
+    .extra-people-container {
+      display: inline;
+      border-bottom: 1px dotted #8f8f8f;
+      cursor: pointer;
+      .name-tooltip {
+        display: block;
+        position: absolute;
+        padding: 2px 10px 4px;
+        background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.7);
+        color: #FFF;
+        border-radius: 4px;
+        opacity: 0;
+        transition: opacity 0.2s ease 0s;
+        right: 6%;
+        bottom: 25px;
+        .name-tooltip-arrow {
+          position: absolute;
+          right: 9px;
+          bottom: -6px;
+          width: 0;
+          height: 0;
+          border-left: 6px solid transparent;
+          border-right: 6px solid transparent;
+          border-top: 6px solid rgba(0, 0, 0, 0.7);
+        }
+      }
+      &:hover {
+        .name-tooltip {
+          opacity: 1;
+          &:hover {
+            opacity: 0;
+          }
+        }
+      }
+    }
   }
   .subsection {
     margin-top: 15px;

@@ -3,12 +3,22 @@
   %a{:'href' => "/notes/#{activity.trackable.shared_note.id}"}
     #{activity.trackable.shared_note.title}
 - else
-  = "shared a note with "
-  %a{:class =>'user-name', :'href' => "/profile/#{activity.trackable.user.id}"}
-    #{activity.trackable.user.name.split[0]}
-  - num_activities = group[:activities].length
-  - if num_activities > 1
-    = " and #{num_activities-1} other #{(num_activities-1 > 1 ? 'people' : 'person')}"
-  = ": "
+  = "shared "
   %a{:'href' => "/notes/#{activity.trackable.shared_note.id}"}
     #{activity.trackable.shared_note.title}
+  = " with "
+  %a{:class =>'user-name', :'href' => "/profile/#{activity.trackable.user.id}"}
+    #{activity.trackable.user.name}
+  - num_activities = group[:activities].length
+  - if num_activities > 1
+    = " and "
+    - count_text = "#{num_activities-1} other #{(num_activities-1 > 1 ? 'people' : 'person')}"
+    .extra-people-container
+      %b= "#{count_text}"
+      .name-tooltip
+        - remaining_activities = group[:activities].drop(1)
+        - remaining_activities.each_with_index do |act, i|
+          = act.trackable.user.name
+          = ", " unless i == remaining_activities.length-1
+        .name-tooltip-arrow
+
