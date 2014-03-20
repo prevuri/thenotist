@@ -1,15 +1,14 @@
 .note-item{:'ng-init' => 'itemIndex = $index', :'loaded' => true }
-  %a.big-link{:'ng-if' => 'note.processed && noteDeleteClicked != note.id',:'ng-href' => '/notes/{{note.id}}'}
+  %a.big-link{:'ng-if' => '!note.flagged && note.processed && noteDeleteClicked != note.id',:'ng-href' => '/notes/{{note.id}}'}
   .img-preview{:'ng-if' => 'note.processed', :'ng-style' => '{"background-image": "url(" + note.uploaded_thumb_files[0].public_path + ")"}'}
 
   .delete-confirmation{:'ng-if' => 'noteDeleteClicked == note.id'}
-    %h3
-      Delete this note?
+    %h3 Delete this note?
     %a.btn.cancel{:'ng-click' => 'cancelDelete()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Cancel Delete"}
       Cancel
-    %a.btn.delete{:'ng-if' => 'note.shared', :'ng-click' => 'unsubscribeNote()'}
+    %a.btn.delete{:'ng-if' => 'note.is_owner', :'ng-click' => 'deleteNote()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Verify Delete" }
       Delete
-    %a.btn.delete{:'ng-if' => '!note.shared', :'ng-click' => 'deleteNote()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Verify Delete" }
+    %a.btn.delete{:'ng-if' => '!note.is_owner', :'ng-click' => 'unsubscribeNote()', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Verify Unsubscribe" }
       Delete
 
   .process-spinner{:'ng-if' => '!note.processed && !note.aborted && noteDeleteClicked != note.id'}
@@ -25,14 +24,14 @@
     %h4
       Please try again later...
 
-  .info-preview{:'ng-class' => '"color" + itemIndex%7'}
+  .info-preview{:'ng-class' => 'note.colorClass'}
     %h3{:'ng-if' => 'note.processed'}
       .text-link
         {{note.title}}
       .owner-footer
         by {{note.user.name}}
 
-  .tags{:'ng-if' => 'note.processed'}
+  .tags{:'ng-if' => '!note.flagged && note.processed'}
     .tag{:'ng-repeat' => 'tag in note.tags', :'ng-if' => '$index < 9', :'ng-click' => 'tagClicked(tag)'}
       .delete-tag-btn{:'ng-click' => 'deleteTag(note, tag); $event.stopPropagation()'}
         %i.icon-remove
@@ -43,6 +42,11 @@
       .add-tag-btn{:'ng-click' => 'addButtonClicked($event)'}
         %i.icon-plus
 
+  .flagged-container{:'ng-if' => 'note.flagged'}
+    %i.icon-exclamation.icon-white
+    .flagged-title Flagged
+    .flagged-description This note will not be available until our administrators review the complaint.
+
   .btn-group.appear-hover{:'ng-if' => 'noteDeleteClicked != note.id'}
     %div
       %a{:'ng-click' => 'deleteClickedNote(note, $index)', "analytics-on" => "click", "analytics-category" => "Upload Note", "analytics-event" => "Delete" }
@@ -51,7 +55,7 @@
   #list-footer{:'ng-if' => 'note.processed && noteDeleteClicked != note.id'}
     .big-info
       .contributors
-        .profile-container.circular{:'ng-if' => 'note.shared'}
+        .profile-container.circular{:'ng-if' => '!note.is_owner'}
           %img.profile-image.circular{:'ng-src' => '{{note.user.user_fb_data.profile_image}}'}
         %div{:'ng-repeat' => 'contrib in note.contributing_users | orderBy:name | limitTo:3'}
           .profile-container.circular{:'ng-if' => 'contrib.id != currentUser.id'}
@@ -59,13 +63,5 @@
         .profile-container.circular.share-note{:'ng-if' => 'note.contributing_users.length > 3'}
           %span
             {{note.contributing_users.length}}
-        .profile-container.circular.share-note{:'ng-if' => '!note.shared', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
+        .profile-container.circular.share-note{:'ng-if' => '!note.flagged && note.is_owner', :'ng-click' => 'setSharedNote(note)', "data-toggle" => "modal", "data-target" => ".share-note-form-container" }
           %i.icon-share
-
-  / %div{:'ng-if' => '!note.shared'}
-  /   .tooltip.fade.bottom.in.hidden{:'ng-if' => '!note.tooltipHidden'}
-  /     .tooltip-arrow
-  /     .ui-widget.tooltip-inner
-  /       %input{:id => 'buddies', :type => 'text', :placeholder => "SHARE", :selected => false}
-
-/ %img{:src => "#{note.uploaded_files.first.public_path}"}

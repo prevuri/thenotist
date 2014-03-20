@@ -14,6 +14,14 @@ notistApp.config(['$httpProvider', ($httpProvider) ->
   $locationProvider.html5Mode(true);
 ]).config(['$routeProvider', ($routeProvider) ->
     $routeProvider.
+      when('/admin', {
+        templateUrl: '/client_views/admin.html',
+        controller: 'AdminCtrl'
+      }).
+      when('/flag_reports', {
+        templateUrl: '/client_views/flag_reports.html',
+        controller: 'FlagReportCtrl'
+      }).
       when('/notes', {
         templateUrl: '/client_views/notes.html',
         controller: 'NotesCtrl'

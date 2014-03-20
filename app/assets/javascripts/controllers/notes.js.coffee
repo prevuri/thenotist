@@ -13,36 +13,27 @@
   $scope.tagMaxCharacters = 15
 
   # Init
-  $scope.init = (ctrl, profile, params) ->
-    console.log '[Angular] NotesCtrl being initialized'
+  $scope.init = (ctrl, userId) ->
     if ctrl == "Profile"
       $scope.callingController = "Profile"
-      # $scope.currentUserProfile = profile
-      # $scope.idParam = param
+      $scope.viewingUserId = userId
+      $scope.userNotes()
     else
-      $scope.currentUserProfile = true
       $scope.$root.title = 'Notes'
       $scope.$root.section = 'notes'
       $scope.button = 'date'
       $scope.reverse = true
-    if $scope.currentUserProfile
       $scope.updateNotes()
-    else
-      $scope.userNotes()
-    # $scope.colorize()
-    
+
   # Updates all the notes on the page
   $scope.updateNotes = () ->
     success = (data) ->
       if data.notes.length == 0
         $scope.$root.loading = false
       $scope.notes = $filter('orderBy')(data.notes, 'created_at', true)
-      for note in $scope.notes
-        if note.user.id == $scope.currentUser.id
-          note.shared = false
-        else
-          note.shared = true
-
+      for note, i in $scope.notes
+        if !note.flagged
+          note.colorClass = "color" + i%7
         if !note.processed
           $scope.notesProcessing.push note.id
           $scope.initPolling(note.id)
@@ -53,23 +44,18 @@
 
   $scope.userNotes = () ->
     success = (data) ->
-      $scope.notes = $filter('orderBy')(data.notes, 'created_at', true)
-
-      for note in $scope.notes
-        contributingIds = []
-        for contrib in note.contributing_users
-          contributingIds.push(contrib.id)
-        if $scope.currentUser.id in contributingIds
-          note.hasAccess = true
-          note.shared = true
-        else if note.user.id == $scope.currentUser.id
-          note.hasAccess = true
-          note.shared = false
-        else
-          note.hasAccess = false
+      all_notes = $filter('orderBy')(data.notes, 'created_at', true)
+      filtered_notes = []
+      for note, i in all_notes
+        if !note.flagged
+          note.colorClass = "color" + i%7
+        if note.processed && !note.aborted
+          filtered_notes.push(note)
+      $scope.notes = filtered_notes
+      $scope.all_notes_count = data.all_notes_count
     error = (data) ->
       $scope.setAlert("Error loading notes list", false)
-    NotesUserApi.get($scope.idParam, success, error)
+    NotesUserApi.get({id: $scope.viewingUserId}, success, error)
 
   # Computes Reversing
   $scope.setReverse = (name) ->
@@ -94,7 +80,6 @@
 
   # Deletes a user note
   $scope.deleteNote = () ->
-    # if confirm("Are you sure you want to delete " + note.title)
     success = (data) ->
       $scope.notes.splice($scope.noteDeleteIndex, 1)
       $scope.noteDeleteIndex = -1

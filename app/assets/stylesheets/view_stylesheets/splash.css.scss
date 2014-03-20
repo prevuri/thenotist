@@ -50,7 +50,7 @@ $review-5-left: 1190px;
     margin: 0 auto;
     padding: 5% 20px;
     z-index: 2;
-    position: relative; 
+    position: relative;
   }
 
   .clear-format {
@@ -97,12 +97,6 @@ $review-5-left: 1190px;
         // padding-top: 8px;
     }
   }
-  
-  // @media screen and (-webkit-min-device-pixel-ratio:0) {
-  //   .big-splash-section{ 
-  //       background-attachment: fixed;
-  //   }
-  // }
 
   .big-splash-section {
     // min-height: 680px;
@@ -186,7 +180,6 @@ $review-5-left: 1190px;
     }
     .big-splash-section {
       min-height: 480px;
-      
       .section-wrapper {
         min-height: 480px;
       }
@@ -201,7 +194,7 @@ $review-5-left: 1190px;
       }
     }
 
-    
+
     .text {
       h1 {
         padding-top: 15%;
@@ -244,7 +237,6 @@ $review-5-left: 1190px;
   @media screen and (min-width: 992px) {
     .big-splash-section {
       min-height: 580px;
-      
       .section-wrapper {
         min-height: 580px;
       }
@@ -280,7 +272,6 @@ $review-5-left: 1190px;
   @media screen and (min-width: 1200px) {
     .big-splash-section {
       min-height: 780px;
-      
       .section-wrapper {
         min-height: 780px;
       }
@@ -319,12 +310,12 @@ $review-5-left: 1190px;
 
     .text {
       width: 40%;
-      float: left;    
-    } 
+      float: left;
+    }
 
     .image {
       max-width: 50%;
-      float: right; 
+      float: right;
       margin-top: 25px;
     }
   }
@@ -336,12 +327,12 @@ $review-5-left: 1190px;
 
     .text {
       width: 40%;
-      float: right;    
-    } 
+      float: right;
+    }
 
     .image {
       max-width: 50%;
-      float: left; 
+      float: left;
       margin-top: 25px;
     }
   }
@@ -353,19 +344,19 @@ $review-5-left: 1190px;
 
     .text {
       width: 40%;
-      float: left;    
-    } 
+      float: left;
+    }
 
     .image {
       max-width: 50%;
-      float: right; 
+      float: right;
       margin-top: 25px;
     }
   }
 
   .sign-up-section {
     background: url("/assets/splash/splashmural-second.jpg") center center fixed no-repeat;
-    
+
 
     .background-overlay {
       height: 100%;
@@ -376,7 +367,7 @@ $review-5-left: 1190px;
       z-index: 1;
       background-color: rgba(0, 0, 0, 0.3);
     }
-    
+
     .inner-tour-wrapper {
       padding: 5% 10%;
     }
@@ -444,13 +435,12 @@ $review-5-left: 1190px;
         vertical-align: bottom;
         font-size: 1.4em;
         color: #6d7174;
-        
+
         a {
           color: #6d7174;
           text-decoration: none;
         }
       }
-
     }
   }
 }
@@ -470,7 +460,7 @@ $review-5-left: 1190px;
       margin-right: 0;
     }
   }
-  
+
   .notist-logo {
     height: 60px;
     z-index: 2;
@@ -479,7 +469,7 @@ $review-5-left: 1190px;
     background: url('/assets/logo/notist-logo-optimized.png') no-repeat scroll 0% 0% / 218px 57px transparent;
     margin-top: 20px;
   }
-  
+
   // h1:after {
   //   content: " ";
   //   width: 100px;
@@ -530,26 +520,88 @@ $review-5-left: 1190px;
       overflow: hidden;
     }
   }
+}
+
+#details {
+  .inner-tour-wrapper {
+    // min-width: 1000px;
+    max-width: 960px;
+    padding: 3% 20px;
+  }
+
+  .inner-wrapper {
+    max-width: 960px;
+
+    .connect-fb-button {
+      margin-right: 0;
+    }
+  }
+
+  .notist-logo {
+    height: 60px;
+    z-index: 2;
+    width: 50%;
+    float: left;
+    background: url('/assets/logo/notist-logo-optimized.png') no-repeat scroll 0% 0% / 218px 57px transparent;
+    margin-top: 20px;
+  }
+
+  p {
+    font-weight: 100;
+    font-size: 1.4em;
+    line-height: 1.5em;
+
+    &.break-after:after {
+      content: " ";
+      width: 300px;
+      height: 1px;
+      display: block;
+      margin-top: 20px;
+    }
+  }
+
+  h4 {
+    font-size: 1.5em;
+  }
+
+  ul {
+    font-size: 1.1em;
+  }
+
+  .small-header {
+    height: 100px;
+    background-color: #373737;
+  }
+
+  .founder-info {
+    float: left;
+    text-align: center;
+    color: #373737;
+    margin: 5% 20px;
+
+    .image {
+      height: 200px;
+      width: 200px;
+      border-radius: 150px;
+      overflow: hidden;
+    }
+  }
 
   @media screen and (min-width: 0px) {
     .founder-info {
       margin: 2% 40%;
-    } 
+    }
   }
 
   @media screen and (min-width: 920px) {
     .founder-info {
       margin: 3% 120px;
-    } 
+    }
   }
 
   @media screen and (min-width: 1000px) {
     .founder-info {
       margin: 5% 20px;
-    } 
+    }
   }
-
-
-
-  
 }

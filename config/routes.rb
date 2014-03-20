@@ -22,10 +22,16 @@ TheNotist::Application.routes.draw do
 
   resources :client_views, :only => [:show]
 
+  resources :admin, :only => [:index]
+  # resources :notes
   match "/profile" => redirect("/?goto=profile")
   match "/profile/*id" => redirect("/?goto=profile/%{id}")
 
+  match "/admin" => redirect("/?goto=admin")
+  match "/flag_reports" => redirect("/?goto=flag_reports")
+
   resources :profile
+  resources :flag_reports, :only => [:index]
   resources :buddies, :only => [:index]
   resources :relationships, :only => [:create, :destroy]
 
@@ -37,6 +43,7 @@ TheNotist::Application.routes.draw do
     resources :users, :only => [ :index, :show ]
     match 'users/:id/friends' => 'users#friends', :as => :user_friends, :via => :get
 
+    resources :flag_reports, :only => [ :index, :create, :update ]
     resources :comments, :only => [ :index, :create, :destroy ]
     resources :files, :only => [ :index, :show ]
     resources :notes, :only => [ :index, :show, :update, :destroy, :create ]

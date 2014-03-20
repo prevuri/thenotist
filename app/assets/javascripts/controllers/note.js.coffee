@@ -17,6 +17,10 @@
   $scope.pageEl = {}
   $scope.lineYCache = {}
   $scope.placeholderHeight = 0
+  $scope.flagReport = {
+    category: "Legal - Privacy, Copyright, or Other",
+    description: ""
+  }
 
   $scope.$watch('currentPage', () =>
     $scope.loadVisiblePages()
@@ -219,6 +223,26 @@
         ).error( (data, status, headers, config) ->
           $scope.setAlert("Error deleting comment", false)
           comment.deleteFade = false
+      )
+
+  $scope.resetFlagReportForm = () ->
+    $('#flag-description-field').val('')
+    $("input:radio[name=flag_report_category][id=default]").prop('checked', true)
+
+
+  $scope.submitReport = () ->
+    data = {'note_id': $scope.note.id, 'report_type': $scope.flagReport.category, 'report_description': $scope.flagReport.descriptions}
+    $http({method: 'POST', url: '/api/flag_reports', params: data}).
+      success( (data, status, headers, config) ->
+        console.log("Flag Report has been sent")
+        $('.flag-report-form-container').modal('hide');
+        $scope.resetFlagReportForm();
+        #TODO update with angular alerts
+        alert "Thank you! Your flag report has been sent."
+      ).error( (data, status, headers, config) ->
+        alert data
+        #TODO update with angular alerts
+        alert "Sorry! Your flag report failed to send."
       )
 
   $scope.groupComments = (comments) =>

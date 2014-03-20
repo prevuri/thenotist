@@ -18,6 +18,7 @@ gem 'sitemap_generator'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
+  gem 'd3-rails'
   gem 'jquery-rails'
   gem 'jquery-ui-rails'
   gem 'bootstrap-sass'

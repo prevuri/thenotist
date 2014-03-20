@@ -1,0 +1,102 @@
+$fbbar_background: #ECF0F1;
+$button_color: #2ECC71;
+
+.buddy-list-item {
+	margin-bottom: 30px;
+}
+
+.unresolved-section {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	padding-left: 10px;
+	width: 90%;
+	overflow: auto;
+	box-shadow: 0 0 10px #888;
+
+	background-color: $fbbar_background;
+}
+
+.resolved-section {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	padding-left: 10px;
+	width: 50%;
+	overflow: auto;
+	box-shadow: 0 0 10px #888;
+
+	background-color: $fbbar_background;
+}
+
+.unresolved-report {
+	width: 290px;
+	margin-top: 7px;
+	margin-right: 10px;
+	border-top: 1px #ccc solid;
+	clear: both;
+	.friend-info {
+		width: 80%;
+		margin-top: 7px;
+		margin-bottom: 7px;
+		.profile-container {
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			padding: 2px;
+			margin-right: 10px;
+			float: left;
+			.profile-image {
+				width: 50px;
+				height: 50px;
+			}
+		}
+		.profile-link-container {
+			float: left;
+			max-width: 300px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin-top: 16px;
+			white-space: nowrap;
+		}
+	}
+}
+
+.resolved-report {
+	width: 290px;
+	margin-top: 7px;
+	margin-right: 10px;
+	border-top: 1px #ccc solid;
+	clear: both;
+	.friend-info {
+		width: 80%;
+		margin-top: 7px;
+		margin-bottom: 7px;
+		.profile-container {
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			padding: 2px;
+			margin-right: 10px;
+			float: left;
+			.profile-image {
+				width: 50px;
+				height: 50px;
+			}
+		}
+		.profile-link-container {
+			float: left;
+			max-width: 300px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			margin-top: 16px;
+			white-space: nowrap;
+		}
+	}
+}
+
+.report-info {
+	float:left;
+}

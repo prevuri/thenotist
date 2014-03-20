@@ -5,7 +5,6 @@
 $highlight-color: #27F;
 $thumbnail-width: 240px;
 $thumbnail-height: 330px;
-
 $shift-max-width: 1400px;
 
 .notes-loading-container {
@@ -568,6 +567,12 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
       }
       .comment-inner {
         margin-left: 49px;
+
+        .delete-confirm-panel {
+          .btn {
+            width: 75px;
+          }
+        }
       }
       .profile-container {
         margin-top: 0px;
@@ -673,6 +678,11 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         }
       }
     }
+    .comment-inner:hover {
+      .delete-button.text-link {
+        opacity: 1;
+      }
+    }
     .comment-date {
       float: right;
       margin-left: 5px;
@@ -696,7 +706,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           position: absolute;
           right: 9px;
           bottom: -6px;
-          width: 0; 
+          width: 0;
           height: 0;
           border-left: 6px solid transparent;
           border-right: 6px solid transparent;
@@ -815,7 +825,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
           top: calc(50% - 37px);
           left: calc(50% - 92px);
           text-align: center;
-
           .btn {
             background-color: rgba(255, 255, 255, 0.2);
             font-size: 20px;
@@ -824,13 +833,20 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
               background-color: rgba(255, 255, 255, 0.3);
             }
           }
-
           .btn.delete {
             margin-left: 15px;
             background-color: RGBA(255, 0, 5, 0.3);
 
             &:hover {
               background-color: RGBA(255, 0, 5, 0.6)
+            }
+          }
+          &.unsubscribe {
+            margin-left: -10px;
+            margin-left: -34px;
+            margin-top: 30px;
+            h4 {
+              font-size: 21px;
             }
           }
         }
@@ -962,7 +978,6 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             border-radius: 0 4px 4px 0;
           }
         }
-
         .big-link {
           height: 100%;//275px;
           width: 100%;
@@ -1207,6 +1222,45 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             background-color: RGBA(80, 160, 200, 0.7);
           }
         }
+
+        .flagged-container {
+          position: absolute;
+          z-index: 103;
+          width: 100%;
+          text-align: center;
+          margin-top: 60px;
+          color: #fff;
+          i {
+            font-size: 5em;
+          }
+          .flagged-title {
+            font-size: 2.3em;
+          }
+          .flagged-description {
+            font-size: 1.5em;
+          }
+        }
+      }
+    }
+    .inaccessible-notes-container {
+      background-color: #5E5D65;
+      .notes-diff-count {
+        color: #ffffff;
+        font-size: 5em;
+        margin-left: -30px;
+        text-align: center;
+        margin-top: 40px;
+        &.no-plus {
+          margin-left: 0px;
+        }
+      }
+      .notes-diff-text {
+        color: #ffffff;
+        font-size: 2em;
+        text-align: center;
+      }
+      &:hover {
+        background-color: #5E5D65;
       }
     }
   }

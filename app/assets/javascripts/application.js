@@ -24,6 +24,7 @@
 //= require underscore
 //= require s3_direct_upload
 //= require googleanalytics
+//= require d3
 //
 // Removing these requirements for gem
 // require bootstrap

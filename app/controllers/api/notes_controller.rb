@@ -6,7 +6,7 @@ class Api::NotesController < ApplicationController
   before_filter :get_note, :only => [ :show, :update, :share, :unshare, :unsubscribe, :contribs, :destroy, :paginate ]
   before_filter :get_note_title, :only => [:create, :update]
   before_filter :get_page_range, :only => [ :paginate ]
-  before_filter :abort_timed_out_notes, :only => [ :index ]
+  # before_filter :abort_timed_out_notes, :only => [ :index ]
 
   UserInfo = Struct.new(:id, :name, :image)
 
@@ -14,7 +14,7 @@ class Api::NotesController < ApplicationController
     @notes = current_user.notes + current_user.shared_notes
     return render :json => {
       :success => true,
-      :notes => @notes.map { |n| n.as_json(current_user) }
+      :notes => @notes.map { |n| n.as_json_for_index(current_user) }
     }
   end
 
@@ -80,7 +80,8 @@ class Api::NotesController < ApplicationController
     @notes = @user.notes + @user.shared_notes
     return render :json => {
       :success => true,
-      :notes => @notes.map{ |note| (note.shared_with? current_user or note.user == current_user) ? note.as_json(current_user) : note.as_private_json}
+      :all_notes_count => @notes.count,
+      :notes => @notes.map { |n| n.as_json_for_index(current_user) }
     }
   end
 
@@ -227,7 +228,7 @@ private
     "Invalid page range."
   end
 
-  def abort_timed_out_notes
-    current_user.notes.each &:abort_if_timed_out!
-  end
+  # def abort_timed_out_notes
+  #   current_user.notes.each &:abort_if_timed_out!
+  # end
 end
