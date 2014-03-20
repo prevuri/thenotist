@@ -80,7 +80,7 @@ class Api::NotesController < ApplicationController
     @notes = @user.notes + @user.shared_notes
     return render :json => {
       :success => true,
-      :all_notes_count => @user.notes.count,
+      :all_notes_count => @notes.count,
       :notes => @notes.map { |n| n.as_json_for_index(current_user) }
     }
   end

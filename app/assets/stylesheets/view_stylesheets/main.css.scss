@@ -130,6 +130,18 @@ $user-type-color: #A5BA3D;
     font-size: 15px;
   }
 
+  a {
+    color: #268;
+    text-decoration: none;
+    font-weight: 500;
+    &:hover {
+      color: #146;
+    }
+    &:active {
+      color: #024;
+    }
+  }
+
   .activity-header-content-container {
     display: inline;
     position: relative;
