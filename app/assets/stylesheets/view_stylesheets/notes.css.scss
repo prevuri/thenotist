@@ -1240,7 +1240,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             font-size: 2.3em;
           }
           .flagged-description {
-            font-size: 1.5em;
+            font-size: 1.2em;
           }
         }
       }
@@ -1266,6 +1266,33 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         background-color: #5E5D65;
       }
     }
+  }
+}
+
+.flag-report-form-container {
+  .flag-report-heading {
+    color: #444;
+    font-size: 1.5em;
+    margin-left: 4px;
+    margin-bottom: 8px;
+  }
+  .radio-container {
+    overflow: auto;
+    margin-bottom: 10px;
+    input {
+      margin-left: 5px;
+      margin-bottom: 5px;
+      float: left;
+    }
+    .radio-text {
+      float: left;
+      margin-left: 5px;
+      margin-top: 2px;
+    }
+  }
+
+  #flag-report-description {
+    width: 300px;
   }
 }
 
