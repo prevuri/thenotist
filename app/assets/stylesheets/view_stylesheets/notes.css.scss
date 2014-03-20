@@ -824,9 +824,13 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         .delete-confirmation {
           position: absolute;
           color: #fff;
-          z-index: 103;
-          top: calc(50% - 37px);
-          left: calc(50% - 92px);
+          z-index: 200;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding-top: 20%;
+          background: rgba(0, 0, 0, 0.7);
           text-align: center;
           .btn {
             background-color: rgba(255, 255, 255, 0.2);
