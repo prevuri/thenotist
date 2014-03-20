@@ -632,6 +632,9 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         color: #268;
         font-weight: bold;
         &:hover {
+          color: #146;
+        }
+        &:active {
           color: #024;
         }
       }
