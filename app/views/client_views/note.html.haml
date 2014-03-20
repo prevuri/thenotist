@@ -77,16 +77,18 @@
     #note-shift-overlay{:'ng-show' => 'expandedCommentLine != null || showingNewComment', :'ng-click' => 'expandCommentLine(null); showingNewComment = false'}
 
     .flag-report-form-container.modal.hide.fade{ :role => :dialog, :tabindex => -1, "aria-labelledby" => "myModalLabel", "aria-hidden" => true }
-      .form-container.modal-body
-        .form-container
-          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Legal - Privacy, Copyright, or Other" } Privacy, copyright, or or other legal complaints
-          %br
-          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Content - Intentionally Inaccurate"} Intentionally inaccurate content
-          %br
-          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Content - Hateful or Abusive"} Hateful or abusive content
-          %br
-          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Content - Violent or Repulsive"} Violent or repulsive content
-          %input#flag-report-description{:type => 'text', :placeholder => "Explain why this document needs to be flagged", :'ng-model' => 'flagReport.description', "analytics-on" => "click", "analytics-category" => "Flagging", "analytics-event" => "Flag Report Description" }
-      .form-container.modal-footer
+      .modal-body
+        .flag-report-heading  Flag this note
+        .radio-container
+          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Legal - Privacy, Copyright, or Other" }
+          .radio-text Privacy, copyright, or other legal infringements
+        .radio-container
+          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Content - Intentionally Inaccurate"}
+          .radio-text Intentionally inaccurate content
+        .radio-container
+          %input{:type => "radio", :'ng-model' => 'flagReport.category', :value => "Content - Hateful or Abusive"}
+          .radio-text Hateful, violent, or abusive content
+        %input#flag-report-description{:type => 'text', :placeholder => "Explain why this document needs to be flagged", :'ng-model' => 'flagReport.description', "analytics-on" => "click", "analytics-category" => "Flagging", "analytics-event" => "Flag Report Description" }
+      .modal-footer
         .btn.btn-primary.submit-action{ :'ng-click' => "submitReport()" }
-          .submit-action-text Send Report
+          Send Report

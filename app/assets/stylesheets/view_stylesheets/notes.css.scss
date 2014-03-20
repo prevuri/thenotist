@@ -824,9 +824,13 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         .delete-confirmation {
           position: absolute;
           color: #fff;
-          z-index: 103;
-          top: calc(50% - 37px);
-          left: calc(50% - 92px);
+          z-index: 200;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding-top: 20%;
+          background: rgba(0, 0, 0, 0.7);
           text-align: center;
           .btn {
             background-color: rgba(255, 255, 255, 0.2);
@@ -1240,7 +1244,7 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
             font-size: 2.3em;
           }
           .flagged-description {
-            font-size: 1.5em;
+            font-size: 1.2em;
           }
         }
       }
@@ -1266,6 +1270,33 @@ textarea.comment-text, #newcomment, .comment .new-reply-panel .newreply {
         background-color: #5E5D65;
       }
     }
+  }
+}
+
+.flag-report-form-container {
+  .flag-report-heading {
+    color: #444;
+    font-size: 1.5em;
+    margin-left: 4px;
+    margin-bottom: 8px;
+  }
+  .radio-container {
+    overflow: auto;
+    margin-bottom: 10px;
+    input {
+      margin-left: 5px;
+      margin-bottom: 5px;
+      float: left;
+    }
+    .radio-text {
+      float: left;
+      margin-left: 5px;
+      margin-top: 2px;
+    }
+  }
+
+  #flag-report-description {
+    width: 300px;
   }
 }
 
