@@ -335,21 +335,20 @@ $shift-max-width: 1400px;
         .t {
           cursor: pointer;
           &:hover {
-            background-color: rgba(40, 120, 200, 0.1);
+            background-color: rgba(40, 135, 200, 0.1);
             &:after {
               content: "+";
               color: white;
               position: absolute;
-              z-index: 99999;
-              line-height: 0.8;
-              right: -50px;
-              bottom: 0;
               z-index: 9999;
-              padding: 4px 5px 8px;
-              border-radius: 20px;
-              font-size: 30px;
+              line-height: 0.9;
+              right: -1.0em;
+              bottom: 0.08em;
+              padding: 0.05em 0.14em 0.14em;
+              border-radius: 2em;
+              font-size: 0.6em;
               font-family: Verdana;
-              background-color: rgba(40, 120, 200, 0.5);
+              background-color: rgba(40, 135, 200, 0.5);
             }
           }
         }
@@ -393,6 +392,18 @@ $shift-max-width: 1400px;
         -webkit-transition: margin 0.2s ease;
         -moz-transition: margin 0.2s ease;
         transition: margin 0.2s ease;
+
+        .profile-container .blank {
+          background-color: #c5c8d0;
+          padding: 1px;
+          margin: -1px 0 0 -1px;
+        }
+        .overlay .profile-ellipsis {
+          color: #f5f5f5;
+          font-size: 25px;
+          line-height: 0.37;
+          text-align: center;
+        }
       }
 
       &.active {
@@ -420,17 +431,6 @@ $shift-max-width: 1400px;
           -moz-transition: background-color 0.1s linear;
           transition: background-color 0.1s linear;
           background-color: rgba(255,255,255,0.3);
-          &.blank {
-            background-color: #c5c8d0;
-            padding: 1px;
-            margin: -1px 0 0 -1px;
-          }
-          .profile-ellipsis {
-            color: #f5f5f5;
-            font-size: 25px;
-            line-height: 0.37;
-            text-align: center;
-          }
         }
         &:active {
           border-color: #888;
@@ -450,7 +450,7 @@ $shift-max-width: 1400px;
           border: 1px solid #ccc;
           .overlay {
             background-color: transparent;
-            .ellipsis {
+            .profile-ellipsis {
               display: none;
             }
           }
