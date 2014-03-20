@@ -1,5 +1,5 @@
 class Note < ActiveRecord::Base
-  attr_accessible :title, :processed, :aborted, :flagged
+  attr_accessible :title, :processed, :aborted, :flagged, :user_id
   belongs_to :user
   has_many :contributors, foreign_key: "shared_note_id", dependent: :destroy
   has_many :contributing_users, through: :contributors, source: :user

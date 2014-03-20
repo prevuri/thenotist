@@ -1,17 +1,15 @@
 .activity-item-border
   .activity-item
-    %a{:'href' => "/profile/#{activity.user.id}"}
+    %a{:'href' => "/profile/#{group[:user_id]}"}
       .profile-halo-container
         .profile-container.circular
-          %img.profile-image.circular#activity-image{:style => "background:url(#{activity.user.user_fb_data.profile_image}) no-repeat"}
+          %img.profile-image.circular#activity-image{:style => "background:url(#{group[:profile_image]}) no-repeat"}
     .act.tooltip.fade.right.in
       .tooltip-inner
         .activity-type
-          %div{:class => "#{activity.trackable.class.name.downcase}-type" }
-            - if activity.trackable_type == "Relationship"
-              USER
-            - elsif activity.trackable_type == "Contributor"
+          %div{:class => "#{group[:class]}-type" }
+            - if group[:type].downcase == 'contributor'
               NOTE
             - else
-              = activity.trackable.class.name.upcase
-        = ActivityPresenter.new(activity, self).render_activity
+              = group[:class].upcase
+        = ActivityPresenter.new(group, self).render_activity_group

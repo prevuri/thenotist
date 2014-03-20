@@ -138,16 +138,79 @@ class User < ActiveRecord::Base
     all_contrib_activities = self.activities
       .find_by_sql(activity_type_query % ['contributor', 'contributor'])
       .reject { |a| a.trackable.blank? }
-      .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_note.user.id == current_user.id }
+      .select { |a| a.trackable.user_id == current_user.id || a.trackable.shared_note.user_id == current_user.id }
 
     all_note_activities = self.activities
       .find_by_sql(activity_type_query % ['note', 'note'])
       .reject { |a| a.trackable.blank? }
-      .select { |a| a.trackable.user.id == current_user.id || a.trackable.shared_with?(current_user) }
+      .select { |a| a.trackable.user_id == current_user.id || a.trackable.shared_with?(current_user) }
 
-    all_activities = (all_comment_activities + all_contrib_activities + all_note_activities).sort_by(&:created_at).reverse
-    return all_activities
+    return (all_comment_activities + all_contrib_activities + all_note_activities).sort_by(&:created_at).reverse
+    # all_groups = group_activities(all_comment_activities)
+    #   .concat(group_activities(all_contrib_activities))
+    #   .concat(group_activities(all_note_activities))
+    #   .sort_by { |g| g[:time] }
+
+    # return all_groups
   end
+
+  # # assuming that all activities in the group are of the same type
+  # def group_activities activities_of_same_type
+  #   return [] if activities_of_same_type.blank?
+
+  #   now = Time.zone.now
+  #   an_hour_ago = now - 1.hour
+  #   midnight_today = now.beginning_of_day
+
+  #   # activities in real time
+  #   activities_in_last_hour = activities_of_same_type.select { |a| (an_hour_ago..now).cover?(a.created_at) }
+  #   all_activity_groups = []
+  #   unless activities_in_last_hour.blank?
+  #     activities_in_last_hour.sort_by!(&:created_at)
+  #     all_activity_groups << build_activity_group(activities_in_last_hour, 'realtime')
+  #   end
+  #   activities_of_same_type -= activities_in_last_hour
+
+  #   # activities for today - HOURLY
+  #   current_hour = midnight_today
+  #   while current_hour < an_hour_ago
+  #     range = current_hour..(current_hour+1.hour)
+  #     activities_for_this_hour = activities_of_same_type.select { |a| range.cover?(a.created_at) }
+  #     unless activities_for_this_hour.blank?
+  #       activities_for_this_hour.sort_by!(&:created_at)
+  #       all_activity_groups << build_activity_group(activities_for_this_hour, 'hourly')
+  #     end
+  #     activities_of_same_type -= activities_for_this_hour
+  #     current_hour += 1.hour
+  #   end
+
+  #   # activities for before today - DAILY
+  #   return all_activity_groups if activities_of_same_type.blank?
+  #   current_day = activities_of_same_type.min {|a| a.created_at.to_i}.created_at.beginning_of_day
+  #   daily_activities = []
+  #   while !activities_of_same_type.empty?
+  #     range = current_day..(current_day+1.day)
+  #     activities_for_this_day = activities_of_same_type.select { |a| range.cover?(a.created_at) }
+  #     unless activities_for_this_day.blank?
+  #       activities_for_this_day.sort_by!(&:created_at)
+  #       all_activity_groups << build_activity_group(activities_for_this_day, 'daily')
+  #     end
+  #     activities_of_same_type -= activities_for_this_day
+  #     current_day += 1.day
+  #   end
+
+  #   return all_activity_groups
+  # end
+
+  # # assuming that all activities in the group are of the same type
+  # def build_activity_group group, granularity
+  #   return {
+  #     :time => group.min{ |a| a.created_at.to_i }.created_at,
+  #     :type => group.first.trackable_type,
+  #     :granularity => granularity,
+  #     :activities => group
+  #   }
+  # end
 
   def as_json
     {
