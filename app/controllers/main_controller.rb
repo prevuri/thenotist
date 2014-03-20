@@ -5,7 +5,8 @@ class MainController < ApplicationController
         :title    => 'The Notist',
         :type     => 'website',
         :image    => 'http://www.notist.co/assets/notist-logo-med.png',
-        :url      => 'http://www.notist.co'
+        :url      => 'http://www.notist.co',
+        :description => 'Organize. Share. Discuss. A platform to share and discuss your notes and documents with friends and classmates.'
       }
       render 'splash', :layout => 'minimal'
     else
