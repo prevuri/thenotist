@@ -14,7 +14,10 @@ $user-type-color: #A5BA3D;
 }
 
 .no-activity-container {
+  max-width: 1180px;
+  margin: 0 auto;
   .get-started-header-container {
+    width: 960px;
     font-size: 2em;
   }
   .steps-container {
@@ -22,9 +25,57 @@ $user-type-color: #A5BA3D;
     margin-top: 30px;
     .step {
       font-size: 21px;
-      margin-bottom: 15px;
-      .action-header {
-        font-weight: 500;
+      margin-bottom: 20px;
+      display: inline-block;
+      margin-right: 20px;
+      position: relative;
+      height: 200px;
+      width: 320px;
+      vertical-align: middle;
+      border: black 1px solid;
+
+      .inner-container {
+        margin: 20px;
+  
+        i {
+          font-size: 4em;
+        }
+
+        .icon-circle-arrow-up, .icon-share{
+          position: absolute;
+          font-size: 4em;
+          top: 25px;
+          left: 128px;
+        }
+
+
+        .icon-facebook {
+          position: absolute;
+          top: 25px;
+          left: 88px;
+        }
+
+        .icon-twitter {
+          position: absolute;
+          top: 25px;
+          left: 168px;
+        }
+        
+        .blurb {
+          position: absolute;
+          bottom: 20px;
+          margin: 0 10px;
+          left: 10px;
+          text-align: center;
+
+          // .social-links {
+          //   font-size: 0.5em;
+          // }
+        }
+
+        .action-header {
+          font-weight: 500;
+        }
       }
     }
     .get-started-upload-note {
@@ -44,11 +95,6 @@ $user-type-color: #A5BA3D;
       &:hover {
         text-decoration: none;
       }
-    }
-
-    .facebook, .twitter {
-      display: block;
-      margin-left: 23px;
     }
   }
 }

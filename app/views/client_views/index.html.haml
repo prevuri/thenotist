@@ -10,19 +10,29 @@
       Looks like you're new here. Here's how you can get started:
     .steps-container
       .get-started-upload-note.step
-        %span 1.
-        %span.action-header Upload
-        %span a PDF file to your
-        %a{:href => '/notes'} Library
+        .inner-container
+          %i.icon-circle-arrow-up.icon-white
+          .blurb
+            %span.action-header Upload
+            %span a PDF file to your
+            %a{:href => '/notes'} Library
       .get-started-invite-friends.step
-        %span 2.
-        %span.action-header Invite
-        %span Invite your friends to join TheNotist:
-        %a.social-network-link.facebook{:href => 'https://www.facebook.com/thenotist'} facebook.com/TheNotist
-        %a.social-network-link.twitter{:href => 'https://twitter.com/TheNotist'} twitter.com/TheNotist
+        .inner-container
+          %a.social-network-link.facebook{:href => 'https://www.facebook.com/thenotist'} 
+            %i.icon-facebook.icon-white
+          %a.social-network-link.twitter{:href => 'https://twitter.com/TheNotist'}
+            %i.icon-twitter.icon-white
+          .blurb
+            %span.action-header Invite
+            %span your friends to join the 
+            %span.action-header the notist.
+            .social-links
+              
       .get-started-share-and-comment.step
-        %span 3.
-        %span.action-header Share
-        %span notes in your
-        %a{:href => '/notes'} Library
-        with your friends.
+        .inner-container
+          %i.icon-share.icon-white
+          .blurb
+            %span.action-header Share
+            %span notes in your
+            %a{:href => '/notes'} Library
+            with your friends.
