@@ -68,3 +68,11 @@ For realtime performance monitoring:
         * "scout_realtime stop" to stop the daemon
 
 * Find the gem here: https://github.com/scoutapp/scout_realtime
+
+
+-----------------------------------------------
+PROD DATABASE
+-----------------------------------------------
+* Check if DB is down: Log in, execute 'psql'
+* use 'sudo /etc/init.d/postgresql start 9.3' to start the psql database if it's down
+
