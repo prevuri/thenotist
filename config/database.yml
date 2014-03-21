@@ -19,9 +19,11 @@ production:
   adapter: postgresql
   database: NotistApp
   username: notistapp
+  password: notistapppgdbpwd
   # password: notablenotist
   # host: notistapppgdb.ci7lbldq35nq.us-east-1.rds.amazonaws.com
   # port: 5432
+  host: localhost
   pool: 25
   timeout: 5000
 
