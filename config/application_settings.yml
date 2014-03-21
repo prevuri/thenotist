@@ -19,7 +19,7 @@ test:
   output_thumb_prefix: test_thumb_store
 
 production:
-  sqs_pdf_conversion_queue_name: document_conversion_queue
+  sqs_pdf_conversion_queue_name: document_conversion_queue_prod
   ddb_one_word_reverse_index_table_name: one_word_reverse_index
   stop_word_file: config/stop_words.txt
   s3_bucket_name: thenotist
